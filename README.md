@@ -1,2 +1,2 @@
-# snowstorm
+# Snowstorm
 Minecraft Bedrock Particle Generator
