@@ -58,7 +58,7 @@ $(document).ready(() => {
 						{label: 'Fire', 	click: () => {loadPreset('fire')}},
 						{label: 'Magic', 	click: () => {loadPreset('magic')}},
 						{label: 'Trail', 	click: () => {loadPreset('trail')}},
-						{label: 'Explosion',click: () => {loadPreset('explosion')}},
+						//{label: 'Explosion',click: () => {loadPreset('explosion')}},
 					]
 				}
 			]
