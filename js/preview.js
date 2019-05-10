@@ -8,6 +8,8 @@ const gizmo_colors = {
 }
 var Emitter = {};
 
+let animationLoop = null
+
 function initPreview() {
 
 	View.canvas = $('canvas').get(0)
@@ -488,7 +490,25 @@ function startAnimation() {
 	}
 	Emitter.start()
 }
+function startAnimationLoop() {
+	if (System.paused) {
+		togglePause()
+	}
+	for (var i = Emitter.particles.length-1; i >= 0; i--) {
+		Emitter.particles[i].remove()
+	}
+
+	const loop = () => {
+		setTimeout(() => {
+			Emitter.start()
+
+			animationLoop = requestAnimationFrame(loop)
+		}, 1000 / 20) // 20 tps
+	}
+	loop()
+}
 function togglePause() {
+	if (animationLoop) cancelAnimationFrame(animationLoop)
 	System.paused = !System.paused;
 }
 function updateMaterial(cb) {
