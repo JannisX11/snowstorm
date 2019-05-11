@@ -33,7 +33,7 @@ class Overlay {
 		}
 	}
 }
-var ExpandedInput;
+var ExpandedInput, MolangSheet;
 $(document).ready(() => {
 
 	header_vue = new Vue({
@@ -60,6 +60,15 @@ $(document).ready(() => {
 						{label: 'Trail', 	click: () => {loadPreset('trail')}},
 						//{label: 'Explosion',click: () => {loadPreset('explosion')}},
 					]
+				},
+				{
+					label: 'Help',
+					children: [
+						{label: 'Format Documentation', click: () => { open('https://bedrock.dev/1.12.0.0/1.12.0.4/Particles') }},
+						{label: 'MoLang Sheet', click: () => { MolangSheet.open() }},
+						{label: 'Report a Bug', click: () => { open('https://github.com/JannisX11/snowstorm/issues') }},
+						{label: 'Discord Channel', click: () => { open('https://discord.gg/eGqsNha') }},
+					]
 				}
 			]
 		}
@@ -76,6 +85,11 @@ $(document).ready(() => {
 			}
 		}
 	})
+
+	MolangSheet = new Overlay($('#molang_sheet'), {
+		
+	})
+
 
 	ExpandedInput = {
 		input: 0,
@@ -102,7 +116,6 @@ $(document).ready(() => {
 	}
 	document.body.ondrop = function(event) {
 		var file = event.dataTransfer && event.dataTransfer.files && event.dataTransfer.files[0];
-		cl(file)
 		if (file) {
 			if (pathToExtension(file.name) === 'json') {
 				var reader = new FileReader()
@@ -119,6 +132,9 @@ $(document).ready(() => {
 
 })
 .keypress(e => {
+	var input_focus = $('input[type="text"]:focus, input[type="number"]:focus, div[contenteditable="true"]:focus, textarea:focus').length > 0
+	if (input_focus) return;
+
 	if (e.which === 32) {
 		startAnimation()
 	} else if (e.which === 13) {

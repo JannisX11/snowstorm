@@ -17,6 +17,13 @@
 		height: 30px;
 		min-width: 162px;
 	}
+	code {
+		padding: 2px 8px;
+		color: #1062ab;
+		font-size: 0.9em;
+		background-color: var(--color-highlight);
+		user-select: auto;
+	}
 /*Layout*/
 	body {
 		display: grid;
@@ -230,18 +237,20 @@
 		background: transparent;
 	}
 /*Overlays*/
-	#expanded_input {
+	.dialog {
 		position: absolute;
 		margin-left: calc(50% - 400px);
 		width: 800px;
-		top: 300px;
+		top: 20px;
 		background-color: #e5ebfa;
 		box-shadow: 1px 1px 12px black;
 		z-index: 50;
 	}
-	#expanded_input input {
-		width: calc(100% - 12px);
-		margin: 6px;
-		padding: 5px;
-		font-size: 1.08em;
+	.dialog h3 {
+		padding: 20px 0 5px 0;
+	}
+	#molang_sheet {
+		padding: 20px 40px;
+		overflow-y: scroll;
+		bottom: 20px;
 	}

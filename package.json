@@ -1,6 +1,6 @@
 {
-	"name": "Snowstorm",
-	"version": "1.0.0",
+	"name": "snowstorm",
+	"version": "1.0.1",
 	"description": "A web-based particle generator",
 	"author": {
 		"name": "JannisX11",

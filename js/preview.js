@@ -1,6 +1,8 @@
 const View = {}
 const System = {}
-const Flipbook = {}
+const Flipbook = {
+	width: 16, height: 16
+}
 const gizmo_colors = {
 	r: new THREE.Color(0xfd3043),
 	g: new THREE.Color(0x26ec45),
@@ -144,26 +146,27 @@ class EmitterClass {
 		})
 
 		this.age += 1/30;
+		var age = Math.roundTo(this.age, 5);
 		if (this.mode == 'looping') {
 			//Looping
-			if (!this.enabled && this.age > this.sleep_time) {
-				this.start()
-			}
-			if (this.enabled && this.age > this.active_time) {
+			if (this.enabled && age >= this.active_time) {
 				this.stop()
+			}
+			if (!this.enabled && age >= this.sleep_time) {
+				this.start()
 			}
 		} else if (this.mode == 'once') {
 			//Once
-			if (this.enabled && this.age > this.active_time) {
+			if (this.enabled && age >= this.active_time) {
 				this.stop()
 			}
 		} else if (this.mode === 'expression') {
 			//Expressions
-			if (!this.enabled && Data.emitter.lifetime.activation.calculate(params)) {
-				this.start()
-			}
 			if (this.enabled && Data.emitter.lifetime.expiration.calculate(params)) {
 				this.stop()
+			}
+			if (!this.enabled && Data.emitter.lifetime.activation.calculate(params)) {
+				this.start()
 			}
 		}
 		return this;
@@ -257,6 +260,7 @@ class Particle {
 		this.current_frame = 0;
 		this.random_vars = [Math.random(), Math.random(), Math.random(), Math.random()]
 		this.material.copy(System.material)
+		this.material.needsUpdate = true;
 		var params = this.params()
 
 		this.position.set(0, 0, 0)
@@ -374,7 +378,9 @@ class Particle {
 			this.rotation_rate += rot_acceleration*1/30;
 			this.rotation = Math.degToRad(this.initial_rotation + this.rotation_rate*this.age);
 		} else {
-			this.position.copy(Data.particle.motion.relative_position.calculate(params));
+			if (Data.particle.motion.relative_position.value.join('').length) {
+				this.position.copy(Data.particle.motion.relative_position.calculate(params));
+			}
 			this.rotation = Math.degToRad(Data.particle.rotation.rotation.calculate(params));
 		}
 
@@ -509,7 +515,7 @@ function updateMaterial(cb) {
 			url = 'assets/missing.png';
 		}
 	}
-	var tex = new THREE.TextureLoader().load(url, function() {
+	var tex = new THREE.TextureLoader().load(url, function(a, b) {
 		function factorize(input, axis, factor) {
 			if (!input.value || !input.value[axis]) return;
 			var arr = input.value.slice()
@@ -527,12 +533,12 @@ function updateMaterial(cb) {
 		System.material.map = tex
 		var x_factor = System.material.map.image.naturalWidth / Flipbook.width;
 		var y_factor = System.material.map.image.naturalHeight / Flipbook.height;
-		if (x_factor != 1) {
+		if (x_factor && x_factor != 1) {
 			factorize(Data.particle.texture.uv, 0, x_factor)
 			factorize(Data.particle.texture.uv_size, 0, x_factor)
 			factorize(Data.particle.texture.uv_step, 0, x_factor)
 		}
-		if (y_factor != 1) {
+		if (y_factor && y_factor != 1) {
 			factorize(Data.particle.texture.uv, 1, y_factor)
 			factorize(Data.particle.texture.uv_size, 1, y_factor)
 			factorize(Data.particle.texture.uv_step, 1, y_factor)
