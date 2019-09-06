@@ -1,8 +1,8 @@
 function loadFile(data) {
 
-	if (data && data.particle_effect) {
+	if (data && data.particle_effect && startNewProject()) {
 
-		startNewProject()
+		
 
 		var comps = data.particle_effect.components;
 		var desc = data.particle_effect.description;
@@ -192,15 +192,6 @@ function loadFile(data) {
 					}
 				}
 			}
-			/*
-			if (comp('')) {
-				Data.particle..mode.set('')
-				Data.particle...set(comp('').)
-			}
-			if (comp('')) {
-				Data.particle..mode.set('')
-				Data.particle...set(comp('').)
-			}*/
 		}
 		if (Data.particle.texture.path.value) {
 			updateMaterial(startAnimation)
@@ -210,21 +201,15 @@ function loadFile(data) {
 	}
 }
 function startNewProject() {
-	forEachInput(input => {
-		input.reset()
-	})
-	updateMaterial(startAnimation)
+	if (confirm('This action may clear your current work. Do you want to continue?')) {
+		forEachInput(input => {
+			input.reset()
+		})
+		updateMaterial(startAnimation)
+		return true;
+	}
 }
-/*
-Other BUttons/Info
-	Export Button
-	FPS
-	Creator Link
-	Presets
-	Play Button
-	Pause Button
 
-*/
 function importFile() {
 	IO.import({
 		extensions: ['json']

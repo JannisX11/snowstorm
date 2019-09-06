@@ -6,7 +6,8 @@ const Flipbook = {
 const gizmo_colors = {
 	r: new THREE.Color(0xfd3043),
 	g: new THREE.Color(0x26ec45),
-	b: new THREE.Color(0x2d5ee8)
+	b: new THREE.Color(0x2d5ee8),
+	grid: new THREE.Color(0x3d4954),
 }
 var Emitter = {};
 
@@ -19,7 +20,7 @@ function initPreview() {
 		canvas: View.canvas,
 		antialias: true,
 		alpha: true,
-		preserverDrawingBuffer: true,
+		preserveDrawingBuffer: true,
 	})
 
 	View.controls = new THREE.OrbitControls(View.camera, View.canvas);
@@ -44,8 +45,10 @@ function initPreview() {
 	View.scene = new THREE.Scene()
 
 	View.helper = new THREE.AxesHelper(1);
-	View
-	View.scene.add(View.helper)
+	View.grid = new THREE.GridHelper(128, 128, gizmo_colors.grid, gizmo_colors.grid);
+	View.grid.position.y -= 0.0005
+	View.scene.add(View.helper);
+	View.scene.add(View.grid);
 
 	initParticles()
 
@@ -70,13 +73,15 @@ function animate() {
 	View.controls.update()
 	View.renderer.render(View.scene, View.camera);
 	View.frames_this_second++;
-	System.tick = !System.tick;
 
-	if (Emitter && document.hasFocus() && !System.paused && System.tick === true) {
-		Emitter.tick()
-	}
 	Emitter.tickParticleRotation()
 }
+setInterval(function() {
+	
+	if (Emitter && document.hasFocus() && !System.paused) {
+		Emitter.tick()
+	}
+}, 1000/30)
 
 $(document).ready(initPreview)
 $(window).resize(resize)

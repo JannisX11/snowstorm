@@ -15,7 +15,6 @@
 	}
 	select {
 		height: 30px;
-		min-width: 162px;
 	}
 	code {
 		padding: 2px 8px;
@@ -28,8 +27,8 @@
 	body {
 		display: grid;
 		grid-template-rows:  64px calc(100% - 64px);
-		grid-template-columns: calc(100% - 520px) 520px;
-		grid-template-areas: "header sidebar" "preview sidebar";
+		grid-template-columns: var(--sidebar) calc(100% - var(--sidebar));
+		grid-template-areas: "sidebar header" "sidebar preview";
 		height: 100%;
 		width: 100%;
 		position: fixed;
@@ -39,6 +38,7 @@
 		font-weight: 300;
 		image-rendering: pixelated;
 		background-color: #29323a;
+		--sidebar: 520px;
 	}
 	main {
 		grid-area: preview;
@@ -52,7 +52,7 @@
 		position: absolute;
 		bottom: 0px;
 		width: 800px;
-		margin-left: calc(50% - (800px + 520px) / 2);
+		margin-left: calc(50% - (800px - var(--sidebar)) / 2);
 		font-size: 1.2em;
 		padding-left: 20px;
 		background-color: #cfd7ea;
@@ -61,7 +61,6 @@
 	content {
 		grid-area: sidebar;
 		background-color: #e5ebfa;
-		overflow-y: scroll;
 	}
 /*Stuff*/
 	
@@ -73,6 +72,21 @@
 	.tool:hover {
 		color: #3e5366;
 	}
+	.resizer {
+		position: absolute !important;
+		z-index: 12;
+	}
+	.resizer.vertical { /*	|	*/
+		cursor: ew-resize;
+		width: 6px;
+	}
+	.resizer.horizontal { /*	__	*/
+		cursor: ns-resize;
+		height: 6px;
+	}
+	.resizer.disabled {
+		pointer-events: none;
+	}
 /*Sidebar*/
 	content h1 {
 		padding: 20px;
@@ -80,8 +94,13 @@
 		margin: 0;
 		font-family: 'Josefin Sans', sans-serif;
 		font-weight: 600;
-		font-size: 3em;
+		font-size: 2.6em;
 		color: #9aa3b8;
+		overflow: hidden;
+	}
+	content > div {
+		overflow-y: scroll;
+		height: 100%;
 	}
 	.input_subject {
 
@@ -116,16 +135,16 @@
 	}
 	.input_right {
 		display: inline-block;
-		width: 378px;
+		width: calc(100% - 110px);
 		margin-left: 4px;
 	}
-	.input_right[axes="1"] input:not([type="checkbox"]) {
+	.input_right[axes="1"] input:not([type="checkbox"]), .input_right[axes="1"] select:not([type="checkbox"]) {
 		width: 100%;
 	}
-	.input_right[axes="2"] input:not([type="checkbox"]) {
+	.input_right[axes="2"] input:not([type="checkbox"]), .input_right[axes="2"] select:not([type="checkbox"]) {
 		width: 50%;
 	}
-	.input_right[axes="3"] input:not([type="checkbox"]) {
+	.input_right[axes="3"] input:not([type="checkbox"]), .input_right[axes="3"] select:not([type="checkbox"]) {
 		width: 33.33%;
 	}
 	.input_right .vc-chrome {
@@ -140,7 +159,7 @@
 	}
 
 	input#image {
-		width: calc(100% - 120px);
+		width: 100%;
 	}
 	.input_texture_preview {
 		display: inline-block;

@@ -132,9 +132,13 @@ class Input {
 		return this;
 	}
 	reset() {
-		var v = this.default_value;
 		this.value = this.default_value;
 		this.set(this.default_value);
+		if (this.type == 'image') {
+			delete this.image
+			$('#particle-texture-image .input_texture_preview').css('background-image', `none`)
+			this.updatePreview()
+		}
 		return this;
 	}
 	focus(axis) {
@@ -186,7 +190,7 @@ const Data = {
 				onchange: function() {
 					Emitter.creation_variables = {};
 					this.value.forEach((s, i) => {
-						var p = s.replace(/\s/g, '').split('=')
+						var p = s.toLowerCase().replace(/\s/g, '').split('=')
 						if (p.length > 1) {
 							let key = p.shift();
 							Emitter.creation_variables[key] = p.join('=');
@@ -202,7 +206,7 @@ const Data = {
 				onchange: function() {
 					Emitter.tick_variables = {};
 					this.value.forEach((s, i) => {
-						var p = s.replace(/\s/g, '').split('=')
+						var p = s.toLowerCase().replace(/\s/g, '').split('=')
 						if (p.length > 1) {
 							let key = p.shift();
 							Emitter.tick_variables[key] = p.join('=');
@@ -489,7 +493,11 @@ const Data = {
 			path: new Input({
 				type: 'text',
 				info: 'Path to the texture, starting from the texture pack. Example: textures/particle/snowflake',
-				label: 'Texture'
+				placeholder: 'textures/particle/particles',
+				label: 'Texture',
+				updatePreview: function() {
+					updateMaterial()
+				}
 			}),
 			image: new Input({
 				type: 'image',
@@ -592,7 +600,7 @@ const Data = {
 				type: 'number',
 			}),
 			coefficient_of_restitution: new Input({
-				label: 'Coefficient Of Restitution',
+				label: 'Bounciness',
 				info: 'Set to 0.0 to not bounce, 1.0 to bounce back up to original hight',
 				type: 'number',
 			}),
