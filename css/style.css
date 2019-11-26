@@ -100,7 +100,7 @@
 	}
 	content > div {
 		overflow-y: scroll;
-		height: calc(100% - 70px);
+		height: 100%;
 	}
 	.input_subject {
 

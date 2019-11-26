@@ -14,7 +14,7 @@ var Emitter = {};
 function initPreview() {
 
 	View.canvas = $('canvas').get(0)
-	View.camera = new THREE.PerspectiveCamera(45, 16/9, 1, 3000);
+	View.camera = new THREE.PerspectiveCamera(45, 16/9, 0.1, 3000);
 	View.camera.position.set(-6, 3, -6)
 	View.renderer = new THREE.WebGLRenderer({
 		canvas: View.canvas,
@@ -77,8 +77,7 @@ function animate() {
 	Emitter.tickParticleRotation()
 }
 setInterval(function() {
-	
-	if (Emitter && document.hasFocus() && !System.paused) {
+	if (Emitter && Emitter.tick && document.hasFocus() && !System.paused) {
 		Emitter.tick()
 	}
 }, 1000/30)
@@ -196,8 +195,16 @@ class EmitterClass {
 					p.mesh.rotation.reorder('YXZ');
 					p.mesh.rotation.x = p.mesh.rotation.z = 0;
 					break;
-				case 'direction':
-					var q = new THREE.Quaternion().setFromUnitVectors(System.znormal, p.speed)
+				case 'direction_x':
+					var q = new THREE.Quaternion().setFromUnitVectors(System.xnormal, new THREE.Vector3().copy(p.speed).normalize())
+					p.mesh.rotation.setFromQuaternion(q);
+					break;
+				case 'direction_y':
+					var q = new THREE.Quaternion().setFromUnitVectors(System.upnormal, new THREE.Vector3().copy(p.speed).normalize())
+					p.mesh.rotation.setFromQuaternion(q);
+					break;
+				case 'direction_z':
+					var q = new THREE.Quaternion().setFromUnitVectors(System.znormal, new THREE.Vector3().copy(p.speed).normalize())
 					p.mesh.rotation.setFromQuaternion(q);
 					break;
 			}
@@ -241,6 +248,7 @@ class Particle {
 		this.position = this.mesh.position;
 
 		this.speed = data.speed||new THREE.Vector3();
+		this.direction = new THREE.Vector3();
 		this.acceleration = data.acceleration||new THREE.Vector3();
 
 		this.add()
@@ -340,10 +348,10 @@ class Particle {
 		} else {
 			this.speed = Data.particle.direction.direction.calculate(params).normalize()
 		}
+		this.direction.copy(this.speed);
+
 		var speed = Data.particle.motion.linear_speed.calculate(params);
-		this.speed.x *= speed;
-		this.speed.y *= speed;
-		this.speed.z *= speed;
+		this.speed.multiplyScalar(speed);
 
 		this.position.add(Data.emitter.shape.offset.calculate(params))
 
@@ -473,6 +481,7 @@ function initParticles() {
 	System.group = new THREE.Group()
 	View.scene.add(System.group)
 	System.upnormal = new THREE.Vector3(0, 1, 0)
+	System.xnormal = new THREE.Vector3(1, 0, 0)
 	System.znormal = new THREE.Vector3(0, 0, 1)
 	System.veczero = new THREE.Vector3(0, 0, 0)
 	System.max_particles = 10000;
