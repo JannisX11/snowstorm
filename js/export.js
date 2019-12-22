@@ -64,7 +64,7 @@ function generateFile(options) {
 		s = s.replace(/;;/g, ';')
 		if (s) {
 			if (!comps['minecraft:emitter_initialization']) comps['minecraft:emitter_initialization'] = {};
-			comps['minecraft:emitter_initialization'].per_update_expressions = s+';'
+			comps['minecraft:emitter_initialization'].per_update_expression = s+';'
 		}
 	}
 	if (getValue(0, 'position', 'local_position')) {
