@@ -4,9 +4,11 @@ var side_vue;
 class Input {
 	constructor(data) {
 		this.type = data.type||'molang';
+		this.isInput = true;
 		this.label = data.label;
 		this.info = data.info;
 		this.placeholder = data.placeholder;
+		this.required = data.required == true;
 		this.value = data.value;
 
 		this.options = data.options;
@@ -152,6 +154,7 @@ class Input {
 /**/
 
 
+
 const Data = {
 	general: {
 		label: 'General',
@@ -162,6 +165,7 @@ const Data = {
 				label: 'Identifier',
 				info: 'This is the name the particle emitter is referred to as. Should have a namespace.',
 				placeholder: 'space:name',
+				required: true,
 				type: 'text'
 			})
 		},
@@ -215,6 +219,12 @@ const Data = {
 				}
 			})
 		},
+		curves: {
+			label: 'Curves',
+			_folded: true,
+			type: 'curves',
+			curves: []
+		}
 	},
 	emitter: {
 		label: 'Emitter',
@@ -235,17 +245,20 @@ const Data = {
 				label: 'Rate',
 				info: 'How often a particle is emitted, in particles/sec. Evaluated once per particle emitted.',
 				enabled_modes: ['steady'],
+				required: true,
 				value: 1,
 			}),
 			amount: new Input({
 				label: 'Amount',
 				info: 'How many particles are spawned at once',
 				enabled_modes: ['instant'],
+				required: true,
 			}),
 			maximum: new Input({
 				label: 'Maximum',
 				info: '',
 				enabled_modes: ['steady'],
+				required: true,
 				value: 100,
 			})
 		},
@@ -389,7 +402,7 @@ const Data = {
 			mode: new Input({
 				type: 'select',
 				label: 'Mode',
-				mode_groups: [['particle', 'motion'], ['particle', 'rotation']],
+				mode_groups: ['particle', 'motion'],
 				options: {
 					dynamic: 'Dynamic',
 					parametric: 'Parametric',
@@ -427,6 +440,15 @@ const Data = {
 		rotation: {
 			label: 'Rotation',
 			_folded: true,
+			mode: new Input({
+				type: 'select',
+				label: 'Mode',
+				mode_groups: ['particle', 'rotation'],
+				options: {
+					dynamic: 'Dynamic',
+					parametric: 'Parametric',
+				},
+			}),
 			initial_rotation: new Input({
 				label: 'Start Rotation',
 				info: 'Specifies the initial rotation in degrees',
@@ -520,6 +542,7 @@ const Data = {
 				label: 'UV Start',
 				info: 'UV start coordinates',
 				axis_count: 2,
+				required: true,
 				value: [0, 0]
 			}),
 			uv_size: new Input({
@@ -656,6 +679,12 @@ $(document).ready(function() {
 		methods: {
 			fold: function(group) {
 				group._folded = !group._folded
+				if (group.curves && !group._folded) {
+					updateCurvesPanel();
+				}
+			},
+			addCurve() {
+				Data.general.curves.curves.push(new Curve())
 			}
 		}
 	})

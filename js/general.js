@@ -149,11 +149,6 @@ $(document).ready(() => {
 		data: {
 			fps: 0,
 			particles: 0
-		},
-		methods: {
-			fold: function(group) {
-				group._folded = !group._folded
-			}
 		}
 	})
 

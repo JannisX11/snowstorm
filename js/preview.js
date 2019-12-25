@@ -66,6 +66,8 @@ function resize() {
 
 	View.renderer.setSize(width, height);
 	View.renderer.setPixelRatio(window.devicePixelRatio);
+
+	updateCurvesPanel()
 }
 
 function animate() {
@@ -97,6 +99,7 @@ class EmitterClass {
 		this.tick_values = {};
 		this.creation_variables = {};
 		this.creation_values = {};
+		this.curves = {};
 	}
 	params() {
 		var obj = {
@@ -493,8 +496,10 @@ function initParticles() {
 			input.updatePreview(data)
 		}
 	})
-	Molang.variableHandler = function (key) {
-		return Emitter.creation_values[key] || Emitter.tick_values[key]
+	Molang.variableHandler = function (key, params) {
+		return Emitter.creation_values[key]
+			|| Emitter.tick_values[key]
+			|| (Emitter.curves[key] && Emitter.curves[key].calculate(params))
 	}
 
 	Emitter = new EmitterClass().start()

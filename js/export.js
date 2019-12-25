@@ -1,4 +1,4 @@
-function getValue(subject, group, input) {
+function getValue(subject, group, key, curve_key) {
 	if (typeof subject === 'number') {
 		switch (subject) {
 			case 0: subject = 'general'; break;
@@ -6,7 +6,10 @@ function getValue(subject, group, input) {
 			case 2: subject = 'particle'; break;
 		}
 	}
-	var input = Data[subject][group][input];
+	var input = Data[subject][group][key];
+	if (group == 'curves') {
+		input = Data.general.curves.curves[key][curve_key]
+	}
 	var original_value = input.value;
 
 	function processValue(v) {
@@ -25,9 +28,10 @@ function getValue(subject, group, input) {
 		for (var i = 0; i < input.axis_count; i++) {
 			value[i] = processValue(original_value[i])
 		}
-		if (value.allEqual(0)) value = undefined;
+		if (value.allEqual(0) && !input.required) value = undefined;
 	} else {
-		var value = processValue(original_value)||undefined;
+		var value = processValue(original_value);
+		if (!value && !input.required) value = undefined;
 	}
 	return value;
 }
@@ -43,11 +47,26 @@ function generateFile(options) {
 					material: 'particles_alpha',
 					texture: getValue(2, 'texture', 'path') || 'textures/blocks/wool_colored_white'
 				}
-			},
-			components: {}
+			}
 		}
 	}
-	var comps = file.particle_effect.components;
+
+	//Curves
+	if (Data.general.curves.curves.length) {
+		var json_curves = file.particle_effect.curves = {};
+		Data.general.curves.curves.forEach((curve, i) => {
+			if (!curve.id.value) return;
+			var json_curve = {
+				type: getValue(0, 'curves', i, 'mode'),
+				input: getValue(0, 'curves', i, 'input'),
+				horizontal_range: getValue(0, 'curves', i, 'range'),
+				nodes: curve.nodes.slice()
+			}
+			json_curves[curve.id.value] = json_curve
+		})
+	}
+
+	var comps = file.particle_effect.components = {};
 
 	//Emitter Components
 	if (getValue(0, 'variables', 'creation_vars').length) {
@@ -197,7 +216,7 @@ function generateFile(options) {
 			rotation_rate: init_rot_rate||undefined
 		}
 	}
-	comps['minecraft:particle_initial_speed'] = getValue(2, 'motion', 'linear_speed')||0;
+	comps['minecraft:particle_initial_speed'] = getValue(2, 'motion', 'linear_speed');
 	/*
 	mode = getValue(2, 'init', 'mode')
 	if (mode === 'linear') {

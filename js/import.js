@@ -2,15 +2,33 @@ function loadFile(data) {
 
 	if (data && data.particle_effect && startNewProject()) {
 
-		
-
 		var comps = data.particle_effect.components;
+		var curves = data.particle_effect.curves;
 		var desc = data.particle_effect.description;
 		if (desc && desc.identifier) {
 			Data.general.general.identifier.set(desc.identifier)
 		}
 		if (desc && desc.basic_render_parameters) {
 			Data.particle.texture.path.set(desc.basic_render_parameters.texture)
+		}
+		if (curves) {
+			for (var key in curves) {
+				var json_curve = curves[key];
+				new_curve = new Curve();
+				new_curve.id.set(key);
+				new_curve.mode.set(json_curve.type);
+				new_curve.input.set(json_curve.input);
+				new_curve.range.set(json_curve.horizontal_range);
+				new_curve.nodes.splice(0);
+				if (json_curve.nodes && json_curve.nodes.length) {
+					json_curve.nodes.forEach(value => {
+						value = parseFloat(value)||0;
+						new_curve.nodes.push(value);
+					})
+					new_curve.updateMinMax();
+				}
+				Data.general.curves.curves.push(new_curve);
+			}
 		}
 
 		if (comps) {
@@ -205,6 +223,7 @@ function startNewProject() {
 		forEachInput(input => {
 			input.reset()
 		})
+		Data.general.curves.curves.splice(0);
 		updateMaterial(startAnimation)
 		return true;
 	}
