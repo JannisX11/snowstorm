@@ -144,7 +144,10 @@
 								<div class="curve_max_num">{{curve.max}}</div>
 								<div class="curve_min_num">{{curve.min}}</div>
 							</div>
-							<div class="tool" v-on:click="curve.remove()"><i class="fas fa-times-circle"></i></div>
+							<div class="curve_footer">
+								<div class="fill_line"></div>
+								<div class="tool" v-on:click="curve.remove()">Remove Curve</div>
+							</div>
 						</li>
 						<label>Add Curve</label>
 						<div class="tool" v-on:click="addCurve()"><i class="fas fa-plus-circle"></i></div>

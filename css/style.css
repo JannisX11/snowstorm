@@ -176,11 +176,8 @@
 	}
 /*Curves*/
 	.curve {
-		padding-bottom: 20px;
-		padding-top: 20px;
-	}
-	.curve:not(:first-child) {
-		border-top: 2px solid #9aa3b8;
+		padding-bottom: 8px;
+		padding-top: 12px;
 	}
 	.curve_display {
 		position: relative;
@@ -253,8 +250,8 @@
 	.curve_node:hover .curve_node_remover {
 		display: block;
 	}
-	.curve_node .curve_node_remover:hover {
-		color: 
+	.curve_node .curve_node_remover i {
+		background-color: #e5ebfa;
 	}
 	.curve_node .curve_point {
 		position: absolute;
@@ -288,6 +285,15 @@
 	}
 	.curve_controls .curve_add:first-child, .curve_controls .curve_add:last-child {
 		max-width: 20px;
+	}
+	.curve_footer {
+		display: flex;
+		height: 30px;
+	}
+	.curve_footer .fill_line {
+		flex-grow: 1;
+		height: 16px;
+		border-bottom: 2px solid #9aa3b8;
 	}
 
 /*View*/

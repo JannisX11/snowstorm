@@ -66,6 +66,7 @@ class Curve {
 		Vue.nextTick(() => this.updateSVG());
 	}
 	removeNode(index, event) {
+		if (this.nodes.length <= 2) return;
 		this.nodes.splice(index, 1);
 		Vue.nextTick(() => this.updateSVG());
 	}
