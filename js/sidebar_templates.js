@@ -19,6 +19,10 @@
 				v-bind:id="subject_key +'-'+ group_key +'-'+ key"
 			>
 				<label v-bind:for="key" v-if="input.label">{{ input.label }}</label>
+				<div class="tool input_expand_button" v-if="input.expandable" @click="input.toggleExpand()" title="Expand">
+					<i v-if="!input.expanded" class="fas fa-caret-down"></i>
+					<i v-else class="fas fa-caret-up"></i>
+				</div>
 				<template  v-if="input.type == 'list'">
 					<!--List-->
 					<div class="tool" v-on:click="input.value.push('')"><i class="fas fa-plus-circle"></i></div>
@@ -34,7 +38,7 @@
 						</li>
 					</ul>
 				</template>
-				<div v-else class="input_right" v-bind:axes="input.axis_count">
+				<div v-else class="input_right" :axes="input.axis_count" :class="{expandable: input.expandable, expanded: input.expanded}">
 					<template v-if="input.axis_count == 1">
 						<!--Text-->
 						<input

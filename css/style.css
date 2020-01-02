@@ -123,20 +123,26 @@
 		background-color: #c5cde0;
 	}
 	.input_group > ul {
-		padding: 12px; 
+		padding: 12px;
+		padding-right: 2px;
 	}
 
-
+	.input_wrapper {
+		margin: 2px 0;
+	}
 	.input_wrapper > label {
 		width: 100px;
 		text-align: right;
-		margin-top: 3px;
-		margin-bottom: 5px;
+		margin: 3px 0;
 	}
 	.input_right {
 		display: inline-block;
+		vertical-align: top;
 		width: calc(100% - 110px);
 		margin-left: 4px;
+	}
+	.input_right.expandable {
+		width: calc(100% - 134px);
 	}
 	.input_right[axes="1"] input:not([type="checkbox"]), .input_right[axes="1"] select:not([type="checkbox"]) {
 		width: 100%;
@@ -147,10 +153,23 @@
 	.input_right[axes="3"] input:not([type="checkbox"]), .input_right[axes="3"] select:not([type="checkbox"]) {
 		width: 33.33%;
 	}
+	.input_right.expanded {
+		display: block;
+		width: calc(100% - 7px);
+	}
+	.input_right.expanded input {
+		width: 100% !important;
+		display: block;
+	}
 	.input_right .vc-chrome {
 		box-shadow: none !important;
 		border-radius: 0;
 		border: 1px solid gray;
+	}
+	.tool.input_expand_button {
+		float: right;
+		width: 22px;
+		padding-left: 3px;
 	}
 
 	ul.input_list input {

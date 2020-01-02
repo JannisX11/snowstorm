@@ -9,6 +9,8 @@ class Input {
 		this.info = data.info;
 		this.placeholder = data.placeholder;
 		this.required = data.required == true;
+		this.expanded = data.expanded == true;
+		this.expandable = ['molang', 'text', 'number'].includes(this.type);
 		this.value = data.value;
 
 		this.options = data.options;
@@ -36,6 +38,11 @@ class Input {
 			this.value = []
 		}
 		this.default_value = this.value instanceof Array ? this.value.slice() : this.value;
+	}
+	toggleExpand() {
+		if (this.expandable) {
+			this.expanded = !this.expanded;
+		}
 	}
 	update() {
 		var scope = this;
@@ -633,6 +640,7 @@ const Data = {
 				label: 'Collision Radius',
 				info: 'Used to minimize interpenetration of particles with the environment',
 				max: 0.5,
+				required: true,
 				type: 'number',
 			}),
 			expire_on_contact: new Input({

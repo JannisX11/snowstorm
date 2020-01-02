@@ -294,7 +294,7 @@ function generateFile(options) {
 		var color = getValue(2, 'color', 'expression')
 		if (color instanceof Array) {
 			color.forEach((s, i) => {
-				if (typeof s === 'string') {
+				if (typeof s === 'string' && !s.toLowerCase().match(/^math\.clamp/)) {
 					color[i] = `Math.clamp(${s}, 0, 1)`
 				}
 			})
