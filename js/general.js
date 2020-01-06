@@ -135,7 +135,7 @@ $(document).ready(() => {
 				{
 					label: 'Help',
 					children: [
-						{label: 'Format Documentation', click: () => { open('https://bedrock.dev/1.12.0.0/1.12.0.4/Particles') }},
+						{label: 'Format Documentation', click: () => { open('https://bedrock.dev/r/Particles') }},
 						{label: 'MoLang Sheet', click: () => { MolangSheet.open() }},
 						{label: 'Report a Bug', click: () => { open('https://github.com/JannisX11/snowstorm/issues') }},
 						{label: 'Discord Channel', click: () => { open('https://discord.gg/eGqsNha') }},

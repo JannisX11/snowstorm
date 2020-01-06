@@ -381,6 +381,16 @@ const Data = {
 					direction_z: 'Direction Z',
 				},
 			}),
+			material: new Input({
+				type: 'select',
+				info: 'Material to use for the particles',
+				label: 'Material',
+				options: {
+					particles_alpha: 'Alpha',
+					particles_blend: 'Blend',
+					particles_opaque: 'Opaque',
+				},
+			}),
 		},
 		direction: {
 			label: 'Direction',

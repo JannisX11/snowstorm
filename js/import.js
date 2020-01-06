@@ -10,6 +10,8 @@ function loadFile(data) {
 		}
 		if (desc && desc.basic_render_parameters) {
 			Data.particle.texture.path.set(desc.basic_render_parameters.texture)
+
+			Data.particle.appearance.material.set(desc.basic_render_parameters.material)
 		}
 		if (curves) {
 			for (var key in curves) {

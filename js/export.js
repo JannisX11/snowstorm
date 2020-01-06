@@ -44,7 +44,7 @@ function generateFile(options) {
 			description: {
 				identifier: Data.general.general.identifier.value,
 				basic_render_parameters: {
-					material: 'particles_alpha',
+					material: getValue(2, 'appearance', 'material'),
 					texture: getValue(2, 'texture', 'path') || 'textures/blocks/wool_colored_white'
 				}
 			}
