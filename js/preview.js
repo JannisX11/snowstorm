@@ -35,7 +35,9 @@ function initPreview() {
 	View.clock = new THREE.Clock()
 	View.frames_this_second = 0;
 	View.FPS = 0;
+	
 	setInterval(function() {
+		if (!footer_vue) return;
 		View.FPS = View.frames_this_second;
 		footer_vue._data.fps = View.FPS;
 		View.frames_this_second = 0;
@@ -94,6 +96,7 @@ class EmitterClass {
 		this.age = 0;
 		this.enabled = false;
 		this.mode = 'looping';
+		this.shape = 'point';
 		this.random_vars = [Math.random(), Math.random(), Math.random(), Math.random()]
 		this.tick_variables = {};
 		this.tick_values = {};

@@ -288,6 +288,7 @@ const Data = {
 				label: 'Active Time',
 				info: '',
 				enabled_modes: ['looping', 'once'],
+				required: true,
 				value: 1,
 				updatePreview: (v) => {Emitter.active_time = v}
 			}),
@@ -300,6 +301,7 @@ const Data = {
 			activation: new Input({
 				label: 'Activation',
 				info: 'When the expression is non-zero, the emitter will emit particles',
+				required: true,
 				enabled_modes: ['expression']
 			}),
 			expiration: new Input({
@@ -333,6 +335,7 @@ const Data = {
 			}),
 			radius: new Input({
 				label: 'Radius',
+				required: true,
 				info: 'Sphere or disc radius',
 				enabled_modes: ['sphere', 'disc'],
 			}),
@@ -423,12 +426,14 @@ const Data = {
 				options: {
 					dynamic: 'Dynamic',
 					parametric: 'Parametric',
+					static: 'Static',
 				},
 			}),
 			linear_speed: new Input({
 				label: 'Speed',
 				info: 'Starts the particle with a specified speed, using the direction specified by the emitter shape',
 				enabled_modes: ['dynamic'],
+				required: true
 			}),
 			linear_acceleration: new Input({
 				label: 'Acceleration',

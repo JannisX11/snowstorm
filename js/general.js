@@ -85,6 +85,16 @@ class ResizeLine {
 	}
 }
 
+if (window.parent !== window) {
+	console.log('Snowstorm trapped')
+	window.addEventListener('message', event => {
+		console.log('xD');
+		Data.general.general.identifier.value = 'v5'
+	}, false)
+	window.parent.postMessage({type: 'test', data: 'hey from snowstorm'})
+	window.postMessage({type: 'test', data: 'hey2 from snowstorm'})
+}
+
 var ExpandedInput, MolangSheet;
 $(document).ready(() => {
 
@@ -195,9 +205,6 @@ $(document).ready(() => {
 			}
 		}
 	}
-
-
-
 })
 .keypress(e => {
 	var input_focus = $('input[type="text"]:focus, input[type="number"]:focus, div[contenteditable="true"]:focus, textarea:focus').length > 0
