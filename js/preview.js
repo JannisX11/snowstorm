@@ -333,7 +333,7 @@ class Particle {
 
 			var normal = Data.emitter.shape.plane_normal.calculate(params)
 			if (!normal.equals(System.veczero)) {
-				var q = new THREE.Quaternion().setFromUnitVectors(System.upnormal, normal)
+				var q = new THREE.Quaternion().setFromUnitVectors(System.upnormal, normal.normalize())
 				this.position.applyQuaternion(q)
 			}
 		}
