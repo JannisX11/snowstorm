@@ -243,6 +243,10 @@ function generateFile(options) {
 			}
 		}
 	}
+
+	//Kill Plane
+	comps['minecraft:particle_kill_plane'] = getValue(2, 'lifetime', 'kill_plane');
+	
 	//Texture
 	var tex_comp = comps['minecraft:particle_appearance_billboard'] = {
 		size: getValue(2, 'appearance', 'size'),

@@ -105,7 +105,14 @@ class Input {
 		}
 		var data;
 		if (this.type === 'molang' || this.type === 'number') {
-			if (this.axis_count === 3) {
+			if (this.axis_count === 4) {
+				var data = new THREE.Plane().setComponents(
+					getV(this.value[0]),
+					getV(this.value[1]),
+					getV(this.value[2]),
+					getV(this.value[3])
+				)
+			} else if (this.axis_count === 3) {
 				var data = new THREE.Vector3(
 					getV(this.value[0]),
 					getV(this.value[1]),
@@ -514,6 +521,12 @@ const Data = {
 				info: 'Maximum age of the particle in seconds',
 				value: 1,
 				enabled_modes: ['time']
+			}),
+			kill_plane: new Input({
+				label: 'Kill Plane',
+				type: 'number',
+				info: 'Particles that cross this plane expire. The plane is relative to the emitter, but oriented in world space. The four parameters are the usual 4 elements of a plane equation.',
+				axis_count: 4
 			}),
 			expiration_expression: new Input({
 				label: 'Kill Expression',

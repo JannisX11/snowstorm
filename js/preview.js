@@ -389,6 +389,14 @@ class Particle {
 			this.acceleration.addScaledVector(this.speed, -drag)
 			this.speed.addScaledVector(this.acceleration, 1/30);
 			this.position.addScaledVector(this.speed, 1/30);
+			if (getValue(2, 'lifetime', 'kill_plane')) {
+				var plane = Data.particle.lifetime.kill_plane.calculate();
+				var start_point = new THREE.Vector3().copy(this.position).addScaledVector(this.speed, -1/30);
+				var line = new THREE.Line3(start_point, this.position)
+				if (plane.intersectsLine(line)) {
+					this.remove();
+				}
+			}
 
 			//Rotation
 			var rot_drag = Data.particle.rotation.rotation_drag_coefficient.calculate(params)
@@ -396,7 +404,8 @@ class Particle {
 				rot_acceleration += -rot_drag * this.rotation_rate;
 			this.rotation_rate += rot_acceleration*1/30;
 			this.rotation = Math.degToRad(this.initial_rotation + this.rotation_rate*this.age);
-		} else {
+
+		} else if (Data.particle.motion.mode.value === 'parametric') {
 			if (Data.particle.motion.relative_position.value.join('').length) {
 				this.position.copy(Data.particle.motion.relative_position.calculate(params));
 			}
@@ -430,7 +439,7 @@ class Particle {
 			}
 		}
 
-		//Color (ToDo)
+		//Color
 		if (Data.particle.color.mode.value === 'expression') {
 			var c = Data.particle.color.expression.calculate(params)
 			this.material.color.r = c.x;
@@ -490,6 +499,7 @@ function initParticles() {
 	System.xnormal = new THREE.Vector3(1, 0, 0)
 	System.znormal = new THREE.Vector3(0, 0, 1)
 	System.veczero = new THREE.Vector3(0, 0, 0)
+	System.planezero = new THREE.Plane(new THREE.Vector3(0, 0, 0), 0)
 	System.max_particles = 10000;
 	System.tick = false;
 

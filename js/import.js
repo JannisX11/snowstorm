@@ -129,6 +129,9 @@ function loadFile(data) {
 					Data.particle.motion.linear_speed.set(1)
 				}
 			}
+			if (comp('particle_kill_plane')) {
+				Data.particle.lifetime.kill_plane.set(comp('particle_kill_plane'))
+			}
 
 			if (comp('particle_motion_dynamic')) {
 				Data.particle.motion.mode.set('dynamic')

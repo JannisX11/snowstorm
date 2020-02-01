@@ -136,7 +136,7 @@
 		margin: 3px 0;
 	}
 	.input_right {
-		display: inline-block;
+		display: inline-flex;
 		vertical-align: top;
 		width: calc(100% - 110px);
 		margin-left: 4px;
@@ -146,12 +146,6 @@
 	}
 	.input_right[axes="1"] input:not([type="checkbox"]), .input_right[axes="1"] select:not([type="checkbox"]) {
 		width: 100%;
-	}
-	.input_right[axes="2"] input:not([type="checkbox"]), .input_right[axes="2"] select:not([type="checkbox"]) {
-		width: 50%;
-	}
-	.input_right[axes="3"] input:not([type="checkbox"]), .input_right[axes="3"] select:not([type="checkbox"]) {
-		width: 33.33%;
 	}
 	.input_right.expanded {
 		display: block;
@@ -191,7 +185,8 @@
 		margin-left: 44px;
 	}
 	.input_vector {
-		width: 120px;
+		width: 40px;
+		flex-grow: 1;
 	}
 /*Curves*/
 	.curve {
