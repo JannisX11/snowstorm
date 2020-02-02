@@ -1,5 +1,7 @@
 var header_vue, footer_vue;
 
+var open_mode = 'preview';
+
 $.ajaxSetup({ cache: false });
 
 var OpenOverlay;
@@ -84,6 +86,27 @@ class ResizeLine {
 		}
 	}
 }
+function setMode(id) {
+	$('.mode_selector.selected').removeClass('selected');
+	$('.mode_selector.'+id).addClass('selected');
+
+	$('main.selected').removeClass('selected');
+	$('main#'+id).addClass('selected');
+	open_mode = id;
+}
+(function() {
+	let previous_text;
+	setInterval(_ => {
+		if (open_mode == 'code') {
+			var content = compileJSON(generateFile())
+			if (content != previous_text) {
+				$('code').text(content);
+				Prism.highlightAll();
+				previous_text = content;
+			}
+		}
+	}, 200)
+})()
 
 if (window.parent !== window) {
 	console.log('Snowstorm trapped')
@@ -127,7 +150,6 @@ $(document).ready(() => {
 						{label: 'Start Over', click: () => {startNewProject()}},
 						{label: 'Import', click: () => {importFile()}},
 						{label: 'Download', click: () => {downloadFile()}},
-						{label: 'View JSON', click: () => {openFileTab()}},
 					]
 				},
 				{

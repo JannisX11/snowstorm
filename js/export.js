@@ -318,19 +318,12 @@ function downloadFile() {
 		content: content
 	})
 }
-function openFileTab() {
-	var content = compileJSON(generateFile())
-	System.code_window = window.open('view_code.html', getName(), 'channelmode=1')
-	System.code_window.particle_file = content;
 
-	if (!System.code_window.init) {
-		setInterval(_ => {
-			var content = compileJSON(generateFile())
-			System.code_window.particle_file = content;
-			if (typeof System.code_window.updateText == 'function') {
-				System.code_window.updateText();
-			}
-		}, 150)
-		System.code_window.init = true;
-	}
+function selectText(element) {
+    var node = document.getElementById(element);
+    var selection = window.getSelection();
+    var range = document.createRange();
+    range.selectNodeContents(node);
+    selection.removeAllRanges();
+    selection.addRange(range);
 }

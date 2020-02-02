@@ -14,6 +14,7 @@
 	<link rel="stylesheet" href="css/spectrum.css">
 	<link rel="stylesheet" href="css/common.css">
 	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="css/prism.css">
 
 	<script src="lib/jquery.js"></script>
 	<script src="lib/jquery-ui.min.js"></script>
@@ -91,21 +92,29 @@
 					</li>
 				</ul>
 			</li>
+			<li class="mode_selector code" onclick="setMode('code')">Code</li>
+			<li class="mode_selector preview selected" onclick="setMode('preview')">Preview</li>
 		</ul>
 		<div id="expression_bar">
 			<i class="fas fa-code"></i>
 			<input type="text">
 		</div>
 	</header>
-	<main>
+	<main id="preview" class="preview selected">
 		<canvas id="canvas"></canvas>
+		<footer>
+			<div class="tool" onclick="startAnimation()"><i class="fas fa-play-circle"></i></div>
+			<div class="tool" onclick="togglePause()"><i class="fas fa-pause-circle"></i></div>
+			<div class="stat">{{fps}} FPS</div>
+			<div class="stat">{{particles}} P</div>
+		</footer>
 	</main>
-	<footer>
-		<div class="tool" onclick="startAnimation()"><i class="fas fa-play-circle"></i></div>
-		<div class="tool" onclick="togglePause()"><i class="fas fa-pause-circle"></i></div>
-		<div class="stat">{{fps}} FPS</div>
-		<div class="stat">{{particles}} P</div>
-	</footer>
+	<main id="code" class="code">
+		<div class="menu">
+			<a onclick="selectText('code');document.execCommand('copy');">Copy</a>
+		</div>
+		<pre class=" lang-json"><code id="code"></code></pre>
+	</main>
 	<content id="sidebar">
 		<div id="sidebar_content">
 			<h1>SNOWSTORM</h1>
@@ -114,42 +123,12 @@
 				<div class="input_group" v-for="(group, group_key) in subject" v-if="typeof group === 'object'">
 					<h4 v-on:click="fold(group)">{{ group.label }}</h4>
 					<ul v-show="!group._folded" v-if="group.type == 'curves'">
-						<li
+						<curve
 							class="curve"
 							v-for="curve in group.curves"
-							v-bind:title="group.info"
-							v-bind:id="subject_key +'-curves-'+ curve.uuid"
-							v-bind:uuid="curve.uuid"
-						>
-							<input-group :group.sync="curve" :group_key.sync="group_key" :subject_key.sync="subject_key"></input-group>
-
-							<div class="curve_display">
-								<svg>
-									<!--path d="M10,150 q160,-200 200,0 q60,-100 100,0" stroke="#3983ab" /-->
-									<path class="curve_path" :d="curve.svg_data"/>
-									<path class="vertical_line_path" :d="curve.vertical_line_data"/>
-									<path class="horizontal_line_path" :d="curve.horizontal_line_data"/>
-								</svg>
-								<ul class="curve_controls">
-									<li class="curve_add" :key="'add_0'" @click="curve.addNode(0, $event)"></li>
-									<template v-for="(value, index) in curve.nodes">
-										<li class="curve_node" :key="'node_'+index" @mousedown="curve.slideValue(index, $event)">
-											<div class="curve_point" :style="{bottom: ((value-curve.min)/(curve.max-curve.min))*140 + 'px'}"><label>{{value}}</label></div>
-											<div class="curve_node_remover tool" @click="curve.removeNode(index, $event)">
-												<i class="fas fa-minus-circle"></i>
-											</div>
-										</li>
-										<li class="curve_add" :key="'add_'+index+1" @click="curve.addNode(index+1, $event)"></li>
-									</template>
-								</ul>
-								<div class="curve_max_num">{{curve.max}}</div>
-								<div class="curve_min_num">{{curve.min}}</div>
-							</div>
-							<div class="curve_footer">
-								<div class="fill_line"></div>
-								<div class="tool" v-on:click="curve.remove()">Remove Curve</div>
-							</div>
-						</li>
+							v-bind:title="group.info" :id="subject_key +'-curves-'+ curve.uuid" :uuid="curve.uuid" :key="curve.uuid"
+							:curve.sync="curve" :group_key.sync="group_key" :subject_key.sync="subject_key"
+						></curve>
 						<label>Add Curve</label>
 						<div class="tool" v-on:click="addCurve()"><i class="fas fa-plus-circle"></i></div>
 					</ul>

@@ -52,7 +52,7 @@
 		position: absolute;
 		bottom: 0px;
 		width: 800px;
-		margin-left: calc(50% - (800px - var(--sidebar)) / 2);
+		margin-left: calc(50% - 400px);
 		font-size: 1.2em;
 		padding-left: 20px;
 		background-color: #cfd7ea;
@@ -310,10 +310,52 @@
 		border-bottom: 2px solid #9aa3b8;
 	}
 
-/*View*/
+/*Main View*/
 	canvas {
 		height: 100%;
 		width: 100%;
+	}
+	main {
+		display: none;
+	}
+	main.selected {
+		display: block;
+	}
+	main#preview {
+		position: relative;
+	}
+/*Code Viewer*/
+	main#code {
+		background-color: #21282f;
+	}
+	main#code pre {
+		background-color: var(--color-background);
+		box-shadow: 0 0 10px black;
+		user-select: text;
+		max-width: 1000px;
+		margin-left: auto;
+		margin-right: auto;
+		overflow-y: auto;
+		max-height: calc(100% - 60px);
+	}
+	main#code .menu {
+		color: #ccc;
+		font-size: 14pt;
+	}
+	main#code .menu a {
+		cursor: default;
+		padding: 3px;
+		margin: 0 20px; 
+		display: inline-block;
+	}
+	main#code .menu a:hover {
+		color: white !important;
+	}
+	main#code .menu label {
+		float: right;
+		font-size: 0.9em;
+		opacity: 0.8;
+		padding-top: 3px;
 	}
 /*Header*/
 	header {
@@ -332,7 +374,7 @@
 	header > ul#menu_bar {
 		height: 32px;
 		font-weight: normal;
-		padding-left: 20px;
+		padding: 0 8px;
 	}
 	header > ul#menu_bar > li {
 		display: inline-block;
@@ -350,6 +392,20 @@
 	}
 	header > ul#menu_bar > li:hover > a {
 		background-color: var(--color-interface);
+	}
+	.mode_selector {
+		float: right;
+		height: 100%;
+		padding: 2px 10px;
+		padding-top: 3px;
+	}
+	.mode_selector:hover {
+		background-color: var(--color-interface);
+		color: black;
+	}
+	.mode_selector.selected {
+		background-color: var(--color-background);
+		color: var(--color-bar);
 	}
 	header #expression_bar {
 		width: 100%;
