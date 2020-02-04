@@ -97,7 +97,12 @@ function loadFile(data) {
 				shape_component = comp('emitter_shape_disc');
 				Data.emitter.shape.mode.set('disc')
 				Data.emitter.shape.offset.set(shape_component.offset)
-				Data.emitter.shape.plane_normal.set(shape_component.plane_normal)
+				switch (shape_component.plane_normal) {
+					case 'x': Data.emitter.shape.plane_normal.set([1, 0, 0]); break;
+					case 'y': Data.emitter.shape.plane_normal.set([0, 1, 0]); break;
+					case 'z': Data.emitter.shape.plane_normal.set([0, 0, 1]); break;
+					default:  Data.emitter.shape.plane_normal.set(shape_component.plane_normal); break;
+				}
 				Data.emitter.shape.radius.set(shape_component.radius)
 				Data.emitter.shape.surface_only.set(shape_component.surface_only)
 			}

@@ -166,10 +166,18 @@ function generateFile(options) {
 				direction: direction
 			}
 		} else if (mode === 'disc') {
+			let plane_normal = getValue(1, 'shape', 'plane_normal')
+			if (plane_normal) {
+				switch (plane_normal.join('')) {
+					case '100': plane_normal = 'x'; break;
+					case '010': plane_normal = 'y'; break;
+					case '001': plane_normal = 'z'; break;
+				}
+			}
 			comps['minecraft:emitter_shape_disc'] = {
 				offset: getValue(1, 'shape', 'offset'),
 				radius: getValue(1, 'shape', 'radius'),
-				plane_normal: getValue(1, 'shape', 'plane_normal'),
+				plane_normal,
 				surface_only: getValue(1, 'shape', 'surface_only'),
 				direction: direction
 			}
