@@ -89,6 +89,19 @@ setInterval(function() {
 $(document).ready(initPreview)
 $(window).resize(resize)
 
+View.screenshot = function() {
+    let dataurl = View.canvas.toDataURL()
+    let is_ff = navigator.userAgent.toLowerCase().indexOf('firefox') > -1
+
+   	let download = document.createElement('a');
+	download.href = dataurl
+	download.download = `snowstorm_screenshot.png`;
+	if (is_ff) document.body.appendChild(download);
+	download.click();
+	if (is_ff) document.body.removeChild(download);
+
+}
+
 class EmitterClass {
 	constructor() {
 		this.particles = [];

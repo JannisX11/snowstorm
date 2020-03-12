@@ -172,6 +172,14 @@ $(document).ready(() => {
 						{label: 'Report a Bug', click: () => { open('https://github.com/JannisX11/snowstorm/issues') }},
 						{label: 'Discord Channel', click: () => { open('https://discord.gg/eGqsNha') }},
 					]
+				},
+				{
+					label: 'View',
+					children: [
+						{label: 'Grid Visibility', click: () => { View.grid.visible = !View.grid.visible }},
+						{label: 'Axis Helper Visibility', click: () => { View.helper.visible = !View.helper.visible }},
+						{label: 'Take Screenshot', click: () => { View.screenshot() }},
+					]
 				}
 			]
 		}
