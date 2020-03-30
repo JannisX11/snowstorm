@@ -100,7 +100,7 @@ function setMode(id) {
 		if (open_mode == 'code') {
 			var content = compileJSON(generateFile())
 			if (content != previous_text) {
-				$('code').text(content);
+				$('code#code').text(content);
 				Prism.highlightAll();
 				previous_text = content;
 			}

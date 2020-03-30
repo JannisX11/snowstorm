@@ -336,6 +336,7 @@ class Particle {
 				this.position.x = radius * Math.random()
 			}
 			this.position.applyEuler(THREE.getRandomEuler())
+			
 		} else if (Emitter.shape === 'disc') {
 			var radius = Data.emitter.shape.radius.calculate(params)
 			var ang = Math.random()*Math.PI*2
