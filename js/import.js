@@ -124,16 +124,6 @@ function loadFile(data) {
 				Data.particle.rotation.initial_rotation.set(comp('particle_initial_spin').rotation)
 				Data.particle.rotation.rotation_rate.set(comp('particle_initial_spin').rotation_rate)
 			}
-			if (comp('particle_initial_speed')) {
-				var c = comp('particle_initial_speed')
-				if (typeof c !== 'object') {
-					Data.particle.motion.linear_speed.set(c)
-				} else {
-					Data.particle.direction.mode.set('direction')
-					Data.particle.direction.direction.set(comp('particle_initial_speed'))
-					Data.particle.motion.linear_speed.set(1)
-				}
-			}
 			if (comp('particle_kill_plane')) {
 				Data.particle.lifetime.kill_plane.set(comp('particle_kill_plane'))
 			}
@@ -144,6 +134,7 @@ function loadFile(data) {
 				Data.particle.motion.linear_drag_coefficient.set(comp('particle_motion_dynamic').linear_drag_coefficient)
 				Data.particle.rotation.rotation_acceleration.set(comp('particle_motion_dynamic').rotation_acceleration)
 				Data.particle.rotation.rotation_drag_coefficient.set(comp('particle_motion_dynamic').rotation_drag_coefficient)
+				Data.particle.motion.linear_speed.set(1)
 			}
 			if (comp('particle_motion_parametric')) {
 				Data.particle.motion.mode.set('parametric')
@@ -156,6 +147,16 @@ function loadFile(data) {
 				Data.particle.collision.coefficient_of_restitution.set(comp('particle_motion_collision').coefficient_of_restitution)
 				Data.particle.collision.collision_radius.set(comp('particle_motion_collision').collision_radius)
 				Data.particle.collision.expire_on_contact.set(comp('particle_motion_collision').expire_on_contact)
+			}
+			if (comp('particle_initial_speed')) {
+				var c = comp('particle_initial_speed')
+				if (typeof c !== 'object') {
+					Data.particle.motion.linear_speed.set(c)
+				} else {
+					Data.particle.direction.mode.set('direction')
+					Data.particle.direction.direction.set(comp('particle_initial_speed'))
+					Data.particle.motion.linear_speed.set(1)
+				}
 			}
 
 			if (comp('particle_lifetime_expression')) {
