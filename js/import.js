@@ -204,6 +204,7 @@ function loadFile(data) {
 			}
 			if (comp('particle_appearance_tinting')) {
 				var c = comp('particle_appearance_tinting').color
+
 				if (c instanceof Array && c.length >= 3) {
 
 					if ((typeof c[0] + typeof c[1] + typeof c[1]).includes('string')) {
@@ -219,6 +220,31 @@ function loadFile(data) {
 						}
 						Data.particle.color.picker.set(color)
 					}
+				} else if (typeof c == 'object') {
+					// Gradient
+						Data.particle.color.mode.set('gradient')
+					Data.particle.color.interpolant.set(c.interpolant)
+					Data.particle.color.gradient.value.empty()
+					if (c.gradient instanceof Array) {
+						let distance = 100 / (c.gradient.length-1);
+						c.gradient.forEach((color, i) => {
+							color = new tinycolor(color).toHexString();
+							var percent = distance * i;
+							Data.particle.color.gradient.value.push({percent, color})
+						})
+					} else if (typeof c.gradient == 'object') {
+						let max_time = 0;
+						for (var time in c.gradient) {
+							max_time = Math.max(parseFloat(time), max_time)
+						}
+						Data.particle.color.range.set(max_time)
+						for (var time in c.gradient) {
+							var color = new tinycolor(c.gradient[time]).toHexString();
+							var percent = (parseFloat(time) / max_time) * 100;
+							Data.particle.color.gradient.value.push({color, percent})
+						}
+					}
+					Data.particle.color.gradient.selected = Data.particle.color.gradient.value[0]
 				}
 			}
 		}

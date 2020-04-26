@@ -302,6 +302,16 @@ function generateFile(options) {
 				]
 			}
 		}
+	} else if (getValue(2, 'color', 'mode') === 'gradient') {
+
+		let range = getValue(2, 'color', 'range')
+		comps['minecraft:particle_appearance_tinting'] = {
+			color: {
+				interpolant: getValue(2, 'color', 'interpolant'),
+				gradient: Data.particle.color.gradient.export(range)
+			}
+		}
+
 	} else {
 		var color = getValue(2, 'color', 'expression')
 		if (color instanceof Array) {

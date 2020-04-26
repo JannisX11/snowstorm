@@ -412,24 +412,32 @@ class Particle {
 				}
 			}
 
-			//Rotation
+		} else if (Data.particle.motion.mode.value === 'parametric') {
+			if (Data.particle.motion.relative_position.value.join('').length) {
+				this.position.copy(Data.particle.motion.relative_position.calculate(params));
+			}
+			if (Data.particle.motion.direction.value.join('').length) {
+				this.speed.copy(Data.particle.motion.direction.calculate(params));
+			}
+		}
+
+		// Rotation
+		if (Data.particle.rotation.mode.value === 'dynamic') {
 			var rot_drag = Data.particle.rotation.rotation_drag_coefficient.calculate(params)
 			var rot_acceleration = Data.particle.rotation.rotation_acceleration.calculate(params)
 				rot_acceleration += -rot_drag * this.rotation_rate;
 			this.rotation_rate += rot_acceleration*1/30;
 			this.rotation = Math.degToRad(this.initial_rotation + this.rotation_rate*this.age);
 
-		} else if (Data.particle.motion.mode.value === 'parametric') {
-			if (Data.particle.motion.relative_position.value.join('').length) {
-				this.position.copy(Data.particle.motion.relative_position.calculate(params));
-			}
+		} else if (Data.particle.rotation.mode.value === 'parametric') {
+
 			this.rotation = Math.degToRad(Data.particle.rotation.rotation.calculate(params));
 		}
 
 		//Size
 		var size = Data.particle.appearance.size.calculate(params);
-		this.mesh.scale.x = size.x*2.25 || 0.0001;
-		this.mesh.scale.y = size.y*2.25 || 0.0001;
+		this.mesh.scale.x = size.x*2 || 0.0001;
+		this.mesh.scale.y = size.y*2 || 0.0001;
 
 		//UV
 		if (Data.particle.texture.mode.value === 'animated') {
@@ -459,6 +467,12 @@ class Particle {
 			this.material.color.r = c.x;
 			this.material.color.g = c.y;
 			this.material.color.b = c.z;
+		} else if (Data.particle.color.mode.value === 'gradient') {
+			var i = Data.particle.color.interpolant.calculate(params)
+			var r = Data.particle.color.range.calculate(params)
+			var c = Data.particle.color.gradient.calculate((i/r) * 100)
+
+			this.material.color.copy(c)
 		}
 
 		return this;

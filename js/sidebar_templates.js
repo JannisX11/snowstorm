@@ -39,6 +39,7 @@
 					</ul>
 				</template>
 				<div v-else class="input_right" :axes="input.axis_count" :class="{expandable: input.expandable, expanded: input.expanded}">
+
 					<template v-if="input.axis_count == 1">
 						<!--Text-->
 						<input
@@ -53,6 +54,7 @@
 							v-model="input.value"
 							v-on:input="input.change($event)">
 					</template>
+
 					<template v-else>
 						<!--Text-->
 						<input class="input_vector"
@@ -71,14 +73,37 @@
 							v-if="input.type == 'number'"
 							v-on:input="input.change($event)">
 					</template>
+
 					<!--Check-->
 					<input v-if="input.type == 'checkbox'" v-bind:id="key" type="checkbox" v-model="input.value">
+
 					<!--Select-->
 					<select v-if="input.type == 'select'" v-bind:id="key" v-model="input.meta_value" v-on:change="input.change($event)">
 						<option v-for="(s_label, s_key) in input.options" v-bind:id="s_key">{{s_label}}</option>
 					</select>
+
 					<!--Color-->
 					<color-picker v-if="input.type == 'color'" v-model="input.value" v-on:input="input.change($event)"></color-picker>
+
+					<!--Gradient-->
+					<div v-if="input.type == 'gradient'" class="color_gradient">
+						<div class="gradient_container checkerboard">
+							<div class="gradient_inner" :style="{background: input.getCSSString(input.value)}"></div>
+							<div class="gradient_point"
+								v-for="point in input.value" :key="point.id"
+								:class="{selected: point == input.selected}"
+								@mousedown="input.dragPoint(point, $event)"
+								:style="{left: point.percent+'%', background: point.color}"
+								:title="point.percent + '%'"
+							></div>
+						</div>
+						<div v-if="input.selected && input.selected.color">
+						<div class="tool" style="float: right;" v-on:click="input.removePoint()"><i class="fas fa-minus-circle"></i></div>
+							<div class="tool" style="float: right;" v-on:click="input.addPoint()"><i class="fas fa-plus-circle"></i></div>
+							<color-picker v-model="input.selected.color" v-on:input="input.change($event)"></color-picker>
+						</div>
+					</div>
+
 					<!--Image-->
 					<template v-if="input.type == 'image'">
 						<div class="input_texture_preview"></div>

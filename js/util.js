@@ -258,12 +258,11 @@ Array.prototype.remove = function (item) { {
 	}		
 }
 Array.prototype.empty = function() {
-	this.length = 0;
+	this.splice(0, Infinity)
 	return this;
 }
 Array.prototype.purge = function() {
-	this.length = Math.clamp(this.length, 0, 1);
-	this.splice(0, 1)
+	this.splice(0, Infinity)
 	return this;
 }
 Array.prototype.findInArray = function(key, value) {
