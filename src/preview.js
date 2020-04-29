@@ -1,3 +1,8 @@
+import * as THREE from 'three'
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
+import $ from 'jquery'
+
+
 const View = {}
 const System = {}
 const Flipbook = {
@@ -23,7 +28,7 @@ function initPreview() {
 		preserveDrawingBuffer: true,
 	})
 
-	View.controls = new THREE.OrbitControls(View.camera, View.canvas);
+	View.controls = new OrbitControls(View.camera, View.canvas);
 	View.controls.target.set(0, 0.8, 0)
 	View.controls.screenSpacePanning = true;
 	View.controls.enableKeys = false;
@@ -86,7 +91,6 @@ setInterval(function() {
 	}
 }, 1000/30)
 
-$(document).ready(initPreview)
 $(window).resize(resize)
 
 View.screenshot = function() {
@@ -257,6 +261,14 @@ class EmitterClass {
 	}
 }
 
+function getRandomEuler() {
+	return new THREE.Euler(
+		Math.randomab(-Math.PI, Math.PI),
+		Math.randomab(-Math.PI, Math.PI),
+		Math.randomab(-Math.PI, Math.PI)
+	)
+}
+
 class Particle {
 	constructor(data) {
 		if (!data) data = 0;
@@ -335,7 +347,7 @@ class Particle {
 			} else {
 				this.position.x = radius * Math.random()
 			}
-			this.position.applyEuler(THREE.getRandomEuler())
+			this.position.applyEuler(getRandomEuler())
 			
 		} else if (Emitter.shape === 'disc') {
 			var radius = Data.emitter.shape.radius.calculate(params)
@@ -358,7 +370,7 @@ class Particle {
 		if (dir == 'inwards' || dir == 'outwards') {
 
 			if (Emitter.shape === 'point') {
-				this.speed.set(1, 0, 0).applyEuler(THREE.getRandomEuler())
+				this.speed.set(1, 0, 0).applyEuler(getRandomEuler())
 			} else {
 				this.speed.copy(this.position).normalize()
 				if (dir == 'inwards') {
@@ -610,3 +622,6 @@ function updateMaterial(cb) {
 		}
 	})
 }
+
+
+export {View, System, Flipbook, Emitter, resize, startAnimation, updateMaterial, initPreview}

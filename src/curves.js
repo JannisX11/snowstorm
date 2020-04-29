@@ -1,3 +1,6 @@
+import Vue from 'vue'
+import {Emitter} from './preview'
+
 class Curve {
 	constructor() {
 		var scope = this;
@@ -277,3 +280,5 @@ Vue.component('curve', {
 		</div>
 	`
 })
+
+export {Curve, updateCurvesPanel}

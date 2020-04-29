@@ -1,7 +1,7 @@
 
 var side_vue;
 
-class Input {
+export default class Input {
 	constructor(data) {
 		this.type = data.type||'molang';
 		this.isInput = true;

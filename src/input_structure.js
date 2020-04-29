@@ -6,63 +6,69 @@ const Data = {
 		general: {
 			label: 'Particle Effect',
 			_folded: false,
-			identifier: new Input({
-				label: 'Identifier',
-				info: 'This is the name the particle emitter is referred to as. Should have a namespace.',
-				placeholder: 'space:name',
-				required: true,
-				type: 'text'
-			})
+			inputs: {
+				identifier: new Input({
+					label: 'Identifier',
+					info: 'This is the name the particle emitter is referred to as. Should have a namespace.',
+					placeholder: 'space:name',
+					required: true,
+					type: 'text'
+				})
+			}
 		},
 		position: {
 			label: 'Space',
 			_folded: true,
-			local_position: new Input({
-				label: 'Local Position',
-				info: 'When enabled and the effect is attached to an entity, the particles will simulate in entity space',
-				type: 'checkbox'
-			}),
-			local_rotation: new Input({
-				label: 'Local Rotation',
-				info: 'When enabled and the effect is attached to an entity, the particle rotation will simulate in entity space. Only works if local position is enabled too.',
-				type: 'checkbox'
-			})
+			inputs: {
+				local_position: new Input({
+					label: 'Local Position',
+					info: 'When enabled and the effect is attached to an entity, the particles will simulate in entity space',
+					type: 'checkbox'
+				}),
+				local_rotation: new Input({
+					label: 'Local Rotation',
+					info: 'When enabled and the effect is attached to an entity, the particle rotation will simulate in entity space. Only works if local position is enabled too.',
+					type: 'checkbox'
+				})
+			}
 		},
 		variables: {
 			label: 'Variables',
 			_folded: true,
-			creation_vars: new Input({
-				label: 'Start Variables',
-				info: 'Set up MoLang Variables when the emitter starts',
-				placeholder: 'variable.name = value',
-				type: 'list',
-				onchange: function() {
-					Emitter.creation_variables = {};
-					this.value.forEach((s, i) => {
-						var p = s.toLowerCase().replace(/\s/g, '').split('=')
-						if (p.length > 1) {
-							let key = p.shift();
-							Emitter.creation_variables[key] = p.join('=');
-						}
-					})
-				}
-			}),
-			tick_vars: new Input({
-				label: 'Tick Variables',
-				info: 'MoLang Variables that get processed for every Emitter update',
-				placeholder: 'variable.name = value',
-				type: 'list',
-				onchange: function() {
-					Emitter.tick_variables = {};
-					this.value.forEach((s, i) => {
-						var p = s.toLowerCase().replace(/\s/g, '').split('=')
-						if (p.length > 1) {
-							let key = p.shift();
-							Emitter.tick_variables[key] = p.join('=');
-						}
-					})
-				}
-			})
+			inputs: {
+				creation_vars: new Input({
+					label: 'Start Variables',
+					info: 'Set up MoLang Variables when the emitter starts',
+					placeholder: 'variable.name = value',
+					type: 'list',
+					onchange: function() {
+						Emitter.creation_variables = {};
+						this.value.forEach((s, i) => {
+							var p = s.toLowerCase().replace(/\s/g, '').split('=')
+							if (p.length > 1) {
+								let key = p.shift();
+								Emitter.creation_variables[key] = p.join('=');
+							}
+						})
+					}
+				}),
+				tick_vars: new Input({
+					label: 'Tick Variables',
+					info: 'MoLang Variables that get processed for every Emitter update',
+					placeholder: 'variable.name = value',
+					type: 'list',
+					onchange: function() {
+						Emitter.tick_variables = {};
+						this.value.forEach((s, i) => {
+							var p = s.toLowerCase().replace(/\s/g, '').split('=')
+							if (p.length > 1) {
+								let key = p.shift();
+								Emitter.tick_variables[key] = p.join('=');
+							}
+						})
+					}
+				})
+			}
 		},
 		curves: {
 			label: 'Curves',
@@ -76,77 +82,81 @@ const Data = {
 		rate: {
 			label: 'Rate',
 			_folded: false,
-			mode: new Input({
-				type: 'select',
-				label: 'Mode',
-				info: '',
-				mode_groups: ['emitter', 'rate'],
-				options: {
-					steady: 'Steady',
-					instant: 'Instant'
-				}
-			}),
-			rate: new Input({
-				label: 'Rate',
-				info: 'How often a particle is emitted, in particles/sec. Evaluated once per particle emitted.',
-				enabled_modes: ['steady'],
-				required: true,
-				value: 1,
-			}),
-			amount: new Input({
-				label: 'Amount',
-				info: 'How many particles are spawned at once',
-				enabled_modes: ['instant'],
-				required: true,
-			}),
-			maximum: new Input({
-				label: 'Maximum',
-				info: '',
-				enabled_modes: ['steady'],
-				required: true,
-				value: 100,
-			})
+			inputs: {
+				mode: new Input({
+					type: 'select',
+					label: 'Mode',
+					info: '',
+					mode_groups: ['emitter', 'rate'],
+					options: {
+						steady: 'Steady',
+						instant: 'Instant'
+					}
+				}),
+				rate: new Input({
+					label: 'Rate',
+					info: 'How often a particle is emitted, in particles/sec. Evaluated once per particle emitted.',
+					enabled_modes: ['steady'],
+					required: true,
+					value: 1,
+				}),
+				amount: new Input({
+					label: 'Amount',
+					info: 'How many particles are spawned at once',
+					enabled_modes: ['instant'],
+					required: true,
+				}),
+				maximum: new Input({
+					label: 'Maximum',
+					info: '',
+					enabled_modes: ['steady'],
+					required: true,
+					value: 100,
+				})
+			}
 		},
 		lifetime: {
 			label: 'Emitter Lifetime',
 			_folded: true,
-			mode: new Input({
-				type: 'select',
-				label: 'Mode',
-				info: '',
-				mode_groups: ['emitter', 'lifetime'],
-				options: {
-					looping: 'Looping',
-					once: 'Once',
-					expression: 'Expression'
-				},
-				updatePreview: (m) => {Emitter.mode = m}
-			}),
-			active_time: new Input({
-				label: 'Active Time',
-				info: '',
-				enabled_modes: ['looping', 'once'],
-				required: true,
-				value: 1,
-				updatePreview: (v) => {Emitter.active_time = v}
-			}),
-			sleep_time: new Input({
-				label: 'Sleep Time',
-				info: 'emitter will pause emitting particles for this time per loop',
-				enabled_modes: ['looping'],
-				updatePreview: (v) => {Emitter.sleep_time = v}
-			}),
-			activation: new Input({
-				label: 'Activation',
-				info: 'When the expression is non-zero, the emitter will emit particles',
-				required: true,
-				enabled_modes: ['expression']
-			}),
-			expiration: new Input({
-				label: 'Expiration',
-				info: 'Emitter will expire if the expression is non-zero',
-				enabled_modes: ['expression']
-			})
+			inputs: {
+				mode: new Input({
+					type: 'select',
+					label: 'Mode',
+					info: '',
+					mode_groups: ['emitter', 'lifetime'],
+					options: {
+						looping: 'Looping',
+						once: 'Once',
+						expression: 'Expression'
+					},
+					updatePreview: (m) => {Emitter.mode = m}
+				}),
+				active_time: new Input({
+					label: 'Active Time',
+					info: '',
+					enabled_modes: ['looping', 'once'],
+					required: true,
+					value: 1,
+					updatePreview: (v) => {Emitter.active_time = v}
+				}),
+				sleep_time: new Input({
+					label: 'Sleep Time',
+					info: 'emitter will pause emitting particles for this time per loop',
+					enabled_modes: ['looping'],
+					updatePreview: (v) => {Emitter.sleep_time = v}
+				}),
+				activation: new Input({
+					label: 'Activation',
+					info: 'When the expression is non-zero, the emitter will emit particles',
+					required: true,
+					enabled_modes: ['expression']
+				}),
+				expiration: new Input({
+					label: 'Expiration',
+					info: 'Emitter will expire if the expression is non-zero',
+					enabled_modes: ['expression']
+				})
+			}
 		},
 		shape: {
 			label: 'Shape',
@@ -575,3 +585,5 @@ $(document).ready(function() {
 		}
 	})
 })
+
+export default Data

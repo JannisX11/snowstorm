@@ -345,3 +345,5 @@ function selectText(element) {
     selection.removeAllRanges();
     selection.addRange(range);
 }
+
+export {generateFile, downloadFile, selectText}

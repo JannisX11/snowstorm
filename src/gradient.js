@@ -1,4 +1,6 @@
-class Gradient extends Input {
+import Input from './input'
+
+export default class Gradient extends Input {
     constructor(...args) {
         super(...args)
         this.default_value = [

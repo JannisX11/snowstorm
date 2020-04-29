@@ -108,14 +108,17 @@ function setMode(id) {
 	}, 200)
 })()
 
+
 if (window.parent !== window) {
 	console.log('Snowstorm trapped')
 	window.addEventListener('message', event => {
-		console.log('xD');
+		console.log('C: '+JSON.stringify(event.data));
 		Data.general.general.identifier.value = 'v5'
 	}, false)
-	window.parent.postMessage({type: 'test', data: 'hey from snowstorm'})
-	window.postMessage({type: 'test', data: 'hey2 from snowstorm'})
+
+	setTimeout(() => {
+		window.parent.postMessage({type: 'test', data: 'hey from snowstorm'})
+	}, 600)
 }
 
 var ExpandedInput, MolangSheet;

@@ -467,11 +467,7 @@ function getAverageRGB(imgEl, blockSize) {
 
 //THREE
 THREE.getRandomEuler = function() {
-	return new THREE.Euler(
-		Math.randomab(-Math.PI, Math.PI),
-		Math.randomab(-Math.PI, Math.PI),
-		Math.randomab(-Math.PI, Math.PI)
-	)
+
 }
 
 
