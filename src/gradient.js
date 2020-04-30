@@ -1,5 +1,7 @@
 import Input from './input'
 import {bbuid} from './util'
+import tinycolor from 'tinycolor2'
+import * as THREE from 'three'
 
 export default class Gradient extends Input {
     constructor(...args) {

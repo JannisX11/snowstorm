@@ -45,7 +45,7 @@ export default {
 	}
 	.curve_display {
 		position: relative;
-		background-color: #cfd7ea;
+		background-color: var(--color-bar);
 		height: 150px;
 		margin-top: 10px;
 	}
@@ -68,7 +68,7 @@ export default {
 	.curve_display .curve_path {
 		fill: none;
 		stroke-width: 2px;
-		stroke: #9aa3b8;
+		stroke: var(--color-bar);
 	}
 	.curve_display .vertical_line_path {
 		fill: none;
@@ -115,7 +115,7 @@ export default {
 		display: block;
 	}
 	.curve_node .curve_node_remover i {
-		background-color: #e5ebfa;
+		background-color: var(--color-background);
 	}
 	.curve_node .curve_point {
 		position: absolute;
@@ -157,6 +157,6 @@ export default {
 	.curve_footer .fill_line {
 		flex-grow: 1;
 		height: 16px;
-		border-bottom: 2px solid #9aa3b8;
+		border-bottom: 2px solid var(--color-bar);
 	}
 </style>

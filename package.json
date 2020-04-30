@@ -41,6 +41,8 @@
 		"three": "^0.115.0",
 		"tinycolor2": "^1.4.1",
 		"vue": "^2.6.11",
-		"vue-color": "^2.7.1"
+		"vue-color": "^2.7.1",
+		"vue-prism-component": "^1.2.0",
+		"vue-prism-editor": "^0.6.1"
 	}
 }

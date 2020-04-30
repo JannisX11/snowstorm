@@ -337,13 +337,5 @@ function downloadFile() {
 	})
 }
 
-function selectText(element) {
-    var node = document.getElementById(element);
-    var selection = window.getSelection();
-    var range = document.createRange();
-    range.selectNodeContents(node);
-    selection.removeAllRanges();
-    selection.addRange(range);
-}
 
-export {generateFile, downloadFile, selectText}
+export {generateFile, downloadFile}

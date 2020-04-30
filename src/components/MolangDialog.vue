@@ -54,7 +54,7 @@ export default {
 		margin-left: calc(50% - 400px);
 		width: 800px;
 		top: 20px;
-		background-color: #e5ebfa;
+		background-color: #ar(--color-background);
 		box-shadow: 1px 1px 12px black;
 		z-index: 50;
 	}

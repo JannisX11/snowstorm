@@ -1,5 +1,8 @@
 import * as THREE from 'three'
 import Molang from 'molangjs'
+import $ from 'jquery'
+
+import {ExpandedInput} from './components/ExpressionBar'
 
 export default class Input {
 	constructor(data) {

@@ -54,11 +54,11 @@ function initPreview() {
 
 	initParticles()
 
-	resize()
+	resizeCanvas()
 	setTimeout(animate, 200)
 
 }
-function resize() {
+function resizeCanvas() {
 	var wrapper = $('main')
 	var height = wrapper.height()
 	var width = wrapper.width()
@@ -86,7 +86,7 @@ setInterval(function() {
 	}
 }, 1000/30)
 
-$(window).resize(resize)
+$(window).resize(resizeCanvas)
 
 View.screenshot = function() {
     let dataurl = View.canvas.toDataURL()
@@ -646,4 +646,4 @@ function updateMaterial(cb) {
 }
 
 
-export {View, System, Flipbook, Emitter, resize, startAnimation, updateMaterial, initPreview}
+export {View, System, Flipbook, Emitter, resizeCanvas, startAnimation, updateMaterial, initPreview}

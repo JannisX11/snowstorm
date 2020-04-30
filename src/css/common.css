@@ -7,17 +7,17 @@
 	}
 	
 	::-webkit-scrollbar-track {
-		background: #e5ebfa;
+		background: var(--color-interface);
 	}
 	::-webkit-scrollbar-corner {
-		background: #e5ebfa;
+		background: var(--color-interface);
 	}
 	
 	::-webkit-scrollbar-thumb {
-		background: #cfd7ea;
+		background: var(--color-bar);
 	}
 	::-webkit-scrollbar-thumb:hover {
-		background: #9aa3b8;
+		background: var(--color-bar);
 	}
 	::selection {
 		background: var(--color-selection);
@@ -27,7 +27,7 @@
 	}
 	* {
 		scrollbar-width: thin;
-		scrollbar-color: white #9aa3b8;
+		scrollbar-color: white var(--color-bar);
 	}
 
 	body {
@@ -37,6 +37,7 @@
 		--color-title: #9aa3b8;
 		--color-selection: rgba(110, 142, 191, 0.3);
 		--color-highlight: #f7f9ff;
+		--color-text: #212529;
 	}
 
 
@@ -79,7 +80,7 @@
 	}
 	body {
 		image-rendering: pixelated;
-		background-color: #29323a;
+		background-color: var(--color-background);
 		user-select: none;
 		-moz-user-select: none;
 		font-family: 'Lato', -apple-system, "Segoe UI", sans-serif;
@@ -89,6 +90,6 @@
         font-size: 1rem;
         font-weight: 400;
         line-height: 1.5;
-        color: #212529;
+        color: var(--color-text);
         text-align: left;
 	}

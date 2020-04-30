@@ -1,5 +1,6 @@
 <template>
-    <div id="app">
+    <div id="app" :style="{'--sidebar': sidebar_width+'px'}">
+		<link rel="stylesheet" href="https://unpkg.com/vue-prism-editor/dist/VuePrismEditor.css">
 		<link rel="stylesheet" 
         	href="node_modules/@fortawesome/fontawesome-free/css/all.css">
 
@@ -7,15 +8,13 @@
 
         <header>
 			<menu-bar @changetab="setTab" :selected_tab="tab"></menu-bar>
-            <div id="expression_bar">
-                <i class="fas fa-code"></i>
-                <input type="text">
-            </div>
+			<expression-bar></expression-bar>
         </header>
 
-		<preview v-show="tab == 'preview'"></preview>
-
+		<preview v-show="tab == 'preview'" ref="preview"></preview>
 		<code-viewer v-if="tab == 'code'"></code-viewer>
+
+		<div class="resizer" :style="{left: sidebar_width+'px'}" ref="sidebar_resizer" @mousedown="resizeSidebarStart($event)"></div>
 
 		<sidebar></sidebar>
 
@@ -28,17 +27,39 @@ import Sidebar from './Sidebar';
 import Preview from './Preview';
 import CodeViewer from './CodeViewer';
 import MolangDialog from './MolangDialog'
+import ExpressionBar from './ExpressionBar'
+
+
 
 export default {
 	name: 'app',
-	components: {Preview, CodeViewer, MenuBar, Sidebar, MolangDialog},
+	components: {Preview, CodeViewer, MenuBar, Sidebar, MolangDialog, ExpressionBar},
 	data() {return {
-		tab: 'preview'
+		code: '{"test": false}',
+		tab: 'preview',
+		sidebar_width: 520
 	}},
 	methods: {
 		setTab(tab) {
 			this.tab = tab
 			console.log(tab)
+		},
+		setSidebarSize(size) {
+			this.sidebar_width = Math.clamp(size, 240, document.body.clientWidth-240)
+			this.$refs.preview.updateSize()
+		},
+		resizeSidebarStart(start_event) {
+			let scope = this;
+			let original_width = this.sidebar_width;
+			let move = (move_event) => {
+				this.setSidebarSize(original_width + move_event.clientX - start_event.clientX)
+			}
+			let stop = () => {
+				document.removeEventListener('mousemove', move)
+				document.removeEventListener('mouseup', stop)
+			}
+			document.addEventListener('mousemove', move, false)
+			document.addEventListener('mouseup', stop, false)
 		}
 	}
 }
@@ -100,63 +121,30 @@ export default {
 	}
 	header {
 		grid-area: header;
-		background-color: #9aa3b8;
+		background-color: var(--color-bar);
+		font-size: 1.1em;
 	}
 
 	content {
 		grid-area: sidebar;
-		background-color: #e5ebfa;
+		background-color: var(--color-interface);
 	}
-/*Stuff*/
-
-
-/*Main View*/
-	main {
-		display: none;
+/*Resize*/
+	.resizer {
+		top: 0;
+		bottom: 0;
+		position: absolute;
+		width: 6px;
+		margin-left: -3px;
+		cursor: ew-resize;
 	}
-	main.selected {
-		display: block;
-	}
-/*Code Viewer*/
-
-
-	header {
-		font-size: 1.1em;
-		background-color: var(--color-bar);
-	}
-
-	header #expression_bar {
-		width: 100%;
-		height: 32px;
-		background-color: var(--color-background);
-		color: white;
-	}
-	header #expression_bar i {
-		text-align: center;
-		width: 40px;
-		padding-top: 7px;
-		float: left;
-		opacity: 0.8;
-	}
-	header #expression_bar input {
-		background-color: transparent;
-		width: calc(100% - 40px);
-		border: none;
-		height: 32px;
-		padding: 5px 8px;
-		opacity: 0.8;
-		float: left;
-		color: white;
-	}
-	header #expression_bar input:focus {
-		opacity: 1;
-	}
+	
 /*Footer*/
 	footer > * {
 		display: inline-block;
 		padding: 2px 8px; 
 		padding-top: 2px;
-		background-color: #cfd7ea;
+		background-color: var(--color-bar);
 	}
 	div.stat {
 		float: right;

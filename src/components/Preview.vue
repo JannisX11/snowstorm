@@ -13,7 +13,7 @@
 
 <script>
 
-    import {View, Emitter, initPreview} from './../preview'
+    import {View, Emitter, initPreview, resizeCanvas} from './../preview'
 
 	
 
@@ -25,6 +25,11 @@
             fps: 0,
             particles: 0,
         }},
+        methods: {
+            updateSize() {
+                resizeCanvas()
+            }
+        },
         mounted() {
             console.log('mount preview')
             initPreview()
@@ -46,14 +51,13 @@
 		width: 100%;
 	}
 	footer {
-		background-color: #9aa3b8;
+		background-color: var(--color-bar);
 		position: absolute;
 		bottom: 0px;
 		width: 800px;
 		margin-left: calc(50% - 400px);
 		font-size: 1.2em;
 		padding-left: 20px;
-		background-color: #cfd7ea;
 		height: 32px;
 	}
 </style>

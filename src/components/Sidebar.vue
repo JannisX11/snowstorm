@@ -59,7 +59,7 @@ export default {
 		font-family: 'Josefin Sans', sans-serif;
 		font-weight: 600;
 		font-size: 2.6em;
-		color: #9aa3b8;
+		color: var(--color-title);
 		overflow: hidden;
 	}
 	content > div {
@@ -67,12 +67,12 @@ export default {
 		height: 100%;
 	}
 	.input_subject h3 {
-		background-color: #9aa3b8;
+		background-color: var(--color-title);
 		padding: 5px;
 		padding-left: 12px;
 	}
 	.input_group h4 {
-		background-color: #cfd7ea;
+		background-color: var(--color-bar);
 		padding: 5px;
 		font-size: 1.4em;
 		padding-left: 12px;
