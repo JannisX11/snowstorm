@@ -1,3 +1,8 @@
+import Data from './input_structure'
+import {compileJSON} from 'util'
+
+import {Flipbook} from './preview'
+
 function getValue(subject, group, key, curve_key) {
 	if (typeof subject === 'number') {
 		switch (subject) {
@@ -6,9 +11,9 @@ function getValue(subject, group, key, curve_key) {
 			case 2: subject = 'particle'; break;
 		}
 	}
-	var input = Data[subject][group][key];
+	var input = Data[subject][group].inputs[key];
 	if (group == 'curves') {
-		input = Data.general.curves.curves[key][curve_key]
+		input = Data.general.curves.curves[key].inputs[curve_key]
 	}
 	var original_value = input.value;
 
@@ -42,7 +47,7 @@ function generateFile(options) {
 		format_version: '1.10.0',
 		particle_effect: {
 			description: {
-				identifier: Data.general.general.identifier.value,
+				identifier: Data.general.general.inputs.identifier.value,
 				basic_render_parameters: {
 					material: getValue(2, 'appearance', 'material'),
 					texture: getValue(2, 'texture', 'path') || 'textures/blocks/wool_colored_white'
@@ -55,14 +60,14 @@ function generateFile(options) {
 	if (Data.general.curves.curves.length) {
 		var json_curves = file.particle_effect.curves = {};
 		Data.general.curves.curves.forEach((curve, i) => {
-			if (!curve.id.value) return;
+			if (!curve.inputs.id.value) return;
 			var json_curve = {
 				type: getValue(0, 'curves', i, 'mode'),
 				input: getValue(0, 'curves', i, 'input'),
 				horizontal_range: getValue(0, 'curves', i, 'range'),
 				nodes: curve.nodes.slice()
 			}
-			json_curves[curve.id.value] = json_curve
+			json_curves[curve.inputs.id.value] = json_curve
 		})
 	}
 
@@ -291,7 +296,7 @@ function generateFile(options) {
 		comps['minecraft:particle_appearance_lighting'] = {}
 	}
 	if (getValue(2, 'color', 'mode') === 'static') {
-		var static_color = Data.particle.color.picker.calculate()
+		var static_color = Data.particle.color.inputs.picker.calculate()
 		if (!static_color.equals({r: 1, g: 1, b: 1})) {
 			comps['minecraft:particle_appearance_tinting'] = {
 				color: [
@@ -308,7 +313,7 @@ function generateFile(options) {
 		comps['minecraft:particle_appearance_tinting'] = {
 			color: {
 				interpolant: getValue(2, 'color', 'interpolant'),
-				gradient: Data.particle.color.gradient.export(range)
+				gradient: Data.particle.color.inputs.gradient.export(range)
 			}
 		}
 

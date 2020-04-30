@@ -429,6 +429,7 @@ tinycolor.prototype.toInt = function() {
 
 
 //JSON
+*/
 function compileJSON(object, options) {
 	var output = ''
 	if (typeof options !== 'object') options = {}
@@ -495,7 +496,7 @@ function compileJSON(object, options) {
 	}
 	return handleVar(object, 1)
 }
-*/
+
 const IO = {
 	import: function (options, cb) {
 		if (typeof options !== 'object') {options = {}}
@@ -585,5 +586,6 @@ const IO = {
 
 
 export {
-	bbuid, guid
+	bbuid, guid,
+	compileJSON
 }

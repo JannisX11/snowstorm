@@ -14,6 +14,8 @@ import 'prismjs/themes/prism-okaidia.css'
 import 'prismjs/components/prism-json'
 import Prism from 'vue-prism-component'
 
+import {generateFile} from '../export'
+
 
 function selectText(element) {
     var node = document.getElementById(element);
@@ -28,42 +30,7 @@ export default {
 	name: 'code-viewer',
 	components: {Prism},
 	data() {return {
-		code: `{
-	"format_version": "1.10.0",
-	"particle_effect": {
-		"description": {
-			"basic_render_parameters": {
-				"material": "particles_alpha",
-				"texture": "textures/blocks/wool_colored_white"
-			}
-		},
-		"components": {
-			"minecraft:emitter_rate_steady": {
-				"spawn_rate": 1,
-				"max_particles": 100
-			},
-			"minecraft:emitter_lifetime_looping": {
-				"active_time": 1
-			},
-			"minecraft:emitter_shape_point": {},
-			"minecraft:particle_lifetime_expression": {
-				"max_lifetime": 1
-			},
-			"minecraft:particle_initial_speed": 0,
-			"minecraft:particle_motion_dynamic": {},
-			"minecraft:particle_appearance_billboard": {
-				"size": [0.2, 0.2],
-				"facing_camera_mode": "rotate_xyz",
-				"uv": {
-					"texture_width": 16,
-					"texture_height": 16,
-					"uv": [0, 0],
-					"uv_size": [16, 16]
-				}
-			}
-		}
-	}
-}`
+		code: generateFile()
 	}},
 	methods: {
 		copy() {

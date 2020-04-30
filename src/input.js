@@ -1,5 +1,6 @@
 import * as THREE from 'three'
 import Molang from 'molangjs'
+import tinycolor from 'tinycolor2'
 import $ from 'jquery'
 
 import {ExpandedInput} from './components/ExpressionBar'
