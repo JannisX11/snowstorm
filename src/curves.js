@@ -1,43 +1,49 @@
 import Vue from 'vue'
 import {Emitter} from './preview'
 import Data from './input_structure'
+import Input from './input'
+import {guid} from './util'
+import $ from 'jquery'
 
 class Curve {
 	constructor() {
 		var scope = this;
 		this.uuid = guid();
-		this.id = new Input({
-			label: 'Name',
-			info: 'The MoLang variable to be used later in MoLang expressions. Must begin with "variable."',
-			placeholder: 'variable.curve1',
-			type: 'text',
-			onchange() {
-				Emitter.curves[this.value] = scope;
-			}
-		})
-		this.mode = new Input({
-			type: 'select',
-			label: 'Mode',
-			info: 'Curve interpolation type',
-			options: {
-				catmull_rom: 'Catmull Rom',
-				linear: 'Linear',
-				//bezier: 'Bezier',
-			},
-			onchange() {
-				Vue.nextTick(() => scope.updateSVG());
-			}
-		})
-		this.input = new Input({
-			label: 'Input',
-			info: 'Horizontal input',
-			type: 'text'
-		})
-		this.range = new Input({
-			label: 'Range',
-			info: 'Horizontal range that the input is mapped to',
-			type: 'text'
-		})
+
+		this.inputs = {
+			id: new Input({
+				label: 'Name',
+				info: 'The MoLang variable to be used later in MoLang expressions. Must begin with "variable."',
+				placeholder: 'variable.curve1',
+				type: 'text',
+				onchange() {
+					Emitter.curves[this.value] = scope;
+				}
+			}),
+			mode: new Input({
+				type: 'select',
+				label: 'Mode',
+				info: 'Curve interpolation type',
+				options: {
+					catmull_rom: 'Catmull Rom',
+					linear: 'Linear',
+					//bezier: 'Bezier',
+				},
+				onchange() {
+					Vue.nextTick(() => scope.updateSVG());
+				}
+			}),
+			input: new Input({
+				label: 'Input',
+				info: 'Horizontal input',
+				type: 'text'
+			}),
+			range: new Input({
+				label: 'Range',
+				info: 'Horizontal range that the input is mapped to',
+				type: 'text'
+			})
+		}
 		this.nodes = [0, 1, 0]
 		this.svg_data = '';
 		this.vertical_line_data = '';
@@ -100,10 +106,10 @@ class Curve {
 		//Vue.nextTick(() => this.updateSVG());
 	}
 	calculate(params) {
-		var position = Molang.parse(this.input.value, params);
-		var range = Molang.parse(this.range.value, params);
+		var position = Molang.parse(this.inputs.input.value, params);
+		var range = Molang.parse(this.inputs.range.value, params);
 		position = (position/range) || 0;
-		if (this.mode.value == 'linear') {
+		if (this.inputs.mode.value == 'linear') {
 
 			var segments = this.nodes.length-1;
 			position *= segments
@@ -113,7 +119,7 @@ class Curve {
 			var value = this.nodes[index] + difference * blend;
 			return value;
 
-		} else if (this.mode.value == 'catmull_rom') {
+		} else if (this.inputs.mode.value == 'catmull_rom') {
 			var vectors = [];
 			this.nodes.forEach((val, i) => {
 				vectors.push(new THREE.Vector2(i-1, val))
@@ -159,16 +165,16 @@ class Curve {
 
 		this.svg_data += `M${getPoint(0)}`;
 
-		if (this.mode.value == 'linear') {
+		if (this.inputs.mode.value == 'linear') {
 
 			for (var i = 1; i < this.nodes.length; i++) {
 				this.svg_data += ` L${getPoint(i)}`;
 			}
 			this.vertical_line_data = `M${start} 150 L${start} 0 M${end} 150 L${end} 0`;
 
-		} else if (this.mode.value == 'bezier') {
+		} else if (this.inputs.mode.value == 'bezier') {
 
-		} else if (this.mode.value == 'catmull_rom') {
+		} else if (this.inputs.mode.value == 'catmull_rom') {
 
 			var points = [];
 			this.nodes.forEach((node, i) => {
@@ -244,11 +250,6 @@ function updateCurvesPanel() {
 }
 
 Vue.component('curve', {
-	props: {
-		curve: Object,
-		group_key: String,
-		subject_key: String,
-	},
 	template: `
 		<div>
 			<input-group :group.sync="curve" :group_key.sync="group_key" :subject_key.sync="subject_key"></input-group>

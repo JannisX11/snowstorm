@@ -106,15 +106,6 @@ $.fn.deepest = function() {
 }
 
 //Math
-function guid() {
-	function s4() {
-		return Math.floor((1 + Math.random()) * 0x10000)
-			.toString(16)
-			.substring(1);
-	}
-	return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
-		s4() + '-' + s4() + s4() + s4();
-}
 function isUUID(s) {
 	return (s.length === 36 && s.match(/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/))
 }
@@ -133,6 +124,17 @@ function bbuid(l) {
 	}
 	return s;
 }
+function guid() {
+	function s4() {
+		return Math.floor((1 + Math.random()) * 0x10000)
+			.toString(16)
+			.substring(1);
+	}
+	return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
+		s4() + '-' + s4() + s4() + s4();
+}
+
+
 Math.clamp = (number, min, max) => {
 	if (number > max) number = max;
 	if (number < min || isNaN(number)) number = min;
@@ -583,5 +585,5 @@ const IO = {
 
 
 export {
-	bbuid
+	bbuid, guid
 }

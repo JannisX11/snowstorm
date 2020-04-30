@@ -27,7 +27,8 @@
 
 <script>
 import InputGroup from './Sidebar/InputGroup';
-import Curve from './Sidebar/Curve';
+import curve from './Sidebar/Curve';
+import {Curve, updateCurvesPanel} from './../curves'
 
 import Data from './../input_structure'
 
@@ -36,7 +37,7 @@ export default {
 	data() {return {
 		data: Data
 	}},
-	components: {InputGroup, Curve},
+	components: {InputGroup, curve},
 	methods: {
 		fold: function(group) {
 			group._folded = !group._folded

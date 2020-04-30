@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="curve">
         <input-group :group.sync="curve" :group_key.sync="group_key" :subject_key.sync="subject_key"></input-group>
 
         <div class="curve_display">
@@ -32,8 +32,18 @@
 
 
 <script>
+import InputGroup from './InputGroup'
+import $ from 'jquery'
+
+
 export default {
-    name: 'curve'
+	name: 'curve',
+	props: {
+		curve: Object,
+		group_key: String,
+		subject_key: String,
+	},
+	components: {InputGroup}
 }
 </script>
 
@@ -68,7 +78,7 @@ export default {
 	.curve_display .curve_path {
 		fill: none;
 		stroke-width: 2px;
-		stroke: var(--color-bar);
+		stroke: var(--color-title);
 	}
 	.curve_display .vertical_line_path {
 		fill: none;

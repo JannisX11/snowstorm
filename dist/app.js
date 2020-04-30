@@ -554,7 +554,8 @@ var frames_this_second = 0;
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Sidebar_InputGroup__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Sidebar/InputGroup */ "./src/components/Sidebar/InputGroup.vue");
 /* harmony import */ var _Sidebar_Curve__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Sidebar/Curve */ "./src/components/Sidebar/Curve.vue");
-/* harmony import */ var _input_structure__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./../input_structure */ "./src/input_structure.js");
+/* harmony import */ var _curves__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./../curves */ "./src/curves.js");
+/* harmony import */ var _input_structure__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./../input_structure */ "./src/input_structure.js");
 //
 //
 //
@@ -582,6 +583,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 
 
 
@@ -589,23 +591,23 @@ __webpack_require__.r(__webpack_exports__);
   name: 'sidebar',
   data: function data() {
     return {
-      data: _input_structure__WEBPACK_IMPORTED_MODULE_2__["default"]
+      data: _input_structure__WEBPACK_IMPORTED_MODULE_3__["default"]
     };
   },
   components: {
     InputGroup: _Sidebar_InputGroup__WEBPACK_IMPORTED_MODULE_0__["default"],
-    Curve: _Sidebar_Curve__WEBPACK_IMPORTED_MODULE_1__["default"]
+    curve: _Sidebar_Curve__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
   methods: {
     fold: function fold(group) {
       group._folded = !group._folded;
 
       if (group.curves && !group._folded) {
-        updateCurvesPanel();
+        Object(_curves__WEBPACK_IMPORTED_MODULE_2__["updateCurvesPanel"])();
       }
     },
     addCurve: function addCurve() {
-      _input_structure__WEBPACK_IMPORTED_MODULE_2__["default"].general.curves.curves.push(new _Sidebar_Curve__WEBPACK_IMPORTED_MODULE_1__["default"]());
+      _input_structure__WEBPACK_IMPORTED_MODULE_3__["default"].general.curves.curves.push(new _curves__WEBPACK_IMPORTED_MODULE_2__["Curve"]());
     }
   }
 });
@@ -621,6 +623,9 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _InputGroup__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./InputGroup */ "./src/components/Sidebar/InputGroup.vue");
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_1__);
 //
 //
 //
@@ -654,8 +659,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: 'curve'
+  name: 'curve',
+  props: {
+    curve: Object,
+    group_key: String,
+    subject_key: String
+  },
+  components: {
+    InputGroup: _InputGroup__WEBPACK_IMPORTED_MODULE_0__["default"]
+  }
 });
 
 /***/ }),
@@ -1078,7 +1093,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.curve[data-v-c64b3b48] {\n\tpadding-bottom: 8px;\n\tpadding-top: 12px;\n}\n.curve_display[data-v-c64b3b48] {\n\tposition: relative;\n\tbackground-color: var(--color-bar);\n\theight: 150px;\n\tmargin-top: 10px;\n}\n.curve_display svg[data-v-c64b3b48] {\n\theight: 100%;\n\twidth: 100%;\n}\n.curve_min_num[data-v-c64b3b48] {\n\tposition: absolute;\n\tbottom: 0;\n\tleft: 2px;\n\tpointer-events: none;\n}\n.curve_max_num[data-v-c64b3b48] {\n\tposition: absolute;\n\ttop: 0;\n\tleft: 2px;\n\tpointer-events: none;\n}\n.curve_display .curve_path[data-v-c64b3b48] {\n\tfill: none;\n\tstroke-width: 2px;\n\tstroke: var(--color-bar);\n}\n.curve_display .vertical_line_path[data-v-c64b3b48] {\n\tfill: none;\n\tstroke-width: 2px;\n\tstroke-dasharray: 8;\n\tstroke: #b5c0d4;\n}\n.curve_display .horizontal_line_path[data-v-c64b3b48] {\n\tfill: none;\n\tstroke-width: 2px;\n\tstroke-dasharray: 6;\n\tstroke: #b5c0d4;\n}\n.curve_display .curve_controls[data-v-c64b3b48] {\n\tposition: absolute;\n\ttop: 0;\n\tleft: 0;\n\theight: 100%;\n\twidth: 100%;\n\tdisplay: flex;\n}\n.curve_controls .curve_node[data-v-c64b3b48],\n.curve_controls .curve_add[data-v-c64b3b48] {\n\theight: 100%;\n\tflex-grow: 1;\n}\n.curve_controls .curve_node[data-v-c64b3b48] {\n\tcursor: ns-resize;\n\tposition: relative;\n}\n.curve_node[data-v-c64b3b48]:hover {\n\tbackground-color: rgba(255, 255, 255, 0.2);\n}\n.curve_node .curve_node_remover[data-v-c64b3b48] {\n\tdisplay: none;\n\tposition: absolute;\n\tbottom: -25px;\n\twidth: 100%;\n\theight: 25px;\n\ttext-align: center;\n\tcursor: default;\n}\n.curve_node:hover .curve_node_remover[data-v-c64b3b48] {\n\tdisplay: block;\n}\n.curve_node .curve_node_remover i[data-v-c64b3b48] {\n\tbackground-color: var(--color-background);\n}\n.curve_node .curve_point[data-v-c64b3b48] {\n\tposition: absolute;\n\theight: 8px;\n\twidth: 8px;\n\tright: 0;\n\tleft: 0;\n\tmargin-bottom: 1px;\n\tmargin-right: auto;\n\tmargin-left: auto;\n\tbackground: #45617d;\n\tborder-radius: 50%;\n}\n.curve_node:hover .curve_point[data-v-c64b3b48] {\n\tbackground: white;\n}\n.curve_node .curve_point label[data-v-c64b3b48] {\n\tdisplay: none;\n\tpointer-events: none;\n\tmargin-left: 12px;\n\tmargin-top: -8.4px;\n}\n.curve_node:hover .curve_point label[data-v-c64b3b48] {\n\tdisplay: block;\n}\n.curve_controls .curve_add[data-v-c64b3b48] {\n\tcursor: copy;\n}\n.curve_controls .curve_add[data-v-c64b3b48]:hover {\n\tbackground-color: rgba(255, 255, 255, 0.2);\n}\n.curve_controls .curve_add[data-v-c64b3b48]:first-child, .curve_controls .curve_add[data-v-c64b3b48]:last-child {\n\tmax-width: 20px;\n}\n.curve_footer[data-v-c64b3b48] {\n\tdisplay: flex;\n\theight: 30px;\n}\n.curve_footer .fill_line[data-v-c64b3b48] {\n\tflex-grow: 1;\n\theight: 16px;\n\tborder-bottom: 2px solid var(--color-bar);\n}\n", ""]);
+exports.push([module.i, "\n.curve[data-v-c64b3b48] {\n\tpadding-bottom: 8px;\n\tpadding-top: 12px;\n}\n.curve_display[data-v-c64b3b48] {\n\tposition: relative;\n\tbackground-color: var(--color-bar);\n\theight: 150px;\n\tmargin-top: 10px;\n}\n.curve_display svg[data-v-c64b3b48] {\n\theight: 100%;\n\twidth: 100%;\n}\n.curve_min_num[data-v-c64b3b48] {\n\tposition: absolute;\n\tbottom: 0;\n\tleft: 2px;\n\tpointer-events: none;\n}\n.curve_max_num[data-v-c64b3b48] {\n\tposition: absolute;\n\ttop: 0;\n\tleft: 2px;\n\tpointer-events: none;\n}\n.curve_display .curve_path[data-v-c64b3b48] {\n\tfill: none;\n\tstroke-width: 2px;\n\tstroke: var(--color-title);\n}\n.curve_display .vertical_line_path[data-v-c64b3b48] {\n\tfill: none;\n\tstroke-width: 2px;\n\tstroke-dasharray: 8;\n\tstroke: #b5c0d4;\n}\n.curve_display .horizontal_line_path[data-v-c64b3b48] {\n\tfill: none;\n\tstroke-width: 2px;\n\tstroke-dasharray: 6;\n\tstroke: #b5c0d4;\n}\n.curve_display .curve_controls[data-v-c64b3b48] {\n\tposition: absolute;\n\ttop: 0;\n\tleft: 0;\n\theight: 100%;\n\twidth: 100%;\n\tdisplay: flex;\n}\n.curve_controls .curve_node[data-v-c64b3b48],\n.curve_controls .curve_add[data-v-c64b3b48] {\n\theight: 100%;\n\tflex-grow: 1;\n}\n.curve_controls .curve_node[data-v-c64b3b48] {\n\tcursor: ns-resize;\n\tposition: relative;\n}\n.curve_node[data-v-c64b3b48]:hover {\n\tbackground-color: rgba(255, 255, 255, 0.2);\n}\n.curve_node .curve_node_remover[data-v-c64b3b48] {\n\tdisplay: none;\n\tposition: absolute;\n\tbottom: -25px;\n\twidth: 100%;\n\theight: 25px;\n\ttext-align: center;\n\tcursor: default;\n}\n.curve_node:hover .curve_node_remover[data-v-c64b3b48] {\n\tdisplay: block;\n}\n.curve_node .curve_node_remover i[data-v-c64b3b48] {\n\tbackground-color: var(--color-background);\n}\n.curve_node .curve_point[data-v-c64b3b48] {\n\tposition: absolute;\n\theight: 8px;\n\twidth: 8px;\n\tright: 0;\n\tleft: 0;\n\tmargin-bottom: 1px;\n\tmargin-right: auto;\n\tmargin-left: auto;\n\tbackground: #45617d;\n\tborder-radius: 50%;\n}\n.curve_node:hover .curve_point[data-v-c64b3b48] {\n\tbackground: white;\n}\n.curve_node .curve_point label[data-v-c64b3b48] {\n\tdisplay: none;\n\tpointer-events: none;\n\tmargin-left: 12px;\n\tmargin-top: -8.4px;\n}\n.curve_node:hover .curve_point label[data-v-c64b3b48] {\n\tdisplay: block;\n}\n.curve_controls .curve_add[data-v-c64b3b48] {\n\tcursor: copy;\n}\n.curve_controls .curve_add[data-v-c64b3b48]:hover {\n\tbackground-color: rgba(255, 255, 255, 0.2);\n}\n.curve_controls .curve_add[data-v-c64b3b48]:first-child, .curve_controls .curve_add[data-v-c64b3b48]:last-child {\n\tmax-width: 20px;\n}\n.curve_footer[data-v-c64b3b48] {\n\tdisplay: flex;\n\theight: 30px;\n}\n.curve_footer .fill_line[data-v-c64b3b48] {\n\tflex-grow: 1;\n\theight: 16px;\n\tborder-bottom: 2px solid var(--color-bar);\n}\n", ""]);
 
 // exports
 
@@ -68751,6 +68766,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
+    { staticClass: "curve" },
     [
       _c("input-group", {
         attrs: {
@@ -82634,6 +82650,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _preview__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./preview */ "./src/preview.js");
 /* harmony import */ var _input_structure__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./input_structure */ "./src/input_structure.js");
+/* harmony import */ var _input__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./input */ "./src/input.js");
+/* harmony import */ var _util__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./util */ "./src/util.js");
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_5__);
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
 
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -82656,46 +82676,51 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 
 
+
+
+
 var Curve = /*#__PURE__*/function () {
   function Curve() {
     _classCallCheck(this, Curve);
 
     var scope = this;
-    this.uuid = guid();
-    this.id = new Input({
-      label: 'Name',
-      info: 'The MoLang variable to be used later in MoLang expressions. Must begin with "variable."',
-      placeholder: 'variable.curve1',
-      type: 'text',
-      onchange: function onchange() {
-        _preview__WEBPACK_IMPORTED_MODULE_1__["Emitter"].curves[this.value] = scope;
-      }
-    });
-    this.mode = new Input({
-      type: 'select',
-      label: 'Mode',
-      info: 'Curve interpolation type',
-      options: {
-        catmull_rom: 'Catmull Rom',
-        linear: 'Linear' //bezier: 'Bezier',
+    this.uuid = Object(_util__WEBPACK_IMPORTED_MODULE_4__["guid"])();
+    this.inputs = {
+      id: new _input__WEBPACK_IMPORTED_MODULE_3__["default"]({
+        label: 'Name',
+        info: 'The MoLang variable to be used later in MoLang expressions. Must begin with "variable."',
+        placeholder: 'variable.curve1',
+        type: 'text',
+        onchange: function onchange() {
+          _preview__WEBPACK_IMPORTED_MODULE_1__["Emitter"].curves[this.value] = scope;
+        }
+      }),
+      mode: new _input__WEBPACK_IMPORTED_MODULE_3__["default"]({
+        type: 'select',
+        label: 'Mode',
+        info: 'Curve interpolation type',
+        options: {
+          catmull_rom: 'Catmull Rom',
+          linear: 'Linear' //bezier: 'Bezier',
 
-      },
-      onchange: function onchange() {
-        vue__WEBPACK_IMPORTED_MODULE_0___default.a.nextTick(function () {
-          return scope.updateSVG();
-        });
-      }
-    });
-    this.input = new Input({
-      label: 'Input',
-      info: 'Horizontal input',
-      type: 'text'
-    });
-    this.range = new Input({
-      label: 'Range',
-      info: 'Horizontal range that the input is mapped to',
-      type: 'text'
-    });
+        },
+        onchange: function onchange() {
+          vue__WEBPACK_IMPORTED_MODULE_0___default.a.nextTick(function () {
+            return scope.updateSVG();
+          });
+        }
+      }),
+      input: new _input__WEBPACK_IMPORTED_MODULE_3__["default"]({
+        label: 'Input',
+        info: 'Horizontal input',
+        type: 'text'
+      }),
+      range: new _input__WEBPACK_IMPORTED_MODULE_3__["default"]({
+        label: 'Range',
+        info: 'Horizontal range that the input is mapped to',
+        type: 'text'
+      })
+    };
     this.nodes = [0, 1, 0];
     this.svg_data = '';
     this.vertical_line_data = '';
@@ -82786,11 +82811,11 @@ var Curve = /*#__PURE__*/function () {
   }, {
     key: "calculate",
     value: function calculate(params) {
-      var position = Molang.parse(this.input.value, params);
-      var range = Molang.parse(this.range.value, params);
+      var position = Molang.parse(this.inputs.input.value, params);
+      var range = Molang.parse(this.inputs.range.value, params);
       position = position / range || 0;
 
-      if (this.mode.value == 'linear') {
+      if (this.inputs.mode.value == 'linear') {
         var segments = this.nodes.length - 1;
         position *= segments;
         var index = Math.floor(position);
@@ -82798,7 +82823,7 @@ var Curve = /*#__PURE__*/function () {
         var difference = this.nodes[index + 1] - this.nodes[index];
         var value = this.nodes[index] + difference * blend;
         return value;
-      } else if (this.mode.value == 'catmull_rom') {
+      } else if (this.inputs.mode.value == 'catmull_rom') {
         var vectors = [];
         this.nodes.forEach(function (val, i) {
           vectors.push(new THREE.Vector2(i - 1, val));
@@ -82816,15 +82841,15 @@ var Curve = /*#__PURE__*/function () {
       var scope = this;
       this.svg_data = '';
       this.vertical_line_data = '';
-      var points = $(".curve[uuid=".concat(this.uuid, "] .curve_node .curve_point"));
+      var points = jquery__WEBPACK_IMPORTED_MODULE_5___default()(".curve[uuid=".concat(this.uuid, "] .curve_node .curve_point"));
       if (!points.length) return this;
-      var parent_offset = $(".curve[uuid=".concat(this.uuid, "] .curve_display")).offset().left + 1;
+      var parent_offset = jquery__WEBPACK_IMPORTED_MODULE_5___default()(".curve[uuid=".concat(this.uuid, "] .curve_display")).offset().left + 1;
       var start = points.first().offset().left + 5 - parent_offset;
       var end = points.last().offset().left + 5 - parent_offset;
       var width = end - start;
       var gap = width / (scope.nodes.length - 1);
       if (!width) return;
-      $(".curve[uuid=".concat(this.uuid, "] .curve_display > svg")); //.css('margin-left', (start-parent_offset-3)+'px')
+      jquery__WEBPACK_IMPORTED_MODULE_5___default()(".curve[uuid=".concat(this.uuid, "] .curve_display > svg")); //.css('margin-left', (start-parent_offset-3)+'px')
       //.css('width', (width+4)+'px')
 
       function getPoint(index, raw) {
@@ -82837,13 +82862,13 @@ var Curve = /*#__PURE__*/function () {
       this.horizontal_line_data = "M".concat(0, " ", ground, " L", 2000, " ").concat(ground, " M", 0, " ").concat(ceiling, " L", 2000, " ").concat(ceiling);
       this.svg_data += "M".concat(getPoint(0));
 
-      if (this.mode.value == 'linear') {
+      if (this.inputs.mode.value == 'linear') {
         for (var i = 1; i < this.nodes.length; i++) {
           this.svg_data += " L".concat(getPoint(i));
         }
 
         this.vertical_line_data = "M".concat(start, " 150 L").concat(start, " 0 M").concat(end, " 150 L").concat(end, " 0");
-      } else if (this.mode.value == 'bezier') {} else if (this.mode.value == 'catmull_rom') {
+      } else if (this.inputs.mode.value == 'bezier') {} else if (this.inputs.mode.value == 'catmull_rom') {
         var points = [];
         this.nodes.forEach(function (node, i) {
           points.push(getPoint(i, true));
@@ -82939,11 +82964,6 @@ function updateCurvesPanel() {
 }
 
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('curve', {
-  props: {
-    curve: Object,
-    group_key: String,
-    subject_key: String
-  },
   template: "\n\t\t<div>\n\t\t\t<input-group :group.sync=\"curve\" :group_key.sync=\"group_key\" :subject_key.sync=\"subject_key\"></input-group>\n\n\t\t\t<div class=\"curve_display\">\n\t\t\t\t<svg>\n\t\t\t\t\t<path class=\"curve_path\" :d=\"curve.svg_data\"/>\n\t\t\t\t\t<path class=\"vertical_line_path\" :d=\"curve.vertical_line_data\"/>\n\t\t\t\t\t<path class=\"horizontal_line_path\" :d=\"curve.horizontal_line_data\"/>\n\t\t\t\t</svg>\n\t\t\t\t<ul class=\"curve_controls\">\n\t\t\t\t\t<li class=\"curve_add\" :key=\"'add_0'\" @click=\"curve.addNode(0, $event)\"></li>\n\t\t\t\t\t<template v-for=\"(value, index) in curve.nodes\">\n\t\t\t\t\t\t<li class=\"curve_node\" :key=\"'node_'+index\" @mousedown=\"curve.slideValue(index, $event)\">\n\t\t\t\t\t\t\t<div class=\"curve_point\" :style=\"{bottom: ((value-curve.min)/(curve.max-curve.min))*140 + 'px'}\"><label>{{value}}</label></div>\n\t\t\t\t\t\t\t<div class=\"curve_node_remover tool\" @click=\"curve.removeNode(index, $event)\">\n\t\t\t\t\t\t\t\t<i class=\"fas fa-minus-circle\"></i>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</li>\n\t\t\t\t\t\t<li class=\"curve_add\" :key=\"'add_'+index+1\" @click=\"curve.addNode(index+1, $event)\"></li>\n\t\t\t\t\t</template>\n\t\t\t\t</ul>\n\t\t\t\t<div class=\"curve_max_num\">{{curve.max}}</div>\n\t\t\t\t<div class=\"curve_min_num\">{{curve.min}}</div>\n\t\t\t</div>\n\t\t\t<div class=\"curve_footer\">\n\t\t\t\t<div class=\"fill_line\"></div>\n\t\t\t\t<div class=\"tool\" v-on:click=\"curve.remove()\">Remove Curve</div>\n\t\t\t</div>\n\t\t</div>\n\t"
 });
 
@@ -84721,12 +84741,13 @@ function updateMaterial(cb) {
 /*!*********************!*\
   !*** ./src/util.js ***!
   \*********************/
-/*! exports provided: bbuid */
+/*! exports provided: bbuid, guid */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "bbuid", function() { return bbuid; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "guid", function() { return guid; });
 /* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
 /* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_0__);
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -84838,15 +84859,6 @@ $.fn.deepest = function() {
 }
 
 //Math
-function guid() {
-	function s4() {
-		return Math.floor((1 + Math.random()) * 0x10000)
-			.toString(16)
-			.substring(1);
-	}
-	return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
-		s4() + '-' + s4() + s4() + s4();
-}
 function isUUID(s) {
 	return (s.length === 36 && s.match(/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/))
 }
@@ -84869,6 +84881,14 @@ function bbuid(l) {
   }
 
   return s;
+}
+
+function guid() {
+  function s4() {
+    return Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
+  }
+
+  return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
 }
 
 Math.clamp = function (number, min, max) {
