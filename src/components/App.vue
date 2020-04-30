@@ -1,5 +1,7 @@
 <template>
     <div id="app">
+		<link rel="stylesheet" 
+        	href="node_modules/@fortawesome/fontawesome-free/css/all.css">
 
 		<molang-dialog></molang-dialog>
 
@@ -35,19 +37,51 @@ export default {
 	}},
 	methods: {
 		setTab(tab) {
-			console.log('tab')
+			this.tab = tab
+			console.log(tab)
 		}
 	}
 }
 </script>
 
+
 <style lang="scss">
+
 	@import "~bootstrap/scss/bootstrap";
+	
 </style>
 
 <style>
-    @import url('./../css/common.css');
+
+	@import url('./../css/common.css');
+
+		
+	.tool {
+		display: inline-block;
+		padding: 2px 8px; 
+		padding-top: 3px;
+	}
+	.tool:hover {
+		color: #3e5366;
+	}
+	.resizer {
+		position: absolute !important;
+		z-index: 12;
+	}
+	.resizer.vertical { /*	|	*/
+		cursor: ew-resize;
+		width: 6px;
+	}
+	.resizer.horizontal { /*	__	*/
+		cursor: ns-resize;
+		height: 6px;
+	}
+	.resizer.disabled {
+		pointer-events: none;
+	}
+
 </style>
+
 
 <style scoped>
 	div#app {
@@ -74,30 +108,7 @@ export default {
 		background-color: #e5ebfa;
 	}
 /*Stuff*/
-	
-	.tool {
-		display: inline-block;
-		padding: 2px 8px; 
-		padding-top: 3px;
-	}
-	.tool:hover {
-		color: #3e5366;
-	}
-	.resizer {
-		position: absolute !important;
-		z-index: 12;
-	}
-	.resizer.vertical { /*	|	*/
-		cursor: ew-resize;
-		width: 6px;
-	}
-	.resizer.horizontal { /*	__	*/
-		cursor: ns-resize;
-		height: 6px;
-	}
-	.resizer.disabled {
-		pointer-events: none;
-	}
+
 
 /*Main View*/
 	main {

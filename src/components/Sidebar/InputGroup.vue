@@ -9,7 +9,7 @@
             v-bind:id="subject_key +'-'+ group_key +'-'+ key"
         >
             <label v-bind:for="key" v-if="input.label">{{ input.label }}</label>
-            <div class="tool input_expand_button" v-if="input.expandable" @click="input.toggleExpand()" title="Expand">
+            <div class="tool input_expand_button" v-if="input.expandable" @click="toggleExpand(input)" title="Expand">
                 <i v-if="!input.expanded" class="fas fa-caret-down"></i>
                 <i v-else class="fas fa-caret-up"></i>
             </div>
@@ -17,7 +17,7 @@
                 <!--List-->
                 <div class="tool" v-on:click="input.value.push('')"><i class="fas fa-plus-circle"></i></div>
                 <ul class="input_list">
-                    <li v-for="(item, index) in input.value">
+                    <li v-for="(item, index) in input.value" :key="index">
                         <input
                             v-model="input.value[index]"
                             v-bind:index="index"
@@ -125,9 +125,79 @@ export default {
         'color-picker': VueColor.Chrome,
         Gradient
     },
+    methods: {
+        toggleExpand(input) {
+            if (input.expandable) {
+                input.expanded = !input.expanded;
+            }
+        }
+    }
 }
 </script>
 
 <style scoped>
 
+	.input_wrapper {
+		margin: 2px 0;
+	}
+	.input_wrapper > label {
+		width: 100px;
+		text-align: right;
+		margin: 3px 0;
+	}
+	.input_right {
+		display: inline-flex;
+		vertical-align: top;
+		width: calc(100% - 110px);
+		margin-left: 4px;
+	}
+	.input_right.expandable {
+		width: calc(100% - 134px);
+	}
+	.input_right[axes="1"] input:not([type="checkbox"]), .input_right[axes="1"] select:not([type="checkbox"]) {
+		width: 100%;
+	}
+	.input_right.expanded {
+		display: block;
+		width: calc(100% - 7px);
+	}
+	.input_right.expanded input {
+		width: 100% !important;
+		display: block;
+	}
+	.input_right .vc-chrome {
+		float: left;
+		box-shadow: none !important;
+		border-radius: 0;
+		border: 1px solid gray;
+		font-family: inherit;
+	}
+	.tool.input_expand_button {
+		float: right;
+		width: 22px;
+		padding-left: 3px;
+    }
+    
+	ul.input_list input {
+		width: calc(100% - 100px);
+		margin-left: 62px;
+	}
+
+	input#image {
+		width: 100%;
+	}
+	.input_texture_preview {
+		display: inline-block;
+		background-size: contain;
+		background-repeat: no-repeat;
+		height: 48px;
+		width: 48px;
+		vertical-align: middle;
+		margin-right: 8px;
+		margin-left: 44px;
+	}
+	.input_vector {
+		width: 40px;
+		flex-grow: 1;
+	}
 </style>

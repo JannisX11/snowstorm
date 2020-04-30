@@ -8,8 +8,8 @@
                 </li>
             </ul>
         </li>
-        <li class="mode_selector code" :class="{selected: selected_tab == 'code'}" @click="$emit('setTab', 'code')">Code</li>
-        <li class="mode_selector preview" :class="{selected: selected_tab == 'preview'}" @click="$emit('setTab', 'preview')">Preview</li>
+        <li class="mode_selector code" :class="{selected: selected_tab == 'code'}" @click="$emit('changetab', 'code')">Code</li>
+        <li class="mode_selector preview" :class="{selected: selected_tab == 'preview'}" @click="$emit('changetab', 'preview')">Preview</li>
     </ul>
 </template>
 

@@ -1,6 +1,5 @@
 import Input from './input'
 import Gradient from './gradient'
-import {bbuid} from './util'
 
 const Data = {
 	general: {
@@ -582,6 +581,6 @@ forEachInput(input => {
 	}
 })
 
-
+window.Data = Data;
 export default Data
 export {forEachInput}
