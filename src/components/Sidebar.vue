@@ -4,7 +4,7 @@
             <h1>SNOWSTORM</h1>
             <div class="input_subject" v-for="(subject, subject_key) in data" :key="subject_key">
                 <h3>{{ subject.label }}</h3>
-                <div class="input_group" v-for="(group, group_key) in subject" :key="group_key" v-if="typeof group === 'object'">
+                <div class="input_group" v-for="(group, group_key) in subject" :key="group_key">
                     <h4 v-on:click="fold(group)">{{ group.label }}</h4>
                     <ul v-show="!group._folded" v-if="group.type == 'curves'">
                         <curve
@@ -26,11 +26,28 @@
 </template>
 
 <script>
+import InputGroup from './Sidebar/InputGroup';
 import Curve from './Sidebar/Curve';
-import Gradient from './Sidebar/Gradient';
+
+import Data from './../input_structure'
 
 export default {
-    name: 'sidebar'
+	name: 'sidebar',
+	data() {return {
+		data: Data
+	}},
+	components: {InputGroup, Curve},
+	methods: {
+		fold: function(group) {
+			group._folded = !group._folded
+			if (group.curves && !group._folded) {
+				updateCurvesPanel();
+			}
+		},
+		addCurve() {
+			Data.general.curves.curves.push(new Curve())
+		}
+	}
 }
 </script>
 

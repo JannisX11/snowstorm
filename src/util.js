@@ -1,5 +1,7 @@
-//Blockbench
-function compareVersions(string1/*new*/, string2/*old*/) {
+import $ from 'jquery'
+
+/*//Blockbench
+function compareVersions(string1, string2) {
 	// Is string1 newer than string2 ?
 	var arr1 = string1.split('.')
 	var arr2 = string2.split('.')
@@ -116,6 +118,7 @@ function guid() {
 function isUUID(s) {
 	return (s.length === 36 && s.match(/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/))
 }
+*/
 function bbuid(l) {
 	l = l || 1
 	let chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
@@ -129,6 +132,14 @@ function bbuid(l) {
 		l--;
 	}
 	return s;
+}
+Math.clamp = (number, min, max) => {
+	if (number > max) number = max;
+	if (number < min || isNaN(number)) number = min;
+	return number;
+}
+Math.randomab = function(a, b) {
+	return a + Math.random() * (b-a)
 }
 Math.radToDeg = function(rad) {
 	return rad / Math.PI * 180
@@ -152,9 +163,7 @@ Math.trimDeg = function(a) {
 Math.isPowerOfTwo = function(x) {
 	return (x > 1) && ((x & (x - 1)) == 0);
 }
-Math.randomab = function(a, b) {
-	return a + Math.random() * (b-a)
-}
+/*
 function trimFloatNumber(val) {
 	if (val == '') return val;
 	var string = val.toFixed(4)
@@ -175,12 +184,6 @@ function getAxisNumber(letter) {
 		case 'z': return 2; break;
 	}
 }
-function limitNumber(number, min, max) {
-	if (number > max) number = max;
-	if (number < min || isNaN(number)) number = min;
-	return number;
-}
-Math.clamp = limitNumber;
 function getRectangle(a, b, c, d) {
 	var rect = {};
 	if (!b && typeof a === 'object') {
@@ -223,6 +226,7 @@ function doRectanglesOverlap(rect1, rect2) {
 }
 
 //Array
+*/
 Array.prototype.safePush = function(item) {
 	if (!this.includes(item)) {
 		this.push(item);
@@ -292,6 +296,7 @@ Array.prototype.allEqual = function(s) {
 Array.prototype.random = function() {
 	return this[Math.floor(Math.random()*this.length)]
 }
+/*
 
 //Object
 Object.defineProperty(Array.prototype, "equals", {enumerable: false});
@@ -417,58 +422,8 @@ tinycolor.prototype.toInt = function() {
 	var rgba = this.toRgb()
 	return Jimp.rgbaToInt(rgba.r, rgba.g, rgba.b, rgba.a)
 }
-function getAverageRGB(imgEl, blockSize) {
-		
-	var defaultRGB = {r:0,g:0,b:0}, // for non-supporting envs
-		canvas = document.createElement('canvas'),
-		context = canvas.getContext && canvas.getContext('2d'),
-		data, width, height,
-		i = -4,
-		length,
-		rgb = {r:0,g:0,b:0},
-		count = 0;
-			
-	if (!context) {
-		return defaultRGB;
-	}
-	
-	height = canvas.height = imgEl.naturalHeight || imgEl.offsetHeight || imgEl.height;
-	width = canvas.width = imgEl.naturalWidth || imgEl.offsetWidth || imgEl.width;
-	
-	context.drawImage(imgEl, 0, 0);
-	
-	try {
-		data = context.getImageData(0, 0, width, height);
-	} catch(e) {
-		/* security error, img on diff domain */alert('x');
-		return defaultRGB;
-	}
-	
-	length = data.data.length;
 
-	if (!blockSize) blockSize = Math.ceil(length/64)
-	
-	while ( (i += blockSize * 4) < length ) {
-		if (data.data[i+3] > 0) {
-			++count;
-			rgb.r += data.data[i];
-			rgb.g += data.data[i+1];
-			rgb.b += data.data[i+2];
-		}
-	}
-	
-	// ~~ used to floor values
-	rgb.r = ~~(rgb.r/count);
-	rgb.g = ~~(rgb.g/count);
-	rgb.b = ~~(rgb.b/count);
-	
-	return rgb;	
-}
 
-//THREE
-THREE.getRandomEuler = function() {
-
-}
 
 
 //JSON
@@ -538,7 +493,7 @@ function compileJSON(object, options) {
 	}
 	return handleVar(object, 1)
 }
-
+*/
 const IO = {
 	import: function (options, cb) {
 		if (typeof options !== 'object') {options = {}}
@@ -624,4 +579,9 @@ const IO = {
 			cb()
 		}
 	}
+}
+
+
+export {
+	bbuid
 }

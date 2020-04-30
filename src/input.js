@@ -1,5 +1,5 @@
-
-var side_vue;
+import * as THREE from 'three'
+import Molang from 'molangjs'
 
 export default class Input {
 	constructor(data) {

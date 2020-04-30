@@ -13,9 +13,11 @@
 
 <script>
 
-    import {View, initPreview} from './../preview'
+    import {View, Emitter, initPreview} from './../preview'
 
+	
 
+	let frames_this_second = 0;
 
     export default {
         name: 'preview',
@@ -26,6 +28,11 @@
         mounted() {
             console.log('mount preview')
             initPreview()
+            setInterval(() => {
+                this.fps = frames_this_second;
+                frames_this_second = 0;
+                this.particles = Emitter.particles.length;
+            }, 1000)
         }
     }
 </script>

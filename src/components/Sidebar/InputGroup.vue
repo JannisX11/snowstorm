@@ -1,0 +1,133 @@
+<template>
+    <ul>
+        <li
+            class="input_wrapper"
+            v-for="(input, key) in group.inputs"
+            :key="key"
+            v-show="!input.enabled_modes || group._selected_mode === null || input.enabled_modes.includes(group._selected_mode)"
+            v-bind:title="input.info"
+            v-bind:id="subject_key +'-'+ group_key +'-'+ key"
+        >
+            <label v-bind:for="key" v-if="input.label">{{ input.label }}</label>
+            <div class="tool input_expand_button" v-if="input.expandable" @click="input.toggleExpand()" title="Expand">
+                <i v-if="!input.expanded" class="fas fa-caret-down"></i>
+                <i v-else class="fas fa-caret-up"></i>
+            </div>
+            <template  v-if="input.type == 'list'">
+                <!--List-->
+                <div class="tool" v-on:click="input.value.push('')"><i class="fas fa-plus-circle"></i></div>
+                <ul class="input_list">
+                    <li v-for="(item, index) in input.value">
+                        <input
+                            v-model="input.value[index]"
+                            v-bind:index="index"
+                            v-bind:placeholder="input.placeholder"
+                            v-on:input="input.change($event)"
+                            v-on:focus="input.focus(index, $event)">
+                        <div class="tool" v-on:click="input.value.remove(item)"><i class="fas fa-times-circle"></i></div>
+                    </li>
+                </ul>
+            </template>
+            <div v-else class="input_right" :axes="input.axis_count" :class="{expandable: input.expandable, expanded: input.expanded}">
+
+                <template v-if="input.axis_count == 1">
+                    <!--Text-->
+                    <input
+                        v-if="input.type == 'text' || input.type == 'molang'"
+                        v-model="input.value"
+                        v-bind:placeholder="input.placeholder"
+                        v-on:input="input.change($event)"
+                        v-on:focus="input.focus(-1, $event)">
+                    <!--Number-->
+                    <input
+                        v-if="input.type == 'number'" type="number"
+                        v-model="input.value"
+                        v-on:input="input.change($event)">
+                </template>
+
+                <template v-else>
+                    <!--Text-->
+                    <template v-if="input.type == 'text' || input.type == 'molang'">
+                        <input class="input_vector"
+                            v-for="i in input.axis_count"
+                            :key="i"
+                            v-model="input.value[i-1]"
+                            v-bind:index="i-1"
+                            v-bind:placeholder="input.placeholder"
+                            v-on:input="input.change($event)"
+                            v-on:focus="input.focus(i-1, $event)">
+                    </template>
+                    <!--Number-->
+                    <template v-if="input.type == 'number'">
+                        <input class="input_vector" type="number"
+                            v-for="i in input.axis_count"
+                            :key="i"
+                            v-model="input.value[i-1]"
+                            v-bind:index="i-1"
+                            v-on:input="input.change($event)">
+                    </template>
+                </template>
+
+                <!--Check-->
+                <input v-if="input.type == 'checkbox'" v-bind:id="key" type="checkbox" v-model="input.value">
+
+                <!--Select-->
+                <select v-if="input.type == 'select'" v-bind:id="key" v-model="input.meta_value" v-on:change="input.change($event)">
+                    <option v-for="(s_label, s_key) in input.options" :key="s_key" v-bind:id="s_key">{{s_label}}</option>
+                </select>
+
+                <!--Color-->
+                <color-picker v-if="input.type == 'color'" v-model="input.value" v-on:input="input.change($event)"></color-picker>
+
+                <!--Gradient-->
+                <div v-if="input.type == 'gradient'" class="color_gradient">
+                    <div class="gradient_container checkerboard">
+                        <div class="gradient_inner" :style="{background: input.getCSSString(input.value)}"></div>
+                        <div class="gradient_point"
+                            v-for="point in input.value" :key="point.id"
+                            :class="{selected: point == input.selected}"
+                            @mousedown="input.dragPoint(point, $event)"
+                            :style="{left: point.percent+'%', background: point.color}"
+                            :title="point.percent + '%'"
+                        ></div>
+                    </div>
+                    <div v-if="input.selected && input.selected.color">
+                    <div class="tool" style="float: right;" v-on:click="input.removePoint()"><i class="fas fa-minus-circle"></i></div>
+                        <div class="tool" style="float: right;" v-on:click="input.addPoint()"><i class="fas fa-plus-circle"></i></div>
+                        <color-picker v-model="input.selected.color" v-on:input="input.change($event)"></color-picker>
+                    </div>
+                </div>
+
+                <!--Image-->
+                <template v-if="input.type == 'image'">
+                    <div class="input_texture_preview"></div>
+                    <div class="tool" v-on:click="input.reset()"><i class="fas fa-times-circle"></i></div>
+                    <input  v-bind:id="key" type="file" accept=".png" v-on:change="input.change($event)">
+                </template>
+            </div>
+        </li>
+    </ul>
+</template>
+
+
+<script>
+import VueColor from 'vue-color'
+import Gradient from './Gradient';
+
+export default {
+    name: 'input-group',
+    props: {
+        group: Object,
+        group_key: String,
+        subject_key: String
+    },
+    components: {
+        'color-picker': VueColor.Chrome,
+        Gradient
+    },
+}
+</script>
+
+<style scoped>
+
+</style>

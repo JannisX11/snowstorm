@@ -1,4 +1,5 @@
 import Input from './input'
+import {bbuid} from './util'
 
 export default class Gradient extends Input {
     constructor(...args) {

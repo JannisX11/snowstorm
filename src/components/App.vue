@@ -41,95 +41,12 @@ export default {
 }
 </script>
 
+<style lang="scss">
+	@import "~bootstrap/scss/bootstrap";
+</style>
+
 <style>
-
-	/*Setup*/
-
-	::-webkit-scrollbar {
-		width: 8px;
-		height: 8px;
-	}
-	
-	::-webkit-scrollbar-track {
-		background: #e5ebfa;
-	}
-	::-webkit-scrollbar-corner {
-		background: #e5ebfa;
-	}
-	
-	::-webkit-scrollbar-thumb {
-		background: #cfd7ea;
-	}
-	::-webkit-scrollbar-thumb:hover {
-		background: #9aa3b8;
-	}
-	::selection {
-		background: var(--color-selection);
-	}
-	::placeholder {
-		opacity: 0.6;
-	}
-	* {
-		scrollbar-width: thin;
-		scrollbar-color: white #9aa3b8;
-	}
-
-	body {
-		--color-background: #29323a;
-		--color-interface: #e5ebfa;
-		--color-bar: #cfd7ea;
-		--color-title: #9aa3b8;
-		--color-selection: rgba(110, 142, 191, 0.3);
-		--color-highlight: #f7f9ff;
-	}
-
-
-	h1, h2, h3, h4, h5, h6 {
-		margin: 0;
-		font-weight: inherit;
-	}
-	ul {
-		list-style: none;
-		padding-left: 0;
-		margin: 0;
-	}
-	* {
-		margin: 0;
-		padding: 0;
-	}
-	input, select {
-		font-weight: inherit;
-	}
-	input[type=text], input[type=number], input:not([type]) {
-		font-family: 'Inconsolata', monospace;
-	}
-	input[type=checkbox] {
-		height: 15px;
-		width: 15px;
-		vertical-align: middle;
-		margin: 0 0 2px 4px;
-		margin-top: 5px;
-	}
-	select {
-		height: 30px;
-	}
-	code {
-		padding: 2px 8px;
-		color: #1062ab;
-		font-size: 0.9em;
-		background-color: var(--color-highlight);
-		user-select: auto;
-	}
-	body {
-		image-rendering: pixelated;
-		background-color: #29323a;
-		user-select: none;
-		-moz-user-select: none;
-		font-family: 'Lato', sans-serif;
-		height: 100%;
-		width: 100%;
-	}
-
+    @import url('./../css/common.css');
 </style>
 
 <style scoped>

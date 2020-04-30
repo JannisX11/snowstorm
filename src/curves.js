@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import {Emitter} from './preview'
+import Data from './input_structure'
 
 class Curve {
 	constructor() {

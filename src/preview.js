@@ -1,6 +1,10 @@
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import $ from 'jquery'
+import Molang from 'molangjs'
+
+import Data, {forEachInput} from './input_structure'
+import {updateCurvesPanel} from './curves'
 
 
 const View = {}
@@ -15,6 +19,9 @@ const gizmo_colors = {
 	grid: new THREE.Color(0x3d4954),
 }
 var Emitter = {};
+
+
+
 
 function initPreview() {
 
@@ -33,25 +40,13 @@ function initPreview() {
 	View.controls.screenSpacePanning = true;
 	View.controls.enableKeys = false;
 	View.controls.enableDamping = true;
-	View.controls.panSpeed = 0.25;
-	View.controls.rotateSpeed = 0.4;
-	View.controls.zoomSpeed = 1.8
+	View.controls.zoomSpeed = 1.4
 
-	View.clock = new THREE.Clock()
-	View.frames_this_second = 0;
-	View.FPS = 0;
-	
-	setInterval(function() {
-		if (!footer_vue) return;
-		View.FPS = View.frames_this_second;
-		footer_vue._data.fps = View.FPS;
-		View.frames_this_second = 0;
-		footer_vue._data.particles = Emitter.particles.length;
-	}, 1000)
+	console.log(View)
 
 	View.scene = new THREE.Scene()
 
-	View.helper = new THREE.AxesHelper(1);
+	View.helper = new CustomAxesHelper(1);
 	View.grid = new THREE.GridHelper(128, 128, gizmo_colors.grid, gizmo_colors.grid);
 	View.grid.position.y -= 0.0005
 	View.scene.add(View.helper);
@@ -106,6 +101,30 @@ View.screenshot = function() {
 
 }
 
+
+function CustomAxesHelper( size ) {
+	size = size || 1;
+	var vertices = [
+		0, 0, 0,	size, 0, 0,
+		0, 0, 0,	0, size, 0,
+		0, 0, 0,	0, 0, size
+	];
+	var c = gizmo_colors
+	var colors = [
+		c.r.r, c.r.g, c.r.b,	c.r.r, c.r.g, c.r.b, 
+		c.g.r, c.g.g, c.g.b,	c.g.r, c.g.g, c.g.b, 
+		c.b.r, c.b.g, c.b.b,	c.b.r, c.b.g, c.b.b,
+	]
+	var geometry = new THREE.BufferGeometry();
+	geometry.addAttribute( 'position', new THREE.Float32BufferAttribute( vertices, 3 ) );
+	geometry.addAttribute( 'color', new THREE.Float32BufferAttribute( colors, 3 ) );
+	var material = new THREE.LineBasicMaterial( { vertexColors: 2 } );
+	THREE.LineSegments.call( this, geometry, material );
+}
+CustomAxesHelper.prototype = Object.create( THREE.LineSegments.prototype );
+
+
+
 class EmitterClass {
 	constructor() {
 		this.particles = [];
@@ -137,16 +156,16 @@ class EmitterClass {
 		this.age = 0;
 		this.enabled = true;
 		var params = this.params()
-		this.active_time = Data.emitter.lifetime.active_time.calculate(params)
-		this.sleep_time = Data.emitter.lifetime.sleep_time.calculate(params)
+		this.active_time = Data.emitter.lifetime.inputs.active_time.calculate(params)
+		this.sleep_time = Data.emitter.lifetime.inputs.sleep_time.calculate(params)
 		this.random_vars = [Math.random(), Math.random(), Math.random(), Math.random()]
 		this.creation_values = {};
 		for (var key in this.creation_variables) {
 			var s = this.creation_variables[key];
 			Emitter.creation_values[key] = Molang.parse(s)
 		}
-		if (getValue(1, 'rate', 'mode') === 'instant') {
-			this.spawnParticles(Data.emitter.rate.amount.calculate(params))
+		if (Data.emitter.rate.inputs.mode.value === 'instant') {
+			this.spawnParticles(Data.emitter.rate.inputs.amount.calculate(params))
 		}
 		return this;
 	}
@@ -157,8 +176,8 @@ class EmitterClass {
 			var s = this.tick_variables[key];
 			Emitter.tick_values[key] = Molang.parse(s, params)
 		}
-		if (this.enabled && getValue(1, 'rate', 'mode') === 'steady') {
-			var p_this_tick = Data.emitter.rate.rate.calculate(params)/30
+		if (this.enabled && Data.emitter.rate.inputs.mode.value === 'steady') {
+			var p_this_tick = Data.emitter.rate.inputs.rate.calculate(params)/30
 			var x = 1/p_this_tick;
 			var c_f = Math.round(this.age*30)
 			if (c_f % Math.round(x) == 0) {
@@ -189,10 +208,10 @@ class EmitterClass {
 			}
 		} else if (this.mode === 'expression') {
 			//Expressions
-			if (this.enabled && Data.emitter.lifetime.expiration.calculate(params)) {
+			if (this.enabled && Data.emitter.lifetime.inputs.expiration.calculate(params)) {
 				this.stop()
 			}
-			if (!this.enabled && Data.emitter.lifetime.activation.calculate(params)) {
+			if (!this.enabled && Data.emitter.lifetime.inputs.activation.calculate(params)) {
 				this.start()
 			}
 		}
@@ -201,7 +220,7 @@ class EmitterClass {
 	tickParticleRotation() {
 		this.particles.forEach(p => {
 
-			switch (Data.particle.appearance.facing_camera_mode.value) {
+			switch (Data.particle.appearance.inputs.facing_camera_mode.value) {
 				case 'lookat_xyz':
 					p.mesh.lookAt(View.camera.position)
 					break;
@@ -242,8 +261,8 @@ class EmitterClass {
 	spawnParticles(count) {
 		if (!count) return this;
 
-		if (Data.emitter.rate.mode.value == 'steady') {
-			var max = Data.emitter.rate.maximum.calculate(this.params())||0;
+		if (Data.emitter.rate.inputs.mode.value == 'steady') {
+			var max = Data.emitter.rate.inputs.maximum.calculate(this.params())||0;
 			max = Math.clamp(max, 0, System.max_particles)
 			count = Math.clamp(count, 0, max-this.particles.length);
 		} else {
@@ -308,15 +327,15 @@ class Particle {
 		var params = this.params()
 
 		this.position.set(0, 0, 0)
-		this.lifetime = Data.particle.lifetime.max_lifetime.calculate(params);
-		this.initial_rotation = Data.particle.rotation.initial_rotation.calculate(params);
-		this.rotation_rate = Data.particle.rotation.rotation_rate.calculate(params);
+		this.lifetime = Data.particle.lifetime.inputs.max_lifetime.calculate(params);
+		this.initial_rotation = Data.particle.rotation.inputs.initial_rotation.calculate(params);
+		this.rotation_rate = Data.particle.rotation.inputs.rotation_rate.calculate(params);
 		this.rotation = 0;
 
 		//Init Position:
-		var surface = Data.emitter.shape.surface_only.value;
+		var surface = Data.emitter.shape.inputs.surface_only.value;
 		if (Emitter.shape === 'box') {
-			var size = Data.emitter.shape.half_dimensions.calculate(params);
+			var size = Data.emitter.shape.inputs.half_dimensions.calculate(params);
 
 			this.position.x = Math.randomab(-size.x, size.x);
 			this.position.y = Math.randomab(-size.y, size.y);
@@ -341,7 +360,7 @@ class Particle {
 			}
 		} else if (Emitter.shape === 'sphere') {
 
-			var radius = Data.emitter.shape.radius.calculate(params)
+			var radius = Data.emitter.shape.inputs.radius.calculate(params)
 			if (surface) {
 				this.position.x = radius
 			} else {
@@ -350,23 +369,23 @@ class Particle {
 			this.position.applyEuler(getRandomEuler())
 			
 		} else if (Emitter.shape === 'disc') {
-			var radius = Data.emitter.shape.radius.calculate(params)
+			var radius = Data.emitter.shape.inputs.radius.calculate(params)
 			var ang = Math.random()*Math.PI*2
 			var dis = surface ? radius : radius * Math.sqrt(Math.random())
 
 			this.position.x = dis * Math.cos(ang)
 			this.position.z = dis * Math.sin(ang)
 
-			var normal = Data.emitter.shape.plane_normal.calculate(params)
+			var normal = Data.emitter.shape.inputs.plane_normal.calculate(params)
 			if (!normal.equals(System.veczero)) {
 				var q = new THREE.Quaternion().setFromUnitVectors(System.upnormal, normal.normalize())
 				this.position.applyQuaternion(q)
 			}
 		}
 		//Speed
-			//this.speed = Data.particle.motion.direction_speed.calculate(params);
+			//this.speed = Data.particle.motion.inputs.direction_speed.calculate(params);
 		this.speed = new THREE.Vector3()
-		var dir = Data.particle.direction.mode.value;
+		var dir = Data.particle.direction.inputs.mode.value;
 		if (dir == 'inwards' || dir == 'outwards') {
 
 			if (Emitter.shape === 'point') {
@@ -378,14 +397,14 @@ class Particle {
 				}
 			}
 		} else {
-			this.speed = Data.particle.direction.direction.calculate(params).normalize()
+			this.speed = Data.particle.direction.inputs.direction.calculate(params).normalize()
 		}
 		this.direction.copy(this.speed);
 
-		var speed = Data.particle.motion.linear_speed.calculate(params);
+		var speed = Data.particle.motion.inputs.linear_speed.calculate(params);
 		this.speed.multiplyScalar(speed);
 
-		this.position.add(Data.emitter.shape.offset.calculate(params))
+		this.position.add(Data.emitter.shape.inputs.offset.calculate(params))
 
 		//UV
 		this.setFrame(0)
@@ -398,25 +417,25 @@ class Particle {
 		//Lifetime
 		this.age += 1/30;
 		this.loop_time += 1/30;
-		if (Data.particle.lifetime.mode.value === 'time') {
+		if (Data.particle.lifetime.inputs.mode.value === 'time') {
 			if (this.age > this.lifetime) {
 				this.remove();
 			}
 		} else {
-			if (Data.particle.lifetime.expiration_expression.calculate(params)) {
+			if (Data.particle.lifetime.inputs.expiration_expression.calculate(params)) {
 				this.remove();
 			}
 		}
 		//Movement
-		if (Data.particle.motion.mode.value === 'dynamic') {
+		if (Data.particle.motion.inputs.mode.value === 'dynamic') {
 			//Position
-			var drag = Data.particle.motion.linear_drag_coefficient.calculate(params);
-			this.acceleration = Data.particle.motion.linear_acceleration.calculate(params);
+			var drag = Data.particle.motion.inputs.linear_drag_coefficient.calculate(params);
+			this.acceleration = Data.particle.motion.inputs.linear_acceleration.calculate(params);
 			this.acceleration.addScaledVector(this.speed, -drag)
 			this.speed.addScaledVector(this.acceleration, 1/30);
 			this.position.addScaledVector(this.speed, 1/30);
-			if (getValue(2, 'lifetime', 'kill_plane')) {
-				var plane = Data.particle.lifetime.kill_plane.calculate();
+			if (Data.particle.lifetime.inputs.kill_plane.value) {
+				var plane = Data.particle.lifetime.inputs.kill_plane.calculate();
 				var start_point = new THREE.Vector3().copy(this.position).addScaledVector(this.speed, -1/30);
 				var line = new THREE.Line3(start_point, this.position)
 				if (plane.intersectsLine(line)) {
@@ -424,45 +443,45 @@ class Particle {
 				}
 			}
 
-		} else if (Data.particle.motion.mode.value === 'parametric') {
-			if (Data.particle.motion.relative_position.value.join('').length) {
-				this.position.copy(Data.particle.motion.relative_position.calculate(params));
+		} else if (Data.particle.motion.inputs.mode.value === 'parametric') {
+			if (Data.particle.motion.inputs.relative_position.value.join('').length) {
+				this.position.copy(Data.particle.motion.inputs.relative_position.calculate(params));
 			}
-			if (Data.particle.motion.direction.value.join('').length) {
-				this.speed.copy(Data.particle.motion.direction.calculate(params));
+			if (Data.particle.motion.inputs.direction.value.join('').length) {
+				this.speed.copy(Data.particle.motion.inputs.direction.calculate(params));
 			}
 		}
 
 		// Rotation
-		if (Data.particle.rotation.mode.value === 'dynamic') {
-			var rot_drag = Data.particle.rotation.rotation_drag_coefficient.calculate(params)
-			var rot_acceleration = Data.particle.rotation.rotation_acceleration.calculate(params)
+		if (Data.particle.rotation.inputs.mode.value === 'dynamic') {
+			var rot_drag = Data.particle.rotation.inputs.rotation_drag_coefficient.calculate(params)
+			var rot_acceleration = Data.particle.rotation.inputs.rotation_acceleration.calculate(params)
 				rot_acceleration += -rot_drag * this.rotation_rate;
 			this.rotation_rate += rot_acceleration*1/30;
 			this.rotation = Math.degToRad(this.initial_rotation + this.rotation_rate*this.age);
 
-		} else if (Data.particle.rotation.mode.value === 'parametric') {
+		} else if (Data.particle.rotation.inputs.mode.value === 'parametric') {
 
-			this.rotation = Math.degToRad(Data.particle.rotation.rotation.calculate(params));
+			this.rotation = Math.degToRad(Data.particle.rotation.inputs.rotation.calculate(params));
 		}
 
 		//Size
-		var size = Data.particle.appearance.size.calculate(params);
+		var size = Data.particle.appearance.inputs.size.calculate(params);
 		this.mesh.scale.x = size.x*2 || 0.0001;
 		this.mesh.scale.y = size.y*2 || 0.0001;
 
 		//UV
-		if (Data.particle.texture.mode.value === 'animated') {
-			var max_frame = Data.particle.texture.max_frame.calculate(params);
-			if (Data.particle.texture.stretch_to_lifetime.value && max_frame) {
+		if (Data.particle.texture.inputs.mode.value === 'animated') {
+			var max_frame = Data.particle.texture.inputs.max_frame.calculate(params);
+			if (Data.particle.texture.inputs.stretch_to_lifetime.value && max_frame) {
 				var fps = max_frame/this.lifetime;
 			} else {
-				var fps = Data.particle.texture.frames_per_second.calculate(params);
+				var fps = Data.particle.texture.inputs.frames_per_second.calculate(params);
 			}
 			if (Math.floor(this.loop_time*fps) > this.current_frame) {
 				this.current_frame = Math.floor(this.loop_time*fps);
 				if (max_frame && this.current_frame > max_frame) {
-					if (Data.particle.texture.loop.value) {
+					if (Data.particle.texture.inputs.loop.value) {
 						this.current_frame = 0;
 						this.loop_time = 0;
 						this.setFrame(this.current_frame);
@@ -474,15 +493,15 @@ class Particle {
 		}
 
 		//Color
-		if (Data.particle.color.mode.value === 'expression') {
-			var c = Data.particle.color.expression.calculate(params)
+		if (Data.particle.color.inputs.mode.value === 'expression') {
+			var c = Data.particle.color.inputs.expression.calculate(params)
 			this.material.color.r = c.x;
 			this.material.color.g = c.y;
 			this.material.color.b = c.z;
-		} else if (Data.particle.color.mode.value === 'gradient') {
-			var i = Data.particle.color.interpolant.calculate(params)
-			var r = Data.particle.color.range.calculate(params)
-			var c = Data.particle.color.gradient.calculate((i/r) * 100)
+		} else if (Data.particle.color.inputs.mode.value === 'gradient') {
+			var i = Data.particle.color.inputs.interpolant.calculate(params)
+			var r = Data.particle.color.inputs.range.calculate(params)
+			var c = Data.particle.color.inputs.gradient.calculate((i/r) * 100)
 
 			this.material.color.copy(c)
 		}
@@ -497,10 +516,10 @@ class Particle {
 	}
 	setFrame(n) {
 		var params = this.params()
-		var uv = Data.particle.texture.uv.calculate(params)
-		var size = Data.particle.texture.uv_size.calculate(params)
+		var uv = Data.particle.texture.inputs.uv.calculate(params)
+		var size = Data.particle.texture.inputs.uv_size.calculate(params)
 		if (n) {
-			var offset = Data.particle.texture.uv_step.calculate(params)
+			var offset = Data.particle.texture.inputs.uv_step.calculate(params)
 			uv.addScaledVector(offset, n)
 		}
 		this.setUV(uv.x, uv.y, size.x||Flipbook.width, size.y||Flipbook.height)
@@ -532,6 +551,8 @@ function initParticles() {
 		alphaTest: 0.2
 	});
 	updateMaterial()
+
+	console.log(Molang)
 
 	System.group = new THREE.Group()
 	View.scene.add(System.group)
@@ -571,9 +592,10 @@ function togglePause() {
 }
 function updateMaterial(cb) {
 	var url;
-	var path = Data.particle.texture.path.value;
-	if (Data.particle.texture.image.image) {
-		url = Data.particle.texture.image.image.data;
+	console.log(Data.particle)
+	var path = Data.particle.texture.inputs.path.value;
+	if (Data.particle.texture.inputs.image.image) {
+		url = Data.particle.texture.inputs.image.image.data;
 	} else {
 		if (path == 'textures/particle/particles') {
 			url = 'assets/default_particles.png';
@@ -606,14 +628,14 @@ function updateMaterial(cb) {
 		var x_factor = System.material.map.image.naturalWidth / Flipbook.width;
 		var y_factor = System.material.map.image.naturalHeight / Flipbook.height;
 		if (x_factor && x_factor != 1) {
-			factorize(Data.particle.texture.uv, 0, x_factor)
-			factorize(Data.particle.texture.uv_size, 0, x_factor)
-			factorize(Data.particle.texture.uv_step, 0, x_factor)
+			factorize(Data.particle.texture.inputs.uv, 0, x_factor)
+			factorize(Data.particle.texture.inputs.uv_size, 0, x_factor)
+			factorize(Data.particle.texture.inputs.uv_step, 0, x_factor)
 		}
 		if (y_factor && y_factor != 1) {
-			factorize(Data.particle.texture.uv, 1, y_factor)
-			factorize(Data.particle.texture.uv_size, 1, y_factor)
-			factorize(Data.particle.texture.uv_step, 1, y_factor)
+			factorize(Data.particle.texture.inputs.uv, 1, y_factor)
+			factorize(Data.particle.texture.inputs.uv_size, 1, y_factor)
+			factorize(Data.particle.texture.inputs.uv_step, 1, y_factor)
 		}
 		Flipbook.width = System.material.map.image.naturalWidth;
 		Flipbook.height = System.material.map.image.naturalHeight;
