@@ -64,12 +64,4 @@ export default {
 		height: 100%;
 		width: 100%;
 	}
-	.checkerboard {
-		--color-checker_offset: var(--color-bar);
-		--color-checkerboard: var(--color-interface);
-		background-color: var(--color-checkerboard) !important;
-		background-image: linear-gradient(45deg, var(--color-checkerboard) 25%, transparent 25%), linear-gradient(-45deg, var(--color-checkerboard) 25%, transparent 25%), linear-gradient(45deg, transparent 75%, var(--color-checkerboard) 75%), linear-gradient(-45deg, var(--color-checker_offset) 75%, var(--color-checkerboard) 75%);
-		background-size: 30px 30px;
-		background-position: 0 0, 0 15px, 15px -15px, -15px 0px;
-	}
 </style>

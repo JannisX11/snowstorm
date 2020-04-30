@@ -53,36 +53,45 @@ export default {
 </script>
 
 <style scoped>
+	content {
+		border-right: 1px solid var(--color-border);
+	}
     content h1 {
-		padding: 20px;
+		padding: 12px;
 		padding-bottom: 0;
 		margin: 0;
 		font-family: 'Josefin Sans', sans-serif;
-		font-weight: 600;
+		font-weight: 800;
 		font-size: 2.6em;
 		color: var(--color-title);
 		overflow: hidden;
+		background: linear-gradient(150deg, #dce4e8, #c2d2dc);
 	}
 	content > div {
 		overflow-y: scroll;
 		height: 100%;
+		padding-bottom: 240px;
+	}
+	.input_subject {
+		border-right: 1px solid var(--color-border);
 	}
 	.input_subject h3 {
 		background-color: var(--color-title);
-		padding: 5px;
+		padding: 4px;
+		font-size: 1.4em;
 		padding-left: 12px;
 	}
 	.input_group h4 {
 		background-color: var(--color-bar);
-		padding: 5px;
-		font-size: 1.4em;
+		padding: 4px;
+		font-size: 1.2em;
 		padding-left: 12px;
 	}
 	.input_group h4:hover {
-		background-color: #c5cde0;
+		filter: brightness(1.1);;
 	}
 	.input_group > ul {
-		padding: 12px;
+		padding: 8px;
 		padding-right: 2px;
 	}
 

@@ -37,7 +37,18 @@
 		--color-title: #9aa3b8;
 		--color-selection: rgba(110, 142, 191, 0.3);
 		--color-highlight: #f7f9ff;
-		--color-text: #212529;
+		--color-text: #434b53;
+	}
+	body {
+		--color-background: #29323a;
+		--color-dark: #20272d;
+		--color-border: #1a1c1f;
+		--color-interface: #29323a;
+		--color-bar: #34404a;
+		--color-title: #596b7b;
+		--color-selection: rgba(110, 142, 191, 0.3);
+		--color-highlight: #f7f9ff;
+		--color-text: #bcc3ca;
 	}
 
 
@@ -57,6 +68,11 @@
 	}
 	input, select {
 		font-weight: inherit;
+		background-color: var(--color-dark);
+		border: 1px solid var(--color-border);
+		color: var(--color-text);
+		height: 30px;
+		padding: 4px;
 	}
 	input[type=text], input[type=number], input:not([type]) {
 		font-family: 'Inconsolata', monospace;
@@ -67,6 +83,14 @@
 		vertical-align: middle;
 		margin: 0 0 2px 4px;
 		margin-top: 5px;
+	}
+	.checkerboard {
+		--color-checker_offset: var(--color-bar);
+		--color-checkerboard: var(--color-interface);
+		background-color: var(--color-checkerboard) !important;
+		background-image: linear-gradient(45deg, var(--color-checkerboard) 25%, transparent 25%), linear-gradient(-45deg, var(--color-checkerboard) 25%, transparent 25%), linear-gradient(45deg, transparent 75%, var(--color-checkerboard) 75%), linear-gradient(-45deg, var(--color-checker_offset) 75%, var(--color-checkerboard) 75%);
+		background-size: 16px 16px;
+		background-position: 0 0, 0 8px, 8px -8px, -8px 0px;
 	}
 	select {
 		height: 30px;
@@ -87,7 +111,7 @@
 		height: 100%;
         width: 100%;
         margin: 0;
-        font-size: 1rem;
+        font-size: 11pt;
         font-weight: 400;
         line-height: 1.5;
         color: var(--color-text);

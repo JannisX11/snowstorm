@@ -113,7 +113,7 @@ export default {
 		height: 100%;
 		width: 100%;
 		position: fixed;
-		font-weight: 300;
+		font-weight: 400;
 		--sidebar: 520px;
 	}
 	main {

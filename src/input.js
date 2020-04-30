@@ -3,6 +3,7 @@ import Molang from 'molangjs'
 import tinycolor from 'tinycolor2'
 import $ from 'jquery'
 
+
 import {ExpandedInput} from './components/ExpressionBar'
 
 export default class Input {
@@ -41,6 +42,9 @@ export default class Input {
 			this.value = []
 		} else if (this.type === 'list' && !this.value) {
 			this.value = []
+		} else if (this.type === 'image') {
+			this.value = '';
+			this.image_data = '';
 		}
 		this.default_value = this.value instanceof Array ? this.value.slice() : this.value;
 	}
@@ -49,7 +53,7 @@ export default class Input {
 			this.expanded = !this.expanded;
 		}
 	}
-	update() {
+	update(Data) {
 		var scope = this;
 		if (this.type === 'select') {
 			if (this.mode_groups instanceof Array) {
@@ -75,7 +79,7 @@ export default class Input {
 						name: file.name,
 						data: reader.result
 					}
-					$(e.target).siblings('.input_texture_preview').css('background-image', `url(${reader.result})`)
+					scope.image_data = reader.result
 					scope.updatePreview(scope.image)
 				}
 				reader.readAsDataURL(file)

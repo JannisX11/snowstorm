@@ -831,6 +831,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -943,7 +945,7 @@ exports = module.exports = __webpack_require__(/*! ../../node_modules/css-loader
 
 
 // module
-exports.push([module.i, "\ndiv#app[data-v-617ab0be] {\n\t\tdisplay: grid;\n\t\tgrid-template-rows:  64px calc(100% - 64px);\n\t\tgrid-template-columns: var(--sidebar) calc(100% - var(--sidebar));\n\t\tgrid-template-areas: \"sidebar header\" \"sidebar preview\";\n\t\theight: 100%;\n\t\twidth: 100%;\n\t\tposition: fixed;\n\t\tfont-weight: 300;\n\t\t--sidebar: 520px;\n}\nmain[data-v-617ab0be] {\n\t\tgrid-area: preview;\n}\nheader[data-v-617ab0be] {\n\t\tgrid-area: header;\n\t\tbackground-color: var(--color-bar);\n\t\tfont-size: 1.1em;\n}\ncontent[data-v-617ab0be] {\n\t\tgrid-area: sidebar;\n\t\tbackground-color: var(--color-interface);\n}\n/*Resize*/\n.resizer[data-v-617ab0be] {\n\t\ttop: 0;\n\t\tbottom: 0;\n\t\tposition: absolute;\n\t\twidth: 6px;\n\t\tmargin-left: -3px;\n\t\tcursor: ew-resize;\n}\n\t\n/*Footer*/\nfooter > *[data-v-617ab0be] {\n\t\tdisplay: inline-block;\n\t\tpadding: 2px 8px; \n\t\tpadding-top: 2px;\n\t\tbackground-color: var(--color-bar);\n}\ndiv.stat[data-v-617ab0be] {\n\t\tfloat: right;\n\t\tfont-size: 14.5pt;\n\t\tfont-family: 'Inconsolata', monospace;\n\t\tbackground: transparent;\n}\n/*Overlays*/\n\n", ""]);
+exports.push([module.i, "\ndiv#app[data-v-617ab0be] {\n\t\tdisplay: grid;\n\t\tgrid-template-rows:  64px calc(100% - 64px);\n\t\tgrid-template-columns: var(--sidebar) calc(100% - var(--sidebar));\n\t\tgrid-template-areas: \"sidebar header\" \"sidebar preview\";\n\t\theight: 100%;\n\t\twidth: 100%;\n\t\tposition: fixed;\n\t\tfont-weight: 400;\n\t\t--sidebar: 520px;\n}\nmain[data-v-617ab0be] {\n\t\tgrid-area: preview;\n}\nheader[data-v-617ab0be] {\n\t\tgrid-area: header;\n\t\tbackground-color: var(--color-bar);\n\t\tfont-size: 1.1em;\n}\ncontent[data-v-617ab0be] {\n\t\tgrid-area: sidebar;\n\t\tbackground-color: var(--color-interface);\n}\n/*Resize*/\n.resizer[data-v-617ab0be] {\n\t\ttop: 0;\n\t\tbottom: 0;\n\t\tposition: absolute;\n\t\twidth: 6px;\n\t\tmargin-left: -3px;\n\t\tcursor: ew-resize;\n}\n\t\n/*Footer*/\nfooter > *[data-v-617ab0be] {\n\t\tdisplay: inline-block;\n\t\tpadding: 2px 8px; \n\t\tpadding-top: 2px;\n\t\tbackground-color: var(--color-bar);\n}\ndiv.stat[data-v-617ab0be] {\n\t\tfloat: right;\n\t\tfont-size: 14.5pt;\n\t\tfont-family: 'Inconsolata', monospace;\n\t\tbackground: transparent;\n}\n/*Overlays*/\n\n", ""]);
 
 // exports
 
@@ -1019,7 +1021,7 @@ exports = module.exports = __webpack_require__(/*! ../../node_modules/css-loader
 
 
 // module
-exports.push([module.i, "\na[data-v-4a501398] {\n\tdisplay: block;\n\tpadding: 2px 20px; \n\tpadding-top: 3px;\n}\na[data-v-4a501398]:hover {\n\tbackground-color: var(--color-interface);\n\tcolor: black;\n}\nul#menu_bar[data-v-4a501398] {\n\theight: 32px;\n\tfont-weight: normal;\n\tpadding: 0 8px;\n}\nul#menu_bar > li[data-v-4a501398] {\n\tdisplay: inline-block;\n}\nul#menu_bar > li > ul[data-v-4a501398] {\n\tdisplay: none;\n\tposition: absolute;\n\tpadding: 0;\n\tz-index: 8;\n\tmin-width: 150px;\n\tbackground-color: var(--color-bar);\n}\nul#menu_bar > li:hover > ul[data-v-4a501398] {\n\tdisplay: block;\n}\nul#menu_bar > li:hover > a[data-v-4a501398] {\n\tbackground-color: var(--color-interface);\n}\n.mode_selector[data-v-4a501398] {\n\tfloat: right;\n\theight: 100%;\n\tpadding: 2px 10px;\n\tpadding-top: 3px;\n}\n.mode_selector[data-v-4a501398]:hover {\n\tbackground-color: var(--color-interface);\n\tcolor: black;\n}\n.mode_selector.selected[data-v-4a501398] {\n\tbackground-color: var(--color-background);\n\tcolor: var(--color-bar);\n}\n", ""]);
+exports.push([module.i, "\na[data-v-4a501398] {\n\tdisplay: block;\n\tpadding: 2px 20px; \n\tpadding-top: 3px;\n}\na[data-v-4a501398]:hover {\n\tbackground-color: var(--color-interface);\n\tcolor: black;\n}\nul#menu_bar[data-v-4a501398] {\n\theight: 32px;\n\tfont-weight: normal;\n\tpadding: 0 8px;\n}\nul#menu_bar > li[data-v-4a501398] {\n\tdisplay: inline-block;\n}\nul#menu_bar > li > ul[data-v-4a501398] {\n\tdisplay: none;\n\tposition: absolute;\n\tpadding: 0;\n\tz-index: 8;\n\tmin-width: 150px;\n\tbackground-color: var(--color-bar);\n}\nul#menu_bar > li:hover > ul[data-v-4a501398] {\n\tdisplay: block;\n}\nul#menu_bar > li:hover > a[data-v-4a501398] {\n\tbackground-color: var(--color-interface);\n}\n.mode_selector[data-v-4a501398] {\n\tfloat: right;\n\theight: 100%;\n\tpadding: 2px 10px;\n\tpadding-top: 3px;\n\tcursor: pointer;\n}\n.mode_selector[data-v-4a501398]:hover {\n\tbackground-color: var(--color-interface);\n}\n.mode_selector.selected[data-v-4a501398] {\n\tbackground-color: var(--color-background);\n\tcolor: var(--color-title);\n}\n", ""]);
 
 // exports
 
@@ -1057,7 +1059,7 @@ exports = module.exports = __webpack_require__(/*! ../../node_modules/css-loader
 
 
 // module
-exports.push([module.i, "\nmain#preview[data-v-48e6f1c8] {\n\tposition: relative;\n}\ncanvas[data-v-48e6f1c8] {\n\theight: 100%;\n\twidth: 100%;\n}\nfooter[data-v-48e6f1c8] {\n\tbackground-color: var(--color-bar);\n\tposition: absolute;\n\tbottom: 0px;\n\twidth: 800px;\n\tmargin-left: calc(50% - 400px);\n\tfont-size: 1.2em;\n\tpadding-left: 20px;\n\theight: 32px;\n}\n", ""]);
+exports.push([module.i, "\nmain#preview[data-v-48e6f1c8] {\n\t\tposition: relative;\n}\ncanvas[data-v-48e6f1c8] {\n\t\theight: 100%;\n\t\twidth: 100%;\n}\nfooter[data-v-48e6f1c8] {\n\t\tbackground-color: var(--color-bar);\n\t\tposition: absolute;\n\t\tbottom: 0px;\n\t\twidth: 800px;\n\t\tmargin-left: calc(50% - 400px);\n\t\tfont-size: 1.2em;\n\t\tpadding-left: 20px;\n        height: 32px;\n        box-shadow: 0 -1px 14px rgba(0,0,0,0.2);\n\t    position: absolute;\n}\n", ""]);
 
 // exports
 
@@ -1076,7 +1078,7 @@ exports = module.exports = __webpack_require__(/*! ../../node_modules/css-loader
 
 
 // module
-exports.push([module.i, "\ncontent h1[data-v-7d622f5c] {\n\t\tpadding: 20px;\n\t\tpadding-bottom: 0;\n\t\tmargin: 0;\n\t\tfont-family: 'Josefin Sans', sans-serif;\n\t\tfont-weight: 600;\n\t\tfont-size: 2.6em;\n\t\tcolor: var(--color-title);\n\t\toverflow: hidden;\n}\ncontent > div[data-v-7d622f5c] {\n\t\toverflow-y: scroll;\n\t\theight: 100%;\n}\n.input_subject h3[data-v-7d622f5c] {\n\t\tbackground-color: var(--color-title);\n\t\tpadding: 5px;\n\t\tpadding-left: 12px;\n}\n.input_group h4[data-v-7d622f5c] {\n\t\tbackground-color: var(--color-bar);\n\t\tpadding: 5px;\n\t\tfont-size: 1.4em;\n\t\tpadding-left: 12px;\n}\n.input_group h4[data-v-7d622f5c]:hover {\n\t\tbackground-color: #c5cde0;\n}\n.input_group > ul[data-v-7d622f5c] {\n\t\tpadding: 12px;\n\t\tpadding-right: 2px;\n}\n\n\n\n", ""]);
+exports.push([module.i, "\ncontent[data-v-7d622f5c] {\n\t\tborder-right: 1px solid var(--color-border);\n}\ncontent h1[data-v-7d622f5c] {\n\t\tpadding: 12px;\n\t\tpadding-bottom: 0;\n\t\tmargin: 0;\n\t\tfont-family: 'Josefin Sans', sans-serif;\n\t\tfont-weight: 800;\n\t\tfont-size: 2.6em;\n\t\tcolor: var(--color-title);\n\t\toverflow: hidden;\n\t\tbackground: linear-gradient(150deg, #dce4e8, #c2d2dc);\n}\ncontent > div[data-v-7d622f5c] {\n\t\toverflow-y: scroll;\n\t\theight: 100%;\n\t\tpadding-bottom: 240px;\n}\n.input_subject[data-v-7d622f5c] {\n\t\tborder-right: 1px solid var(--color-border);\n}\n.input_subject h3[data-v-7d622f5c] {\n\t\tbackground-color: var(--color-title);\n\t\tpadding: 4px;\n\t\tfont-size: 1.4em;\n\t\tpadding-left: 12px;\n}\n.input_group h4[data-v-7d622f5c] {\n\t\tbackground-color: var(--color-bar);\n\t\tpadding: 4px;\n\t\tfont-size: 1.2em;\n\t\tpadding-left: 12px;\n}\n.input_group h4[data-v-7d622f5c]:hover {\n\t\tfilter: brightness(1.1);\n}\n.input_group > ul[data-v-7d622f5c] {\n\t\tpadding: 8px;\n\t\tpadding-right: 2px;\n}\n\n\n\n", ""]);
 
 // exports
 
@@ -1095,7 +1097,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.curve[data-v-c64b3b48] {\n\tpadding-bottom: 8px;\n\tpadding-top: 12px;\n}\n.curve_display[data-v-c64b3b48] {\n\tposition: relative;\n\tbackground-color: var(--color-bar);\n\theight: 150px;\n\tmargin-top: 10px;\n}\n.curve_display svg[data-v-c64b3b48] {\n\theight: 100%;\n\twidth: 100%;\n}\n.curve_min_num[data-v-c64b3b48] {\n\tposition: absolute;\n\tbottom: 0;\n\tleft: 2px;\n\tpointer-events: none;\n}\n.curve_max_num[data-v-c64b3b48] {\n\tposition: absolute;\n\ttop: 0;\n\tleft: 2px;\n\tpointer-events: none;\n}\n.curve_display .curve_path[data-v-c64b3b48] {\n\tfill: none;\n\tstroke-width: 2px;\n\tstroke: var(--color-title);\n}\n.curve_display .vertical_line_path[data-v-c64b3b48] {\n\tfill: none;\n\tstroke-width: 2px;\n\tstroke-dasharray: 8;\n\tstroke: #b5c0d4;\n}\n.curve_display .horizontal_line_path[data-v-c64b3b48] {\n\tfill: none;\n\tstroke-width: 2px;\n\tstroke-dasharray: 6;\n\tstroke: #b5c0d4;\n}\n.curve_display .curve_controls[data-v-c64b3b48] {\n\tposition: absolute;\n\ttop: 0;\n\tleft: 0;\n\theight: 100%;\n\twidth: 100%;\n\tdisplay: flex;\n}\n.curve_controls .curve_node[data-v-c64b3b48],\n.curve_controls .curve_add[data-v-c64b3b48] {\n\theight: 100%;\n\tflex-grow: 1;\n}\n.curve_controls .curve_node[data-v-c64b3b48] {\n\tcursor: ns-resize;\n\tposition: relative;\n}\n.curve_node[data-v-c64b3b48]:hover {\n\tbackground-color: rgba(255, 255, 255, 0.2);\n}\n.curve_node .curve_node_remover[data-v-c64b3b48] {\n\tdisplay: none;\n\tposition: absolute;\n\tbottom: -25px;\n\twidth: 100%;\n\theight: 25px;\n\ttext-align: center;\n\tcursor: default;\n}\n.curve_node:hover .curve_node_remover[data-v-c64b3b48] {\n\tdisplay: block;\n}\n.curve_node .curve_node_remover i[data-v-c64b3b48] {\n\tbackground-color: var(--color-background);\n}\n.curve_node .curve_point[data-v-c64b3b48] {\n\tposition: absolute;\n\theight: 8px;\n\twidth: 8px;\n\tright: 0;\n\tleft: 0;\n\tmargin-bottom: 1px;\n\tmargin-right: auto;\n\tmargin-left: auto;\n\tbackground: #45617d;\n\tborder-radius: 50%;\n}\n.curve_node:hover .curve_point[data-v-c64b3b48] {\n\tbackground: white;\n}\n.curve_node .curve_point label[data-v-c64b3b48] {\n\tdisplay: none;\n\tpointer-events: none;\n\tmargin-left: 12px;\n\tmargin-top: -8.4px;\n}\n.curve_node:hover .curve_point label[data-v-c64b3b48] {\n\tdisplay: block;\n}\n.curve_controls .curve_add[data-v-c64b3b48] {\n\tcursor: copy;\n}\n.curve_controls .curve_add[data-v-c64b3b48]:hover {\n\tbackground-color: rgba(255, 255, 255, 0.2);\n}\n.curve_controls .curve_add[data-v-c64b3b48]:first-child, .curve_controls .curve_add[data-v-c64b3b48]:last-child {\n\tmax-width: 20px;\n}\n.curve_footer[data-v-c64b3b48] {\n\tdisplay: flex;\n\theight: 30px;\n}\n.curve_footer .fill_line[data-v-c64b3b48] {\n\tflex-grow: 1;\n\theight: 16px;\n\tborder-bottom: 2px solid var(--color-bar);\n}\n", ""]);
+exports.push([module.i, "\n.curve[data-v-c64b3b48] {\n\tpadding-bottom: 8px;\n\tpadding-top: 12px;\n}\n.curve_display[data-v-c64b3b48] {\n\tposition: relative;\n\tbackground-color: var(--color-bar);\n\theight: 150px;\n\tmargin-top: 10px;\n}\n.curve_display svg[data-v-c64b3b48] {\n\theight: 100%;\n\twidth: 100%;\n}\n.curve_min_num[data-v-c64b3b48] {\n\tposition: absolute;\n\tbottom: 0;\n\tleft: 2px;\n\tpointer-events: none;\n}\n.curve_max_num[data-v-c64b3b48] {\n\tposition: absolute;\n\ttop: 0;\n\tleft: 2px;\n\tpointer-events: none;\n}\n.curve_display .curve_path[data-v-c64b3b48] {\n\tfill: none;\n\tstroke-width: 2px;\n\tstroke: var(--color-title);\n}\n.curve_display .vertical_line_path[data-v-c64b3b48] {\n\tfill: none;\n\tstroke-width: 2px;\n\tstroke-dasharray: 8;\n\tstroke: var(--color-selection);\n}\n.curve_display .horizontal_line_path[data-v-c64b3b48] {\n\tfill: none;\n\tstroke-width: 2px;\n\tstroke-dasharray: 6;\n\tstroke: var(--color-selection);\n}\n.curve_display .curve_controls[data-v-c64b3b48] {\n\tposition: absolute;\n\ttop: 0;\n\tleft: 0;\n\theight: 100%;\n\twidth: 100%;\n\tdisplay: flex;\n}\n.curve_controls .curve_node[data-v-c64b3b48],\n.curve_controls .curve_add[data-v-c64b3b48] {\n\theight: 100%;\n\tflex-grow: 1;\n}\n.curve_controls .curve_node[data-v-c64b3b48] {\n\tcursor: ns-resize;\n\tposition: relative;\n}\n.curve_node[data-v-c64b3b48]:hover {\n\tbackground-color: rgba(174, 217, 255, 0.2);\n}\n.curve_node .curve_node_remover[data-v-c64b3b48] {\n\tdisplay: none;\n\tposition: absolute;\n\tbottom: -25px;\n\twidth: 100%;\n\theight: 25px;\n\ttext-align: center;\n\tcursor: default;\n}\n.curve_node:hover .curve_node_remover[data-v-c64b3b48] {\n\tdisplay: block;\n}\n.curve_node .curve_node_remover i[data-v-c64b3b48] {\n\tbackground-color: var(--color-background);\n}\n.curve_node .curve_point[data-v-c64b3b48] {\n\tposition: absolute;\n\theight: 8px;\n\twidth: 8px;\n\tright: 0;\n\tleft: 0;\n\tmargin-bottom: 1px;\n\tmargin-right: auto;\n\tmargin-left: auto;\n\tbackground: var(--color-text);\n\tborder-radius: 50%;\n}\n.curve_node:hover .curve_point[data-v-c64b3b48] {\n\tbackground: white;\n}\n.curve_node .curve_point label[data-v-c64b3b48] {\n\tdisplay: none;\n\tpointer-events: none;\n\tmargin-left: 12px;\n\tmargin-top: -8.4px;\n}\n.curve_node:hover .curve_point label[data-v-c64b3b48] {\n\tdisplay: block;\n}\n.curve_controls .curve_add[data-v-c64b3b48] {\n\tcursor: copy;\n}\n.curve_controls .curve_add[data-v-c64b3b48]:hover {\n\tbackground-color: rgba(255, 255, 255, 0.2);\n}\n.curve_controls .curve_add[data-v-c64b3b48]:first-child, .curve_controls .curve_add[data-v-c64b3b48]:last-child {\n\tmax-width: 20px;\n}\n.curve_footer[data-v-c64b3b48] {\n\tdisplay: flex;\n\theight: 30px;\n}\n.curve_footer .fill_line[data-v-c64b3b48] {\n\tflex-grow: 1;\n\theight: 16px;\n\tborder-bottom: 2px solid var(--color-bar);\n}\n", ""]);
 
 // exports
 
@@ -1114,7 +1116,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.color_gradient[data-v-5998915a] {\n\twidth: 100%;\n}\n.gradient_container[data-v-5998915a] {\n\tposition: relative;\n\twidth: calc(100% - 10px);\n\theight: 20px;\n\tmargin: 0 5px 10px 5px;\n\tborder: 1px solid black;\n}\n.gradient_point[data-v-5998915a] {\n\tposition: absolute;\n\theight: 16px;\n\twidth: 10px;\n\ttop: 10px;\n\tmargin-left: -5px;\n\tborder: 1px solid #212529;\n\toverflow: hidden;\n\tcursor: pointer;\n}\n.gradient_point.selected[data-v-5998915a] {\n\tborder-color: #fff;\n\tbox-shadow: 0 0 2px #000;\n\tz-index: 4;\n}\n.gradient_inner[data-v-5998915a] {\n\theight: 100%;\n\twidth: 100%;\n}\n.checkerboard[data-v-5998915a] {\n\t--color-checker_offset: var(--color-bar);\n\t--color-checkerboard: var(--color-interface);\n\tbackground-color: var(--color-checkerboard) !important;\n\tbackground-image: linear-gradient(45deg, var(--color-checkerboard) 25%, transparent 25%), linear-gradient(-45deg, var(--color-checkerboard) 25%, transparent 25%), linear-gradient(45deg, transparent 75%, var(--color-checkerboard) 75%), linear-gradient(-45deg, var(--color-checker_offset) 75%, var(--color-checkerboard) 75%);\n\tbackground-size: 30px 30px;\n\tbackground-position: 0 0, 0 15px, 15px -15px, -15px 0px;\n}\n", ""]);
+exports.push([module.i, "\n.color_gradient[data-v-5998915a] {\n\twidth: 100%;\n}\n.gradient_container[data-v-5998915a] {\n\tposition: relative;\n\twidth: calc(100% - 10px);\n\theight: 20px;\n\tmargin: 0 5px 10px 5px;\n\tborder: 1px solid black;\n}\n.gradient_point[data-v-5998915a] {\n\tposition: absolute;\n\theight: 16px;\n\twidth: 10px;\n\ttop: 10px;\n\tmargin-left: -5px;\n\tborder: 1px solid #212529;\n\toverflow: hidden;\n\tcursor: pointer;\n}\n.gradient_point.selected[data-v-5998915a] {\n\tborder-color: #fff;\n\tbox-shadow: 0 0 2px #000;\n\tz-index: 4;\n}\n.gradient_inner[data-v-5998915a] {\n\theight: 100%;\n\twidth: 100%;\n}\n", ""]);
 
 // exports
 
@@ -1133,7 +1135,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.input_wrapper[data-v-64472bb8] {\n\t\tmargin: 2px 0;\n}\n.input_wrapper > label[data-v-64472bb8] {\n\t\twidth: 100px;\n\t\ttext-align: right;\n\t\tmargin: 3px 0;\n}\n.input_right[data-v-64472bb8] {\n\t\tdisplay: inline-flex;\n\t\tvertical-align: top;\n\t\twidth: calc(100% - 110px);\n\t\tmargin-left: 4px;\n}\n.input_right.expandable[data-v-64472bb8] {\n\t\twidth: calc(100% - 134px);\n}\n.input_right[axes=\"1\"] input[data-v-64472bb8]:not([type=\"checkbox\"]), .input_right[axes=\"1\"] select[data-v-64472bb8]:not([type=\"checkbox\"]) {\n\t\twidth: 100%;\n}\n.input_right.expanded[data-v-64472bb8] {\n\t\tdisplay: block;\n\t\twidth: calc(100% - 7px);\n}\n.input_right.expanded input[data-v-64472bb8] {\n\t\twidth: 100% !important;\n\t\tdisplay: block;\n}\n.input_right .vc-chrome[data-v-64472bb8] {\n\t\tfloat: left;\n\t\tbox-shadow: none !important;\n\t\tborder-radius: 0;\n\t\tborder: 1px solid gray;\n\t\tfont-family: inherit;\n}\n.tool.input_expand_button[data-v-64472bb8] {\n\t\tfloat: right;\n\t\twidth: 22px;\n\t\tpadding-left: 3px;\n}\nul.input_list input[data-v-64472bb8] {\n\t\twidth: calc(100% - 100px);\n\t\tmargin-left: 62px;\n}\ninput#image[data-v-64472bb8] {\n\t\twidth: 100%;\n}\n.input_texture_preview[data-v-64472bb8] {\n\t\tdisplay: inline-block;\n\t\tbackground-size: contain;\n\t\tbackground-repeat: no-repeat;\n\t\theight: 48px;\n\t\twidth: 48px;\n\t\tvertical-align: middle;\n\t\tmargin-right: 8px;\n\t\tmargin-left: 44px;\n}\n.input_vector[data-v-64472bb8] {\n\t\twidth: 40px;\n\t\tflex-grow: 1;\n}\n", ""]);
+exports.push([module.i, "\n.input_wrapper[data-v-64472bb8] {\n\t\tmargin: 2px 0;\n}\n.input_wrapper > label[data-v-64472bb8] {\n\t\twidth: 100px;\n\t\ttext-align: right;\n\t\tmargin: 3px 0;\n}\n.input_right[data-v-64472bb8] {\n\t\tdisplay: inline-flex;\n\t\tvertical-align: top;\n\t\twidth: calc(100% - 110px);\n\t\tmargin-left: 4px;\n}\n.input_right.expandable[data-v-64472bb8] {\n\t\twidth: calc(100% - 134px);\n}\n.input_right[axes=\"1\"] input[data-v-64472bb8]:not([type=\"checkbox\"]), .input_right[axes=\"1\"] select[data-v-64472bb8]:not([type=\"checkbox\"]) {\n\t\twidth: 100%;\n}\n.input_right.expanded[data-v-64472bb8] {\n\t\tdisplay: block;\n\t\twidth: calc(100% - 7px);\n}\n.input_right.expanded input[data-v-64472bb8] {\n\t\twidth: 100% !important;\n\t\tdisplay: block;\n}\n.input_right .vc-chrome[data-v-64472bb8] {\n\t\tfloat: left;\n\t\tbox-shadow: none !important;\n\t\tborder-radius: 0;\n\t\tborder: 1px solid gray;\n\t\tfont-family: inherit;\n}\n.tool.input_expand_button[data-v-64472bb8] {\n\t\tfloat: right;\n\t\twidth: 22px;\n\t\tpadding-left: 3px;\n}\nul.input_list input[data-v-64472bb8] {\n\t\twidth: calc(100% - 100px);\n\t\tmargin-left: 62px;\n}\ninput#image[data-v-64472bb8] {\n\t\twidth: 100%;\n}\n.input_texture_wrapper[data-v-64472bb8] {\n\t\tdisplay: block;\n\t\theight: 48px;\n\t\twidth: 48px;\n\t\tmin-height: 48px;\n\t\tmin-width: 48px;\n\t\tmargin-right: 8px;\n\t\tmargin-left: 44px;\n}\n.input_texture_preview[data-v-64472bb8] {\n        width: 100%;\n        height: 100%;\n\t\tbackground-size: contain;\n\t\tbackground-repeat: no-repeat;\n}\n.input_vector[data-v-64472bb8] {\n\t\twidth: 40px;\n\t\tflex-grow: 1;\n}\n", ""]);
 
 // exports
 
@@ -1152,7 +1154,7 @@ exports = module.exports = __webpack_require__(/*! ../../node_modules/css-loader
 
 
 // module
-exports.push([module.i, "\r\n\t/*Setup*/\n::-webkit-scrollbar {\r\n\t\twidth: 8px;\r\n\t\theight: 8px;\n}\n::-webkit-scrollbar-track {\r\n\t\tbackground: var(--color-interface);\n}\n::-webkit-scrollbar-corner {\r\n\t\tbackground: var(--color-interface);\n}\n::-webkit-scrollbar-thumb {\r\n\t\tbackground: var(--color-bar);\n}\n::-webkit-scrollbar-thumb:hover {\r\n\t\tbackground: var(--color-bar);\n}\n::selection {\r\n\t\tbackground: var(--color-selection);\n}\n::placeholder {\r\n\t\topacity: 0.6;\n}\n* {\r\n\t\tscrollbar-width: thin;\r\n\t\tscrollbar-color: white var(--color-bar);\n}\nbody {\r\n\t\t--color-background: #29323a;\r\n\t\t--color-interface: #e5ebfa;\r\n\t\t--color-bar: #cfd7ea;\r\n\t\t--color-title: #9aa3b8;\r\n\t\t--color-selection: rgba(110, 142, 191, 0.3);\r\n\t\t--color-highlight: #f7f9ff;\r\n\t\t--color-text: #212529;\n}\nh1, h2, h3, h4, h5, h6 {\r\n\t\tmargin: 0;\r\n\t\tfont-weight: inherit;\n}\nul {\r\n\t\tlist-style: none;\r\n\t\tpadding-left: 0;\r\n\t\tmargin: 0;\n}\n* {\r\n\t\tmargin: 0;\r\n        padding: 0;\r\n        box-sizing: border-box;\n}\ninput, select {\r\n\t\tfont-weight: inherit;\n}\ninput[type=text], input[type=number], input:not([type]) {\r\n\t\tfont-family: 'Inconsolata', monospace;\n}\ninput[type=checkbox] {\r\n\t\theight: 15px;\r\n\t\twidth: 15px;\r\n\t\tvertical-align: middle;\r\n\t\tmargin: 0 0 2px 4px;\r\n\t\tmargin-top: 5px;\n}\nselect {\r\n\t\theight: 30px;\n}\ncode {\r\n\t\tpadding: 2px 8px;\r\n\t\tcolor: #1062ab;\r\n\t\tfont-size: 0.9em;\r\n\t\tbackground-color: var(--color-highlight);\r\n\t\tuser-select: auto;\n}\nbody {\r\n\t\timage-rendering: pixelated;\r\n\t\tbackground-color: var(--color-background);\r\n\t\tuser-select: none;\r\n\t\t-moz-user-select: none;\r\n\t\tfont-family: 'Lato', -apple-system, \"Segoe UI\", sans-serif;\r\n\t\theight: 100%;\r\n        width: 100%;\r\n        margin: 0;\r\n        font-size: 1rem;\r\n        font-weight: 400;\r\n        line-height: 1.5;\r\n        color: var(--color-text);\r\n        text-align: left;\n}", ""]);
+exports.push([module.i, "\r\n\t/*Setup*/\n::-webkit-scrollbar {\r\n\t\twidth: 8px;\r\n\t\theight: 8px;\n}\n::-webkit-scrollbar-track {\r\n\t\tbackground: var(--color-interface);\n}\n::-webkit-scrollbar-corner {\r\n\t\tbackground: var(--color-interface);\n}\n::-webkit-scrollbar-thumb {\r\n\t\tbackground: var(--color-bar);\n}\n::-webkit-scrollbar-thumb:hover {\r\n\t\tbackground: var(--color-bar);\n}\n::selection {\r\n\t\tbackground: var(--color-selection);\n}\n::placeholder {\r\n\t\topacity: 0.6;\n}\n* {\r\n\t\tscrollbar-width: thin;\r\n\t\tscrollbar-color: white var(--color-bar);\n}\nbody {\r\n\t\t--color-background: #29323a;\r\n\t\t--color-interface: #e5ebfa;\r\n\t\t--color-bar: #cfd7ea;\r\n\t\t--color-title: #9aa3b8;\r\n\t\t--color-selection: rgba(110, 142, 191, 0.3);\r\n\t\t--color-highlight: #f7f9ff;\r\n\t\t--color-text: #434b53;\n}\nbody {\r\n\t\t--color-background: #29323a;\r\n\t\t--color-dark: #20272d;\r\n\t\t--color-border: #1a1c1f;\r\n\t\t--color-interface: #29323a;\r\n\t\t--color-bar: #34404a;\r\n\t\t--color-title: #596b7b;\r\n\t\t--color-selection: rgba(110, 142, 191, 0.3);\r\n\t\t--color-highlight: #f7f9ff;\r\n\t\t--color-text: #bcc3ca;\n}\nh1, h2, h3, h4, h5, h6 {\r\n\t\tmargin: 0;\r\n\t\tfont-weight: inherit;\n}\nul {\r\n\t\tlist-style: none;\r\n\t\tpadding-left: 0;\r\n\t\tmargin: 0;\n}\n* {\r\n\t\tmargin: 0;\r\n        padding: 0;\r\n        box-sizing: border-box;\n}\ninput, select {\r\n\t\tfont-weight: inherit;\r\n\t\tbackground-color: var(--color-dark);\r\n\t\tborder: 1px solid var(--color-border);\r\n\t\tcolor: var(--color-text);\r\n\t\theight: 30px;\r\n\t\tpadding: 4px;\n}\ninput[type=text], input[type=number], input:not([type]) {\r\n\t\tfont-family: 'Inconsolata', monospace;\n}\ninput[type=checkbox] {\r\n\t\theight: 15px;\r\n\t\twidth: 15px;\r\n\t\tvertical-align: middle;\r\n\t\tmargin: 0 0 2px 4px;\r\n\t\tmargin-top: 5px;\n}\n.checkerboard {\r\n\t\t--color-checker_offset: var(--color-bar);\r\n\t\t--color-checkerboard: var(--color-interface);\r\n\t\tbackground-color: var(--color-checkerboard) !important;\r\n\t\tbackground-image: linear-gradient(45deg, var(--color-checkerboard) 25%, transparent 25%), linear-gradient(-45deg, var(--color-checkerboard) 25%, transparent 25%), linear-gradient(45deg, transparent 75%, var(--color-checkerboard) 75%), linear-gradient(-45deg, var(--color-checker_offset) 75%, var(--color-checkerboard) 75%);\r\n\t\tbackground-size: 16px 16px;\r\n\t\tbackground-position: 0 0, 0 8px, 8px -8px, -8px 0px;\n}\nselect {\r\n\t\theight: 30px;\n}\ncode {\r\n\t\tpadding: 2px 8px;\r\n\t\tcolor: #1062ab;\r\n\t\tfont-size: 0.9em;\r\n\t\tbackground-color: var(--color-highlight);\r\n\t\tuser-select: auto;\n}\nbody {\r\n\t\timage-rendering: pixelated;\r\n\t\tbackground-color: var(--color-background);\r\n\t\tuser-select: none;\r\n\t\t-moz-user-select: none;\r\n\t\tfont-family: 'Lato', -apple-system, \"Segoe UI\", sans-serif;\r\n\t\theight: 100%;\r\n        width: 100%;\r\n        margin: 0;\r\n        font-size: 11pt;\r\n        font-weight: 400;\r\n        line-height: 1.5;\r\n        color: var(--color-text);\r\n        text-align: left;\n}", ""]);
 
 // exports
 
@@ -70191,7 +70193,19 @@ var render = function() {
                   _vm._v(" "),
                   input.type == "image"
                     ? [
-                        _c("div", { staticClass: "input_texture_preview" }),
+                        _c(
+                          "div",
+                          { staticClass: "input_texture_wrapper checkerboard" },
+                          [
+                            _c("div", {
+                              staticClass: "input_texture_preview",
+                              style: {
+                                "background-image":
+                                  "url(" + input.image_data + ")"
+                              }
+                            })
+                          ]
+                        ),
                         _vm._v(" "),
                         _c(
                           "div",
@@ -82433,24 +82447,6 @@ module.exports = g;
 
 /***/ }),
 
-/***/ "./node_modules/webpack/buildin/system.js":
-/*!***********************************!*\
-  !*** (webpack)/buildin/system.js ***!
-  \***********************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-// Provide a "System" global.
-module.exports = {
-	// Make sure import is only used as "System.import"
-	import: function() {
-		throw new Error("System.import cannot be used indirectly");
-	}
-};
-
-
-/***/ }),
-
 /***/ "./src/app.js":
 /*!********************!*\
   !*** ./src/app.js ***!
@@ -84429,6 +84425,9 @@ var Input = /*#__PURE__*/function () {
       this.value = [];
     } else if (this.type === 'list' && !this.value) {
       this.value = [];
+    } else if (this.type === 'image') {
+      this.value = '';
+      this.image_data = '';
     }
 
     this.default_value = this.value instanceof Array ? this.value.slice() : this.value;
@@ -84443,7 +84442,7 @@ var Input = /*#__PURE__*/function () {
     }
   }, {
     key: "update",
-    value: function update() {
+    value: function update(Data) {
       var scope = this;
 
       if (this.type === 'select') {
@@ -84476,7 +84475,7 @@ var Input = /*#__PURE__*/function () {
               name: file.name,
               data: reader.result
             };
-            jquery__WEBPACK_IMPORTED_MODULE_3___default()(e.target).siblings('.input_texture_preview').css('background-image', "url(".concat(reader.result, ")"));
+            scope.image_data = reader.result;
             scope.updatePreview(scope.image);
           };
 
@@ -84601,10 +84600,12 @@ var Input = /*#__PURE__*/function () {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* WEBPACK VAR INJECTION */(function(System) {/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "forEachInput", function() { return forEachInput; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "forEachInput", function() { return forEachInput; });
 /* harmony import */ var _input__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./input */ "./src/input.js");
 /* harmony import */ var _gradient__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./gradient */ "./src/gradient.js");
+/* harmony import */ var _preview__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./preview */ "./src/preview.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
 
 
 
@@ -84650,13 +84651,13 @@ var Data = {
           placeholder: 'variable.name = value',
           type: 'list',
           onchange: function onchange() {
-            Emitter.creation_variables = {};
+            _preview__WEBPACK_IMPORTED_MODULE_2__["Emitter"].creation_variables = {};
             this.value.forEach(function (s, i) {
               var p = s.toLowerCase().replace(/\s/g, '').split('=');
 
               if (p.length > 1) {
                 var key = p.shift();
-                Emitter.creation_variables[key] = p.join('=');
+                _preview__WEBPACK_IMPORTED_MODULE_2__["Emitter"].creation_variables[key] = p.join('=');
               }
             });
           }
@@ -84667,13 +84668,13 @@ var Data = {
           placeholder: 'variable.name = value',
           type: 'list',
           onchange: function onchange() {
-            Emitter.tick_variables = {};
+            _preview__WEBPACK_IMPORTED_MODULE_2__["Emitter"].tick_variables = {};
             this.value.forEach(function (s, i) {
               var p = s.toLowerCase().replace(/\s/g, '').split('=');
 
               if (p.length > 1) {
                 var key = p.shift();
-                Emitter.tick_variables[key] = p.join('=');
+                _preview__WEBPACK_IMPORTED_MODULE_2__["Emitter"].tick_variables[key] = p.join('=');
               }
             });
           }
@@ -84740,7 +84741,7 @@ var Data = {
             expression: 'Expression'
           },
           updatePreview: function updatePreview(m) {
-            Emitter.mode = m;
+            _preview__WEBPACK_IMPORTED_MODULE_2__["Emitter"].mode = m;
           }
         }),
         active_time: new _input__WEBPACK_IMPORTED_MODULE_0__["default"]({
@@ -84750,7 +84751,7 @@ var Data = {
           required: true,
           value: 1,
           updatePreview: function updatePreview(v) {
-            Emitter.active_time = v;
+            _preview__WEBPACK_IMPORTED_MODULE_2__["Emitter"].active_time = v;
           }
         }),
         sleep_time: new _input__WEBPACK_IMPORTED_MODULE_0__["default"]({
@@ -84758,7 +84759,7 @@ var Data = {
           info: 'emitter will pause emitting particles for this time per loop',
           enabled_modes: ['looping'],
           updatePreview: function updatePreview(v) {
-            Emitter.sleep_time = v;
+            _preview__WEBPACK_IMPORTED_MODULE_2__["Emitter"].sleep_time = v;
           }
         }),
         activation: new _input__WEBPACK_IMPORTED_MODULE_0__["default"]({
@@ -84791,7 +84792,7 @@ var Data = {
             entity_aabb: 'Entity Bounding Box'
           },
           updatePreview: function updatePreview(m) {
-            Emitter.shape = m;
+            _preview__WEBPACK_IMPORTED_MODULE_2__["Emitter"].shape = m;
           }
         }),
         offset: new _input__WEBPACK_IMPORTED_MODULE_0__["default"]({
@@ -85027,13 +85028,13 @@ var Data = {
           placeholder: 'textures/particle/particles',
           label: 'Texture',
           updatePreview: function updatePreview() {
-            updateMaterial();
+            Object(_preview__WEBPACK_IMPORTED_MODULE_2__["updateMaterial"])();
           }
         }),
         image: new _input__WEBPACK_IMPORTED_MODULE_0__["default"]({
           type: 'image',
           updatePreview: function updatePreview() {
-            updateMaterial();
+            Object(_preview__WEBPACK_IMPORTED_MODULE_2__["updateMaterial"])();
           }
         }),
         mode: new _input__WEBPACK_IMPORTED_MODULE_0__["default"]({
@@ -85108,7 +85109,7 @@ var Data = {
           info: 'Set a static color for all emitted particles',
           updatePreview: function updatePreview(c) {
             if (!c) return;
-            System.material.color.copy(c);
+            _preview__WEBPACK_IMPORTED_MODULE_2__["System"].material.color.copy(c);
           }
         }),
         interpolant: new _input__WEBPACK_IMPORTED_MODULE_0__["default"]({
@@ -85182,9 +85183,9 @@ function forEachInput(cb) {
       var group = Data[k_subject][k_group];
 
       if (_typeof(group) === 'object') {
-        for (var key in group) {
-          if (group[key] instanceof _input__WEBPACK_IMPORTED_MODULE_0__["default"]) {
-            cb(group[key], key);
+        for (var key in group.inputs) {
+          if (group.inputs[key] instanceof _input__WEBPACK_IMPORTED_MODULE_0__["default"]) {
+            cb(group.inputs[key], key);
           }
         }
       }
@@ -85195,13 +85196,12 @@ function forEachInput(cb) {
 
 forEachInput(function (input) {
   if (input.type === 'select') {
-    input.update();
+    input.update(Data);
   }
 });
 window.Data = Data;
 /* harmony default export */ __webpack_exports__["default"] = (Data);
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../node_modules/webpack/buildin/system.js */ "./node_modules/webpack/buildin/system.js")))
 
 /***/ }),
 

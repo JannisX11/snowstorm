@@ -1,6 +1,4 @@
-var header_vue, footer_vue;
 
-var open_mode = 'preview';
 
 $.ajaxSetup({ cache: false });
 
@@ -36,64 +34,6 @@ class Overlay {
 	}
 }
 
-class ResizeLine {
-	constructor(data) {
-		var scope = this;
-		this.id = data.id
-		this.horizontal = data.horizontal === true
-		this.position = data.position
-		this.width = 0;
-		var jq = $('<div class="resizer '+(data.horizontal ? 'horizontal' : 'vertical')+'"></div>')
-		this.node = jq.get(0)
-		$(document.body).append(this.node)
-		jq.draggable({
-			axis: this.horizontal ? 'y' : 'y',
-			containment: 'body',
-			revert: true,
-			start: function(e, u) {
-				scope.before = data.get()
-			},
-			drag: function(e, u) {
-				if (scope.horizontal) {
-					data.set(scope.before, u.position.top - u.originalPosition.top)
-				} else {
-					data.set(scope.before, (e.clientX - u.position.left))
-				}
-			},
-			stop: function(e, u) {
-				scope.position(scope);
-			}
-		})
-	}
-	setPosition(data) {
-		var jq = $(this.node)
-		jq.css('top', 	data.top 	!== undefined ? data.top+	'px' : '')
-		jq.css('bottom',data.bottom !== undefined ? data.bottom+'px' : '')
-		jq.css('left', 	data.left 	!== undefined ? data.left+	'px' : '')
-		jq.css('right', data.right 	!== undefined ? data.right+	'px' : '')
-
-		if (data.top !== undefined) {
-			jq.css('top', data.top+'px')
-		}
-		if (data.bottom !== undefined && (!data.horizontal || data.top === undefined)) {
-			jq.css('bottom', data.bottom+'px')
-		}
-		if (data.left !== undefined) {
-			jq.css('left', data.left+'px')
-		}
-		if (data.right !== undefined && (data.horizontal || data.left === undefined)) {
-			jq.css('right', data.right+'px')
-		}
-	}
-}
-function setMode(id) {
-	$('.mode_selector.selected').removeClass('selected');
-	$('.mode_selector.'+id).addClass('selected');
-
-	$('main.selected').removeClass('selected');
-	$('main#'+id).addClass('selected');
-	open_mode = id;
-}
 (function() {
 	let previous_text;
 	setInterval(_ => {
@@ -124,24 +64,6 @@ if (window.parent !== window) {
 var ExpandedInput, MolangSheet;
 $(document).ready(() => {
 
-	var sidebar_width = 520;
-	var sidebar_resizer = new ResizeLine({
-		id: 'sidebar',
-		get: () => sidebar_width,
-		set: (o, diff) => {
-			sidebar_width = Math.clamp(o+diff, 320, document.body.clientWidth-40);
-			$(document.body).css('--sidebar', sidebar_width+'px');
-			resize();
-		},
-		position: (line) => {
-			line.setPosition({
-				top: 32,
-				bottom: 0,
-				left: sidebar_width
-			})
-		},
-	})
-	sidebar_resizer.position(sidebar_resizer)
 
 	header_vue = new Vue({
 		el: 'header',
@@ -187,38 +109,14 @@ $(document).ready(() => {
 			]
 		}
 	})
-	footer_vue = new Vue({
-		el: 'footer',
-		data: {
-			fps: 0,
-			particles: 0
-		}
-	})
+
 
 	MolangSheet = new Overlay($('#molang_sheet'), {
 		
 	})
 
 
-	ExpandedInput = {
-		input: 0,
-		axis: null
-	}
-	ExpandedInput.obj = $('#expression_bar input')
-	.on('input', function(e) {
-		if (!ExpandedInput.input) return;
-		var val = $(this).val()
-		var input = ExpandedInput.input;
-		if (input.axis_count > 1 || input.type == 'list') {
-			var arr = [];
-			for (var i = 0; i < input.axis_count; i++) {
-				arr[i] = (i == ExpandedInput.axis) ? val : input.value[i];
-			}
-			input.set(arr)
-		} else {
-			input.value = val;
-		}
-	})
+
 
 	document.ondragover = function(event) {
 		event.preventDefault()

@@ -58,6 +58,8 @@
 		margin-left: calc(50% - 400px);
 		font-size: 1.2em;
 		padding-left: 20px;
-		height: 32px;
+        height: 32px;
+        box-shadow: 0 -1px 14px rgba(0,0,0,0.2);
+	    position: absolute;
 	}
 </style>

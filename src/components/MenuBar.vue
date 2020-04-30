@@ -106,13 +106,13 @@ export default {
 		height: 100%;
 		padding: 2px 10px;
 		padding-top: 3px;
+		cursor: pointer;
 	}
 	.mode_selector:hover {
 		background-color: var(--color-interface);
-		color: black;
 	}
 	.mode_selector.selected {
 		background-color: var(--color-background);
-		color: var(--color-bar);
+		color: var(--color-title);
 	}
 </style>

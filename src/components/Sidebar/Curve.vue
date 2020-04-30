@@ -84,13 +84,13 @@ export default {
 		fill: none;
 		stroke-width: 2px;
 		stroke-dasharray: 8;
-		stroke: #b5c0d4;
+		stroke: var(--color-selection);
 	}
 	.curve_display .horizontal_line_path {
 		fill: none;
 		stroke-width: 2px;
 		stroke-dasharray: 6;
-		stroke: #b5c0d4;
+		stroke: var(--color-selection);
 	}
 	.curve_display .curve_controls {
 		position: absolute;
@@ -110,7 +110,7 @@ export default {
 		position: relative;
 	}
 	.curve_node:hover {
-		background-color: rgba(255, 255, 255, 0.2);
+		background-color: rgba(174, 217, 255, 0.2);;
 	}
 	.curve_node .curve_node_remover {
 		display: none;
@@ -136,7 +136,7 @@ export default {
 		margin-bottom: 1px;
 		margin-right: auto;
 		margin-left: auto;
-		background: #45617d;
+		background: var(--color-text);
 		border-radius: 50%;
 	}
 	.curve_node:hover .curve_point {

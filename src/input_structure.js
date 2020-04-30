@@ -1,5 +1,6 @@
 import Input from './input'
 import Gradient from './gradient'
+import {Emitter, updateMaterial, System} from './preview'
 
 const Data = {
 	general: {
@@ -565,9 +566,9 @@ function forEachInput(cb) {
 		for (var k_group in Data[k_subject]) {
 			var group = Data[k_subject][k_group]
 			if (typeof group === 'object') {
-				for (var key in group) {
-					if (group[key] instanceof Input) {
-						cb(group[key], key)
+				for (var key in group.inputs) {
+					if (group.inputs[key] instanceof Input) {
+						cb(group.inputs[key], key)
 					}
 				}
 			}
@@ -577,7 +578,7 @@ function forEachInput(cb) {
 //Setup Data
 forEachInput(input => {
 	if (input.type === 'select') {
-		input.update()
+		input.update(Data)
 	}
 })
 

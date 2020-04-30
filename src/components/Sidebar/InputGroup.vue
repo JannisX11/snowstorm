@@ -84,7 +84,9 @@
 
                 <!--Image-->
                 <template v-if="input.type == 'image'">
-                    <div class="input_texture_preview"></div>
+                    <div class="input_texture_wrapper checkerboard">
+                        <div class="input_texture_preview" :style="{'background-image': `url(${input.image_data})`}"></div>
+                    </div>
                     <div class="tool" v-on:click="input.reset()"><i class="fas fa-times-circle"></i></div>
                     <input  v-bind:id="key" type="file" accept=".png" v-on:change="input.change($event)">
                 </template>
@@ -170,15 +172,20 @@ export default {
 	input#image {
 		width: 100%;
 	}
-	.input_texture_preview {
-		display: inline-block;
-		background-size: contain;
-		background-repeat: no-repeat;
+	.input_texture_wrapper {
+		display: block;
 		height: 48px;
 		width: 48px;
-		vertical-align: middle;
+		min-height: 48px;
+		min-width: 48px;
 		margin-right: 8px;
 		margin-left: 44px;
+	}
+	.input_texture_preview {
+        width: 100%;
+        height: 100%;
+		background-size: contain;
+		background-repeat: no-repeat;
 	}
 	.input_vector {
 		width: 40px;
