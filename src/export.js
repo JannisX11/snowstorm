@@ -1,5 +1,5 @@
 import Data from './input_structure'
-import {compileJSON} from 'util'
+import {compileJSON, IO} from './util'
 
 import {Flipbook} from './preview'
 
@@ -334,7 +334,17 @@ function generateFile(options) {
 
 	return file;
 }
+function getName() {
+	var name = Data.general.general.inputs.identifier.value
+	if (name) {
+		name = name.replace(/^\w+:/, '');
+	} else {
+		name = 'particles';
+	}
+	return name;
+}
 function downloadFile() {
+	console.log({downloadFile, compileJSON, generateFile, getName, IO})
 	var content = compileJSON(generateFile())
 	IO.export({
 		name: getName()+'.json',

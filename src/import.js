@@ -1,3 +1,10 @@
+import Molang from 'molangjs'
+import $ from 'jquery'
+import {IO} from './util'
+import Data, {forEachInput} from './input_structure'
+import Curve from './curves'
+import {startAnimation, updateMaterial, Flipbook} from './preview'
+
 function loadFile(data) {
 
 	if (data && data.particle_effect && startNewProject()) {
@@ -6,12 +13,12 @@ function loadFile(data) {
 		var curves = data.particle_effect.curves;
 		var desc = data.particle_effect.description;
 		if (desc && desc.identifier) {
-			Data.general.general.identifier.set(desc.identifier)
+			Data.general.general.inputs.identifier.set(desc.identifier)
 		}
 		if (desc && desc.basic_render_parameters) {
-			Data.particle.texture.path.set(desc.basic_render_parameters.texture)
+			Data.particle.texture.inputs.path.set(desc.basic_render_parameters.texture)
 
-			Data.particle.appearance.material.set(desc.basic_render_parameters.material)
+			Data.particle.appearance.inputs.material.set(desc.basic_render_parameters.material)
 		}
 		if (curves) {
 			for (var key in curves) {
@@ -29,7 +36,7 @@ function loadFile(data) {
 					})
 					new_curve.updateMinMax();
 				}
-				Data.general.curves.curves.push(new_curve);
+				Data.general.curves.inputs.curves.push(new_curve);
 			}
 		}
 
@@ -41,166 +48,166 @@ function loadFile(data) {
 				var cr_v = comp('emitter_initialization').creation_expression;
 				var up_v = comp('emitter_initialization').per_update_expression;
 				if (typeof cr_v == 'string') {
-					Data.general.variables.creation_vars.set(cr_v.replace(/;+$/, '').split(';'))
+					Data.general.variables.inputs.creation_vars.set(cr_v.replace(/;+$/, '').split(';'))
 				}
 				if (typeof up_v == 'string') {
-					Data.general.variables.tick_vars.set(up_v.replace(/;+$/, '').split(';'))
+					Data.general.variables.inputs.tick_vars.set(up_v.replace(/;+$/, '').split(';'))
 				}
 			}
 			if (comp('emitter_local_space')) {
-				Data.general.position.local_position.set(comp('emitter_local_space').position)
-				Data.general.position.local_rotation.set(comp('emitter_local_space').rotation)
+				Data.general.position.inputs.local_position.set(comp('emitter_local_space').position)
+				Data.general.position.inputs.local_rotation.set(comp('emitter_local_space').rotation)
 			}
 			if (comp('emitter_rate_steady')) {
-				Data.emitter.rate.mode.set('steady')
-				Data.emitter.rate.rate.set(comp('emitter_rate_steady').spawn_rate)
-				Data.emitter.rate.maximum.set(comp('emitter_rate_steady').max_particles)
+				Data.emitter.rate.inputs.mode.set('steady')
+				Data.emitter.rate.inputs.rate.set(comp('emitter_rate_steady').spawn_rate)
+				Data.emitter.rate.inputs.maximum.set(comp('emitter_rate_steady').max_particles)
 			}
 			if (comp('emitter_rate_instant')) {
-				Data.emitter.rate.mode.set('instant')
-				Data.emitter.rate.amount.set(comp('emitter_rate_instant').num_particles)
+				Data.emitter.rate.inputs.mode.set('instant')
+				Data.emitter.rate.inputs.amount.set(comp('emitter_rate_instant').num_particles)
 			}
 			if (comp('emitter_lifetime_once')) {
-				Data.emitter.lifetime.mode.set('once')
-				Data.emitter.lifetime.active_time.set(comp('emitter_lifetime_once').active_time)
+				Data.emitter.lifetime.inputs.mode.set('once')
+				Data.emitter.lifetime.inputs.active_time.set(comp('emitter_lifetime_once').active_time)
 			}
 			if (comp('emitter_lifetime_looping')) {
-				Data.emitter.lifetime.mode.set('looping')
-				Data.emitter.lifetime.active_time.set(comp('emitter_lifetime_looping').active_time)
-				Data.emitter.lifetime.sleep_time.set(comp('emitter_lifetime_looping').sleep_time)
+				Data.emitter.lifetime.inputs.mode.set('looping')
+				Data.emitter.lifetime.inputs.active_time.set(comp('emitter_lifetime_looping').active_time)
+				Data.emitter.lifetime.inputs.sleep_time.set(comp('emitter_lifetime_looping').sleep_time)
 			}
 			if (comp('emitter_lifetime_expression')) {
-				Data.emitter.lifetime.mode.set('expression')
-				Data.emitter.lifetime.activation.set(comp('emitter_lifetime_expression').activation_expression)
-				Data.emitter.lifetime.expiration.set(comp('emitter_lifetime_expression').expiration_expression)
+				Data.emitter.lifetime.inputs.mode.set('expression')
+				Data.emitter.lifetime.inputs.activation.set(comp('emitter_lifetime_expression').activation_expression)
+				Data.emitter.lifetime.inputs.expiration.set(comp('emitter_lifetime_expression').expiration_expression)
 			}
 			var shape_component = comp('emitter_shape_point') || comp('emitter_shape_custom');
 			if (shape_component) {
-				Data.emitter.shape.mode.set('point')
-				Data.emitter.shape.offset.set(shape_component.offset)
+				Data.emitter.shape.inputs.mode.set('point')
+				Data.emitter.shape.inputs.offset.set(shape_component.offset)
 			}
 			if (comp('emitter_shape_sphere')) {
 				shape_component = comp('emitter_shape_sphere');
-				Data.emitter.shape.mode.set('sphere')
-				Data.emitter.shape.offset.set(shape_component.offset)
-				Data.emitter.shape.radius.set(shape_component.radius)
-				Data.emitter.shape.surface_only.set(shape_component.surface_only)
+				Data.emitter.shape.inputs.mode.set('sphere')
+				Data.emitter.shape.inputs.offset.set(shape_component.offset)
+				Data.emitter.shape.inputs.radius.set(shape_component.radius)
+				Data.emitter.shape.inputs.surface_only.set(shape_component.surface_only)
 			}
 			if (comp('emitter_shape_box')) {
 				shape_component = comp('emitter_shape_box');
-				Data.emitter.shape.mode.set('box')
-				Data.emitter.shape.offset.set(shape_component.offset)
-				Data.emitter.shape.half_dimensions.set(shape_component.half_dimensions)
-				Data.emitter.shape.surface_only.set(shape_component.surface_only)
+				Data.emitter.shape.inputs.mode.set('box')
+				Data.emitter.shape.inputs.offset.set(shape_component.offset)
+				Data.emitter.shape.inputs.half_dimensions.set(shape_component.half_dimensions)
+				Data.emitter.shape.inputs.surface_only.set(shape_component.surface_only)
 			}
 			if (comp('emitter_shape_disc')) {
 				shape_component = comp('emitter_shape_disc');
-				Data.emitter.shape.mode.set('disc')
-				Data.emitter.shape.offset.set(shape_component.offset)
+				Data.emitter.shape.inputs.mode.set('disc')
+				Data.emitter.shape.inputs.offset.set(shape_component.offset)
 				switch (shape_component.plane_normal) {
-					case 'x': Data.emitter.shape.plane_normal.set([1, 0, 0]); break;
-					case 'y': Data.emitter.shape.plane_normal.set([0, 1, 0]); break;
-					case 'z': Data.emitter.shape.plane_normal.set([0, 0, 1]); break;
-					default:  Data.emitter.shape.plane_normal.set(shape_component.plane_normal); break;
+					case 'x': Data.emitter.shape.inputs.plane_normal.set([1, 0, 0]); break;
+					case 'y': Data.emitter.shape.inputs.plane_normal.set([0, 1, 0]); break;
+					case 'z': Data.emitter.shape.inputs.plane_normal.set([0, 0, 1]); break;
+					default:  Data.emitter.shape.inputs.plane_normal.set(shape_component.plane_normal); break;
 				}
-				Data.emitter.shape.radius.set(shape_component.radius)
-				Data.emitter.shape.surface_only.set(shape_component.surface_only)
+				Data.emitter.shape.inputs.radius.set(shape_component.radius)
+				Data.emitter.shape.inputs.surface_only.set(shape_component.surface_only)
 			}
 			if (comp('emitter_shape_entity_aabb')) {
-				Data.emitter.shape.mode.set('entity_aabb')
-				Data.emitter.shape.surface_only.set(comp('emitter_shape_entity_aabb').surface_only)
+				Data.emitter.shape.inputs.mode.set('entity_aabb')
+				Data.emitter.shape.inputs.surface_only.set(comp('emitter_shape_entity_aabb').surface_only)
 				shape_component = comp('emitter_shape_entity_aabb');
 			}
 			if (shape_component && shape_component.direction) {
 				if (shape_component.direction == 'inwards' || shape_component.direction == 'outwards') {
-					Data.particle.direction.mode.set(shape_component.direction)
+					Data.particle.direction.inputs.mode.set(shape_component.direction)
 				} else {
-					Data.particle.direction.mode.set('direction')
-					Data.particle.direction.direction.set(shape_component.direction)
+					Data.particle.direction.inputs.mode.set('direction')
+					Data.particle.direction.inputs.direction.set(shape_component.direction)
 				}
 			}
 
 			if (comp('particle_initial_spin')) {
-				Data.particle.rotation.initial_rotation.set(comp('particle_initial_spin').rotation)
-				Data.particle.rotation.rotation_rate.set(comp('particle_initial_spin').rotation_rate)
+				Data.particle.rotation.inputs.initial_rotation.set(comp('particle_initial_spin').rotation)
+				Data.particle.rotation.inputs.rotation_rate.set(comp('particle_initial_spin').rotation_rate)
 			}
 			if (comp('particle_kill_plane')) {
-				Data.particle.lifetime.kill_plane.set(comp('particle_kill_plane'))
+				Data.particle.lifetime.inputs.kill_plane.set(comp('particle_kill_plane'))
 			}
 
 			if (comp('particle_motion_dynamic')) {
-				Data.particle.motion.mode.set('dynamic')
-				Data.particle.motion.linear_acceleration.set(comp('particle_motion_dynamic').linear_acceleration)
-				Data.particle.motion.linear_drag_coefficient.set(comp('particle_motion_dynamic').linear_drag_coefficient)
-				Data.particle.rotation.rotation_acceleration.set(comp('particle_motion_dynamic').rotation_acceleration)
-				Data.particle.rotation.rotation_drag_coefficient.set(comp('particle_motion_dynamic').rotation_drag_coefficient)
-				Data.particle.motion.linear_speed.set(1)
+				Data.particle.motion.inputs.mode.set('dynamic')
+				Data.particle.motion.inputs.linear_acceleration.set(comp('particle_motion_dynamic').linear_acceleration)
+				Data.particle.motion.inputs.linear_drag_coefficient.set(comp('particle_motion_dynamic').linear_drag_coefficient)
+				Data.particle.rotation.inputs.rotation_acceleration.set(comp('particle_motion_dynamic').rotation_acceleration)
+				Data.particle.rotation.inputs.rotation_drag_coefficient.set(comp('particle_motion_dynamic').rotation_drag_coefficient)
+				Data.particle.motion.inputs.linear_speed.set(1)
 			}
 			if (comp('particle_motion_parametric')) {
-				Data.particle.motion.mode.set('parametric')
-				Data.particle.motion.relative_position.set(comp('particle_motion_parametric').relative_position)
-				Data.particle.motion.direction.set(comp('particle_motion_parametric').direction)
-				Data.particle.rotation.rotation.set(comp('particle_motion_parametric').rotation)
+				Data.particle.motion.inputs.mode.set('parametric')
+				Data.particle.motion.inputs.relative_position.set(comp('particle_motion_parametric').relative_position)
+				Data.particle.motion.inputs.direction.set(comp('particle_motion_parametric').direction)
+				Data.particle.rotation.inputs.rotation.set(comp('particle_motion_parametric').rotation)
 			}
 			if (comp('particle_motion_collision')) {
-				Data.particle.collision.collision_drag.set(comp('particle_motion_collision').collision_drag)
-				Data.particle.collision.coefficient_of_restitution.set(comp('particle_motion_collision').coefficient_of_restitution)
-				Data.particle.collision.collision_radius.set(comp('particle_motion_collision').collision_radius)
-				Data.particle.collision.expire_on_contact.set(comp('particle_motion_collision').expire_on_contact)
+				Data.particle.collision.inputs.collision_drag.set(comp('particle_motion_collision').collision_drag)
+				Data.particle.collision.inputs.coefficient_of_restitution.set(comp('particle_motion_collision').coefficient_of_restitution)
+				Data.particle.collision.inputs.collision_radius.set(comp('particle_motion_collision').collision_radius)
+				Data.particle.collision.inputs.expire_on_contact.set(comp('particle_motion_collision').expire_on_contact)
 			}
 			if (comp('particle_initial_speed')) {
 				var c = comp('particle_initial_speed')
 				if (typeof c !== 'object') {
-					Data.particle.motion.linear_speed.set(c)
+					Data.particle.motion.inputs.linear_speed.set(c)
 				} else {
-					Data.particle.direction.mode.set('direction')
-					Data.particle.direction.direction.set(comp('particle_initial_speed'))
-					Data.particle.motion.linear_speed.set(1)
+					Data.particle.direction.inputs.mode.set('direction')
+					Data.particle.direction.inputs.direction.set(comp('particle_initial_speed'))
+					Data.particle.motion.inputs.linear_speed.set(1)
 				}
 			}
 
 			if (comp('particle_lifetime_expression')) {
-				Data.particle.lifetime.mode.set('expression')
+				Data.particle.lifetime.inputs.mode.set('expression')
 				if (comp('particle_lifetime_expression').expiration_expression) {
-					Data.particle.lifetime.mode.set('expression')
-					Data.particle.lifetime.expiration_expression.set(comp('particle_lifetime_expression').expiration_expression)
+					Data.particle.lifetime.inputs.mode.set('expression')
+					Data.particle.lifetime.inputs.expiration_expression.set(comp('particle_lifetime_expression').expiration_expression)
 				} else {
-					Data.particle.lifetime.mode.set('time')
-					Data.particle.lifetime.max_lifetime.set(comp('particle_lifetime_expression').max_lifetime)
+					Data.particle.lifetime.inputs.mode.set('time')
+					Data.particle.lifetime.inputs.max_lifetime.set(comp('particle_lifetime_expression').max_lifetime)
 				}
 			}
 			if (comp('particle_expire_if_in_blocks') instanceof Array) {
-				Data.particle.lifetime.expire_in.set(comp('particle_expire_if_in_blocks'))
+				Data.particle.lifetime.inputs.expire_in.set(comp('particle_expire_if_in_blocks'))
 			}
 			if (comp('particle_expire_if_not_in_blocks') instanceof Array) {
-				Data.particle.lifetime.expire_outside.set(comp('particle_expire_if_not_in_blocks'))
+				Data.particle.lifetime.inputs.expire_outside.set(comp('particle_expire_if_not_in_blocks'))
 			}
 			
 			if (comp('particle_appearance_billboard')) {
-				Data.particle.appearance.size.set(comp('particle_appearance_billboard').size)
-				Data.particle.appearance.facing_camera_mode.set(comp('particle_appearance_billboard').facing_camera_mode)
+				Data.particle.appearance.inputs.size.set(comp('particle_appearance_billboard').size)
+				Data.particle.appearance.inputs.facing_camera_mode.set(comp('particle_appearance_billboard').facing_camera_mode)
 				var uv_tag = comp('particle_appearance_billboard').uv;
 				if (uv_tag) {
 					if (uv_tag.texture_width) Flipbook.width = uv_tag.texture_width;
 					if (uv_tag.texture_height) Flipbook.height = uv_tag.texture_height;
 					if (uv_tag.flipbook) {
-						Data.particle.texture.mode.set('animated')
-						Data.particle.texture.uv.set(uv_tag.flipbook.base_UV)
-						Data.particle.texture.uv_size.set(uv_tag.flipbook.size_UV)
-						Data.particle.texture.uv_step.set(uv_tag.flipbook.step_UV)
-						Data.particle.texture.frames_per_second.set(uv_tag.flipbook.frames_per_second)
-						Data.particle.texture.max_frame.set(uv_tag.flipbook.max_frame)
-						Data.particle.texture.stretch_to_lifetime.set(uv_tag.flipbook.stretch_to_lifetime)
-						Data.particle.texture.loop.set(uv_tag.flipbook.loop)
+						Data.particle.texture.inputs.mode.set('animated')
+						Data.particle.texture.inputs.uv.set(uv_tag.flipbook.base_UV)
+						Data.particle.texture.inputs.uv_size.set(uv_tag.flipbook.size_UV)
+						Data.particle.texture.inputs.uv_step.set(uv_tag.flipbook.step_UV)
+						Data.particle.texture.inputs.frames_per_second.set(uv_tag.flipbook.frames_per_second)
+						Data.particle.texture.inputs.max_frame.set(uv_tag.flipbook.max_frame)
+						Data.particle.texture.inputs.stretch_to_lifetime.set(uv_tag.flipbook.stretch_to_lifetime)
+						Data.particle.texture.inputs.loop.set(uv_tag.flipbook.loop)
 					} else {
-						Data.particle.texture.mode.set('static')
-						Data.particle.texture.uv.set(uv_tag.uv)
-						Data.particle.texture.uv_size.set(uv_tag.uv_size)
+						Data.particle.texture.inputs.mode.set('static')
+						Data.particle.texture.inputs.uv.set(uv_tag.uv)
+						Data.particle.texture.inputs.uv_size.set(uv_tag.uv_size)
 					}
 				}
 			}
 			if (comp('particle_appearance_lighting')) {
-				Data.particle.color.light.set(true)
+				Data.particle.color.inputs.light.set(true)
 			}
 			if (comp('particle_appearance_tinting')) {
 				var c = comp('particle_appearance_tinting').color
@@ -208,47 +215,47 @@ function loadFile(data) {
 				if (c instanceof Array && c.length >= 3) {
 
 					if ((typeof c[0] + typeof c[1] + typeof c[1]).includes('string')) {
-						Data.particle.color.mode.set('expression')
-						Data.particle.color.expression.set(c)
+						Data.particle.color.inputs.mode.set('expression')
+						Data.particle.color.inputs.expression.set(c)
 
 					} else {
-						Data.particle.color.mode.set('static')
+						Data.particle.color.inputs.mode.set('static')
 						var color = {
 							r: Molang.parse(c[0])*255,
 							g: Molang.parse(c[1])*255,
 							b: Molang.parse(c[2])*255
 						}
-						Data.particle.color.picker.set(color)
+						Data.particle.color.inputs.picker.set(color)
 					}
 				} else if (typeof c == 'object') {
 					// Gradient
-						Data.particle.color.mode.set('gradient')
-					Data.particle.color.interpolant.set(c.interpolant)
-					Data.particle.color.gradient.value.empty()
+						Data.particle.color.inputs.mode.set('gradient')
+					Data.particle.color.inputs.interpolant.set(c.interpolant)
+					Data.particle.color.inputs.gradient.value.empty()
 					if (c.gradient instanceof Array) {
 						let distance = 100 / (c.gradient.length-1);
 						c.gradient.forEach((color, i) => {
 							color = new tinycolor(color).toHexString();
 							var percent = distance * i;
-							Data.particle.color.gradient.value.push({percent, color})
+							Data.particle.color.inputs.gradient.value.push({percent, color})
 						})
 					} else if (typeof c.gradient == 'object') {
 						let max_time = 0;
 						for (var time in c.gradient) {
 							max_time = Math.max(parseFloat(time), max_time)
 						}
-						Data.particle.color.range.set(max_time)
+						Data.particle.color.inputs.range.set(max_time)
 						for (var time in c.gradient) {
 							var color = new tinycolor(c.gradient[time]).toHexString();
 							var percent = (parseFloat(time) / max_time) * 100;
-							Data.particle.color.gradient.value.push({color, percent})
+							Data.particle.color.inputs.gradient.value.push({color, percent})
 						}
 					}
-					Data.particle.color.gradient.selected = Data.particle.color.gradient.value[0]
+					Data.particle.color.inputs.gradient.selected = Data.particle.color.inputs.gradient.value[0]
 				}
 			}
 		}
-		if (Data.particle.texture.path.value) {
+		if (Data.particle.texture.inputs.path.value) {
 			updateMaterial(startAnimation)
 		} else {
 			startAnimation()
@@ -276,17 +283,15 @@ function importFile() {
 		}
 	})
 }
-function getName() {
-	var name = Data.general.general.identifier.value
-	if (name) {
-		name = name.replace(/^\w+:/, '');
-	} else {
-		name = 'particles';
-	}
-	return name;
-}
+
 function loadPreset(id) {
 	$.getJSON(`./examples/${id}.json`, (data) => {
 		loadFile(data)
 	})
+}
+
+export {
+	importFile,
+	loadPreset,
+	startNewProject
 }

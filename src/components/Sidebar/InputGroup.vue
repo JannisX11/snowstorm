@@ -164,6 +164,9 @@ export default {
 		padding-left: 3px;
     }
     
+    .input_list li {
+        margin: 2px 0;
+    }
 	ul.input_list input {
 		width: calc(100% - 100px);
 		margin-left: 62px;
@@ -190,5 +193,9 @@ export default {
 	.input_vector {
 		width: 40px;
 		flex-grow: 1;
+        margin-left: 2px;
+	}
+	.input_vector:first-child {
+        margin-left: 0;
 	}
 </style>

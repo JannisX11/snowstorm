@@ -4,9 +4,9 @@ import {Emitter, updateMaterial, System} from './preview'
 
 const Data = {
 	general: {
-		label: 'General',
+		label: 'Effect',
 		general: {
-			label: 'Particle Effect',
+			label: 'Meta',
 			_folded: false,
 			inputs: {
 				identifier: new Input({

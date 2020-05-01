@@ -91,7 +91,7 @@ export default class Input {
 			}
 			this.update()
 		}
-		if (ExpandedInput.obj && ['molang', 'text', 'list'].includes(this.type)) {
+		if (ExpandedInput.setup && ['molang', 'text', 'list'].includes(this.type)) {
 			this.focus()
 		}
 		if (typeof this.onchange === 'function') {
@@ -171,9 +171,7 @@ export default class Input {
 		ExpandedInput.input = this;
 		if (axis !== undefined) ExpandedInput.axis = axis;
 		var val = (this.axis_count > 1 || this.type == 'list') ? this.value[ExpandedInput.axis] : this.value
-		ExpandedInput.obj.val(val)
+		ExpandedInput.updateText(val, this.type == 'molang' ? 'molang' : 'none');
 		return this;
 	}
 }
-/**/
-

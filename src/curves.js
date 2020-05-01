@@ -283,4 +283,5 @@ Vue.component('curve', {
 	`
 })
 
+export default Curve
 export {Curve, updateCurvesPanel}

@@ -73,7 +73,6 @@ class oneLiner {
 		}
 	}
 }
-var cl = console.log
 var asyncLoop = function(o){
 	var i=-1;
 	var async_loop = function(){
@@ -560,19 +559,30 @@ const IO = {
 			
 		} else if (options.savetype === 'image') {
 
-			var download = document.createElement('a');
-			download.href = options.content
-			download.download = file_name;
-			if (Blockbench.browser === 'firefox') document.body.appendChild(download);
-			download.click();
-			if (Blockbench.browser === 'firefox') document.body.removeChild(download);
+			var element = document.createElement('a');
+			element.href = options.content
+			element.download = file_name;
+			element.style.display = 'none';
+			if (Blockbench.browser === 'firefox') document.body.appendChild(element);
+			element.click();
+			if (Blockbench.browser === 'firefox') document.body.removeChild(element);
 
 		} else if (options.savetype === 'zip') {
 			saveAs(options.content, file_name)
 
 		} else {
-			var blob = new Blob([options.content], {type: "text/plain;charset=utf-8"});
-			saveAs(blob, file_name, {autoBOM: true})
+			//var blob = new Blob([options.content], {type: "text/plain;charset=utf-8"});
+
+			var element = document.createElement('a');
+			element.href = 'data:text/plain;charset=utf-8,' + encodeURIComponent(options.content);
+			element.download = file_name
+			element.style.display = 'none';
+			document.body.appendChild(element);
+			element.click();
+			document.body.removeChild(element);
+
+
+			//saveAs(blob, file_name, {autoBOM: true})
 		}
 		if (options.project_file) {
 			Prop.project_saved = true;
@@ -587,5 +597,6 @@ const IO = {
 
 export {
 	bbuid, guid,
-	compileJSON
+	compileJSON,
+	IO
 }

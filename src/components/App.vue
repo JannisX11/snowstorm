@@ -37,7 +37,7 @@ export default {
 	data() {return {
 		code: '{"test": false}',
 		tab: 'preview',
-		sidebar_width: 520
+		sidebar_width: 440
 	}},
 	methods: {
 		setTab(tab) {
@@ -114,7 +114,6 @@ export default {
 		width: 100%;
 		position: fixed;
 		font-weight: 400;
-		--sidebar: 520px;
 	}
 	main {
 		grid-area: preview;

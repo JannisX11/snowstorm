@@ -3,8 +3,8 @@
     <main id="preview" class="preview selected">
         <canvas id="canvas"></canvas>
         <footer>
-            <div class="tool" onclick="startAnimation()"><i class="fas fa-play-circle"></i></div>
-            <div class="tool" onclick="togglePause()"><i class="fas fa-pause-circle"></i></div>
+            <div class="tool" @click="startAnimation()"><i class="fas fa-play-circle"></i></div>
+            <div class="tool" @click="togglePause()"><i class="fas fa-pause-circle"></i></div>
             <div class="stat">{{fps}} FPS</div>
             <div class="stat">{{particles}} P</div>
         </footer>
@@ -13,7 +13,7 @@
 
 <script>
 
-    import {View, Emitter, initPreview, resizeCanvas} from './../preview'
+    import {View, Emitter, initPreview, resizeCanvas, togglePause, startAnimation} from './../preview'
 
 	
 
@@ -28,7 +28,9 @@
         methods: {
             updateSize() {
                 resizeCanvas()
-            }
+            },
+            startAnimation,
+            togglePause
         },
         mounted() {
             console.log('mount preview')

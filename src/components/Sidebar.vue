@@ -63,9 +63,9 @@ export default {
 		font-family: 'Josefin Sans', sans-serif;
 		font-weight: 800;
 		font-size: 2.6em;
-		color: var(--color-title);
 		overflow: hidden;
-		background: linear-gradient(150deg, #dce4e8, #c2d2dc);
+		/*color: var(--color-title);
+		background: linear-gradient(150deg, #dce4e8, #c2d2dc);*/
 	}
 	content > div {
 		overflow-y: scroll;

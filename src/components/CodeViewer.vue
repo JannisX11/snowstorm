@@ -9,7 +9,6 @@
 
 <script>
 import 'prismjs'
-import 'prismjs/themes/prism.css'
 import 'prismjs/themes/prism-okaidia.css'
 import 'prismjs/components/prism-json'
 import Prism from 'vue-prism-component'
@@ -26,6 +25,8 @@ function selectText(element) {
     selection.addRange(range);
 }
 
+let interval;
+
 export default {
 	name: 'code-viewer',
 	components: {Prism},
@@ -37,6 +38,18 @@ export default {
 			selectText('code');
 			document.execCommand('copy');
 		}
+	},
+	mounted() {
+		clearInterval(interval);
+		interval = setInterval(() => {
+			if (window.document.hasFocus()) {
+				this.code = generateFile()
+				console.log('run')
+			}
+		}, 500)
+	},
+	destroyed() {
+		clearInterval(interval);
 	}
 }
 </script>

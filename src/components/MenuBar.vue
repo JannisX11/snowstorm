@@ -14,6 +14,11 @@
 </template>
 
 <script>
+import {downloadFile} from '../export'
+import {importFile,	loadPreset,	startNewProject} from '../import'
+import {View} from '../preview'
+
+
 export default {
     name: 'menu-bar',
     props: {
@@ -29,7 +34,7 @@ export default {
 			{
 				label: 'File',
 				children: [
-					{label: 'Start Over', click: () => {startNewProject()}},
+					{label: 'New File', click: () => {startNewProject()}},
 					{label: 'Import', click: () => {importFile()}},
 					{label: 'Download', click: () => {downloadFile()}},
 				]
@@ -94,6 +99,7 @@ export default {
 		z-index: 8;
 		min-width: 150px;
 		background-color: var(--color-bar);
+		box-shadow: 1px 4px 10px rgba(0, 0, 0, 0.25);
 	}
 	ul#menu_bar > li:hover > ul {
 		display: block;

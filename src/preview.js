@@ -39,10 +39,8 @@ function initPreview() {
 	View.controls.target.set(0, 0.8, 0)
 	View.controls.screenSpacePanning = true;
 	View.controls.enableKeys = false;
-	View.controls.enableDamping = true;
+	View.controls.enableDamping = false;
 	View.controls.zoomSpeed = 1.4
-
-	console.log(View)
 
 	View.scene = new THREE.Scene()
 
@@ -552,8 +550,6 @@ function initParticles() {
 	});
 	updateMaterial()
 
-	console.log(Molang)
-
 	System.group = new THREE.Group()
 	View.scene.add(System.group)
 	System.upnormal = new THREE.Vector3(0, 1, 0)
@@ -592,7 +588,6 @@ function togglePause() {
 }
 function updateMaterial(cb) {
 	var url;
-	console.log(Data.particle)
 	var path = Data.particle.texture.inputs.path.value;
 	if (Data.particle.texture.inputs.image.image) {
 		url = Data.particle.texture.inputs.image.image.data;
@@ -646,4 +641,4 @@ function updateMaterial(cb) {
 }
 
 
-export {View, System, Flipbook, Emitter, resizeCanvas, startAnimation, updateMaterial, initPreview}
+export {View, System, Flipbook, Emitter, resizeCanvas, startAnimation, updateMaterial, initPreview, togglePause}
