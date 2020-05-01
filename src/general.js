@@ -118,24 +118,7 @@ $(document).ready(() => {
 
 
 
-	document.ondragover = function(event) {
-		event.preventDefault()
-	}
-	document.body.ondrop = function(event) {
-		var file = event.dataTransfer && event.dataTransfer.files && event.dataTransfer.files[0];
-		if (file) {
-			if (pathToExtension(file.name) === 'json') {
-				var reader = new FileReader()
-				reader.onloadend = function() {
 
-					loadFile(JSON.parse(reader.result))
-					startAnimation()
-				}
-				reader.readAsText(file)
-				event.preventDefault()
-			}
-		}
-	}
 })
 .keypress(e => {
 	var input_focus = $('input[type="text"]:focus, input[type="number"]:focus, div[contenteditable="true"]:focus, textarea:focus').length > 0

@@ -1,126 +1,34 @@
 import * as THREE from 'three'
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
-import $ from 'jquery'
 import Molang from 'molangjs'
 
 import Data, {forEachInput} from './input_structure'
-import {updateCurvesPanel} from './curves'
 
 
-const View = {}
+
 const System = {}
 const Flipbook = {
 	width: 16, height: 16
 }
-const gizmo_colors = {
-	r: new THREE.Color(0xfd3043),
-	g: new THREE.Color(0x26ec45),
-	b: new THREE.Color(0x2d5ee8),
-	grid: new THREE.Color(0x3d4954),
-}
+
 var Emitter = {};
 
 
 
-
-function initPreview() {
-
-	View.canvas = $('canvas').get(0)
-	View.camera = new THREE.PerspectiveCamera(45, 16/9, 0.1, 3000);
-	View.camera.position.set(-6, 3, -6)
-	View.renderer = new THREE.WebGLRenderer({
-		canvas: View.canvas,
-		antialias: true,
-		alpha: true,
-		preserveDrawingBuffer: true,
-	})
-
-	View.controls = new OrbitControls(View.camera, View.canvas);
-	View.controls.target.set(0, 0.8, 0)
-	View.controls.screenSpacePanning = true;
-	View.controls.enableKeys = false;
-	View.controls.enableDamping = false;
-	View.controls.zoomSpeed = 1.4
-
-	View.scene = new THREE.Scene()
-
-	View.helper = new CustomAxesHelper(1);
-	View.grid = new THREE.GridHelper(128, 128, gizmo_colors.grid, gizmo_colors.grid);
-	View.grid.position.y -= 0.0005
-	View.scene.add(View.helper);
-	View.scene.add(View.grid);
-
-	initParticles()
-
-	resizeCanvas()
-	setTimeout(animate, 200)
-
-}
-function resizeCanvas() {
-	var wrapper = $('main')
-	var height = wrapper.height()
-	var width = wrapper.width()
-
-	View.camera.aspect = width/height;
-	View.camera.updateProjectionMatrix();
-
-	View.renderer.setSize(width, height);
-	View.renderer.setPixelRatio(window.devicePixelRatio);
-
-	updateCurvesPanel()
-}
-
-function animate() {
-	requestAnimationFrame(animate)
-	View.controls.update()
-	View.renderer.render(View.scene, View.camera);
-	View.frames_this_second++;
-
-	Emitter.tickParticleRotation()
-}
 setInterval(function() {
 	if (Emitter && Emitter.tick && document.hasFocus() && !System.paused) {
 		Emitter.tick()
 	}
 }, 1000/30)
 
-$(window).resize(resizeCanvas)
 
-View.screenshot = function() {
-    let dataurl = View.canvas.toDataURL()
-    let is_ff = navigator.userAgent.toLowerCase().indexOf('firefox') > -1
+/*
 
-   	let download = document.createElement('a');
-	download.href = dataurl
-	download.download = `snowstorm_screenshot.png`;
-	if (is_ff) document.body.appendChild(download);
-	download.click();
-	if (is_ff) document.body.removeChild(download);
+Wintersky Args:
+- Camera
+	(.setCamera())
+- Hook to render look to update particle facing mode
 
-}
-
-
-function CustomAxesHelper( size ) {
-	size = size || 1;
-	var vertices = [
-		0, 0, 0,	size, 0, 0,
-		0, 0, 0,	0, size, 0,
-		0, 0, 0,	0, 0, size
-	];
-	var c = gizmo_colors
-	var colors = [
-		c.r.r, c.r.g, c.r.b,	c.r.r, c.r.g, c.r.b, 
-		c.g.r, c.g.g, c.g.b,	c.g.r, c.g.g, c.g.b, 
-		c.b.r, c.b.g, c.b.b,	c.b.r, c.b.g, c.b.b,
-	]
-	var geometry = new THREE.BufferGeometry();
-	geometry.addAttribute( 'position', new THREE.Float32BufferAttribute( vertices, 3 ) );
-	geometry.addAttribute( 'color', new THREE.Float32BufferAttribute( colors, 3 ) );
-	var material = new THREE.LineBasicMaterial( { vertexColors: 2 } );
-	THREE.LineSegments.call( this, geometry, material );
-}
-CustomAxesHelper.prototype = Object.create( THREE.LineSegments.prototype );
-
+*/
 
 
 class EmitterClass {
@@ -541,8 +449,10 @@ class Particle {
 		this.geometry.uvsNeedUpdate = true
 	}
 }
+let View = 0;
 
-function initParticles() {
+function initParticles(view_arg) {
+	View = view_arg;
 	System.material = new THREE.MeshBasicMaterial({
 		color: 0xffffff,
 		transparent: true,
@@ -641,4 +551,4 @@ function updateMaterial(cb) {
 }
 
 
-export {View, System, Flipbook, Emitter, resizeCanvas, startAnimation, updateMaterial, initPreview, togglePause}
+export {System, Flipbook, Emitter, startAnimation, updateMaterial, togglePause, initParticles}

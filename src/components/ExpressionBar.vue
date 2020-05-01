@@ -11,8 +11,8 @@ import App from "./App";
 
 import "prismjs";
 import "prismjs/themes/prism-okaidia.css";
-import '../molang_syntax';
-//vue-prism-editor dependency
+import 'molangjs/molang-prism-syntax';
+
 import "vue-prism-editor/dist/VuePrismEditor.css";
 import PrismEditor from "vue-prism-editor";
 
@@ -34,9 +34,11 @@ export default {
 	}},
 	methods: {
 		updateInput(text, edit) {
-			if (!text && typeof text !== 'string') return;
+			if (!text && typeof text !== 'string' && typeof text !== 'number') return;
+
 			if (typeof text !== 'string') text = text.toString();
 			if (text.length > 3) text = text.replace(/\n/g, '');
+
 			this.code = text;
 
 			if (!ExpandedInput.input || !edit) return;
@@ -69,7 +71,7 @@ export {ExpandedInput}
 		width: 100%;
 		height: 32px;
 		display: flex;
-		background-color: var(--color-background);
+		background-color: var(--color-dark);
 	}
 	#expression_bar i {
 		text-align: center;
@@ -105,9 +107,7 @@ export {ExpandedInput}
 	#expression_bar pre code {
 		color: #bec2ca;
 	}
-	#expression_bar pre .token.punctuation {
-		color: #5ba8c5
-	}
+
 	#expression_bar pre .token.punctuation {
 		color: #5ba8c5
 	}
@@ -115,12 +115,12 @@ export {ExpandedInput}
 		color: #fc2f40
 	}
 	#expression_bar pre .token.number {
-		color: #b389ff
+		color: #b99cff
 	}
-	#expression_bar pre .token.math-function {
+	#expression_bar pre .token.function-name {
 		color: #94e400
 	}
-	#expression_bar pre .token.accessor {
+	#expression_bar pre .token.selector {
 		color: #92dcff;
 	}
 </style>

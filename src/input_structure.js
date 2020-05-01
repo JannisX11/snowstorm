@@ -1,6 +1,6 @@
 import Input from './input'
 import Gradient from './gradient'
-import {Emitter, updateMaterial, System} from './preview'
+import {Emitter, updateMaterial, System} from './emitter'
 
 const Data = {
 	general: {

@@ -151,13 +151,6 @@ export default {
 		width: 100% !important;
 		display: block;
 	}
-	.input_right .vc-chrome {
-		float: left;
-		box-shadow: none !important;
-		border-radius: 0;
-		border: 1px solid gray;
-		font-family: inherit;
-	}
 	.tool.input_expand_button {
 		float: right;
 		width: 22px;

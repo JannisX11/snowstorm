@@ -45,7 +45,7 @@
 		--color-border: #1a1c1f;
 		--color-interface: #29323a;
 		--color-bar: #34404a;
-		--color-title: #596b7b;
+		--color-title: #4b5b69;
 		--color-selection: rgba(110, 142, 191, 0.3);
 		--color-highlight: #f7f9ff;
 		--color-text: #bcc3ca;
@@ -117,3 +117,27 @@
         color: var(--color-text);
         text-align: left;
 	}
+
+/*Color Picker*/
+	
+	div.vc-chrome {
+		width: 240px;
+		margin: 2px 0;
+		font-family: inherit;
+	}
+	div.vc-chrome .vc-chrome-body {
+		background-color: var(--color-interface);
+	}
+	div.vc-chrome .vc-chrome-fields .vc-input__input {
+		color: var(--color-text);
+		box-shadow: none;
+		font-size: inherit;
+		border: 1px solid var(--color-border);
+		height: 24px;
+	}
+	div.vc-chrome .vc-chrome-toggle-icon svg path {
+		fill: var(--color-text);
+	}
+
+
+

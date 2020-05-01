@@ -1,4 +1,5 @@
 import $ from 'jquery'
+import tinycolor from 'tinycolor2'
 
 /*//Blockbench
 function compareVersions(string1, string2) {
@@ -388,6 +389,7 @@ var Merge = {
 }
 
 //String
+*/
 function capitalizeFirstLetter(string) {
 	return string.charAt(0).toUpperCase() + string.slice(1);
 }
@@ -423,7 +425,7 @@ tinycolor.prototype.toInt = function() {
 	var rgba = this.toRgb()
 	return Jimp.rgbaToInt(rgba.r, rgba.g, rgba.b, rgba.a)
 }
-
+/*
 
 
 
@@ -598,5 +600,7 @@ const IO = {
 export {
 	bbuid, guid,
 	compileJSON,
-	IO
+	IO,
+	pathToExtension,
+	pathToName
 }

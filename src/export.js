@@ -1,7 +1,7 @@
 import Data from './input_structure'
 import {compileJSON, IO} from './util'
 
-import {Flipbook} from './preview'
+import {Flipbook} from './emitter'
 
 function getValue(subject, group, key, curve_key) {
 	if (typeof subject === 'number') {

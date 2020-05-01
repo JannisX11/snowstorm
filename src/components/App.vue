@@ -137,20 +137,7 @@ export default {
 		margin-left: -3px;
 		cursor: ew-resize;
 	}
-	
-/*Footer*/
-	footer > * {
-		display: inline-block;
-		padding: 2px 8px; 
-		padding-top: 2px;
-		background-color: var(--color-bar);
-	}
-	div.stat {
-		float: right;
-		font-size: 14.5pt;
-		font-family: 'Inconsolata', monospace;
-		background: transparent;
-	}
+
 /*Overlays*/
 
 </style>

@@ -16,7 +16,7 @@
 <script>
 import {downloadFile} from '../export'
 import {importFile,	loadPreset,	startNewProject} from '../import'
-import {View} from '../preview'
+import {View} from './Preview'
 
 
 export default {

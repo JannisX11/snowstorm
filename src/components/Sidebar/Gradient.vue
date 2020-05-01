@@ -1,11 +1,11 @@
 <template>
 	<div class="color_gradient">
 		<div class="gradient_container checkerboard">
-			<div class="gradient_inner" :style="{background: input.getCSSString(input.value)}"></div>
+			<div class="gradient_inner" :style="{background: getCSSString(input.value)}"></div>
 			<div class="gradient_point"
 				v-for="point in input.value" :key="point.id"
 				:class="{selected: point == input.selected}"
-				@mousedown="input.dragPoint(point, $event)"
+				@mousedown="dragPoint(input, point, $event)"
 				:style="{left: point.percent+'%', background: point.color}"
 				:title="point.percent + '%'"
 			></div>
@@ -24,11 +24,41 @@ import Gradient from './../../gradient'
 
 export default {
 	name: 'gradient',
+	components: {
+		'color-picker': VueColor.Chrome
+	},
 	props: {
 		input: Gradient
 	},
-	components: {
-		'color-picker': VueColor.Chrome
+	methods: {
+		getCSSString(points) {
+			let stations = ['to right']
+			for (var point of points) {
+				stations.push(`${point.color} ${point.percent}%`)
+			}
+			return `linear-gradient(${stations.join(', ')})`;
+		},
+		dragPoint(input, point, event1) {
+			input.selected = point;
+			let unlocked = false;
+			let original_value = point.percent;
+			function onDrag(event2) {
+				let distance = event2.clientX - event1.clientX
+				if (Math.abs(distance) > 4) unlocked = true;
+				if (unlocked && event1.target.parentElement) {
+					let width = event1.target.parentElement.clientWidth;
+					let percent = original_value + (distance/width) * 100;
+					point.percent = Math.clamp(Math.round(percent), 0, 100)
+					input.sortValues()
+				}
+			}
+			function onDragEnd(event2) {
+				document.removeEventListener('mousemove', onDrag)
+				document.removeEventListener('mouseup', onDragEnd)
+			}
+			document.addEventListener('mousemove', onDrag)
+			document.addEventListener('mouseup', onDragEnd)
+		}
 	}
 }
 </script>

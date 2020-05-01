@@ -1,5 +1,7 @@
 import Vue from 'vue'
-import {Emitter} from './preview'
+import Molang from 'molangjs'
+import * as THREE from 'three'
+import {Emitter} from './emitter'
 import Data from './input_structure'
 import Input from './input'
 import {guid} from './util'
@@ -248,40 +250,6 @@ function updateCurvesPanel() {
 		})
 	})
 }
-
-Vue.component('curve', {
-	template: `
-		<div>
-			<input-group :group.sync="curve" :group_key.sync="group_key" :subject_key.sync="subject_key"></input-group>
-
-			<div class="curve_display">
-				<svg>
-					<path class="curve_path" :d="curve.svg_data"/>
-					<path class="vertical_line_path" :d="curve.vertical_line_data"/>
-					<path class="horizontal_line_path" :d="curve.horizontal_line_data"/>
-				</svg>
-				<ul class="curve_controls">
-					<li class="curve_add" :key="'add_0'" @click="curve.addNode(0, $event)"></li>
-					<template v-for="(value, index) in curve.nodes">
-						<li class="curve_node" :key="'node_'+index" @mousedown="curve.slideValue(index, $event)">
-							<div class="curve_point" :style="{bottom: ((value-curve.min)/(curve.max-curve.min))*140 + 'px'}"><label>{{value}}</label></div>
-							<div class="curve_node_remover tool" @click="curve.removeNode(index, $event)">
-								<i class="fas fa-minus-circle"></i>
-							</div>
-						</li>
-						<li class="curve_add" :key="'add_'+index+1" @click="curve.addNode(index+1, $event)"></li>
-					</template>
-				</ul>
-				<div class="curve_max_num">{{curve.max}}</div>
-				<div class="curve_min_num">{{curve.min}}</div>
-			</div>
-			<div class="curve_footer">
-				<div class="fill_line"></div>
-				<div class="tool" v-on:click="curve.remove()">Remove Curve</div>
-			</div>
-		</div>
-	`
-})
 
 export default Curve
 export {Curve, updateCurvesPanel}

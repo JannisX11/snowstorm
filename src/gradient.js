@@ -42,37 +42,8 @@ export default class Gradient extends Input {
         this.value.splice(0, Infinity, ...this.default_value)
         this.selected = this.value[0];
     }
-    dragPoint(point, event1) {
-        let scope = this;
-        this.selected = point;
-        let unlocked = false;
-        let original_value = point.percent;
-        function onDrag(event2) {
-            let distance = event2.clientX - event1.clientX
-            if (Math.abs(distance) > 4) unlocked = true;
-            if (unlocked && event1.target.parentElement) {
-                let width = event1.target.parentElement.clientWidth;
-                let percent = original_value + (distance/width) * 100;
-                point.percent = Math.clamp(Math.round(percent), 0, 100)
-                scope.sortValues()
-            }
-        }
-        function onDragEnd(event2) {
-            document.removeEventListener('mousemove', onDrag)
-            document.removeEventListener('mouseup', onDragEnd)
-        }
-        document.addEventListener('mousemove', onDrag)
-        document.addEventListener('mouseup', onDragEnd)
-    }
     sortValues() {
         this.value.sort((a, b) => a.percent - b.percent)
-    }
-    getCSSString(points) {
-        let stations = ['to right']
-        for (var point of points) {
-            stations.push(`${point.color} ${point.percent}%`)
-        }
-        return `linear-gradient(${stations.join(', ')})`;
     }
     export(range) {
         let obj = {};

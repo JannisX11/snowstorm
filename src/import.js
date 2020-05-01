@@ -1,9 +1,9 @@
 import Molang from 'molangjs'
 import $ from 'jquery'
-import {IO} from './util'
+import {IO, pathToExtension} from './util'
 import Data, {forEachInput} from './input_structure'
 import Curve from './curves'
-import {startAnimation, updateMaterial, Flipbook} from './preview'
+import {startAnimation, updateMaterial, Flipbook} from './emitter'
 
 function loadFile(data) {
 
@@ -23,11 +23,11 @@ function loadFile(data) {
 		if (curves) {
 			for (var key in curves) {
 				var json_curve = curves[key];
-				new_curve = new Curve();
-				new_curve.id.set(key);
-				new_curve.mode.set(json_curve.type);
-				new_curve.input.set(json_curve.input);
-				new_curve.range.set(json_curve.horizontal_range);
+				var new_curve = new Curve();
+				new_curve.inputs.id.set(key);
+				new_curve.inputs.mode.set(json_curve.type);
+				new_curve.inputs.input.set(json_curve.input);
+				new_curve.inputs.range.set(json_curve.horizontal_range);
 				new_curve.nodes.splice(0);
 				if (json_curve.nodes && json_curve.nodes.length) {
 					json_curve.nodes.forEach(value => {
@@ -36,7 +36,7 @@ function loadFile(data) {
 					})
 					new_curve.updateMinMax();
 				}
-				Data.general.curves.inputs.curves.push(new_curve);
+				Data.general.curves.curves.push(new_curve);
 			}
 		}
 
@@ -282,6 +282,25 @@ function importFile() {
 			startAnimation()
 		}
 	})
+}
+
+document.ondragover = function(event) {
+	event.preventDefault()
+}
+document.body.ondrop = function(event) {
+	var file = event.dataTransfer && event.dataTransfer.files && event.dataTransfer.files[0];
+	if (file) {
+		if (pathToExtension(file.name) === 'json') {
+			var reader = new FileReader()
+			reader.onloadend = function() {
+
+				loadFile(JSON.parse(reader.result))
+				startAnimation()
+			}
+			reader.readAsText(file)
+			event.preventDefault()
+		}
+	}
 }
 
 function loadPreset(id) {
