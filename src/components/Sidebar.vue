@@ -32,6 +32,7 @@ import {Curve, updateCurvesPanel} from './../curves'
 
 import Data from './../input_structure'
 
+
 export default {
 	name: 'sidebar',
 	data() {return {
@@ -45,8 +46,11 @@ export default {
 				updateCurvesPanel();
 			}
 		},
+		updateSize(e) {
+			updateCurvesPanel()
+		},
 		addCurve() {
-			Data.general.curves.curves.push(new Curve())
+			Data.effect.curves.curves.push(new Curve())
 		}
 	}
 }
@@ -64,8 +68,6 @@ export default {
 		font-weight: 800;
 		font-size: 2.6em;
 		overflow: hidden;
-		/*color: var(--color-title);
-		background: linear-gradient(150deg, #dce4e8, #c2d2dc);*/
 	}
 	content > div {
 		overflow-y: scroll;

@@ -43,8 +43,8 @@
             c.b.r, c.b.g, c.b.b,	c.b.r, c.b.g, c.b.b,
         ]
         var geometry = new THREE.BufferGeometry();
-        geometry.addAttribute( 'position', new THREE.Float32BufferAttribute( vertices, 3 ) );
-        geometry.addAttribute( 'color', new THREE.Float32BufferAttribute( colors, 3 ) );
+        geometry.setAttribute( 'position', new THREE.Float32BufferAttribute( vertices, 3 ) );
+        geometry.setAttribute( 'color', new THREE.Float32BufferAttribute( colors, 3 ) );
         var material = new THREE.LineBasicMaterial( { vertexColors: 2 } );
         THREE.LineSegments.call( this, geometry, material );
     }
@@ -66,7 +66,6 @@
     function initPreview(canvas) {
 
         View.canvas = canvas
-        console.log(canvas)
         View.camera = new THREE.PerspectiveCamera(45, 16/9, 0.1, 3000);
         View.camera.position.set(-6, 3, -6)
         View.renderer = new THREE.WebGLRenderer({
@@ -79,7 +78,6 @@
         View.controls = new OrbitControls(View.camera, View.canvas);
         View.controls.target.set(0, 0.8, 0)
         View.controls.screenSpacePanning = true;
-        View.controls.enableKeys = false;
         View.controls.zoomSpeed = 1.4
 
         View.scene = new THREE.Scene()
@@ -157,11 +155,12 @@
 		width: 100%;
 	}
 	footer {
-		background-color: var(--color-bar);
 		width: 100%;
 		font-size: 1.1em;
         height: 28px;
         padding-left: 6px;
+        background-color: var(--color-bar);
+        border-top: 1px solid var(--color-border);
 	}	
 	footer > * {
 		display: inline-block;

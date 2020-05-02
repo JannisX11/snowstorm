@@ -5,7 +5,9 @@ import Data, {forEachInput} from './input_structure'
 
 
 
-const System = {}
+const System = {
+	max_particles: 10000
+}
 const Flipbook = {
 	width: 16, height: 16
 }

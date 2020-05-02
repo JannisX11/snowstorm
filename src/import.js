@@ -13,7 +13,7 @@ function loadFile(data) {
 		var curves = data.particle_effect.curves;
 		var desc = data.particle_effect.description;
 		if (desc && desc.identifier) {
-			Data.general.general.inputs.identifier.set(desc.identifier)
+			Data.effect.meta.inputs.identifier.set(desc.identifier)
 		}
 		if (desc && desc.basic_render_parameters) {
 			Data.particle.texture.inputs.path.set(desc.basic_render_parameters.texture)
@@ -36,7 +36,7 @@ function loadFile(data) {
 					})
 					new_curve.updateMinMax();
 				}
-				Data.general.curves.curves.push(new_curve);
+				Data.effect.curves.curves.push(new_curve);
 			}
 		}
 
@@ -48,15 +48,15 @@ function loadFile(data) {
 				var cr_v = comp('emitter_initialization').creation_expression;
 				var up_v = comp('emitter_initialization').per_update_expression;
 				if (typeof cr_v == 'string') {
-					Data.general.variables.inputs.creation_vars.set(cr_v.replace(/;+$/, '').split(';'))
+					Data.effect.variables.inputs.creation_vars.set(cr_v.replace(/;+$/, '').split(';'))
 				}
 				if (typeof up_v == 'string') {
-					Data.general.variables.inputs.tick_vars.set(up_v.replace(/;+$/, '').split(';'))
+					Data.effect.variables.inputs.tick_vars.set(up_v.replace(/;+$/, '').split(';'))
 				}
 			}
 			if (comp('emitter_local_space')) {
-				Data.general.position.inputs.local_position.set(comp('emitter_local_space').position)
-				Data.general.position.inputs.local_rotation.set(comp('emitter_local_space').rotation)
+				Data.effect.position.inputs.local_position.set(comp('emitter_local_space').position)
+				Data.effect.position.inputs.local_rotation.set(comp('emitter_local_space').rotation)
 			}
 			if (comp('emitter_rate_steady')) {
 				Data.emitter.rate.inputs.mode.set('steady')
@@ -267,7 +267,7 @@ function startNewProject() {
 		forEachInput(input => {
 			input.reset()
 		})
-		Data.general.curves.curves.splice(0);
+		Data.effect.curves.curves.splice(0);
 		updateMaterial(startAnimation)
 		return true;
 	}

@@ -44,7 +44,6 @@ export default {
 		interval = setInterval(() => {
 			if (window.document.hasFocus()) {
 				this.code = generateFile()
-				console.log('run')
 			}
 		}, 500)
 	},

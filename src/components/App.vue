@@ -16,7 +16,7 @@
 
 		<div class="resizer" :style="{left: sidebar_width+'px'}" ref="sidebar_resizer" @mousedown="resizeSidebarStart($event)"></div>
 
-		<sidebar></sidebar>
+		<sidebar ref="sidebar"></sidebar>
 
     </div>
 </template>
@@ -42,11 +42,11 @@ export default {
 	methods: {
 		setTab(tab) {
 			this.tab = tab
-			console.log(tab)
 		},
 		setSidebarSize(size) {
 			this.sidebar_width = Math.clamp(size, 240, document.body.clientWidth-240)
 			this.$refs.preview.updateSize()
+			this.$refs.sidebar.updateSize()
 		},
 		resizeSidebarStart(start_event) {
 			let scope = this;
@@ -107,7 +107,7 @@ export default {
 <style scoped>
 	div#app {
 		display: grid;
-		grid-template-rows:  64px calc(100% - 64px);
+		grid-template-rows:  66px calc(100% - 66px);
 		grid-template-columns: var(--sidebar) calc(100% - var(--sidebar));
 		grid-template-areas: "sidebar header" "sidebar preview";
 		height: 100%;
@@ -120,7 +120,6 @@ export default {
 	}
 	header {
 		grid-area: header;
-		background-color: var(--color-bar);
 		font-size: 1.1em;
 	}
 
@@ -138,6 +137,5 @@ export default {
 		cursor: ew-resize;
 	}
 
-/*Overlays*/
 
 </style>

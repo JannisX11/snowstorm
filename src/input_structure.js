@@ -3,9 +3,9 @@ import Gradient from './gradient'
 import {Emitter, updateMaterial, System} from './emitter'
 
 const Data = {
-	general: {
+	effect: {
 		label: 'Effect',
-		general: {
+		meta: {
 			label: 'Meta',
 			_folded: false,
 			inputs: {
@@ -18,7 +18,7 @@ const Data = {
 				})
 			}
 		},
-		position: {
+		space: {
 			label: 'Space',
 			_folded: true,
 			inputs: {

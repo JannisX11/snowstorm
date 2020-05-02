@@ -34,10 +34,10 @@ export default {
 	}},
 	methods: {
 		updateInput(text, edit) {
-			if (!text && typeof text !== 'string' && typeof text !== 'number') return;
+			if (!text && typeof text !== 'string' && typeof text !== 'number') text = '';
 
 			if (typeof text !== 'string') text = text.toString();
-			if (text.length > 3) text = text.replace(/\n/g, '');
+			//if (text.length > 3) text = text.replace(/\n/g, '');
 
 			this.code = text;
 
@@ -72,6 +72,10 @@ export {ExpandedInput}
 		height: 32px;
 		display: flex;
 		background-color: var(--color-dark);
+		border-bottom: 1px solid var(--color-border);
+		position: absolute;
+		height: auto;
+		z-index: 3;
 	}
 	#expression_bar i {
 		text-align: center;
@@ -98,23 +102,25 @@ export {ExpandedInput}
 <style>
 	#expression_bar .prism-editor-wrapper {
 		overflow-y: hidden;
-		height: 40px;
+		min-height: 30px;
 	}
 	#expression_bar pre {
 		padding: 4px;
+		min-height: 30px;
 		background-color: transparent;
 	}
 	#expression_bar pre code {
 		color: #bec2ca;
+		padding: 0;
 	}
 
 	#expression_bar pre .token.punctuation {
 		color: #5ba8c5
 	}
-	#expression_bar pre .token.operator {
+	#expression_bar pre .token.operator, #expression_bar pre .token.keyword {
 		color: #fc2f40
 	}
-	#expression_bar pre .token.number {
+	#expression_bar pre .token.number, #expression_bar pre .token.boolean {
 		color: #b99cff
 	}
 	#expression_bar pre .token.function-name {

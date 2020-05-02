@@ -6,14 +6,14 @@ import {Flipbook} from './emitter'
 function getValue(subject, group, key, curve_key) {
 	if (typeof subject === 'number') {
 		switch (subject) {
-			case 0: subject = 'general'; break;
+			case 0: subject = 'effect'; break;
 			case 1: subject = 'emitter'; break;
 			case 2: subject = 'particle'; break;
 		}
 	}
 	var input = Data[subject][group].inputs[key];
 	if (group == 'curves') {
-		input = Data.general.curves.curves[key].inputs[curve_key]
+		input = Data.effect.curves.curves[key].inputs[curve_key]
 	}
 	var original_value = input.value;
 
@@ -47,7 +47,7 @@ function generateFile(options) {
 		format_version: '1.10.0',
 		particle_effect: {
 			description: {
-				identifier: Data.general.general.inputs.identifier.value,
+				identifier: Data.effect.meta.inputs.identifier.value,
 				basic_render_parameters: {
 					material: getValue(2, 'appearance', 'material'),
 					texture: getValue(2, 'texture', 'path') || 'textures/blocks/wool_colored_white'
@@ -57,9 +57,9 @@ function generateFile(options) {
 	}
 
 	//Curves
-	if (Data.general.curves.curves.length) {
+	if (Data.effect.curves.curves.length) {
 		var json_curves = file.particle_effect.curves = {};
-		Data.general.curves.curves.forEach((curve, i) => {
+		Data.effect.curves.curves.forEach((curve, i) => {
 			if (!curve.inputs.id.value) return;
 			var json_curve = {
 				type: getValue(0, 'curves', i, 'mode'),
@@ -335,7 +335,7 @@ function generateFile(options) {
 	return file;
 }
 function getName() {
-	var name = Data.general.general.inputs.identifier.value
+	var name = Data.effect.meta.inputs.identifier.value
 	if (name) {
 		name = name.replace(/^\w+:/, '');
 	} else {
