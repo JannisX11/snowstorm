@@ -2,7 +2,7 @@ import * as THREE from 'three'
 import Molang from 'molangjs'
 import tinycolor from 'tinycolor2'
 import $ from 'jquery'
-
+import registerEdit from './edits'
 
 import {ExpandedInput} from './components/ExpressionBar'
 
@@ -100,6 +100,9 @@ export default class Input {
 		if (typeof this.updatePreview === 'function' && this.type !== 'image') {
 			var data = this.calculate()
 			this.updatePreview(data)
+		}
+		if (e instanceof Event)	{
+			registerEdit('change input')
 		}
 		return this;
 	}

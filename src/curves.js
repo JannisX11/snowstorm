@@ -6,6 +6,7 @@ import Data from './input_structure'
 import Input from './input'
 import {guid} from './util'
 import $ from 'jquery'
+import registerEdit from './edits'
 
 class Curve {
 	constructor() {
@@ -80,17 +81,20 @@ class Curve {
 		}
 		this.nodes.splice(index, 0, Math.round(value*100)/100);
 		this.updateSVG();
+		registerEdit('add curve node')
 	}
 	removeNode(index, event) {
 		if (this.nodes.length <= 2) return;
 		this.nodes.splice(index, 1);
 		this.updateSVG();
+		registerEdit('remove curve node')
 	}
 
 	setNode(index, value) {
 		value = Math.round(value*100)/100;
 		this.nodes.splice(index, 1, value);
 		this.updateMinMax();
+		registerEdit('edit curve node')
 	}
 	calculate(params) {
 		var position = Molang.parse(this.inputs.input.value, params);
@@ -121,6 +125,7 @@ class Curve {
 	}
 	remove() {
 		Data.effect.curves.curves.remove(this);
+		registerEdit('remove curve')
 	}
 }
 

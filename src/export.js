@@ -11,9 +11,11 @@ function getValue(subject, group, key, curve_key) {
 			case 2: subject = 'particle'; break;
 		}
 	}
-	var input = Data[subject][group].inputs[key];
+	var input;
 	if (group == 'curves') {
 		input = Data.effect.curves.curves[key].inputs[curve_key]
+	} else {
+		input = Data[subject][group].inputs[key];
 	}
 	var original_value = input.value;
 
@@ -42,7 +44,7 @@ function getValue(subject, group, key, curve_key) {
 }
 
 
-function generateFile(options) {
+function generateFile() {
 	var file = {
 		format_version: '1.10.0',
 		particle_effect: {
@@ -91,10 +93,10 @@ function generateFile(options) {
 			comps['minecraft:emitter_initialization'].per_update_expression = s+';'
 		}
 	}
-	if (getValue(0, 'position', 'local_position')) {
+	if (getValue(0, 'space', 'local_position')) {
 		comps['minecraft:emitter_local_space'] = {
-			position: getValue(0, 'position', 'local_position'),
-			rotation: getValue(0, 'position', 'local_rotation'),
+			position: getValue(0, 'space', 'local_position'),
+			rotation: getValue(0, 'space', 'local_rotation'),
 		}
 	}
 	//Rate

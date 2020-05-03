@@ -1,8 +1,13 @@
 import * as THREE from 'three'
 import Molang from 'molangjs'
+import TextureMissing from 'url-loader!./../assets/missing.png';
+import TextureStandard from 'url-loader!./../assets/default_particles.png';
+console.log(TextureMissing)
+console.log(TextureStandard)
 
 import Data, {forEachInput} from './input_structure'
 
+import vscode from './vscode_extension'
 
 
 const System = {
@@ -501,21 +506,44 @@ function togglePause() {
 function updateMaterial(cb) {
 	var url;
 	var path = Data.particle.texture.inputs.path.value;
-	if (Data.particle.texture.inputs.image.image) {
-		url = Data.particle.texture.inputs.image.image.data;
-	} else {
-		if (path == 'textures/particle/particles') {
-			url = 'assets/default_particles.png';
 
-		} else if (path == 'textures/flame_atlas' || path == 'textures/particle/flame_atlas') {
-			url = 'assets/flame_atlas.png';
+	if (vscode && path) {
 
-		} else if (path == 'textures/particle/campfire_smoke') {
-			url = 'assets/campfire_smoke.png';
-		} else {
-			url = 'assets/missing.png';
+		vscode.postMessage({
+            type: 'request_texture',
+            path
+		});
+		function update(event) {
+			if (event.data.type == 'provide_texture') {
+				loadTexture(event.data.url || 'assets/missing.png');
+				window.removeEventListener('message', update);
+			}
 		}
+		window.addEventListener('message', update, false);
+
+	} else if (Data.particle.texture.inputs.image && Data.particle.texture.inputs.image.image) {
+
+		url = Data.particle.texture.inputs.image.image.data;
+		loadTexture(url, cb)
+
+	} else {
+		switch (path) {
+			case 'textures/particle/particles':
+				url = 'assets/default_particles.png';
+			case 'textures/flame_atlas':
+			case 'textures/particle/flame_atlas':
+				url = 'assets/flame_atlas.png';
+			case 'textures/particle/campfire_smoke':
+				url = 'assets/campfire_smoke.png';
+			default:
+				url = 'assets/missing.png';
+		}
+		loadTexture(url, cb)
 	}
+
+}
+function loadTexture(url, cb) {
+	console.log('--------------- Loading Texture', url)
 	var tex = new THREE.TextureLoader().load(url, function(a, b) {
 		function factorize(input, axis, factor) {
 			if (!input.value || !input.value[axis]) return;

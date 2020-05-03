@@ -1,6 +1,7 @@
 import Input from './input'
 import Gradient from './gradient'
 import {Emitter, updateMaterial, System} from './emitter'
+import vscode from './vscode_extension';
 
 const Data = {
 	effect: {
@@ -414,12 +415,12 @@ const Data = {
 						updateMaterial()
 					}
 				}),
-				image: new Input({
+				...(!vscode && {image: new Input({
 					type: 'image',
 					updatePreview: function() {
 						updateMaterial()
 					}
-				}),
+				})} ),
 				mode: new Input({
 					type: 'select',
 					label: 'UV Mode',

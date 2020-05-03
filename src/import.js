@@ -1,13 +1,33 @@
-import Molang from 'molangjs'
-import $ from 'jquery'
 import {IO, pathToExtension} from './util'
+import Molang from 'molangjs'
 import Data, {forEachInput} from './input_structure'
-import Curve from './curves'
 import {startAnimation, updateMaterial, Flipbook} from './emitter'
+import tinycolor from 'tinycolor2'
+import vscode from './vscode_extension'
+
+import FireSample from '../examples/fire.particle.json'
+import LoadingSample from '../examples/loading.particle.json'
+import MagicSample from '../examples/magic.particle.json'
+import RainSample from '../examples/rain.particle.json'
+import SnowSample from '../examples/snow.particle.json'
+import TrailSample from '../examples/trail.particle.json'
+
+const Samples = {
+	fire: FireSample,
+	loading: LoadingSample,
+	magic: MagicSample,
+	rain: RainSample,
+	snow: SnowSample,
+	trail: TrailSample,
+}
+
 
 function loadFile(data) {
 
+	console.log('in load file function', !!data, !!data.particle_effect, data)
 	if (data && data.particle_effect && startNewProject()) {
+
+		console.log('started new project with', data.particle_effect.description.identifier)
 
 		var comps = data.particle_effect.components;
 		var curves = data.particle_effect.curves;
@@ -55,8 +75,8 @@ function loadFile(data) {
 				}
 			}
 			if (comp('emitter_local_space')) {
-				Data.effect.position.inputs.local_position.set(comp('emitter_local_space').position)
-				Data.effect.position.inputs.local_rotation.set(comp('emitter_local_space').rotation)
+				Data.effect.space.inputs.local_position.set(comp('emitter_local_space').position)
+				Data.effect.space.inputs.local_rotation.set(comp('emitter_local_space').rotation)
 			}
 			if (comp('emitter_rate_steady')) {
 				Data.emitter.rate.inputs.mode.set('steady')
@@ -155,7 +175,7 @@ function loadFile(data) {
 				Data.particle.collision.inputs.collision_radius.set(comp('particle_motion_collision').collision_radius)
 				Data.particle.collision.inputs.expire_on_contact.set(comp('particle_motion_collision').expire_on_contact)
 			}
-			if (comp('particle_initial_speed')) {
+			if (comp('particle_initial_speed') !== undefined) {
 				var c = comp('particle_initial_speed')
 				if (typeof c !== 'object') {
 					Data.particle.motion.inputs.linear_speed.set(c)
@@ -263,7 +283,7 @@ function loadFile(data) {
 	}
 }
 function startNewProject() {
-	if (confirm('This action may clear your current work. Do you want to continue?')) {
+	if (vscode || confirm('This action may clear your current work. Do you want to continue?')) {
 		forEachInput(input => {
 			input.reset()
 		})
@@ -304,13 +324,12 @@ document.body.ondrop = function(event) {
 }
 
 function loadPreset(id) {
-	$.getJSON(`./examples/${id}.json`, (data) => {
-		loadFile(data)
-	})
+	loadFile(Samples[id])
 }
 
 export {
 	importFile,
+	loadFile,
 	loadPreset,
 	startNewProject
 }

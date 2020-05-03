@@ -55,6 +55,7 @@ export default {
 			function onDragEnd(event2) {
 				document.removeEventListener('mousemove', onDrag)
 				document.removeEventListener('mouseup', onDragEnd)
+				input.registerEdit()
 			}
 			document.addEventListener('mousemove', onDrag)
 			document.addEventListener('mouseup', onDragEnd)

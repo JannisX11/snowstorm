@@ -14,6 +14,7 @@ import 'prismjs/components/prism-json'
 import Prism from 'vue-prism-component'
 
 import {generateFile} from '../export'
+import {EditListeners} from '../edits'
 
 
 function selectText(element) {
@@ -25,7 +26,6 @@ function selectText(element) {
     selection.addRange(range);
 }
 
-let interval;
 
 export default {
 	name: 'code-viewer',
@@ -40,15 +40,12 @@ export default {
 		}
 	},
 	mounted() {
-		clearInterval(interval);
-		interval = setInterval(() => {
-			if (window.document.hasFocus()) {
-				this.code = generateFile()
-			}
-		}, 500)
+		EditListeners['code_viewer'] = () => {
+			this.code = generateFile()
+		}
 	},
 	destroyed() {
-		clearInterval(interval);
+		delete EditListeners['code_viewer']
 	}
 }
 </script>

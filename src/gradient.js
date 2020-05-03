@@ -2,6 +2,7 @@ import Input from './input'
 import {bbuid} from './util'
 import tinycolor from 'tinycolor2'
 import * as THREE from 'three'
+import registerEdit from './edits'
 
 export default class Gradient extends Input {
     constructor(...args) {
@@ -37,13 +38,17 @@ export default class Gradient extends Input {
     }
     change(e) {
 		this.selected.color = e.hex;
+        registerEdit('change gradient')
+        return this;
     }
     reset() {
         this.value.splice(0, Infinity, ...this.default_value)
         this.selected = this.value[0];
+        return this;
     }
     sortValues() {
         this.value.sort((a, b) => a.percent - b.percent)
+        return this;
     }
     export(range) {
         let obj = {};
@@ -55,6 +60,10 @@ export default class Gradient extends Input {
         })
         return obj;
     }
+    registerEdit() {
+        registerEdit('update gradient')
+        return this;
+    }
     addPoint() {
         this.value.push({
             percent: 50,
@@ -62,11 +71,15 @@ export default class Gradient extends Input {
         })
         this.selected = this.value[this.value.length-1];
         this.sortValues()
+        registerEdit('add gradient point')
+        return this;
     }
     removePoint() {
         if (this.value.length > 2) {
             let i = this.value.remove(this.selected)
             this.selected = this.value[Math.clamp(i-1, 0, this.value.length-1)]
+            registerEdit('remove gradient point')
         }
+        return this;
     }
 }
