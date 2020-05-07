@@ -14,7 +14,7 @@
                     <li class="curve_node" :key="'node_'+index" @mousedown="slideValue(index, $event)">
                         <div class="curve_point" :style="{bottom: ((value-curve.min)/(curve.max-curve.min))*140 + 'px'}"><label>{{value}}</label></div>
                         <div class="curve_node_remover tool" @click="curve.removeNode(index, $event)">
-                            <i class="fas fa-minus-circle"></i>
+							<i class="unicode_icon">{{'\u2A09'}}</i>
                         </div>
                     </li>
                     <li class="curve_add" :key="'add_'+index+1" @click="curve.addNode(index+1, $event)"></li>

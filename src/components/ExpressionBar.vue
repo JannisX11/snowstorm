@@ -1,6 +1,5 @@
 <template>
     <div id="expression_bar">
-        <i class="fas fa-code"></i>
 		<prism-editor v-model="code" :value="code" @change="updateInput($event, true)" :language="language" :line-numbers="false" ref="input" />
     </div>
 </template>
@@ -70,23 +69,15 @@ export {ExpandedInput}
 	#expression_bar {
 		width: 100%;
 		height: 32px;
-		display: flex;
 		background-color: var(--color-dark);
 		border-bottom: 1px solid var(--color-border);
 		position: absolute;
 		height: auto;
 		z-index: 3;
 	}
-	#expression_bar i {
-		text-align: center;
-		width: 40px;
-		padding-top: 7px;
-		float: left;
-		opacity: 0.8;
-	}
 	#expression_bar input {
 		background-color: transparent;
-		width: calc(100% - 40px);
+		width: 100%;
 		border: none;
 		height: 32px;
 		padding: 5px 8px;

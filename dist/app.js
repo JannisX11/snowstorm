@@ -187,9 +187,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
 
 
 
@@ -342,7 +339,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue_prism_editor_dist_VuePrismEditor_css__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(vue_prism_editor_dist_VuePrismEditor_css__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var vue_prism_editor__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! vue-prism-editor */ "./node_modules/vue-prism-editor/dist/VuePrismEditor.common.js");
 /* harmony import */ var vue_prism_editor__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(vue_prism_editor__WEBPACK_IMPORTED_MODULE_6__);
-//
 //
 //
 //
@@ -1353,7 +1349,7 @@ exports = module.exports = __webpack_require__(/*! ../../node_modules/css-loader
 exports.i(__webpack_require__(/*! -!../../node_modules/css-loader??ref--5-1!../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!./../css/common.css */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./src/css/common.css"), "");
 
 // module
-exports.push([module.i, "\n.tool {\n\tdisplay: inline-block;\n\tpadding: 2px 8px; \n\tpadding-top: 3px;\n}\n.tool:hover {\n\tcolor: #3e5366;\n}\n.resizer {\n\tposition: absolute !important;\n\tz-index: 12;\n}\n.resizer.vertical { /*\t|\t*/\n\tcursor: ew-resize;\n\twidth: 6px;\n}\n.resizer.horizontal { /*\t__\t*/\n\tcursor: ns-resize;\n\theight: 6px;\n}\n.resizer.disabled {\n\tpointer-events: none;\n}\n\n", ""]);
+exports.push([module.i, "\n.tool {\n\tdisplay: inline-block;\n\tpadding: 2px 8px; \n\tpadding-top: 1px;\n\twidth: 35px;\n\theight: 30px;\n}\n.tool:hover {\n\tcolor: var(--color-highlight);\n}\n.resizer {\n\tposition: absolute !important;\n\tz-index: 12;\n}\n.resizer.vertical { /*\t|\t*/\n\tcursor: ew-resize;\n\twidth: 6px;\n}\n.resizer.horizontal { /*\t__\t*/\n\tcursor: ns-resize;\n\theight: 6px;\n}\n.resizer.disabled {\n\tpointer-events: none;\n}\n\n", ""]);
 
 // exports
 
@@ -1429,7 +1425,7 @@ exports = module.exports = __webpack_require__(/*! ../../node_modules/css-loader
 
 
 // module
-exports.push([module.i, "\n#expression_bar[data-v-18eeae4a] {\n\twidth: 100%;\n\theight: 32px;\n\tdisplay: flex;\n\tbackground-color: var(--color-dark);\n\tborder-bottom: 1px solid var(--color-border);\n\tposition: absolute;\n\theight: auto;\n\tz-index: 3;\n}\n#expression_bar i[data-v-18eeae4a] {\n\ttext-align: center;\n\twidth: 40px;\n\tpadding-top: 7px;\n\tfloat: left;\n\topacity: 0.8;\n}\n#expression_bar input[data-v-18eeae4a] {\n\tbackground-color: transparent;\n\twidth: calc(100% - 40px);\n\tborder: none;\n\theight: 32px;\n\tpadding: 5px 8px;\n\topacity: 0.8;\n\tfloat: left;\n\tcolor: white;\n}\n#expression_bar input[data-v-18eeae4a]:focus {\n\topacity: 1;\n}\n", ""]);
+exports.push([module.i, "\n#expression_bar[data-v-18eeae4a] {\n\twidth: 100%;\n\theight: 32px;\n\tbackground-color: var(--color-dark);\n\tborder-bottom: 1px solid var(--color-border);\n\tposition: absolute;\n\theight: auto;\n\tz-index: 3;\n}\n#expression_bar input[data-v-18eeae4a] {\n\tbackground-color: transparent;\n\twidth: 100%;\n\tborder: none;\n\theight: 32px;\n\tpadding: 5px 8px;\n\topacity: 0.8;\n\tfloat: left;\n\tcolor: white;\n}\n#expression_bar input[data-v-18eeae4a]:focus {\n\topacity: 1;\n}\n", ""]);
 
 // exports
 
@@ -1505,7 +1501,7 @@ exports = module.exports = __webpack_require__(/*! ../../node_modules/css-loader
 
 
 // module
-exports.push([module.i, "\nmain#preview[data-v-48e6f1c8] {\n\t\tposition: relative;\n}\n#canvas_wrapper[data-v-48e6f1c8] {\n\t\theight: calc(100% - 28px);\n\t\twidth: 100%;\n}\ncanvas[data-v-48e6f1c8] {\n\t\theight: 100%;\n\t\twidth: 100%;\n}\nfooter[data-v-48e6f1c8] {\n\t\twidth: 100%;\n\t\tfont-size: 1.1em;\n        height: 28px;\n        padding-left: 6px;\n        background-color: var(--color-bar);\n        border-top: 1px solid var(--color-border);\n}\nfooter > *[data-v-48e6f1c8] {\n\t\tdisplay: inline-block;\n\t\tpadding: 2px 8px; \n\t\tpadding-top: 2px;\n\t\tbackground-color: var(--color-bar);\n}\ndiv.stat[data-v-48e6f1c8] {\n        text-align: right;\n\t\tfloat: right;\n\t\tbackground: transparent;\n}\n", ""]);
+exports.push([module.i, "\nmain#preview[data-v-48e6f1c8] {\n\t\tposition: relative;\n}\n#canvas_wrapper[data-v-48e6f1c8] {\n\t\theight: calc(100% - 28px);\n\t\twidth: 100%;\n}\ncanvas[data-v-48e6f1c8] {\n\t\theight: 100%;\n\t\twidth: 100%;\n}\nfooter[data-v-48e6f1c8] {\n\t\twidth: 100%;\n\t\tfont-size: 1.1em;\n        height: 28px;\n        padding-left: 6px;\n        background-color: var(--color-bar);\n        border-top: 1px solid var(--color-border);\n}\nfooter > *[data-v-48e6f1c8] {\n\t\tpadding: 2px 8px; \n\t\tpadding-top: 2px;\n        background-color: var(--color-bar);\n        float: left;\n}\ndiv.stat[data-v-48e6f1c8] {\n        text-align: right;\n\t\tfloat: right;\n\t\tbackground: transparent;\n}\n", ""]);
 
 // exports
 
@@ -1562,7 +1558,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.color_gradient[data-v-5998915a] {\n\twidth: 100%;\n}\n.gradient_container[data-v-5998915a] {\n\tposition: relative;\n\twidth: calc(100% - 10px);\n\theight: 20px;\n\tmargin: 0 5px 10px 5px;\n\tborder: 1px solid black;\n}\n.gradient_point[data-v-5998915a] {\n\tposition: absolute;\n\theight: 16px;\n\twidth: 10px;\n\ttop: 10px;\n\tmargin-left: -5px;\n\tborder: 1px solid #212529;\n\toverflow: hidden;\n\tcursor: pointer;\n}\n.gradient_point.selected[data-v-5998915a] {\n\tborder-color: #fff;\n\tbox-shadow: 0 0 2px #000;\n\tz-index: 4;\n}\n.gradient_inner[data-v-5998915a] {\n\theight: 100%;\n\twidth: 100%;\n}\n", ""]);
+exports.push([module.i, "\n.color_gradient[data-v-5998915a] {\n\twidth: 100%;\n}\n.gradient_container[data-v-5998915a] {\n\tposition: relative;\n\twidth: calc(100% - 10px);\n\theight: 20px;\n\tmargin: 0 5px 10px 5px;\n\tborder: 1px solid black;\n}\n.gradient_point[data-v-5998915a] {\n\tposition: absolute;\n\theight: 16px;\n\twidth: 10px;\n\ttop: 10px;\n\tmargin-left: -5px;\n\tborder: 1px solid #212529;\n\toverflow: hidden;\n\tcursor: pointer;\n}\n.gradient_point.selected[data-v-5998915a] {\n\tborder-color: #fff;\n\tbox-shadow: 0 0 2px #000;\n\tz-index: 4;\n}\n.gradient_inner[data-v-5998915a] {\n\theight: 100%;\n\twidth: 100%;\n}\ndiv.vc-chrome[data-v-5998915a] {\n\tfloat: left;\n}\n", ""]);
 
 // exports
 
@@ -1581,7 +1577,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.input_wrapper[data-v-64472bb8] {\n\t\tmargin: 2px 0;\n}\n.input_wrapper > label[data-v-64472bb8] {\n\t\twidth: 100px;\n\t\ttext-align: right;\n\t\tmargin: 3px 0;\n}\n.input_right[data-v-64472bb8] {\n\t\tdisplay: inline-flex;\n\t\tvertical-align: top;\n\t\twidth: calc(100% - 110px);\n\t\tmargin-left: 4px;\n}\n.input_right.expandable[data-v-64472bb8] {\n\t\twidth: calc(100% - 134px);\n}\n.input_right[axes=\"1\"] input[data-v-64472bb8]:not([type=\"checkbox\"]), .input_right[axes=\"1\"] select[data-v-64472bb8]:not([type=\"checkbox\"]) {\n\t\twidth: 100%;\n}\n.input_right.expanded[data-v-64472bb8] {\n\t\tdisplay: block;\n\t\twidth: calc(100% - 7px);\n}\n.input_right.expanded input[data-v-64472bb8] {\n\t\twidth: 100% !important;\n\t\tdisplay: block;\n}\n.tool.input_expand_button[data-v-64472bb8] {\n\t\tfloat: right;\n\t\twidth: 22px;\n\t\tpadding-left: 3px;\n}\n.input_list li[data-v-64472bb8] {\n        margin: 2px 0;\n}\nul.input_list input[data-v-64472bb8] {\n\t\twidth: calc(100% - 100px);\n\t\tmargin-left: 62px;\n}\ninput#image[data-v-64472bb8] {\n\t\twidth: 100%;\n}\n.input_texture_wrapper[data-v-64472bb8] {\n\t\tdisplay: block;\n\t\theight: 48px;\n\t\twidth: 48px;\n\t\tmin-height: 48px;\n\t\tmin-width: 48px;\n\t\tmargin-right: 8px;\n\t\tmargin-left: 44px;\n}\n.input_texture_preview[data-v-64472bb8] {\n        width: 100%;\n        height: 100%;\n\t\tbackground-size: contain;\n\t\tbackground-repeat: no-repeat;\n}\n.input_vector[data-v-64472bb8] {\n\t\twidth: 40px;\n\t\tflex-grow: 1;\n        margin-left: 2px;\n}\n.input_vector[data-v-64472bb8]:first-child {\n        margin-left: 0;\n}\n", ""]);
+exports.push([module.i, "\n.input_wrapper[data-v-64472bb8] {\n\t\tmargin: 2px 0;\n}\n.input_wrapper > label[data-v-64472bb8] {\n\t\twidth: 100px;\n\t\ttext-align: right;\n\t\tmargin: 3px 0;\n}\n.input_right[data-v-64472bb8] {\n\t\tdisplay: inline-flex;\n\t\tvertical-align: top;\n\t\twidth: calc(100% - 110px);\n\t\tmargin-left: 4px;\n}\n.input_right.expandable[data-v-64472bb8] {\n\t\twidth: calc(100% - 134px);\n}\n.input_right[axes=\"1\"] input[data-v-64472bb8]:not([type=\"checkbox\"]), .input_right[axes=\"1\"] select[data-v-64472bb8]:not([type=\"checkbox\"]) {\n\t\twidth: 100%;\n}\n.input_right.expanded[data-v-64472bb8] {\n\t\tdisplay: block;\n\t\twidth: calc(100% - 7px);\n}\n.input_right.expanded input[data-v-64472bb8] {\n\t\twidth: 100% !important;\n\t\tdisplay: block;\n}\n.tool.input_expand_button[data-v-64472bb8] {\n\t\tfloat: right;\n\t\twidth: 22px;\n\t\tpadding-left: 3px;\n}\n.input_list li[data-v-64472bb8] {\n        margin: 2px 0;\n}\nul.input_list input[data-v-64472bb8] {\n\t\twidth: calc(100% - 100px);\n\t\tmargin-left: 62px;\n}\ninput#image[data-v-64472bb8] {\n\t\twidth: 100%;\n}\n.input_texture_wrapper[data-v-64472bb8] {\n\t\tdisplay: block;\n\t\theight: 48px;\n\t\twidth: 48px;\n\t\tmin-height: 48px;\n\t\tmin-width: 48px;\n\t\tmargin-right: 8px;\n\t\tmargin-left: 44px;\n}\n.input_texture_preview[data-v-64472bb8] {\n        width: 100%;\n        height: 100%;\n\t\tbackground-size: contain;\n\t\tbackground-repeat: no-repeat;\n}\n.input_vector[data-v-64472bb8] {\n\t\twidth: 40px;\n\t\tflex-grow: 1;\n        margin-left: 2px;\n}\n.input_vector[data-v-64472bb8]:first-child {\n        margin-left: 0;\n}\n.list_add_tool[data-v-64472bb8] {\n        vertical-align: sub;\n}\n", ""]);
 
 // exports
 
@@ -1600,7 +1596,7 @@ exports = module.exports = __webpack_require__(/*! ../../node_modules/css-loader
 
 
 // module
-exports.push([module.i, "\r\n\t/*Setup*/\n::-webkit-scrollbar {\r\n\t\twidth: 8px;\r\n\t\theight: 8px;\n}\n::-webkit-scrollbar-track {\r\n\t\tbackground: var(--color-interface);\n}\n::-webkit-scrollbar-corner {\r\n\t\tbackground: var(--color-interface);\n}\n::-webkit-scrollbar-thumb {\r\n\t\tbackground: var(--color-bar);\n}\n::-webkit-scrollbar-thumb:hover {\r\n\t\tbackground: var(--color-bar);\n}\n::selection {\r\n\t\tbackground: var(--color-selection);\n}\n::placeholder {\r\n\t\topacity: 0.6;\n}\n* {\r\n\t\tscrollbar-width: thin;\r\n\t\tscrollbar-color: white var(--color-bar);\n}\nbody {\r\n\t\t--color-background: #29323a;\r\n\t\t--color-interface: #e5ebfa;\r\n\t\t--color-bar: #cfd7ea;\r\n\t\t--color-title: #9aa3b8;\r\n\t\t--color-selection: rgba(110, 142, 191, 0.3);\r\n\t\t--color-highlight: #f7f9ff;\r\n\t\t--color-text: #434b53;\n}\nbody {\r\n\t\t--color-background: #29323a;\r\n\t\t--color-dark: #20272d;\r\n\t\t--color-border: #1a1c1f;\r\n\t\t--color-interface: #29323a;\r\n\t\t--color-bar: #34404a;\r\n\t\t--color-title: #4b5b69;\r\n\t\t--color-selection: rgba(110, 142, 191, 0.3);\r\n\t\t--color-highlight: #f7f9ff;\r\n\t\t--color-text: #bcc3ca;\n}\nh1, h2, h3, h4, h5, h6 {\r\n\t\tmargin: 0;\r\n\t\tfont-weight: inherit;\n}\nul {\r\n\t\tlist-style: none;\r\n\t\tpadding-left: 0;\r\n\t\tmargin: 0;\n}\n* {\r\n\t\tmargin: 0;\r\n        padding: 0;\r\n        box-sizing: border-box;\n}\ninput, select {\r\n\t\tfont-weight: inherit;\r\n\t\tbackground-color: var(--color-dark);\r\n\t\tborder: 1px solid var(--color-border);\r\n\t\tcolor: var(--color-text);\r\n\t\theight: 30px;\r\n\t\tpadding: 4px;\n}\ninput[type=text], input[type=number], input:not([type]) {\r\n\t\tfont-family: 'Inconsolata', monospace;\n}\ninput[type=checkbox] {\r\n\t\theight: 15px;\r\n\t\twidth: 15px;\r\n\t\tvertical-align: middle;\r\n\t\tmargin: 0 0 2px 4px;\r\n\t\tmargin-top: 5px;\n}\n.checkerboard {\r\n\t\t--color-checker_offset: var(--color-bar);\r\n\t\t--color-checkerboard: var(--color-interface);\r\n\t\tbackground-color: var(--color-checkerboard) !important;\r\n\t\tbackground-image: linear-gradient(45deg, var(--color-checkerboard) 25%, transparent 25%), linear-gradient(-45deg, var(--color-checkerboard) 25%, transparent 25%), linear-gradient(45deg, transparent 75%, var(--color-checkerboard) 75%), linear-gradient(-45deg, var(--color-checker_offset) 75%, var(--color-checkerboard) 75%);\r\n\t\tbackground-size: 16px 16px;\r\n\t\tbackground-position: 0 0, 0 8px, 8px -8px, -8px 0px;\n}\nselect {\r\n\t\theight: 30px;\n}\ncode {\r\n\t\tpadding: 2px 8px;\r\n\t\tcolor: #1062ab;\r\n\t\tfont-size: 0.9em;\r\n\t\tbackground-color: var(--color-highlight);\r\n\t\tuser-select: auto;\n}\nbody {\r\n\t\timage-rendering: pixelated;\r\n\t\tbackground-color: var(--color-background);\r\n\t\tuser-select: none;\r\n\t\t-moz-user-select: none;\r\n\t\tfont-family: 'Lato', -apple-system, \"Segoe UI\", sans-serif;\r\n\t\theight: 100%;\r\n        width: 100%;\r\n        margin: 0;\r\n        font-size: 11pt;\r\n        font-weight: 400;\r\n        line-height: 1.5;\r\n        color: var(--color-text);\r\n        text-align: left;\n}\r\n\r\n/*Color Picker*/\ndiv.vc-chrome {\r\n\t\twidth: 240px;\r\n\t\tmargin: 2px 0;\r\n\t\tfont-family: inherit;\n}\ndiv.vc-chrome .vc-chrome-body {\r\n\t\tbackground-color: var(--color-interface);\n}\ndiv.vc-chrome .vc-chrome-fields .vc-input__input {\r\n\t\tcolor: var(--color-text);\r\n\t\tbox-shadow: none;\r\n\t\tfont-size: inherit;\r\n\t\tborder: 1px solid var(--color-border);\r\n\t\theight: 24px;\n}\ndiv.vc-chrome .vc-chrome-toggle-icon svg path {\r\n\t\tfill: var(--color-text);\n}\r\n\r\n\r\n\r\n", ""]);
+exports.push([module.i, "\r\n\t/*Setup*/\n::-webkit-scrollbar {\r\n\t\twidth: 8px;\r\n\t\theight: 8px;\n}\n::-webkit-scrollbar-track {\r\n\t\tbackground: var(--color-interface);\n}\n::-webkit-scrollbar-corner {\r\n\t\tbackground: var(--color-interface);\n}\n::-webkit-scrollbar-thumb {\r\n\t\tbackground: var(--color-bar);\n}\n::-webkit-scrollbar-thumb:hover {\r\n\t\tbackground: var(--color-bar);\n}\n::selection {\r\n\t\tbackground: var(--color-selection);\n}\n::placeholder {\r\n\t\topacity: 0.6;\n}\n* {\r\n\t\tscrollbar-width: thin;\r\n\t\tscrollbar-color: white var(--color-bar);\n}\nbody {\r\n\t\t--color-background: #29323a;\r\n\t\t--color-interface: #e5ebfa;\r\n\t\t--color-bar: #cfd7ea;\r\n\t\t--color-title: #9aa3b8;\r\n\t\t--color-selection: rgba(110, 142, 191, 0.3);\r\n\t\t--color-highlight: #f7f9ff;\r\n\t\t--color-text: #434b53;\n}\nbody {\r\n\t\t--color-background: #29323a;\r\n\t\t--color-dark: #20272d;\r\n\t\t--color-border: #1a1c1f;\r\n\t\t--color-interface: #29323a;\r\n\t\t--color-bar: #34404a;\r\n\t\t--color-title: #4b5b69;\r\n\t\t--color-selection: rgba(110, 142, 191, 0.3);\r\n\t\t--color-highlight: #f7f9ff;\r\n\t\t--color-text: #bcc3ca;\n}\nh1, h2, h3, h4, h5, h6 {\r\n\t\tmargin: 0;\r\n\t\tfont-weight: inherit;\n}\nul {\r\n\t\tlist-style: none;\r\n\t\tpadding-left: 0;\r\n\t\tmargin: 0;\n}\n* {\r\n\t\tmargin: 0;\r\n        padding: 0;\r\n        box-sizing: border-box;\n}\ninput, select {\r\n\t\tfont-weight: inherit;\r\n\t\tbackground-color: var(--color-dark);\r\n\t\tborder: 1px solid var(--color-border);\r\n\t\tcolor: var(--color-text);\r\n\t\theight: 30px;\r\n\t\tpadding: 4px;\n}\ninput[type=text], input[type=number], input:not([type]) {\r\n\t\tfont-family: 'Inconsolata', monospace;\n}\ninput[type=checkbox] {\r\n\t\theight: 15px;\r\n\t\twidth: 15px;\r\n\t\tvertical-align: middle;\r\n\t\tmargin: 0 0 2px 4px;\r\n\t\tmargin-top: 5px;\n}\n.unicode_icon {\r\n\t\tfont-style: unset;\r\n\t\tdisplay: block;\r\n\t\twidth: 24px;\r\n\t\theight: 24px;\r\n\t\ttext-align: center;\r\n\t\tfont-size: 14pt;\n}\n.unicode_icon.caret {\r\n\t\tfont-size: 25pt;\r\n\t\toverflow: hidden;\r\n\t\tdisplay: block;\r\n\t\tmargin-top: -4px;\r\n\t\twidth: 12px;\n}\n.unicode_icon.pause {\r\n\t\tmargin-top: -3px;\r\n\t\tfloat: right;\r\n\t\tfont-size: 15pt;\n}\n.unicode_icon.plus {\r\n\t\tfont-size: 18pt;\r\n\t\tmargin-top: -4px;\n}\n.checkerboard {\r\n\t\t--color-checker_offset: var(--color-bar);\r\n\t\t--color-checkerboard: var(--color-interface);\r\n\t\tbackground-color: var(--color-checkerboard) !important;\r\n\t\tbackground-image: linear-gradient(45deg, var(--color-checkerboard) 25%, transparent 25%), linear-gradient(-45deg, var(--color-checkerboard) 25%, transparent 25%), linear-gradient(45deg, transparent 75%, var(--color-checkerboard) 75%), linear-gradient(-45deg, var(--color-checker_offset) 75%, var(--color-checkerboard) 75%);\r\n\t\tbackground-size: 16px 16px;\r\n\t\tbackground-position: 0 0, 0 8px, 8px -8px, -8px 0px;\n}\nselect {\r\n\t\theight: 30px;\n}\ncode {\r\n\t\tpadding: 2px 8px;\r\n\t\tcolor: #1062ab;\r\n\t\tfont-size: 0.9em;\r\n\t\tbackground-color: var(--color-highlight);\r\n\t\tuser-select: auto;\n}\nbody {\r\n\t\timage-rendering: pixelated;\r\n\t\tbackground-color: var(--color-background);\r\n\t\tuser-select: none;\r\n\t\t-moz-user-select: none;\r\n\t\tfont-family: 'Lato', -apple-system, \"Segoe UI\", sans-serif;\r\n\t\theight: 100%;\r\n        width: 100%;\r\n        margin: 0;\r\n        font-size: 11pt;\r\n        font-weight: 400;\r\n        line-height: 1.5;\r\n        color: var(--color-text);\r\n        text-align: left;\n}\r\n\r\n/*Color Picker*/\ndiv.vc-chrome {\r\n\t\twidth: 240px;\r\n\t\tmargin: 2px 0;\r\n\t\tfont-family: inherit;\n}\ndiv.vc-chrome .vc-chrome-body {\r\n\t\tbackground-color: var(--color-interface);\n}\ndiv.vc-chrome .vc-chrome-fields .vc-input__input {\r\n\t\tcolor: var(--color-text);\r\n\t\tbox-shadow: none;\r\n\t\tfont-size: inherit;\r\n\t\tborder: 1px solid var(--color-border);\r\n\t\theight: 24px;\n}\ndiv.vc-chrome .vc-chrome-toggle-icon svg path {\r\n\t\tfill: var(--color-text);\n}\r\n\r\n\r\n\r\n", ""]);
 
 // exports
 
@@ -68552,7 +68548,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("data:image/png;base64,ZXhwb3J0IGRlZmF1bHQgIi9pbWFnZXMvbWlzc2luZy5wbmc/ODRkOWRlOWY4MTUyNzExZTE4NGYzYTgyYjkyNjU2NGQiOw==");
+/* harmony default export */ __webpack_exports__["default"] = ("data:image/png;base64,ZXhwb3J0IGRlZmF1bHQgIi9pbWFnZXMvbWlzc2luZy5wbmc/NjZiOTNlZTk0NzU3ZDc1OTRkNWExM2RjN2YyZjlmOGEiOw==");
 
 /***/ }),
 
@@ -68587,20 +68583,6 @@ var render = function() {
     "div",
     { style: { "--sidebar": _vm.sidebar_width + "px" }, attrs: { id: "app" } },
     [
-      _c("link", {
-        attrs: {
-          rel: "stylesheet",
-          href: "https://unpkg.com/vue-prism-editor/dist/VuePrismEditor.css"
-        }
-      }),
-      _vm._v(" "),
-      _c("link", {
-        attrs: {
-          rel: "stylesheet",
-          href: "node_modules/@fortawesome/fontawesome-free/css/all.css"
-        }
-      }),
-      _vm._v(" "),
       _c("molang-dialog"),
       _vm._v(" "),
       _c(
@@ -68717,8 +68699,6 @@ var render = function() {
     "div",
     { attrs: { id: "expression_bar" } },
     [
-      _c("i", { staticClass: "fas fa-code" }),
-      _vm._v(" "),
       _c("prism-editor", {
         ref: "input",
         attrs: {
@@ -69084,7 +69064,7 @@ var render = function() {
               }
             }
           },
-          [_c("i", { staticClass: "fas fa-play-circle" })]
+          [_c("i", { staticClass: "unicode_icon" }, [_vm._v(_vm._s("\u25B6"))])]
         ),
         _vm._v(" "),
         _c(
@@ -69098,7 +69078,11 @@ var render = function() {
               }
             }
           },
-          [_c("i", { staticClass: "fas fa-pause-circle" })]
+          [
+            _c("i", { staticClass: "unicode_icon pause" }, [
+              _vm._v(_vm._s("\u23F8"))
+            ])
+          ]
         ),
         _vm._v(" "),
         _c("div", { staticClass: "stat", staticStyle: { width: "66px" } }, [
@@ -69215,7 +69199,13 @@ var render = function() {
                                     }
                                   }
                                 },
-                                [_c("i", { staticClass: "fas fa-plus-circle" })]
+                                [
+                                  _c(
+                                    "i",
+                                    { staticClass: "unicode_icon plus" },
+                                    [_vm._v(_vm._s("\uFF0B"))]
+                                  )
+                                ]
                               )
                             ],
                             2
@@ -69382,7 +69372,11 @@ var render = function() {
                           }
                         }
                       },
-                      [_c("i", { staticClass: "fas fa-minus-circle" })]
+                      [
+                        _c("i", { staticClass: "unicode_icon" }, [
+                          _vm._v(_vm._s("\u2A09"))
+                        ])
+                      ]
                     )
                   ]
                 ),
@@ -69496,7 +69490,11 @@ var render = function() {
                   }
                 }
               },
-              [_c("i", { staticClass: "fas fa-minus-circle" })]
+              [
+                _c("i", { staticClass: "unicode_icon" }, [
+                  _vm._v(_vm._s("\u2A09"))
+                ])
+              ]
             ),
             _vm._v(" "),
             _c(
@@ -69510,7 +69508,11 @@ var render = function() {
                   }
                 }
               },
-              [_c("i", { staticClass: "fas fa-plus-circle" })]
+              [
+                _c("i", { staticClass: "unicode_icon plus" }, [
+                  _vm._v(_vm._s("\uFF0B"))
+                ])
+              ]
             ),
             _vm._v(" "),
             _c("color-picker", {
@@ -69601,8 +69603,12 @@ var render = function() {
                 },
                 [
                   !input.expanded
-                    ? _c("i", { staticClass: "fas fa-caret-down" })
-                    : _c("i", { staticClass: "fas fa-caret-up" })
+                    ? _c("i", { staticClass: "unicode_icon caret" }, [
+                        _vm._v(_vm._s("\u02C7"))
+                      ])
+                    : _c("i", { staticClass: "unicode_icon caret" }, [
+                        _vm._v(_vm._s("\u02C6"))
+                      ])
                 ]
               )
             : _vm._e(),
@@ -69612,14 +69618,18 @@ var render = function() {
                 _c(
                   "div",
                   {
-                    staticClass: "tool",
+                    staticClass: "tool list_add_tool",
                     on: {
                       click: function($event) {
                         return input.value.push("")
                       }
                     }
                   },
-                  [_c("i", { staticClass: "fas fa-plus-circle" })]
+                  [
+                    _c("i", { staticClass: "unicode_icon plus" }, [
+                      _vm._v(_vm._s("\uFF0B"))
+                    ])
+                  ]
                 ),
                 _vm._v(" "),
                 _c(
@@ -69666,7 +69676,11 @@ var render = function() {
                             }
                           }
                         },
-                        [_c("i", { staticClass: "fas fa-times-circle" })]
+                        [
+                          _c("i", { staticClass: "unicode_icon" }, [
+                            _vm._v(_vm._s("\u2A09"))
+                          ])
+                        ]
                       )
                     ])
                   }),
@@ -69972,7 +69986,11 @@ var render = function() {
                               }
                             }
                           },
-                          [_c("i", { staticClass: "fas fa-times-circle" })]
+                          [
+                            _c("i", { staticClass: "unicode_icon" }, [
+                              _vm._v(_vm._s("\u2A09"))
+                            ])
+                          ]
                         ),
                         _vm._v(" "),
                         _c("input", {
@@ -86523,10 +86541,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var three__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! three */ "./node_modules/three/build/three.module.js");
 /* harmony import */ var molangjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! molangjs */ "./node_modules/molangjs/molang.js");
 /* harmony import */ var molangjs__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(molangjs__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var url_loader_assets_missing_png__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! url-loader!./../assets/missing.png */ "./node_modules/url-loader/dist/cjs.js!./assets/missing.png");
-/* harmony import */ var url_loader_assets_default_particles_png__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! url-loader!./../assets/default_particles.png */ "./node_modules/url-loader/dist/cjs.js!./assets/default_particles.png");
-/* harmony import */ var _input_structure__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./input_structure */ "./src/input_structure.js");
-/* harmony import */ var _vscode_extension__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./vscode_extension */ "./src/vscode_extension.js");
+/* harmony import */ var _input_structure__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./input_structure */ "./src/input_structure.js");
+/* harmony import */ var _vscode_extension__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./vscode_extension */ "./src/vscode_extension.js");
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -86536,9 +86552,12 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 
 
+var TextureMissing = __webpack_require__(/*! url-loader!./../assets/missing.png */ "./node_modules/url-loader/dist/cjs.js!./assets/missing.png");
 
-console.log(url_loader_assets_missing_png__WEBPACK_IMPORTED_MODULE_2__["default"]);
-console.log(url_loader_assets_default_particles_png__WEBPACK_IMPORTED_MODULE_3__["default"]);
+var TextureStandard = __webpack_require__(/*! url-loader!./../assets/default_particles.png */ "./node_modules/url-loader/dist/cjs.js!./assets/default_particles.png");
+
+console.log(TextureMissing);
+console.log(TextureStandard);
 
 
 var System = {
@@ -86601,8 +86620,8 @@ var EmitterClass = /*#__PURE__*/function () {
       this.age = 0;
       this.enabled = true;
       var params = this.params();
-      this.active_time = _input_structure__WEBPACK_IMPORTED_MODULE_4__["default"].emitter.lifetime.inputs.active_time.calculate(params);
-      this.sleep_time = _input_structure__WEBPACK_IMPORTED_MODULE_4__["default"].emitter.lifetime.inputs.sleep_time.calculate(params);
+      this.active_time = _input_structure__WEBPACK_IMPORTED_MODULE_2__["default"].emitter.lifetime.inputs.active_time.calculate(params);
+      this.sleep_time = _input_structure__WEBPACK_IMPORTED_MODULE_2__["default"].emitter.lifetime.inputs.sleep_time.calculate(params);
       this.random_vars = [Math.random(), Math.random(), Math.random(), Math.random()];
       this.creation_values = {};
 
@@ -86611,8 +86630,8 @@ var EmitterClass = /*#__PURE__*/function () {
         Emitter.creation_values[key] = molangjs__WEBPACK_IMPORTED_MODULE_1___default.a.parse(s);
       }
 
-      if (_input_structure__WEBPACK_IMPORTED_MODULE_4__["default"].emitter.rate.inputs.mode.value === 'instant') {
-        this.spawnParticles(_input_structure__WEBPACK_IMPORTED_MODULE_4__["default"].emitter.rate.inputs.amount.calculate(params));
+      if (_input_structure__WEBPACK_IMPORTED_MODULE_2__["default"].emitter.rate.inputs.mode.value === 'instant') {
+        this.spawnParticles(_input_structure__WEBPACK_IMPORTED_MODULE_2__["default"].emitter.rate.inputs.amount.calculate(params));
       }
 
       return this;
@@ -86628,8 +86647,8 @@ var EmitterClass = /*#__PURE__*/function () {
         Emitter.tick_values[key] = molangjs__WEBPACK_IMPORTED_MODULE_1___default.a.parse(s, params);
       }
 
-      if (this.enabled && _input_structure__WEBPACK_IMPORTED_MODULE_4__["default"].emitter.rate.inputs.mode.value === 'steady') {
-        var p_this_tick = _input_structure__WEBPACK_IMPORTED_MODULE_4__["default"].emitter.rate.inputs.rate.calculate(params) / 30;
+      if (this.enabled && _input_structure__WEBPACK_IMPORTED_MODULE_2__["default"].emitter.rate.inputs.mode.value === 'steady') {
+        var p_this_tick = _input_structure__WEBPACK_IMPORTED_MODULE_2__["default"].emitter.rate.inputs.rate.calculate(params) / 30;
         var x = 1 / p_this_tick;
         var c_f = Math.round(this.age * 30);
 
@@ -86664,11 +86683,11 @@ var EmitterClass = /*#__PURE__*/function () {
         }
       } else if (this.mode === 'expression') {
         //Expressions
-        if (this.enabled && _input_structure__WEBPACK_IMPORTED_MODULE_4__["default"].emitter.lifetime.inputs.expiration.calculate(params)) {
+        if (this.enabled && _input_structure__WEBPACK_IMPORTED_MODULE_2__["default"].emitter.lifetime.inputs.expiration.calculate(params)) {
           this.stop();
         }
 
-        if (!this.enabled && _input_structure__WEBPACK_IMPORTED_MODULE_4__["default"].emitter.lifetime.inputs.activation.calculate(params)) {
+        if (!this.enabled && _input_structure__WEBPACK_IMPORTED_MODULE_2__["default"].emitter.lifetime.inputs.activation.calculate(params)) {
           this.start();
         }
       }
@@ -86679,7 +86698,7 @@ var EmitterClass = /*#__PURE__*/function () {
     key: "tickParticleRotation",
     value: function tickParticleRotation() {
       this.particles.forEach(function (p) {
-        switch (_input_structure__WEBPACK_IMPORTED_MODULE_4__["default"].particle.appearance.inputs.facing_camera_mode.value) {
+        switch (_input_structure__WEBPACK_IMPORTED_MODULE_2__["default"].particle.appearance.inputs.facing_camera_mode.value) {
           case 'lookat_xyz':
             p.mesh.lookAt(View.camera.position);
             break;
@@ -86731,8 +86750,8 @@ var EmitterClass = /*#__PURE__*/function () {
     value: function spawnParticles(count) {
       if (!count) return this;
 
-      if (_input_structure__WEBPACK_IMPORTED_MODULE_4__["default"].emitter.rate.inputs.mode.value == 'steady') {
-        var max = _input_structure__WEBPACK_IMPORTED_MODULE_4__["default"].emitter.rate.inputs.maximum.calculate(this.params()) || 0;
+      if (_input_structure__WEBPACK_IMPORTED_MODULE_2__["default"].emitter.rate.inputs.mode.value == 'steady') {
+        var max = _input_structure__WEBPACK_IMPORTED_MODULE_2__["default"].emitter.rate.inputs.maximum.calculate(this.params()) || 0;
         max = Math.clamp(max, 0, System.max_particles);
         count = Math.clamp(count, 0, max - this.particles.length);
       } else {
@@ -86802,15 +86821,15 @@ var Particle = /*#__PURE__*/function () {
       this.material.needsUpdate = true;
       var params = this.params();
       this.position.set(0, 0, 0);
-      this.lifetime = _input_structure__WEBPACK_IMPORTED_MODULE_4__["default"].particle.lifetime.inputs.max_lifetime.calculate(params);
-      this.initial_rotation = _input_structure__WEBPACK_IMPORTED_MODULE_4__["default"].particle.rotation.inputs.initial_rotation.calculate(params);
-      this.rotation_rate = _input_structure__WEBPACK_IMPORTED_MODULE_4__["default"].particle.rotation.inputs.rotation_rate.calculate(params);
+      this.lifetime = _input_structure__WEBPACK_IMPORTED_MODULE_2__["default"].particle.lifetime.inputs.max_lifetime.calculate(params);
+      this.initial_rotation = _input_structure__WEBPACK_IMPORTED_MODULE_2__["default"].particle.rotation.inputs.initial_rotation.calculate(params);
+      this.rotation_rate = _input_structure__WEBPACK_IMPORTED_MODULE_2__["default"].particle.rotation.inputs.rotation_rate.calculate(params);
       this.rotation = 0; //Init Position:
 
-      var surface = _input_structure__WEBPACK_IMPORTED_MODULE_4__["default"].emitter.shape.inputs.surface_only.value;
+      var surface = _input_structure__WEBPACK_IMPORTED_MODULE_2__["default"].emitter.shape.inputs.surface_only.value;
 
       if (Emitter.shape === 'box') {
-        var size = _input_structure__WEBPACK_IMPORTED_MODULE_4__["default"].emitter.shape.inputs.half_dimensions.calculate(params);
+        var size = _input_structure__WEBPACK_IMPORTED_MODULE_2__["default"].emitter.shape.inputs.half_dimensions.calculate(params);
         this.position.x = Math.randomab(-size.x, size.x);
         this.position.y = Math.randomab(-size.y, size.y);
         this.position.z = Math.randomab(-size.z, size.z);
@@ -86832,7 +86851,7 @@ var Particle = /*#__PURE__*/function () {
           this.position.setComponent(face, size.getComponent(face) * (side ? 1 : -1));
         }
       } else if (Emitter.shape === 'sphere') {
-        var radius = _input_structure__WEBPACK_IMPORTED_MODULE_4__["default"].emitter.shape.inputs.radius.calculate(params);
+        var radius = _input_structure__WEBPACK_IMPORTED_MODULE_2__["default"].emitter.shape.inputs.radius.calculate(params);
 
         if (surface) {
           this.position.x = radius;
@@ -86842,12 +86861,12 @@ var Particle = /*#__PURE__*/function () {
 
         this.position.applyEuler(getRandomEuler());
       } else if (Emitter.shape === 'disc') {
-        var radius = _input_structure__WEBPACK_IMPORTED_MODULE_4__["default"].emitter.shape.inputs.radius.calculate(params);
+        var radius = _input_structure__WEBPACK_IMPORTED_MODULE_2__["default"].emitter.shape.inputs.radius.calculate(params);
         var ang = Math.random() * Math.PI * 2;
         var dis = surface ? radius : radius * Math.sqrt(Math.random());
         this.position.x = dis * Math.cos(ang);
         this.position.z = dis * Math.sin(ang);
-        var normal = _input_structure__WEBPACK_IMPORTED_MODULE_4__["default"].emitter.shape.inputs.plane_normal.calculate(params);
+        var normal = _input_structure__WEBPACK_IMPORTED_MODULE_2__["default"].emitter.shape.inputs.plane_normal.calculate(params);
 
         if (!normal.equals(System.veczero)) {
           var q = new three__WEBPACK_IMPORTED_MODULE_0__["Quaternion"]().setFromUnitVectors(System.upnormal, normal.normalize());
@@ -86858,7 +86877,7 @@ var Particle = /*#__PURE__*/function () {
 
 
       this.speed = new three__WEBPACK_IMPORTED_MODULE_0__["Vector3"]();
-      var dir = _input_structure__WEBPACK_IMPORTED_MODULE_4__["default"].particle.direction.inputs.mode.value;
+      var dir = _input_structure__WEBPACK_IMPORTED_MODULE_2__["default"].particle.direction.inputs.mode.value;
 
       if (dir == 'inwards' || dir == 'outwards') {
         if (Emitter.shape === 'point') {
@@ -86871,13 +86890,13 @@ var Particle = /*#__PURE__*/function () {
           }
         }
       } else {
-        this.speed = _input_structure__WEBPACK_IMPORTED_MODULE_4__["default"].particle.direction.inputs.direction.calculate(params).normalize();
+        this.speed = _input_structure__WEBPACK_IMPORTED_MODULE_2__["default"].particle.direction.inputs.direction.calculate(params).normalize();
       }
 
       this.direction.copy(this.speed);
-      var speed = _input_structure__WEBPACK_IMPORTED_MODULE_4__["default"].particle.motion.inputs.linear_speed.calculate(params);
+      var speed = _input_structure__WEBPACK_IMPORTED_MODULE_2__["default"].particle.motion.inputs.linear_speed.calculate(params);
       this.speed.multiplyScalar(speed);
-      this.position.add(_input_structure__WEBPACK_IMPORTED_MODULE_4__["default"].emitter.shape.inputs.offset.calculate(params)); //UV
+      this.position.add(_input_structure__WEBPACK_IMPORTED_MODULE_2__["default"].emitter.shape.inputs.offset.calculate(params)); //UV
 
       this.setFrame(0);
       return this.tick();
@@ -86890,27 +86909,27 @@ var Particle = /*#__PURE__*/function () {
       this.age += 1 / 30;
       this.loop_time += 1 / 30;
 
-      if (_input_structure__WEBPACK_IMPORTED_MODULE_4__["default"].particle.lifetime.inputs.mode.value === 'time') {
+      if (_input_structure__WEBPACK_IMPORTED_MODULE_2__["default"].particle.lifetime.inputs.mode.value === 'time') {
         if (this.age > this.lifetime) {
           this.remove();
         }
       } else {
-        if (_input_structure__WEBPACK_IMPORTED_MODULE_4__["default"].particle.lifetime.inputs.expiration_expression.calculate(params)) {
+        if (_input_structure__WEBPACK_IMPORTED_MODULE_2__["default"].particle.lifetime.inputs.expiration_expression.calculate(params)) {
           this.remove();
         }
       } //Movement
 
 
-      if (_input_structure__WEBPACK_IMPORTED_MODULE_4__["default"].particle.motion.inputs.mode.value === 'dynamic') {
+      if (_input_structure__WEBPACK_IMPORTED_MODULE_2__["default"].particle.motion.inputs.mode.value === 'dynamic') {
         //Position
-        var drag = _input_structure__WEBPACK_IMPORTED_MODULE_4__["default"].particle.motion.inputs.linear_drag_coefficient.calculate(params);
-        this.acceleration = _input_structure__WEBPACK_IMPORTED_MODULE_4__["default"].particle.motion.inputs.linear_acceleration.calculate(params);
+        var drag = _input_structure__WEBPACK_IMPORTED_MODULE_2__["default"].particle.motion.inputs.linear_drag_coefficient.calculate(params);
+        this.acceleration = _input_structure__WEBPACK_IMPORTED_MODULE_2__["default"].particle.motion.inputs.linear_acceleration.calculate(params);
         this.acceleration.addScaledVector(this.speed, -drag);
         this.speed.addScaledVector(this.acceleration, 1 / 30);
         this.position.addScaledVector(this.speed, 1 / 30);
 
-        if (_input_structure__WEBPACK_IMPORTED_MODULE_4__["default"].particle.lifetime.inputs.kill_plane.value) {
-          var plane = _input_structure__WEBPACK_IMPORTED_MODULE_4__["default"].particle.lifetime.inputs.kill_plane.calculate();
+        if (_input_structure__WEBPACK_IMPORTED_MODULE_2__["default"].particle.lifetime.inputs.kill_plane.value) {
+          var plane = _input_structure__WEBPACK_IMPORTED_MODULE_2__["default"].particle.lifetime.inputs.kill_plane.calculate();
           var start_point = new three__WEBPACK_IMPORTED_MODULE_0__["Vector3"]().copy(this.position).addScaledVector(this.speed, -1 / 30);
           var line = new three__WEBPACK_IMPORTED_MODULE_0__["Line3"](start_point, this.position);
 
@@ -86918,46 +86937,46 @@ var Particle = /*#__PURE__*/function () {
             this.remove();
           }
         }
-      } else if (_input_structure__WEBPACK_IMPORTED_MODULE_4__["default"].particle.motion.inputs.mode.value === 'parametric') {
-        if (_input_structure__WEBPACK_IMPORTED_MODULE_4__["default"].particle.motion.inputs.relative_position.value.join('').length) {
-          this.position.copy(_input_structure__WEBPACK_IMPORTED_MODULE_4__["default"].particle.motion.inputs.relative_position.calculate(params));
+      } else if (_input_structure__WEBPACK_IMPORTED_MODULE_2__["default"].particle.motion.inputs.mode.value === 'parametric') {
+        if (_input_structure__WEBPACK_IMPORTED_MODULE_2__["default"].particle.motion.inputs.relative_position.value.join('').length) {
+          this.position.copy(_input_structure__WEBPACK_IMPORTED_MODULE_2__["default"].particle.motion.inputs.relative_position.calculate(params));
         }
 
-        if (_input_structure__WEBPACK_IMPORTED_MODULE_4__["default"].particle.motion.inputs.direction.value.join('').length) {
-          this.speed.copy(_input_structure__WEBPACK_IMPORTED_MODULE_4__["default"].particle.motion.inputs.direction.calculate(params));
+        if (_input_structure__WEBPACK_IMPORTED_MODULE_2__["default"].particle.motion.inputs.direction.value.join('').length) {
+          this.speed.copy(_input_structure__WEBPACK_IMPORTED_MODULE_2__["default"].particle.motion.inputs.direction.calculate(params));
         }
       } // Rotation
 
 
-      if (_input_structure__WEBPACK_IMPORTED_MODULE_4__["default"].particle.rotation.inputs.mode.value === 'dynamic') {
-        var rot_drag = _input_structure__WEBPACK_IMPORTED_MODULE_4__["default"].particle.rotation.inputs.rotation_drag_coefficient.calculate(params);
-        var rot_acceleration = _input_structure__WEBPACK_IMPORTED_MODULE_4__["default"].particle.rotation.inputs.rotation_acceleration.calculate(params);
+      if (_input_structure__WEBPACK_IMPORTED_MODULE_2__["default"].particle.rotation.inputs.mode.value === 'dynamic') {
+        var rot_drag = _input_structure__WEBPACK_IMPORTED_MODULE_2__["default"].particle.rotation.inputs.rotation_drag_coefficient.calculate(params);
+        var rot_acceleration = _input_structure__WEBPACK_IMPORTED_MODULE_2__["default"].particle.rotation.inputs.rotation_acceleration.calculate(params);
         rot_acceleration += -rot_drag * this.rotation_rate;
         this.rotation_rate += rot_acceleration * 1 / 30;
         this.rotation = Math.degToRad(this.initial_rotation + this.rotation_rate * this.age);
-      } else if (_input_structure__WEBPACK_IMPORTED_MODULE_4__["default"].particle.rotation.inputs.mode.value === 'parametric') {
-        this.rotation = Math.degToRad(_input_structure__WEBPACK_IMPORTED_MODULE_4__["default"].particle.rotation.inputs.rotation.calculate(params));
+      } else if (_input_structure__WEBPACK_IMPORTED_MODULE_2__["default"].particle.rotation.inputs.mode.value === 'parametric') {
+        this.rotation = Math.degToRad(_input_structure__WEBPACK_IMPORTED_MODULE_2__["default"].particle.rotation.inputs.rotation.calculate(params));
       } //Size
 
 
-      var size = _input_structure__WEBPACK_IMPORTED_MODULE_4__["default"].particle.appearance.inputs.size.calculate(params);
+      var size = _input_structure__WEBPACK_IMPORTED_MODULE_2__["default"].particle.appearance.inputs.size.calculate(params);
       this.mesh.scale.x = size.x * 2 || 0.0001;
       this.mesh.scale.y = size.y * 2 || 0.0001; //UV
 
-      if (_input_structure__WEBPACK_IMPORTED_MODULE_4__["default"].particle.texture.inputs.mode.value === 'animated') {
-        var max_frame = _input_structure__WEBPACK_IMPORTED_MODULE_4__["default"].particle.texture.inputs.max_frame.calculate(params);
+      if (_input_structure__WEBPACK_IMPORTED_MODULE_2__["default"].particle.texture.inputs.mode.value === 'animated') {
+        var max_frame = _input_structure__WEBPACK_IMPORTED_MODULE_2__["default"].particle.texture.inputs.max_frame.calculate(params);
 
-        if (_input_structure__WEBPACK_IMPORTED_MODULE_4__["default"].particle.texture.inputs.stretch_to_lifetime.value && max_frame) {
+        if (_input_structure__WEBPACK_IMPORTED_MODULE_2__["default"].particle.texture.inputs.stretch_to_lifetime.value && max_frame) {
           var fps = max_frame / this.lifetime;
         } else {
-          var fps = _input_structure__WEBPACK_IMPORTED_MODULE_4__["default"].particle.texture.inputs.frames_per_second.calculate(params);
+          var fps = _input_structure__WEBPACK_IMPORTED_MODULE_2__["default"].particle.texture.inputs.frames_per_second.calculate(params);
         }
 
         if (Math.floor(this.loop_time * fps) > this.current_frame) {
           this.current_frame = Math.floor(this.loop_time * fps);
 
           if (max_frame && this.current_frame > max_frame) {
-            if (_input_structure__WEBPACK_IMPORTED_MODULE_4__["default"].particle.texture.inputs.loop.value) {
+            if (_input_structure__WEBPACK_IMPORTED_MODULE_2__["default"].particle.texture.inputs.loop.value) {
               this.current_frame = 0;
               this.loop_time = 0;
               this.setFrame(this.current_frame);
@@ -86969,15 +86988,15 @@ var Particle = /*#__PURE__*/function () {
       } //Color
 
 
-      if (_input_structure__WEBPACK_IMPORTED_MODULE_4__["default"].particle.color.inputs.mode.value === 'expression') {
-        var c = _input_structure__WEBPACK_IMPORTED_MODULE_4__["default"].particle.color.inputs.expression.calculate(params);
+      if (_input_structure__WEBPACK_IMPORTED_MODULE_2__["default"].particle.color.inputs.mode.value === 'expression') {
+        var c = _input_structure__WEBPACK_IMPORTED_MODULE_2__["default"].particle.color.inputs.expression.calculate(params);
         this.material.color.r = c.x;
         this.material.color.g = c.y;
         this.material.color.b = c.z;
-      } else if (_input_structure__WEBPACK_IMPORTED_MODULE_4__["default"].particle.color.inputs.mode.value === 'gradient') {
-        var i = _input_structure__WEBPACK_IMPORTED_MODULE_4__["default"].particle.color.inputs.interpolant.calculate(params);
-        var r = _input_structure__WEBPACK_IMPORTED_MODULE_4__["default"].particle.color.inputs.range.calculate(params);
-        var c = _input_structure__WEBPACK_IMPORTED_MODULE_4__["default"].particle.color.inputs.gradient.calculate(i / r * 100);
+      } else if (_input_structure__WEBPACK_IMPORTED_MODULE_2__["default"].particle.color.inputs.mode.value === 'gradient') {
+        var i = _input_structure__WEBPACK_IMPORTED_MODULE_2__["default"].particle.color.inputs.interpolant.calculate(params);
+        var r = _input_structure__WEBPACK_IMPORTED_MODULE_2__["default"].particle.color.inputs.range.calculate(params);
+        var c = _input_structure__WEBPACK_IMPORTED_MODULE_2__["default"].particle.color.inputs.gradient.calculate(i / r * 100);
         this.material.color.copy(c);
       }
 
@@ -86995,11 +87014,11 @@ var Particle = /*#__PURE__*/function () {
     key: "setFrame",
     value: function setFrame(n) {
       var params = this.params();
-      var uv = _input_structure__WEBPACK_IMPORTED_MODULE_4__["default"].particle.texture.inputs.uv.calculate(params);
-      var size = _input_structure__WEBPACK_IMPORTED_MODULE_4__["default"].particle.texture.inputs.uv_size.calculate(params);
+      var uv = _input_structure__WEBPACK_IMPORTED_MODULE_2__["default"].particle.texture.inputs.uv.calculate(params);
+      var size = _input_structure__WEBPACK_IMPORTED_MODULE_2__["default"].particle.texture.inputs.uv_size.calculate(params);
 
       if (n) {
-        var offset = _input_structure__WEBPACK_IMPORTED_MODULE_4__["default"].particle.texture.inputs.uv_step.calculate(params);
+        var offset = _input_structure__WEBPACK_IMPORTED_MODULE_2__["default"].particle.texture.inputs.uv_step.calculate(params);
         uv.addScaledVector(offset, n);
       }
 
@@ -87046,7 +87065,7 @@ function initParticles(view_arg) {
   System.planezero = new three__WEBPACK_IMPORTED_MODULE_0__["Plane"](new three__WEBPACK_IMPORTED_MODULE_0__["Vector3"](0, 0, 0), 0);
   System.max_particles = 10000;
   System.tick = false;
-  Object(_input_structure__WEBPACK_IMPORTED_MODULE_4__["forEachInput"])(function (input) {
+  Object(_input_structure__WEBPACK_IMPORTED_MODULE_2__["forEachInput"])(function (input) {
     if (input.updatePreview) {
       var data = input.calculate();
       input.updatePreview(data);
@@ -87078,9 +87097,9 @@ function togglePause() {
 
 function updateMaterial(cb) {
   var url;
-  var path = _input_structure__WEBPACK_IMPORTED_MODULE_4__["default"].particle.texture.inputs.path.value;
+  var path = _input_structure__WEBPACK_IMPORTED_MODULE_2__["default"].particle.texture.inputs.path.value;
 
-  if (_vscode_extension__WEBPACK_IMPORTED_MODULE_5__["default"] && path) {
+  if (_vscode_extension__WEBPACK_IMPORTED_MODULE_3__["default"] && path) {
     var update = function update(event) {
       if (event.data.type == 'provide_texture') {
         loadTexture(event.data.url || 'assets/missing.png');
@@ -87088,13 +87107,13 @@ function updateMaterial(cb) {
       }
     };
 
-    _vscode_extension__WEBPACK_IMPORTED_MODULE_5__["default"].postMessage({
+    _vscode_extension__WEBPACK_IMPORTED_MODULE_3__["default"].postMessage({
       type: 'request_texture',
       path: path
     });
     window.addEventListener('message', update, false);
-  } else if (_input_structure__WEBPACK_IMPORTED_MODULE_4__["default"].particle.texture.inputs.image && _input_structure__WEBPACK_IMPORTED_MODULE_4__["default"].particle.texture.inputs.image.image) {
-    url = _input_structure__WEBPACK_IMPORTED_MODULE_4__["default"].particle.texture.inputs.image.image.data;
+  } else if (_input_structure__WEBPACK_IMPORTED_MODULE_2__["default"].particle.texture.inputs.image && _input_structure__WEBPACK_IMPORTED_MODULE_2__["default"].particle.texture.inputs.image.image) {
+    url = _input_structure__WEBPACK_IMPORTED_MODULE_2__["default"].particle.texture.inputs.image.image.data;
     loadTexture(url, cb);
   } else {
     switch (path) {
@@ -87140,15 +87159,15 @@ function loadTexture(url, cb) {
     var y_factor = System.material.map.image.naturalHeight / Flipbook.height;
 
     if (x_factor && x_factor != 1) {
-      factorize(_input_structure__WEBPACK_IMPORTED_MODULE_4__["default"].particle.texture.inputs.uv, 0, x_factor);
-      factorize(_input_structure__WEBPACK_IMPORTED_MODULE_4__["default"].particle.texture.inputs.uv_size, 0, x_factor);
-      factorize(_input_structure__WEBPACK_IMPORTED_MODULE_4__["default"].particle.texture.inputs.uv_step, 0, x_factor);
+      factorize(_input_structure__WEBPACK_IMPORTED_MODULE_2__["default"].particle.texture.inputs.uv, 0, x_factor);
+      factorize(_input_structure__WEBPACK_IMPORTED_MODULE_2__["default"].particle.texture.inputs.uv_size, 0, x_factor);
+      factorize(_input_structure__WEBPACK_IMPORTED_MODULE_2__["default"].particle.texture.inputs.uv_step, 0, x_factor);
     }
 
     if (y_factor && y_factor != 1) {
-      factorize(_input_structure__WEBPACK_IMPORTED_MODULE_4__["default"].particle.texture.inputs.uv, 1, y_factor);
-      factorize(_input_structure__WEBPACK_IMPORTED_MODULE_4__["default"].particle.texture.inputs.uv_size, 1, y_factor);
-      factorize(_input_structure__WEBPACK_IMPORTED_MODULE_4__["default"].particle.texture.inputs.uv_step, 1, y_factor);
+      factorize(_input_structure__WEBPACK_IMPORTED_MODULE_2__["default"].particle.texture.inputs.uv, 1, y_factor);
+      factorize(_input_structure__WEBPACK_IMPORTED_MODULE_2__["default"].particle.texture.inputs.uv_size, 1, y_factor);
+      factorize(_input_structure__WEBPACK_IMPORTED_MODULE_2__["default"].particle.texture.inputs.uv_step, 1, y_factor);
     }
 
     Flipbook.width = System.material.map.image.naturalWidth;

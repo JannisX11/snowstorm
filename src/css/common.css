@@ -84,6 +84,30 @@
 		margin: 0 0 2px 4px;
 		margin-top: 5px;
 	}
+	.unicode_icon {
+		font-style: unset;
+		display: block;
+		width: 24px;
+		height: 24px;
+		text-align: center;
+		font-size: 14pt;
+	}
+	.unicode_icon.caret {
+		font-size: 25pt;
+		overflow: hidden;
+		display: block;
+		margin-top: -4px;
+		width: 12px;
+	}
+	.unicode_icon.pause {
+		margin-top: -3px;
+		float: right;
+		font-size: 15pt;
+	}
+	.unicode_icon.plus {
+		font-size: 18pt;
+		margin-top: -4px;
+	}
 	.checkerboard {
 		--color-checker_offset: var(--color-bar);
 		--color-checkerboard: var(--color-interface);

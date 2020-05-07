@@ -10,12 +10,12 @@
         >
             <label v-bind:for="key" v-if="input.label">{{ input.label }}</label>
             <div class="tool input_expand_button" v-if="input.expandable" @click="toggleExpand(input)" title="Expand">
-                <i v-if="!input.expanded" class="fas fa-caret-down"></i>
-                <i v-else class="fas fa-caret-up"></i>
+                <i v-if="!input.expanded" class="unicode_icon caret">{{'\u02C7'}}</i>
+                <i v-else class="unicode_icon caret">{{'\u02C6'}}</i>
             </div>
             <template  v-if="input.type == 'list'">
                 <!--List-->
-                <div class="tool" v-on:click="input.value.push('')"><i class="fas fa-plus-circle"></i></div>
+                <div class="tool list_add_tool" v-on:click="input.value.push('')"><i class="unicode_icon plus">{{'\uFF0B'}}</i></div>
                 <ul class="input_list">
                     <li v-for="(item, index) in input.value" :key="index">
                         <input
@@ -24,7 +24,7 @@
                             v-bind:placeholder="input.placeholder"
                             v-on:input="input.change($event)"
                             v-on:focus="input.focus(index, $event)">
-                        <div class="tool" v-on:click="input.value.remove(item)"><i class="fas fa-times-circle"></i></div>
+                        <div class="tool" v-on:click="input.value.remove(item)"><i class="unicode_icon">{{'\u2A09'}}</i></div>
                     </li>
                 </ul>
             </template>
@@ -87,7 +87,7 @@
                     <div class="input_texture_wrapper checkerboard">
                         <div class="input_texture_preview" :style="{'background-image': `url(${input.image_data})`}"></div>
                     </div>
-                    <div class="tool" v-on:click="input.reset()"><i class="fas fa-times-circle"></i></div>
+                    <div class="tool" v-on:click="input.reset()"><i class="unicode_icon">{{'\u2A09'}}</i></div>
                     <input  v-bind:id="key" type="file" accept=".png" v-on:change="input.change($event)">
                 </template>
             </div>
@@ -190,5 +190,8 @@ export default {
 	}
 	.input_vector:first-child {
         margin-left: 0;
-	}
+    }
+    .list_add_tool {
+        vertical-align: sub;
+    }
 </style>

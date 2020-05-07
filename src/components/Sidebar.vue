@@ -14,7 +14,7 @@
                             :curve.sync="curve" :group_key.sync="group_key" :subject_key.sync="subject_key"
                         ></curve>
                         <label>Add Curve</label>
-                        <div class="tool" v-on:click="addCurve()"><i class="fas fa-plus-circle"></i></div>
+                        <div class="tool" v-on:click="addCurve()"><i class="unicode_icon plus">{{'\uFF0B'}}</i></div>
                     </ul>
                     <ul v-show="!group._folded" v-else>
                         <input-group :group.sync="group" :group_key.sync="group_key" :subject_key.sync="subject_key"></input-group>

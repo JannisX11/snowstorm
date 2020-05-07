@@ -1,8 +1,5 @@
 <template>
     <div id="app" :style="{'--sidebar': sidebar_width+'px'}">
-		<link rel="stylesheet" href="https://unpkg.com/vue-prism-editor/dist/VuePrismEditor.css">
-		<link rel="stylesheet" 
-        	href="node_modules/@fortawesome/fontawesome-free/css/all.css">
 
 		<molang-dialog></molang-dialog>
 
@@ -80,10 +77,12 @@ export default {
 	.tool {
 		display: inline-block;
 		padding: 2px 8px; 
-		padding-top: 3px;
+		padding-top: 1px;
+		width: 35px;
+		height: 30px;
 	}
 	.tool:hover {
-		color: #3e5366;
+		color: var(--color-highlight);
 	}
 	.resizer {
 		position: absolute !important;

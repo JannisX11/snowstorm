@@ -11,8 +11,8 @@
 			></div>
 		</div>
 		<div v-if="input.selected && input.selected.color">
-		<div class="tool" style="float: right;" v-on:click="input.removePoint()"><i class="fas fa-minus-circle"></i></div>
-			<div class="tool" style="float: right;" v-on:click="input.addPoint()"><i class="fas fa-plus-circle"></i></div>
+		<div class="tool" style="float: right;" v-on:click="input.removePoint()"><i class="unicode_icon">{{'\u2A09'}}</i></div>
+			<div class="tool" style="float: right;" v-on:click="input.addPoint()"><i class="unicode_icon plus">{{'\uFF0B'}}</i></div>
 			<color-picker v-model="input.selected.color" v-on:input="input.change($event)"></color-picker>
 		</div>
 	</div>
@@ -94,5 +94,8 @@ export default {
 	.gradient_inner {
 		height: 100%;
 		width: 100%;
+	}
+	div.vc-chrome {
+		float: left;
 	}
 </style>

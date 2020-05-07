@@ -1,7 +1,7 @@
 import * as THREE from 'three'
 import Molang from 'molangjs'
-import TextureMissing from 'url-loader!./../assets/missing.png';
-import TextureStandard from 'url-loader!./../assets/default_particles.png';
+const TextureMissing = require('url-loader!./../assets/missing.png');
+const TextureStandard = require('url-loader!./../assets/default_particles.png');
 console.log(TextureMissing)
 console.log(TextureStandard)
 
