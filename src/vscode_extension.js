@@ -12,7 +12,6 @@ if (vscode) {
      */
 
     function updateContent(text) {
-        console.log('loading file', text.substr(0, 44))
         if (text && typeof text == 'string') {
             let parsed = JSON.parse(text)
             loadFile(parsed)

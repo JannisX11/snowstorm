@@ -60,7 +60,7 @@ function generateFile() {
 
 	//Curves
 	if (Data.effect.curves.curves.length) {
-		var json_curves = file.particle_effect.curves = {};
+		var json_curves = {};
 		Data.effect.curves.curves.forEach((curve, i) => {
 			if (!curve.inputs.id.value) return;
 			var json_curve = {
@@ -71,6 +71,9 @@ function generateFile() {
 			}
 			json_curves[curve.inputs.id.value] = json_curve
 		})
+		if (Object.keys(json_curves).length) {
+			file.particle_effect.curves  = json_curves;
+		}
 	}
 
 	var comps = file.particle_effect.components = {};
@@ -346,7 +349,6 @@ function getName() {
 	return name;
 }
 function downloadFile() {
-	console.log({downloadFile, compileJSON, generateFile, getName, IO})
 	var content = compileJSON(generateFile())
 	IO.export({
 		name: getName()+'.json',

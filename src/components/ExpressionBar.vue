@@ -50,7 +50,10 @@ export default {
                 input.set(arr)
             } else {
                 input.value = text;
-            }
+			}
+			if (typeof input.change == 'function') {
+				input.change(event)
+			}
 		}
 	},
 	mounted() {

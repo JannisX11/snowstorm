@@ -49,18 +49,6 @@ class Overlay {
 })()
 
 
-if (window.parent !== window) {
-	console.log('Snowstorm trapped')
-	window.addEventListener('message', event => {
-		console.log('C: '+JSON.stringify(event.data));
-		Data.effect.meta.identifier.value = 'v5'
-	}, false)
-
-	setTimeout(() => {
-		window.parent.postMessage({type: 'test', data: 'hey from snowstorm'})
-	}, 600)
-}
-
 var ExpandedInput, MolangSheet;
 $(document).ready(() => {
 

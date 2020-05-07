@@ -5,7 +5,6 @@ import {compileJSON} from './util'
 const EditListeners = {};
 
 export default function registerEdit(id) {
-    console.trace('EDIT', id)
     if (vscode) {
         
         let content = compileJSON(generateFile())
@@ -13,7 +12,6 @@ export default function registerEdit(id) {
             type: 'save',
             content
         });
-        console.log('Posted Save')
     } else {
         for (var key in EditListeners) {
             let handler = EditListeners[key];
@@ -21,4 +19,5 @@ export default function registerEdit(id) {
         }
     }
 }
+
 export {EditListeners}

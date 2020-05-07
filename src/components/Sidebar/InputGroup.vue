@@ -69,7 +69,7 @@
                 </template>
 
                 <!--Check-->
-                <input v-if="input.type == 'checkbox'" v-bind:id="key" type="checkbox" v-model="input.value">
+                <input v-if="input.type == 'checkbox'" v-bind:id="key" type="checkbox" v-model="input.value" @change="input.change($event)">
 
                 <!--Select-->
                 <select v-if="input.type == 'select'" v-bind:id="key" v-model="input.meta_value" v-on:change="input.change($event)">

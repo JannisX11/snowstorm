@@ -24,10 +24,7 @@ const Samples = {
 
 function loadFile(data) {
 
-	console.log('in load file function', !!data, !!data.particle_effect, data)
 	if (data && data.particle_effect && startNewProject()) {
-
-		console.log('started new project with', data.particle_effect.description.identifier)
 
 		var comps = data.particle_effect.components;
 		var curves = data.particle_effect.curves;

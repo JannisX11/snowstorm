@@ -1,9 +1,6 @@
 import * as THREE from 'three'
 import Molang from 'molangjs'
-const TextureMissing = require('url-loader!./../assets/missing.png');
-const TextureStandard = require('url-loader!./../assets/default_particles.png');
-console.log(TextureMissing)
-console.log(TextureStandard)
+import DefaultTex from './default_textures'
 
 import Data, {forEachInput} from './input_structure'
 
@@ -515,7 +512,7 @@ function updateMaterial(cb) {
 		});
 		function update(event) {
 			if (event.data.type == 'provide_texture') {
-				loadTexture(event.data.url || 'assets/missing.png');
+				loadTexture(event.data.url || DefaultTex.missing);
 				window.removeEventListener('message', update);
 			}
 		}
@@ -529,21 +526,23 @@ function updateMaterial(cb) {
 	} else {
 		switch (path) {
 			case 'textures/particle/particles':
-				url = 'assets/default_particles.png';
+				url = DefaultTex.default_particles;
+				break;
 			case 'textures/flame_atlas':
 			case 'textures/particle/flame_atlas':
-				url = 'assets/flame_atlas.png';
+				url = DefaultTex.flame_atlas;
+				break;
 			case 'textures/particle/campfire_smoke':
-				url = 'assets/campfire_smoke.png';
+				url = DefaultTex.campfire_smoke;
+				break;
 			default:
-				url = 'assets/missing.png';
+				url = DefaultTex.missing;
 		}
 		loadTexture(url, cb)
 	}
 
 }
 function loadTexture(url, cb) {
-	console.log('--------------- Loading Texture', url)
 	var tex = new THREE.TextureLoader().load(url, function(a, b) {
 		function factorize(input, axis, factor) {
 			if (!input.value || !input.value[axis]) return;

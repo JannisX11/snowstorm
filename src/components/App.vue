@@ -80,6 +80,7 @@ export default {
 		padding-top: 1px;
 		width: 35px;
 		height: 30px;
+		cursor: pointer;
 	}
 	.tool:hover {
 		color: var(--color-highlight);
