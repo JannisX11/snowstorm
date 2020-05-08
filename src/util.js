@@ -446,7 +446,7 @@ function compileJSON(object, options) {
 		var out = ''
 		if (typeof o === 'string') {
 			//String
-			out += '"' + o.replace(/\\/g, '\\\\').replace(/"/g, '\\"') + '"'
+			out += '"' + o.replace(/\\/g, '\\\\').replace(/"/g, '\\"').replace(/\n|\r\n/g, '\\n').replace(/\t/g, '\\t') + '"'
 		} else if (typeof o === 'boolean') {
 			//Boolean
 			out += (o ? 'true' : 'false')
@@ -457,7 +457,7 @@ function compileJSON(object, options) {
 		} else if (o === null || o === Infinity || o === -Infinity) {
 			//Null
 			out += 'null'
-		} else if (typeof o === 'object' && o.constructor.name === 'Array') {
+		} else if (typeof o === 'object' && o instanceof Array) {
 			//Array
 			var has_content = false
 			out += '['

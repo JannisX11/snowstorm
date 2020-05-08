@@ -17,7 +17,7 @@
 		background: var(--color-bar);
 	}
 	::-webkit-scrollbar-thumb:hover {
-		background: var(--color-bar);
+		background: var(--color-title);
 	}
 	::selection {
 		background: var(--color-selection);
@@ -91,6 +91,7 @@
 		height: 24px;
 		text-align: center;
 		font-size: 14pt;
+		font-family: sans-serif;
 	}
 	.unicode_icon.caret {
 		font-size: 25pt;

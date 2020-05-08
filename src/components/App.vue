@@ -121,6 +121,7 @@ export default {
 	header {
 		grid-area: header;
 		font-size: 1.1em;
+		position: relative;
 	}
 
 	content {

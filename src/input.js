@@ -35,7 +35,7 @@ export default class Input {
 			}
 			this.meta_value = this.options[this.value]
 
-		} else if (this.type === 'color') {
+		} else if (this.type === 'color' && !this.value) {
 			this.value = '#ffffff';
 
 		} else if (this.axis_count > 1 && !this.value) {
@@ -45,8 +45,14 @@ export default class Input {
 		} else if (this.type === 'image') {
 			this.value = '';
 			this.image_data = '';
+		} else if ((this.type === 'text' || this.type === 'molang') && !this.value) {
+			this.value = '';
+		} else if (this.type === 'checkbox' && !this.value) {
+			this.value = '';
+		} else if (this.type === 'number' && !this.value) {
+			this.value = 0;
 		}
-		this.default_value = this.value instanceof Array ? this.value.slice() : this.value;
+		this.default_value = JSON.parse(JSON.stringify(this.value));
 	}
 	toggleExpand() {
 		if (this.expandable) {
@@ -150,19 +156,24 @@ export default class Input {
 	}
 	set(value) {
 		var scope = this;
-		if (value === undefined) return this;
+		if (value === undefined) return;
 		if (this.type === 'select') {
 			this.value = value
 			this.meta_value = this.options[this.value]
 		} else {
-			this.value = value;
+			if (this.value instanceof Array) {
+				console.trace('!!', value, this)
+				if (value instanceof Array) this.value.splice(0, Infinity, ...value);
+			} else {
+				this.value = value;
+			}
 		}
 		scope.change()
 		return this;
 	}
 	reset() {
-		this.value = this.default_value;
 		this.set(this.default_value);
+		console.log(this.label, this.default_value, this.value)
 		if (this.type == 'image') {
 			delete this.image
 			$('#particle-texture-image .input_texture_preview').css('background-image', `none`)

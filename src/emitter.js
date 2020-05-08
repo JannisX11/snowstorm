@@ -19,7 +19,7 @@ var Emitter = {};
 
 
 setInterval(function() {
-	if (Emitter && Emitter.tick && document.hasFocus() && !System.paused) {
+	if (Emitter && Emitter.tick && !System.paused) {
 		Emitter.tick()
 	}
 }, 1000/30)
@@ -500,6 +500,13 @@ function startAnimation() {
 function togglePause() {
 	System.paused = !System.paused;
 }
+
+const VanillaTextures = {
+	'textures/particle/particles': DefaultTex.default_particles,
+	'textures/flame_atlas': DefaultTex.flame_atlas,
+	'textures/particle/flame_atlas': DefaultTex.flame_atlas,
+	'textures/particle/campfire_smoke': DefaultTex.campfire_smoke,
+}
 function updateMaterial(cb) {
 	var url;
 	var path = Data.particle.texture.inputs.path.value;
@@ -512,7 +519,7 @@ function updateMaterial(cb) {
 		});
 		function update(event) {
 			if (event.data.type == 'provide_texture') {
-				loadTexture(event.data.url || DefaultTex.missing);
+				loadTexture(event.data.url || VanillaTextures[path] || DefaultTex.missing, cb);
 				window.removeEventListener('message', update);
 			}
 		}
@@ -524,25 +531,13 @@ function updateMaterial(cb) {
 		loadTexture(url, cb)
 
 	} else {
-		switch (path) {
-			case 'textures/particle/particles':
-				url = DefaultTex.default_particles;
-				break;
-			case 'textures/flame_atlas':
-			case 'textures/particle/flame_atlas':
-				url = DefaultTex.flame_atlas;
-				break;
-			case 'textures/particle/campfire_smoke':
-				url = DefaultTex.campfire_smoke;
-				break;
-			default:
-				url = DefaultTex.missing;
-		}
+		url = VanillaTextures[path] || DefaultTex.missing;
 		loadTexture(url, cb)
 	}
 
 }
 function loadTexture(url, cb) {
+	console.trace('Loading texture:', url)
 	var tex = new THREE.TextureLoader().load(url, function(a, b) {
 		function factorize(input, axis, factor) {
 			if (!input.value || !input.value[axis]) return;

@@ -441,6 +441,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 
 
@@ -556,6 +559,11 @@ var Menu = [{
   methods: {
     changeTab: function changeTab() {
       this.$emit('setTab');
+    },
+    openCodeViewer: function openCodeViewer() {
+      _vscode_extension__WEBPACK_IMPORTED_MODULE_3__["default"].postMessage({
+        type: 'reopen'
+      });
     }
   },
   data: function data() {
@@ -1375,7 +1383,7 @@ exports = module.exports = __webpack_require__(/*! ../../node_modules/css-loader
 
 
 // module
-exports.push([module.i, "\ndiv#app[data-v-617ab0be] {\n\t\tdisplay: grid;\n\t\tgrid-template-rows:  66px calc(100% - 66px);\n\t\tgrid-template-columns: var(--sidebar) calc(100% - var(--sidebar));\n\t\tgrid-template-areas: \"sidebar header\" \"sidebar preview\";\n\t\theight: 100%;\n\t\twidth: 100%;\n\t\tposition: fixed;\n\t\tfont-weight: 400;\n}\nmain[data-v-617ab0be] {\n\t\tgrid-area: preview;\n}\nheader[data-v-617ab0be] {\n\t\tgrid-area: header;\n\t\tfont-size: 1.1em;\n}\ncontent[data-v-617ab0be] {\n\t\tgrid-area: sidebar;\n\t\tbackground-color: var(--color-interface);\n}\n/*Resize*/\n.resizer[data-v-617ab0be] {\n\t\ttop: 0;\n\t\tbottom: 0;\n\t\tposition: absolute;\n\t\twidth: 6px;\n\t\tmargin-left: -3px;\n\t\tcursor: ew-resize;\n}\n\n\n", ""]);
+exports.push([module.i, "\ndiv#app[data-v-617ab0be] {\n\t\tdisplay: grid;\n\t\tgrid-template-rows:  66px calc(100% - 66px);\n\t\tgrid-template-columns: var(--sidebar) calc(100% - var(--sidebar));\n\t\tgrid-template-areas: \"sidebar header\" \"sidebar preview\";\n\t\theight: 100%;\n\t\twidth: 100%;\n\t\tposition: fixed;\n\t\tfont-weight: 400;\n}\nmain[data-v-617ab0be] {\n\t\tgrid-area: preview;\n}\nheader[data-v-617ab0be] {\n\t\tgrid-area: header;\n\t\tfont-size: 1.1em;\n\t\tposition: relative;\n}\ncontent[data-v-617ab0be] {\n\t\tgrid-area: sidebar;\n\t\tbackground-color: var(--color-interface);\n}\n/*Resize*/\n.resizer[data-v-617ab0be] {\n\t\ttop: 0;\n\t\tbottom: 0;\n\t\tposition: absolute;\n\t\twidth: 6px;\n\t\tmargin-left: -3px;\n\t\tcursor: ew-resize;\n}\n\n\n", ""]);
 
 // exports
 
@@ -1451,7 +1459,7 @@ exports = module.exports = __webpack_require__(/*! ../../node_modules/css-loader
 
 
 // module
-exports.push([module.i, "\n#expression_bar .prism-editor-wrapper {\n\toverflow-y: hidden;\n\tmin-height: 30px;\n}\n#expression_bar pre {\n\tpadding: 4px;\n\tmin-height: 30px;\n\tbackground-color: transparent;\n}\n#expression_bar pre code {\n\tcolor: #bec2ca;\n\tpadding: 0;\n}\n#expression_bar pre .token.punctuation {\n\tcolor: #5ba8c5\n}\n#expression_bar pre .token.operator, #expression_bar pre .token.keyword {\n\tcolor: #fc2f40\n}\n#expression_bar pre .token.number, #expression_bar pre .token.boolean {\n\tcolor: #b99cff\n}\n#expression_bar pre .token.function-name {\n\tcolor: #94e400\n}\n#expression_bar pre .token.selector {\n\tcolor: #92dcff;\n}\n", ""]);
+exports.push([module.i, "\n#expression_bar .prism-editor-wrapper {\n\toverflow-y: hidden;\n\tmin-height: 30px;\n}\n#expression_bar pre {\n\tpadding: 4px;\n\tmin-height: 30px;\n\tbackground-color: transparent;\n\tcursor: default;\n}\n#expression_bar pre code {\n\tcolor: #bec2ca;\n\tpadding: 0;\n\tcursor: auto;\n}\n#expression_bar pre .token.punctuation {\n\tcolor: #5ba8c5\n}\n#expression_bar pre .token.operator, #expression_bar pre .token.keyword {\n\tcolor: #fc2f40\n}\n#expression_bar pre .token.number, #expression_bar pre .token.boolean {\n\tcolor: #b99cff\n}\n#expression_bar pre .token.function-name {\n\tcolor: #94e400\n}\n#expression_bar pre .token.selector {\n\tcolor: #92dcff;\n}\n", ""]);
 
 // exports
 
@@ -1603,7 +1611,7 @@ exports = module.exports = __webpack_require__(/*! ../../node_modules/css-loader
 
 
 // module
-exports.push([module.i, "\r\n\t/*Setup*/\n::-webkit-scrollbar {\r\n\t\twidth: 8px;\r\n\t\theight: 8px;\n}\n::-webkit-scrollbar-track {\r\n\t\tbackground: var(--color-interface);\n}\n::-webkit-scrollbar-corner {\r\n\t\tbackground: var(--color-interface);\n}\n::-webkit-scrollbar-thumb {\r\n\t\tbackground: var(--color-bar);\n}\n::-webkit-scrollbar-thumb:hover {\r\n\t\tbackground: var(--color-bar);\n}\n::selection {\r\n\t\tbackground: var(--color-selection);\n}\n::placeholder {\r\n\t\topacity: 0.6;\n}\n* {\r\n\t\tscrollbar-width: thin;\r\n\t\tscrollbar-color: white var(--color-bar);\n}\nbody {\r\n\t\t--color-background: #29323a;\r\n\t\t--color-interface: #e5ebfa;\r\n\t\t--color-bar: #cfd7ea;\r\n\t\t--color-title: #9aa3b8;\r\n\t\t--color-selection: rgba(110, 142, 191, 0.3);\r\n\t\t--color-highlight: #f7f9ff;\r\n\t\t--color-text: #434b53;\n}\nbody {\r\n\t\t--color-background: #29323a;\r\n\t\t--color-dark: #20272d;\r\n\t\t--color-border: #1a1c1f;\r\n\t\t--color-interface: #29323a;\r\n\t\t--color-bar: #34404a;\r\n\t\t--color-title: #4b5b69;\r\n\t\t--color-selection: rgba(110, 142, 191, 0.3);\r\n\t\t--color-highlight: #f7f9ff;\r\n\t\t--color-text: #bcc3ca;\n}\nh1, h2, h3, h4, h5, h6 {\r\n\t\tmargin: 0;\r\n\t\tfont-weight: inherit;\n}\nul {\r\n\t\tlist-style: none;\r\n\t\tpadding-left: 0;\r\n\t\tmargin: 0;\n}\n* {\r\n\t\tmargin: 0;\r\n        padding: 0;\r\n        box-sizing: border-box;\n}\ninput, select {\r\n\t\tfont-weight: inherit;\r\n\t\tbackground-color: var(--color-dark);\r\n\t\tborder: 1px solid var(--color-border);\r\n\t\tcolor: var(--color-text);\r\n\t\theight: 30px;\r\n\t\tpadding: 4px;\n}\ninput[type=text], input[type=number], input:not([type]) {\r\n\t\tfont-family: 'Inconsolata', monospace;\n}\ninput[type=checkbox] {\r\n\t\theight: 15px;\r\n\t\twidth: 15px;\r\n\t\tvertical-align: middle;\r\n\t\tmargin: 0 0 2px 4px;\r\n\t\tmargin-top: 5px;\n}\n.unicode_icon {\r\n\t\tfont-style: unset;\r\n\t\tdisplay: block;\r\n\t\twidth: 24px;\r\n\t\theight: 24px;\r\n\t\ttext-align: center;\r\n\t\tfont-size: 14pt;\n}\n.unicode_icon.caret {\r\n\t\tfont-size: 25pt;\r\n\t\toverflow: hidden;\r\n\t\tdisplay: block;\r\n\t\tmargin-top: -4px;\r\n\t\twidth: 12px;\n}\n.unicode_icon.pause {\r\n\t\tmargin-top: -3px;\r\n\t\tfloat: right;\r\n\t\tfont-size: 15pt;\n}\n.unicode_icon.plus {\r\n\t\tfont-size: 18pt;\r\n\t\tmargin-top: -4px;\n}\n.checkerboard {\r\n\t\t--color-checker_offset: var(--color-bar);\r\n\t\t--color-checkerboard: var(--color-interface);\r\n\t\tbackground-color: var(--color-checkerboard) !important;\r\n\t\tbackground-image: linear-gradient(45deg, var(--color-checkerboard) 25%, transparent 25%), linear-gradient(-45deg, var(--color-checkerboard) 25%, transparent 25%), linear-gradient(45deg, transparent 75%, var(--color-checkerboard) 75%), linear-gradient(-45deg, var(--color-checker_offset) 75%, var(--color-checkerboard) 75%);\r\n\t\tbackground-size: 16px 16px;\r\n\t\tbackground-position: 0 0, 0 8px, 8px -8px, -8px 0px;\n}\nselect {\r\n\t\theight: 30px;\n}\ncode {\r\n\t\tpadding: 2px 8px;\r\n\t\tcolor: #1062ab;\r\n\t\tfont-size: 0.9em;\r\n\t\tbackground-color: var(--color-highlight);\r\n\t\tuser-select: auto;\n}\nbody {\r\n\t\timage-rendering: pixelated;\r\n\t\tbackground-color: var(--color-background);\r\n\t\tuser-select: none;\r\n\t\t-moz-user-select: none;\r\n\t\tfont-family: 'Lato', -apple-system, \"Segoe UI\", sans-serif;\r\n\t\theight: 100%;\r\n        width: 100%;\r\n        margin: 0;\r\n        font-size: 11pt;\r\n        font-weight: 400;\r\n        line-height: 1.5;\r\n        color: var(--color-text);\r\n        text-align: left;\n}\r\n\r\n/*Color Picker*/\ndiv.vc-chrome {\r\n\t\twidth: 240px;\r\n\t\tmargin: 2px 0;\r\n\t\tfont-family: inherit;\n}\ndiv.vc-chrome .vc-chrome-body {\r\n\t\tbackground-color: var(--color-interface);\n}\ndiv.vc-chrome .vc-chrome-fields .vc-input__input {\r\n\t\tcolor: var(--color-text);\r\n\t\tbox-shadow: none;\r\n\t\tfont-size: inherit;\r\n\t\tborder: 1px solid var(--color-border);\r\n\t\theight: 24px;\n}\ndiv.vc-chrome .vc-chrome-toggle-icon svg path {\r\n\t\tfill: var(--color-text);\n}\r\n\r\n\r\n\r\n", ""]);
+exports.push([module.i, "\r\n\t/*Setup*/\n::-webkit-scrollbar {\r\n\t\twidth: 8px;\r\n\t\theight: 8px;\n}\n::-webkit-scrollbar-track {\r\n\t\tbackground: var(--color-interface);\n}\n::-webkit-scrollbar-corner {\r\n\t\tbackground: var(--color-interface);\n}\n::-webkit-scrollbar-thumb {\r\n\t\tbackground: var(--color-bar);\n}\n::-webkit-scrollbar-thumb:hover {\r\n\t\tbackground: var(--color-title);\n}\n::selection {\r\n\t\tbackground: var(--color-selection);\n}\n::placeholder {\r\n\t\topacity: 0.6;\n}\n* {\r\n\t\tscrollbar-width: thin;\r\n\t\tscrollbar-color: white var(--color-bar);\n}\nbody {\r\n\t\t--color-background: #29323a;\r\n\t\t--color-interface: #e5ebfa;\r\n\t\t--color-bar: #cfd7ea;\r\n\t\t--color-title: #9aa3b8;\r\n\t\t--color-selection: rgba(110, 142, 191, 0.3);\r\n\t\t--color-highlight: #f7f9ff;\r\n\t\t--color-text: #434b53;\n}\nbody {\r\n\t\t--color-background: #29323a;\r\n\t\t--color-dark: #20272d;\r\n\t\t--color-border: #1a1c1f;\r\n\t\t--color-interface: #29323a;\r\n\t\t--color-bar: #34404a;\r\n\t\t--color-title: #4b5b69;\r\n\t\t--color-selection: rgba(110, 142, 191, 0.3);\r\n\t\t--color-highlight: #f7f9ff;\r\n\t\t--color-text: #bcc3ca;\n}\nh1, h2, h3, h4, h5, h6 {\r\n\t\tmargin: 0;\r\n\t\tfont-weight: inherit;\n}\nul {\r\n\t\tlist-style: none;\r\n\t\tpadding-left: 0;\r\n\t\tmargin: 0;\n}\n* {\r\n\t\tmargin: 0;\r\n        padding: 0;\r\n        box-sizing: border-box;\n}\ninput, select {\r\n\t\tfont-weight: inherit;\r\n\t\tbackground-color: var(--color-dark);\r\n\t\tborder: 1px solid var(--color-border);\r\n\t\tcolor: var(--color-text);\r\n\t\theight: 30px;\r\n\t\tpadding: 4px;\n}\ninput[type=text], input[type=number], input:not([type]) {\r\n\t\tfont-family: 'Inconsolata', monospace;\n}\ninput[type=checkbox] {\r\n\t\theight: 15px;\r\n\t\twidth: 15px;\r\n\t\tvertical-align: middle;\r\n\t\tmargin: 0 0 2px 4px;\r\n\t\tmargin-top: 5px;\n}\n.unicode_icon {\r\n\t\tfont-style: unset;\r\n\t\tdisplay: block;\r\n\t\twidth: 24px;\r\n\t\theight: 24px;\r\n\t\ttext-align: center;\r\n\t\tfont-size: 14pt;\r\n\t\tfont-family: sans-serif;\n}\n.unicode_icon.caret {\r\n\t\tfont-size: 25pt;\r\n\t\toverflow: hidden;\r\n\t\tdisplay: block;\r\n\t\tmargin-top: -4px;\r\n\t\twidth: 12px;\n}\n.unicode_icon.pause {\r\n\t\tmargin-top: -3px;\r\n\t\tfloat: right;\r\n\t\tfont-size: 15pt;\n}\n.unicode_icon.plus {\r\n\t\tfont-size: 18pt;\r\n\t\tmargin-top: -4px;\n}\n.checkerboard {\r\n\t\t--color-checker_offset: var(--color-bar);\r\n\t\t--color-checkerboard: var(--color-interface);\r\n\t\tbackground-color: var(--color-checkerboard) !important;\r\n\t\tbackground-image: linear-gradient(45deg, var(--color-checkerboard) 25%, transparent 25%), linear-gradient(-45deg, var(--color-checkerboard) 25%, transparent 25%), linear-gradient(45deg, transparent 75%, var(--color-checkerboard) 75%), linear-gradient(-45deg, var(--color-checker_offset) 75%, var(--color-checkerboard) 75%);\r\n\t\tbackground-size: 16px 16px;\r\n\t\tbackground-position: 0 0, 0 8px, 8px -8px, -8px 0px;\n}\nselect {\r\n\t\theight: 30px;\n}\ncode {\r\n\t\tpadding: 2px 8px;\r\n\t\tcolor: #1062ab;\r\n\t\tfont-size: 0.9em;\r\n\t\tbackground-color: var(--color-highlight);\r\n\t\tuser-select: auto;\n}\nbody {\r\n\t\timage-rendering: pixelated;\r\n\t\tbackground-color: var(--color-background);\r\n\t\tuser-select: none;\r\n\t\t-moz-user-select: none;\r\n\t\tfont-family: 'Lato', -apple-system, \"Segoe UI\", sans-serif;\r\n\t\theight: 100%;\r\n        width: 100%;\r\n        margin: 0;\r\n        font-size: 11pt;\r\n        font-weight: 400;\r\n        line-height: 1.5;\r\n        color: var(--color-text);\r\n        text-align: left;\n}\r\n\r\n/*Color Picker*/\ndiv.vc-chrome {\r\n\t\twidth: 240px;\r\n\t\tmargin: 2px 0;\r\n\t\tfont-family: inherit;\n}\ndiv.vc-chrome .vc-chrome-body {\r\n\t\tbackground-color: var(--color-interface);\n}\ndiv.vc-chrome .vc-chrome-fields .vc-input__input {\r\n\t\tcolor: var(--color-text);\r\n\t\tbox-shadow: none;\r\n\t\tfont-size: inherit;\r\n\t\tborder: 1px solid var(--color-border);\r\n\t\theight: 24px;\n}\ndiv.vc-chrome .vc-chrome-toggle-icon svg path {\r\n\t\tfill: var(--color-text);\n}\r\n\r\n\r\n\r\n", ""]);
 
 // exports
 
@@ -68815,8 +68823,22 @@ var render = function() {
         ])
       }),
       _vm._v(" "),
-      !_vm.isVSCExtension
+      _vm.isVSCExtension
         ? [
+            _c(
+              "li",
+              {
+                staticClass: "mode_selector",
+                on: {
+                  click: function($event) {
+                    return _vm.openCodeViewer()
+                  }
+                }
+              },
+              [_vm._v("View Code")]
+            )
+          ]
+        : [
             _c(
               "li",
               {
@@ -68845,7 +68867,6 @@ var render = function() {
               [_vm._v("Preview")]
             )
           ]
-        : _vm._e()
     ],
     2
   )
@@ -86650,7 +86671,7 @@ var Flipbook = {
 };
 var Emitter = {};
 setInterval(function () {
-  if (Emitter && Emitter.tick && document.hasFocus() && !System.paused) {
+  if (Emitter && Emitter.tick && !System.paused) {
     Emitter.tick();
   }
 }, 1000 / 30);
@@ -87176,6 +87197,13 @@ function togglePause() {
   System.paused = !System.paused;
 }
 
+var VanillaTextures = {
+  'textures/particle/particles': _default_textures__WEBPACK_IMPORTED_MODULE_2__["default"].default_particles,
+  'textures/flame_atlas': _default_textures__WEBPACK_IMPORTED_MODULE_2__["default"].flame_atlas,
+  'textures/particle/flame_atlas': _default_textures__WEBPACK_IMPORTED_MODULE_2__["default"].flame_atlas,
+  'textures/particle/campfire_smoke': _default_textures__WEBPACK_IMPORTED_MODULE_2__["default"].campfire_smoke
+};
+
 function updateMaterial(cb) {
   var url;
   var path = _input_structure__WEBPACK_IMPORTED_MODULE_3__["default"].particle.texture.inputs.path.value;
@@ -87183,7 +87211,7 @@ function updateMaterial(cb) {
   if (_vscode_extension__WEBPACK_IMPORTED_MODULE_4__["default"] && path) {
     var update = function update(event) {
       if (event.data.type == 'provide_texture') {
-        loadTexture(event.data.url || _default_textures__WEBPACK_IMPORTED_MODULE_2__["default"].missing);
+        loadTexture(event.data.url || VanillaTextures[path] || _default_textures__WEBPACK_IMPORTED_MODULE_2__["default"].missing, cb);
         window.removeEventListener('message', update);
       }
     };
@@ -87197,29 +87225,13 @@ function updateMaterial(cb) {
     url = _input_structure__WEBPACK_IMPORTED_MODULE_3__["default"].particle.texture.inputs.image.image.data;
     loadTexture(url, cb);
   } else {
-    switch (path) {
-      case 'textures/particle/particles':
-        url = _default_textures__WEBPACK_IMPORTED_MODULE_2__["default"].default_particles;
-        break;
-
-      case 'textures/flame_atlas':
-      case 'textures/particle/flame_atlas':
-        url = _default_textures__WEBPACK_IMPORTED_MODULE_2__["default"].flame_atlas;
-        break;
-
-      case 'textures/particle/campfire_smoke':
-        url = _default_textures__WEBPACK_IMPORTED_MODULE_2__["default"].campfire_smoke;
-        break;
-
-      default:
-        url = _default_textures__WEBPACK_IMPORTED_MODULE_2__["default"].missing;
-    }
-
+    url = VanillaTextures[path] || _default_textures__WEBPACK_IMPORTED_MODULE_2__["default"].missing;
     loadTexture(url, cb);
   }
 }
 
 function loadTexture(url, cb) {
+  console.trace('Loading texture:', url);
   var tex = new three__WEBPACK_IMPORTED_MODULE_0__["TextureLoader"]().load(url, function (a, b) {
     function factorize(input, axis, factor) {
       if (!input.value || !input.value[axis]) return;
@@ -88317,6 +88329,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _edits__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./edits */ "./src/edits.js");
 /* harmony import */ var _components_ExpressionBar__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/ExpressionBar */ "./src/components/ExpressionBar.vue");
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(n); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -88362,7 +88386,7 @@ var Input = /*#__PURE__*/function () {
       }
 
       this.meta_value = this.options[this.value];
-    } else if (this.type === 'color') {
+    } else if (this.type === 'color' && !this.value) {
       this.value = '#ffffff';
     } else if (this.axis_count > 1 && !this.value) {
       this.value = [];
@@ -88371,9 +88395,15 @@ var Input = /*#__PURE__*/function () {
     } else if (this.type === 'image') {
       this.value = '';
       this.image_data = '';
+    } else if ((this.type === 'text' || this.type === 'molang') && !this.value) {
+      this.value = '';
+    } else if (this.type === 'checkbox' && !this.value) {
+      this.value = '';
+    } else if (this.type === 'number' && !this.value) {
+      this.value = 0;
     }
 
-    this.default_value = this.value instanceof Array ? this.value.slice() : this.value;
+    this.default_value = JSON.parse(JSON.stringify(this.value));
   }
 
   _createClass(Input, [{
@@ -88492,13 +88522,20 @@ var Input = /*#__PURE__*/function () {
     key: "set",
     value: function set(value) {
       var scope = this;
-      if (value === undefined) return this;
+      if (value === undefined) return;
 
       if (this.type === 'select') {
         this.value = value;
         this.meta_value = this.options[this.value];
       } else {
-        this.value = value;
+        if (this.value instanceof Array) {
+          var _this$value;
+
+          console.trace('!!', value, this);
+          if (value instanceof Array) (_this$value = this.value).splice.apply(_this$value, [0, Infinity].concat(_toConsumableArray(value)));
+        } else {
+          this.value = value;
+        }
       }
 
       scope.change();
@@ -88507,8 +88544,8 @@ var Input = /*#__PURE__*/function () {
   }, {
     key: "reset",
     value: function reset() {
-      this.value = this.default_value;
       this.set(this.default_value);
+      console.log(this.label, this.default_value, this.value);
 
       if (this.type == 'image') {
         delete this.image;
@@ -89674,7 +89711,7 @@ function compileJSON(object, options) {
 
     if (typeof o === 'string') {
       //String
-      out += '"' + o.replace(/\\/g, '\\\\').replace(/"/g, '\\"') + '"';
+      out += '"' + o.replace(/\\/g, '\\\\').replace(/"/g, '\\"').replace(/\n|\r\n/g, '\\n').replace(/\t/g, '\\t') + '"';
     } else if (typeof o === 'boolean') {
       //Boolean
       out += o ? 'true' : 'false';
@@ -89685,7 +89722,7 @@ function compileJSON(object, options) {
     } else if (o === null || o === Infinity || o === -Infinity) {
       //Null
       out += 'null';
-    } else if (_typeof(o) === 'object' && o.constructor.name === 'Array') {
+    } else if (_typeof(o) === 'object' && o instanceof Array) {
       //Array
       var has_content = false;
       out += '[';

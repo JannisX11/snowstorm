@@ -103,10 +103,12 @@ export {ExpandedInput}
 		padding: 4px;
 		min-height: 30px;
 		background-color: transparent;
+		cursor: default;
 	}
 	#expression_bar pre code {
 		color: #bec2ca;
 		padding: 0;
+		cursor: auto;
 	}
 
 	#expression_bar pre .token.punctuation {

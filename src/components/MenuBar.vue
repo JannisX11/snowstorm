@@ -8,7 +8,10 @@
                 </li>
             </ul>
         </li>
-		<template v-if="!isVSCExtension">
+		<template v-if="isVSCExtension">
+        	<li class="mode_selector" @click="openCodeViewer()">View Code</li>
+		</template>
+		<template v-else>
         	<li class="mode_selector code" :class="{selected: selected_tab == 'code'}" @click="$emit('changetab', 'code')">Code</li>
         	<li class="mode_selector preview" :class="{selected: selected_tab == 'preview'}" @click="$emit('changetab', 'preview')">Preview</li>
 		</template>
@@ -79,6 +82,11 @@ export default {
     methods: {
         changeTab() {
             this.$emit('setTab')
+		},
+		openCodeViewer() {
+			vscode.postMessage({
+				type: 'reopen'
+			});
 		}
 	},
 	data() {return {
