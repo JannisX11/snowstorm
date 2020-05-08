@@ -854,6 +854,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _InputGroup__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./InputGroup */ "./src/components/Sidebar/InputGroup.vue");
 /* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
 /* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _edits__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../edits */ "./src/edits.js");
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
 
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -899,6 +900,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 //
 //
 //
+
 
 
 
@@ -996,6 +998,7 @@ function toCatmullRomBezier(points) {
       function stopSlide() {
         document.removeEventListener('mousemove', slide, false);
         document.removeEventListener('mouseup', stopSlide, false);
+        Object(_edits__WEBPACK_IMPORTED_MODULE_2__["default"])('edit curve node');
       }
 
       document.addEventListener('mousemove', slide, false);
@@ -1429,7 +1432,7 @@ exports = module.exports = __webpack_require__(/*! ../../node_modules/css-loader
 
 
 // module
-exports.push([module.i, "\n#expression_bar[data-v-18eeae4a] {\n\twidth: 100%;\n\theight: 32px;\n\tbackground-color: var(--color-dark);\n\tborder-bottom: 1px solid var(--color-border);\n\tposition: absolute;\n\theight: auto;\n\tz-index: 3;\n}\n#expression_bar input[data-v-18eeae4a] {\n\tbackground-color: transparent;\n\twidth: 100%;\n\tborder: none;\n\theight: 32px;\n\tpadding: 5px 8px;\n\topacity: 0.8;\n\tfloat: left;\n\tcolor: white;\n}\n#expression_bar input[data-v-18eeae4a]:focus {\n\topacity: 1;\n}\n", ""]);
+exports.push([module.i, "\n#expression_bar[data-v-18eeae4a] {\n\twidth: 100%;\n\theight: 32px;\n\tpadding-left: 4px;\n\tbackground-color: var(--color-dark);\n\tborder-bottom: 1px solid var(--color-border);\n\tposition: absolute;\n\theight: auto;\n\tz-index: 3;\n}\n#expression_bar input[data-v-18eeae4a] {\n\tbackground-color: transparent;\n\twidth: 100%;\n\tborder: none;\n\theight: 32px;\n\tpadding: 5px 8px;\n\topacity: 0.8;\n\tfloat: left;\n\tcolor: white;\n}\n#expression_bar input[data-v-18eeae4a]:focus {\n\topacity: 1;\n}\n", ""]);
 
 // exports
 
@@ -12592,6 +12595,7 @@ Prism.languages.molang = {
     'boolean': /\b(?:true|false)\b/i,
 	'number': /(?:\b\d+(?:\.\d+)?(?:[ed][+-]\d+)?|&h[a-f\d]+)\b[%&!#]?/i,
 	'operator': /--|\+\+|>>=?|<<=?|<>|[-+*/\\<>]=?|[:^=?]|\b(?:and|mod|not|or)\b/i,
+	'keyword': /\b(Return)\b/i,
 	'punctuation': /[.,;()[\]{}]/,
 };
 
@@ -12603,49 +12607,69 @@ Prism.languages.molang = {
   !*** ./node_modules/molangjs/molang.js ***!
   \*****************************************/
 /*! no static exports found */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
-const Molang = {
-	parse: function (input, variables) {
+const Molang = {};
 
-		if (typeof input === 'number') {
-			return isNaN(input) ? 0 : input
+(function() {
+
+	const MathUtil = {
+		random(a, b) {
+			return a + Math.random() * (b-a)
+		},
+		clamp(number, min, max) {
+			if (number > max) number = max;
+			if (number < min || isNaN(number)) number = min;
+			return number;
 		}
-		if (typeof input !== 'string') return 0;
-		input = input.toLowerCase();
-		if (input.substr(-1) === ';') input = input.substr(0, input.length-1)
+	};
 
-		if (Molang.cache_enabled && Molang._cached[input]) {
-			var expression = Molang._cached[input];
-		} else {
-			var expression = new Molang.expression(input)
-			if (Molang.cache_enabled) {
-				Molang._cached[input] = expression;
+	function Expression(string) {
+		this.original_input = string;
+		this.lines = string.split(';').map(line => {
+			return iterateString(line);
+		});
+	}
+	function Comp(operator, a, b, c) {
+		this.operator = operator;
+		this.a = iterateString(a);
+		if (b !== undefined) this.b = iterateString(b);
+		if (c !== undefined) this.c = iterateString(c);
+	}
+	function Allocation(name, value) {
+		this.value = iterateString(value);
+		this.name = name;
+	}
+	function Statement(type, value) {
+		this.value = iterateString(value);
+		this.type = type;
+	}
+
+
+
+	Molang.global_variables = {};
+	Molang.cache_enabled = true;
+	Molang.use_radians = false;
+	Molang.variableHandler;
+
+	const cached = {};
+	let current_variables;
+
+
+	function calculate(expression, variables) {
+		current_variables = variables||{};
+		var i = 0;
+		for (var line of expression.lines) {
+			let result = iterateExp(line);
+			i++;
+			if (i == expression.lines.length || (line instanceof Statement && line.type === 'return')) {
+				return result;
 			}
 		}
-		var value = Molang.calculate(expression, variables)
-		return value;
-	},
-	global_variables: {},
-	cache_enabled: true,
-	use_radians: false,
-	expression: function(string) {
-		this.original_input = string;
-		this.data = Molang._itS(string);
-	},
-	calculate: function(expression, variables) {
-		Molang._current_variables = variables||0;
-		return Molang._itEx(expression.data);
-	},
-	Comp: function(operator, a, b, c) {
-		this.operator = operator;
-		this.a = Molang._itS(a);
-		if (b !== undefined) this.b = Molang._itS(b);
-		if (c !== undefined) this.c = Molang._itS(c);
-	},
+		return 0;
+	}
 
-	_cached: {},
-	_itS: function(s) {
+	function iterateString(s) {
 		//Iterates through string, returns float, string or comp;
 		if (!s) return 0;
 		var M = Molang;
@@ -12653,34 +12677,48 @@ const Molang = {
 
 		s = s.replace(/\s/g, '')
 
-		while (M._canTrimParentheses(s)) {
+		while (canTrimParentheses(s)) {
 			s = s.substr(1, s.length-2);
 		}
 
+		//Statement
+		var match = s.length > 5 && s.match(/^return/)
+		if (match) {
+			return new Statement(match[0], s.substr(match[0].length))
+		}
+
+		//allocation
+		var match = s.length > 6 && s.match(/(temp|variable)\.\w+=/)
+		if (match) {
+			let name = match[0].replace(/=$/, '');
+			let value = s.substr(match.index + match[0].length)
+			return new Allocation(name, value)
+		}
+
 		//ternary
-		var split = Molang._splitString(s, '?');
+		var split = splitString(s, '?');
 		if (split) {
-			let ab = Molang._splitString(split[1], ':');
+			let ab = splitString(split[1], ':');
 			if (ab && ab.length) {
-				return new Molang.Comp(10, split[0], ab[0], ab[1]);
+				return new Comp(10, split[0], ab[0], ab[1]);
 			}
 		}
 
 		//2 part operators
 		var comp = (
-			M._testOp(s, '&&', 11) ||
-			M._testOp(s, '||', 12) ||
-			M._testOp(s, '<', 13) ||
-			M._testOp(s, '<=', 14) ||
-			M._testOp(s, '>', 15) ||
-			M._testOp(s, '>=', 16) ||
-			M._testOp(s, '==', 17) ||
-			M._testOp(s, '!=', 18) ||
+			testOp(s, '&&', 11) ||
+			testOp(s, '||', 12) ||
+			testOp(s, '<', 13) ||
+			testOp(s, '<=', 14) ||
+			testOp(s, '>', 15) ||
+			testOp(s, '>=', 16) ||
+			testOp(s, '==', 17) ||
+			testOp(s, '!=', 18) ||
 
-			M._testOp(s, '+', 1, true) ||
-			M._testMinus(s, '-', 2, true) ||
-			M._testOp(s, '*', 3) ||
-			M._testOp(s, '/', 4)
+			testOp(s, '+', 1, true) ||
+			testMinus(s, '-', 2, true) ||
+			testOp(s, '*', 3) ||
+			testOp(s, '/', 4)
 		)
 		if (comp) return comp;
 
@@ -12691,9 +12729,9 @@ const Molang = {
 			let begin = s.search(/\(/);
 			let operator = s.substr(5, begin-5);
 			let inner = s.substr(begin+1, s.length-begin-2)
-			let params = Molang._splitString(inner, ',')||[inner];
+			let params = splitString(inner, ',')||[inner];
 			if (params.length > 1) {
-				var last2 = Molang._splitString(params[1], ',')
+				var last2 = splitString(params[1], ',')
 				if (last2 && last2.length > 1) {
 					params[1] = last2[0];
 					params[2] = last2[1];
@@ -12702,58 +12740,58 @@ const Molang = {
 
 			switch (operator) {
 				case 'abs':
-					return new M.Comp(20, params[0]);
+					return new Comp(20, params[0]);
 					break;
 				case 'sin':
-					return new M.Comp(21, params[0]);
+					return new Comp(21, params[0]);
 					break;
 				case 'cos':
-					return new M.Comp(22, params[0]);
+					return new Comp(22, params[0]);
 					break;
 				case 'exp':
-					return new M.Comp(23, params[0]);
+					return new Comp(23, params[0]);
 					break;
 				case 'ln':
-					return new M.Comp(24, params[0]);
+					return new Comp(24, params[0]);
 					break;
 				case 'pow':
-					return new M.Comp(25, params[0], params[1]);
+					return new Comp(25, params[0], params[1]);
 					break;
 				case 'sqrt':
-					return new M.Comp(26, params[0]);
+					return new Comp(26, params[0]);
 					break;
 				case 'random':
-					return new M.Comp(27, params[0], params[1]);
+					return new Comp(27, params[0], params[1]);
 					break;
 				case 'ceil':
-					return new M.Comp(28, params[0]);
+					return new Comp(28, params[0]);
 					break;
 				case 'round':
-					return new M.Comp(29, params[0]);
+					return new Comp(29, params[0]);
 					break;
 				case 'trunc':
-					return new M.Comp(30, params[0]);
+					return new Comp(30, params[0]);
 					break;
 				case 'floor':
-					return new M.Comp(31, params[0]);
+					return new Comp(31, params[0]);
 					break;
 				case 'mod':
-					return new M.Comp(32, params[0], params[1]);
+					return new Comp(32, params[0], params[1]);
 					break;
 				case 'min':
-					return new M.Comp(33, params[0], params[1]);
+					return new Comp(33, params[0], params[1]);
 					break;
 				case 'max':
-					return new M.Comp(34, params[0], params[1]);
+					return new Comp(34, params[0], params[1]);
 					break;
 				case 'clamp':
-					return new M.Comp(35, params[0], params[1], params[2]);
+					return new Comp(35, params[0], params[1], params[2]);
 					break;
 				case 'lerp':
-					return new M.Comp(36, params[0], params[1], params[2]);
+					return new Comp(36, params[0], params[1], params[2]);
 					break;
 				case 'lerprotate':
-					return new M.Comp(37, params[0], params[1], params[2]);
+					return new Comp(37, params[0], params[1], params[2]);
 					break;
 			}
 		}
@@ -12762,8 +12800,8 @@ const Molang = {
 			return s;
 		}
 		return 0;
-	},
-	_canTrimParentheses: function(s) {
+	}
+	function canTrimParentheses(s) {
 		if (s.substr(0, 1) === '(' && s.substr(-1) === ')') {
 			let level = 0;
 			for (var i = 0; i < s.length-1; i++) {
@@ -12775,35 +12813,34 @@ const Molang = {
 			}
 			return true;
 		}
-	},
-	_testOp: function(s, char, operator, inverse) {
+	}
+	function testOp(s, char, operator, inverse) {
 
-		var split = Molang._splitString(s, char, inverse)
+		var split = splitString(s, char, inverse)
 		if (split) {
-			return new Molang.Comp(operator, split[0], split[1])
+			return new Comp(operator, split[0], split[1])
 		}
-	},
-	_testMinus: function(s, char, operator, inverse) {
+	}
+	function testMinus(s, char, operator, inverse) {
 
-		var split = Molang._splitString(s, char, inverse)
+		var split = splitString(s, char, inverse)
 		if (split) {
 			if (split[0].length === 0) {
-				return new Molang.Comp(operator, 0, split[1])
+				return new Comp(operator, 0, split[1])
 			} else if ('+*/<>=|&?:'.includes(split[0].substr(-1)) === false) {
-				return new Molang.Comp(operator, split[0], split[1])
+				return new Comp(operator, split[0], split[1])
 			}
 		}
-	},
-	_splitString: function(s, char, inverse) {
+	}
+	function splitString(s, char, inverse) {
 		var direction = inverse ? -1 : 1;
 		var i = inverse ? s.length-1 : 0;
 		var level = 0;
 		var is_string = typeof char === 'string'
 		while (inverse ? i >= 0 : i < s.length) {
-			let c = s[i];
-			if (c === '(') {
+			if (s[i] === '(') {
 				level += direction;
-			} else if (c === ')') {
+			} else if (s[i] === ')') {
 				level -= direction;
 			} else if (level === 0) {
 				var letters = s.substr(i, char.length)
@@ -12825,15 +12862,15 @@ const Molang = {
 			}
 			i += direction;
 		}
-	},
-	get _angleFactor() {
+	}
+	function angleFactor() {
 		return this.use_radians ? 1 : (Math.PI/180);
-	},
-	_itEx: function(T) {
+	}
+	function iterateExp(T) {
 		if (typeof T === 'number') {
 			return T
 		} else if (typeof T === 'string') {
-			var val = Molang._current_variables[T]
+			var val = current_variables[T]
 			if (val === undefined) {
 				if (T === 'true') {
 					return 1;
@@ -12847,111 +12884,118 @@ const Molang = {
 				val = Molang.variableHandler(T)
 			}
 			if (typeof val === 'string') {
-				val = Molang.parse(val, Molang._current_variables)
+				val = Molang.parse(val, current_variables)
 			}
 			return val||0;
-		} else if (T instanceof Molang.Comp) {
+
+		} else if (T instanceof Statement) {
+			return iterateExp(T.value);
+
+		} else if (T instanceof Allocation) {
+			return current_variables[T.name] = iterateExp(T.value);
+
+		} else if (T instanceof Comp) {
 			var M = Molang;
 			switch (T.operator) {
 				//Basic
 				case 1:
-					return M._itEx(T.a) + M._itEx(T.b);
+					return iterateExp(T.a) + iterateExp(T.b);
 					break;
 				case 2:
-					return M._itEx(T.a) - M._itEx(T.b);
+					return iterateExp(T.a) - iterateExp(T.b);
 					break;
 				case 3:
-					return M._itEx(T.a) * M._itEx(T.b);
+					return iterateExp(T.a) * iterateExp(T.b);
 					break;
 				case 4:
-					return M._itEx(T.a) / M._itEx(T.b);
+					return iterateExp(T.a) / iterateExp(T.b);
 					break;
-				//Boolean
+				//Logical
 				case 10:
-					return M._itEx(T.a) ? M._itEx(T.b) : M._itEx(T.c);
+					return iterateExp(T.a) ? iterateExp(T.b) : iterateExp(T.c);
 					break;
 				case 11:
-					return M._itEx(T.a) && M._itEx(T.b) ? 1 : 0;
+					return iterateExp(T.a) && iterateExp(T.b) ? 1 : 0;
 					break;
 				case 12:
-					return M._itEx(T.a) || M._itEx(T.b) ? 1 : 0;
+					return iterateExp(T.a) || iterateExp(T.b) ? 1 : 0;
 					break;
 				case 13:
-					return M._itEx(T.a) < M._itEx(T.b) ? 1 : 0;
+					return iterateExp(T.a) < iterateExp(T.b) ? 1 : 0;
 					break;
 				case 14:
-					return M._itEx(T.a) <= M._itEx(T.b) ? 1 : 0;
+					return iterateExp(T.a) <= iterateExp(T.b) ? 1 : 0;
 					break;
 				case 15:
-					return M._itEx(T.a) > M._itEx(T.b) ? 1 : 0;
+					return iterateExp(T.a) > iterateExp(T.b) ? 1 : 0;
 					break;
 				case 16:
-					return M._itEx(T.a) >= M._itEx(T.b) ? 1 : 0;
+					return iterateExp(T.a) >= iterateExp(T.b) ? 1 : 0;
 					break;
 				case 17:
-					return M._itEx(T.a) === M._itEx(T.b) ? 1 : 0;
+					return iterateExp(T.a) === iterateExp(T.b) ? 1 : 0;
 					break;
 				case 18:
-					return M._itEx(T.a) !== M._itEx(T.b) ? 1 : 0;
+					return iterateExp(T.a) !== iterateExp(T.b) ? 1 : 0;
 					break;
 				//Math
 				case 20:
-					return Math.abs(M._itEx(T.a));
+					return Math.abs(iterateExp(T.a));
 					break;
 				case 21:
-					return Math.sin(M._itEx(T.a) * Molang._angleFactor);
+					return Math.sin(iterateExp(T.a) * angleFactor());
 					break;
 				case 22:
-					return Math.cos(M._itEx(T.a) * Molang._angleFactor);
+					return Math.cos(iterateExp(T.a) * angleFactor());
 					break;
 				case 23:
-					return Math.exp(M._itEx(T.a));
+					return Math.exp(iterateExp(T.a));
 					break;
 				case 24:
-					return Math.log(M._itEx(T.a));
+					return Math.log(iterateExp(T.a));
 					break;
 				case 25:
-					return Math.pow(M._itEx(T.a), M._itEx(T.b));
+					return Math.pow(iterateExp(T.a), iterateExp(T.b));
 					break;
 				case 26:
-					return Math.sqrt(M._itEx(T.a));
+					return Math.sqrt(iterateExp(T.a));
 					break;
 				case 27:
-					return Molang._random(M._itEx(T.a), M._itEx(T.b), M._itEx(T.c));
+					return MathUtil.random(iterateExp(T.a), iterateExp(T.b), iterateExp(T.c));
 					break;
 				case 28:
-					return Math.ceil(M._itEx(T.a));
+					return Math.ceil(iterateExp(T.a));
 					break;
 				case 29:
-					return Math.round(M._itEx(T.a));
+					return Math.round(iterateExp(T.a));
 					break;
 				case 30:
-					return Math.trunc(M._itEx(T.a));
+					return Math.trunc(iterateExp(T.a));
 					break;
 				case 31:
-					return Math.floor(M._itEx(T.a));
+					return Math.floor(iterateExp(T.a));
 					break;
 				case 32:
-					return M._itEx(T.a) % M._itEx(T.b);
+					return iterateExp(T.a) % iterateExp(T.b);
 					break;
 				case 33:
-					return Math.min(M._itEx(T.a), M._itEx(T.b));
+					return Math.min(iterateExp(T.a), iterateExp(T.b));
 					break;
 				case 34:
-					return Math.max(M._itEx(T.a), M._itEx(T.b));
+					return Math.max(iterateExp(T.a), iterateExp(T.b));
 					break;
 				case 35:
-					return Molang._clamp(M._itEx(T.a), M._itEx(T.b), M._itEx(T.c));
+					return MathUtil.clamp(iterateExp(T.a), iterateExp(T.b), iterateExp(T.c));
 					break;
 				case 36:
-					let n1 = M._itEx(T.a);
-					return n1 + (M._itEx(T.b) - n1) * M._itEx(T.c);
+					let n1 = iterateExp(T.a);
+					return n1 + (iterateExp(T.b) - n1) * iterateExp(T.c);
 					break;
 				case 37:
 					let radify = n => (((n + 180) % 360) +180) % 360;
-					let a = radify(M._itEx(T.a))
-					let b = radify(M._itEx(T.b))
-					let i = M._itEx(T.c)
+					let a = radify(iterateExp(T.a))
+					let b = radify(iterateExp(T.b))
+					let i = iterateExp(T.c)
 
 					if (a > b) [a, b] = [b, a];
 					var diff = b-a;
@@ -12963,19 +13007,37 @@ const Molang = {
 					break;
 			}
 		}
+		return 0;
 	}
-}
+	function trimInput(string) {
+		string = string.toLowerCase();
+		string = string.replace(/;\s+/g, ';').replace(/;\s*$/, '').trim();
+		return string;
+	}
 
-Molang._random = function(a, b) {
-	return a + Math.random() * (b-a)
-}
-Molang._clamp = function(number, min, max) {
-	if (number > max) number = max;
-	if (number < min || isNaN(number)) number = min;
-	return number;
-}
+	Molang.parse = function (input, variables) {
 
-module.exports = Molang
+		if (typeof input === 'number') {
+			return isNaN(input) ? 0 : input
+		}
+		if (typeof input !== 'string') return 0;
+		input = trimInput(input);
+
+		if (Molang.cache_enabled && cached[input]) {
+			var expression = cached[input];
+		} else {
+			var expression = new Expression(input)
+			if (Molang.cache_enabled) {
+				cached[input] = expression;
+			}
+		}
+		var value = calculate(expression, variables)
+		return value;
+	};
+
+})()
+
+if (true) module.exports = Molang
 
 
 /***/ }),
@@ -69042,7 +69104,16 @@ var render = function() {
               }
             }
           },
-          [_c("i", { staticClass: "unicode_icon" }, [_vm._v(_vm._s("\u25B6"))])]
+          [
+            _c(
+              "i",
+              {
+                staticClass: "unicode_icon",
+                staticStyle: { "font-size": "13pt" }
+              },
+              [_vm._v(_vm._s("\u25B6"))]
+            )
+          ]
         ),
         _vm._v(" "),
         _c(
@@ -69650,7 +69721,8 @@ var render = function() {
                           staticClass: "tool",
                           on: {
                             click: function($event) {
-                              return input.value.remove(item)
+                              input.value.remove(item)
+                              input.change($event)
                             }
                           }
                         },
@@ -86414,7 +86486,6 @@ var Curve = /*#__PURE__*/function () {
       value = Math.round(value * 100) / 100;
       this.nodes.splice(index, 1, value);
       this.updateMinMax();
-      Object(_edits__WEBPACK_IMPORTED_MODULE_8__["default"])('edit curve node');
     }
   }, {
     key: "calculate",
@@ -86504,7 +86575,10 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var EditListeners = {};
-function registerEdit(id) {
+var timeout;
+var typing_merge_threshold = 600;
+
+function processEdit(id) {
   if (_vscode_extension__WEBPACK_IMPORTED_MODULE_0__["default"]) {
     var content = Object(_util__WEBPACK_IMPORTED_MODULE_2__["compileJSON"])(Object(_export__WEBPACK_IMPORTED_MODULE_1__["generateFile"])());
     _vscode_extension__WEBPACK_IMPORTED_MODULE_0__["default"].postMessage({
@@ -86516,6 +86590,18 @@ function registerEdit(id) {
       var handler = EditListeners[key];
       handler(id);
     }
+  }
+}
+
+function registerEdit(id, event) {
+  if (event instanceof InputEvent || event instanceof KeyboardEvent) {
+    if (timeout) clearTimeout(timeout);
+    timeout = setTimeout(function () {
+      processEdit(id);
+      timeout = null;
+    }, typing_merge_threshold);
+  } else {
+    processEdit(id);
   }
 }
 
@@ -88362,7 +88448,7 @@ var Input = /*#__PURE__*/function () {
       }
 
       if (e instanceof Event) {
-        Object(_edits__WEBPACK_IMPORTED_MODULE_4__["default"])('change input');
+        Object(_edits__WEBPACK_IMPORTED_MODULE_4__["default"])('change input', event);
       }
 
       return this;
@@ -89782,12 +89868,6 @@ __webpack_require__.r(__webpack_exports__);
 var vscode = typeof acquireVsCodeApi == 'function' && acquireVsCodeApi();
 
 if (vscode) {
-  /**
-   * VSCODE ISSUES
-   * -Editing changes don't get detected
-   * -Loading textures...
-   * 
-   */
   var updateContent = function updateContent(text) {
     if (text && typeof text == 'string') {
       var parsed = JSON.parse(text);

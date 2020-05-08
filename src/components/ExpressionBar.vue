@@ -72,6 +72,7 @@ export {ExpandedInput}
 	#expression_bar {
 		width: 100%;
 		height: 32px;
+		padding-left: 4px;
 		background-color: var(--color-dark);
 		border-bottom: 1px solid var(--color-border);
 		position: absolute;

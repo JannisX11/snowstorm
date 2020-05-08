@@ -34,6 +34,7 @@
 <script>
 	import InputGroup from './InputGroup'
 	import $ from 'jquery'
+import registerEdit from '../../edits'
 
 	function toCatmullRomBezier( points, tension = 0.5, closing = false) {
 		// sets tension [0.0, 1.0] +/-
@@ -108,6 +109,7 @@
 				function stopSlide() {
 					document.removeEventListener('mousemove', slide, false);
 					document.removeEventListener('mouseup', stopSlide, false);
+					registerEdit('edit curve node')
 				}
 				document.addEventListener('mousemove', slide, false);
 				document.addEventListener('mouseup', stopSlide, false);

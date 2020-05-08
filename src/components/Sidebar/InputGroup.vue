@@ -24,7 +24,7 @@
                             v-bind:placeholder="input.placeholder"
                             v-on:input="input.change($event)"
                             v-on:focus="input.focus(index, $event)">
-                        <div class="tool" v-on:click="input.value.remove(item)"><i class="unicode_icon">{{'\u2A09'}}</i></div>
+                        <div class="tool" v-on:click="input.value.remove(item);input.change($event);"><i class="unicode_icon">{{'\u2A09'}}</i></div>
                     </li>
                 </ul>
             </template>

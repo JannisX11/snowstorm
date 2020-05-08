@@ -102,7 +102,7 @@ export default class Input {
 			this.updatePreview(data)
 		}
 		if (e instanceof Event)	{
-			registerEdit('change input')
+			registerEdit('change input', event)
 		}
 		return this;
 	}

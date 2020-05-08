@@ -94,7 +94,6 @@ class Curve {
 		value = Math.round(value*100)/100;
 		this.nodes.splice(index, 1, value);
 		this.updateMinMax();
-		registerEdit('edit curve node')
 	}
 	calculate(params) {
 		var position = Molang.parse(this.inputs.input.value, params);

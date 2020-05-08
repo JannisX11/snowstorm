@@ -4,13 +4,6 @@ const vscode = typeof acquireVsCodeApi == 'function' && acquireVsCodeApi()
 
 if (vscode) {
 
-    /**
-     * VSCODE ISSUES
-     * -Editing changes don't get detected
-     * -Loading textures...
-     * 
-     */
-
     function updateContent(text) {
         if (text && typeof text == 'string') {
             let parsed = JSON.parse(text)

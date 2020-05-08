@@ -5,7 +5,7 @@
             <canvas id="canvas" ref="canvas"></canvas>
         </div>
         <footer>
-            <div class="tool" @click="startAnimation()" title="Play"><i class="unicode_icon">{{'\u25B6'}}</i></div>
+            <div class="tool" @click="startAnimation()" title="Play"><i class="unicode_icon" style="font-size: 13pt;">{{'\u25B6'}}</i></div>
             <div class="tool" @click="togglePause()" title="Pause"><i class="unicode_icon pause">{{'\u23F8'}}</i></div>
             <div class="stat" style="width: 66px;">{{fps}} FPS</div>
             <div class="stat">{{particles}} P</div>
