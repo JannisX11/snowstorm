@@ -460,8 +460,13 @@ __webpack_require__.r(__webpack_exports__);
 var isVSCExtension = !!_vscode_extension__WEBPACK_IMPORTED_MODULE_3__["default"];
 
 function openLink(link) {
-  if (isVSCExtension) {
-    _vscode_extension__WEBPACK_IMPORTED_MODULE_3__["default"].env.openExternal(_vscode_extension__WEBPACK_IMPORTED_MODULE_3__["default"].Uri.parse('https://example.com'));
+  console.log(_vscode_extension__WEBPACK_IMPORTED_MODULE_3__["default"], _vscode_extension__WEBPACK_IMPORTED_MODULE_3__["default"].commands, Object.keys(_vscode_extension__WEBPACK_IMPORTED_MODULE_3__["default"]).join());
+
+  if (_vscode_extension__WEBPACK_IMPORTED_MODULE_3__["default"]) {
+    _vscode_extension__WEBPACK_IMPORTED_MODULE_3__["default"].postMessage({
+      type: 'link',
+      link: link
+    });
   } else {
     open(link);
   }
@@ -86686,6 +86691,8 @@ function processEdit(id) {
 }
 
 function registerEdit(id, event) {
+  console.log(event, event.type);
+
   if (event instanceof InputEvent || event instanceof KeyboardEvent) {
     if (timeout) clearTimeout(timeout);
     timeout = setTimeout(function () {
@@ -88534,10 +88541,6 @@ var Input = /*#__PURE__*/function () {
         this.update();
       }
 
-      if (_components_ExpressionBar__WEBPACK_IMPORTED_MODULE_5__["ExpandedInput"].setup && ['molang', 'text', 'list'].includes(this.type)) {
-        this.focus();
-      }
-
       if (typeof this.onchange === 'function') {
         this.onchange(e);
       }
@@ -88548,6 +88551,11 @@ var Input = /*#__PURE__*/function () {
       }
 
       if (e instanceof Event) {
+        // User Input
+        if (_components_ExpressionBar__WEBPACK_IMPORTED_MODULE_5__["ExpandedInput"].setup && ['molang', 'text', 'list'].includes(this.type)) {
+          this.focus();
+        }
+
         Object(_edits__WEBPACK_IMPORTED_MODULE_4__["default"])('change input', event);
       }
 
@@ -89969,6 +89977,8 @@ var IO = {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _import__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./import */ "./src/import.js");
+/* harmony import */ var _components_ExpressionBar__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/ExpressionBar */ "./src/components/ExpressionBar.vue");
+
 
 var vscode = typeof acquireVsCodeApi == 'function' && acquireVsCodeApi();
 
@@ -89977,6 +89987,11 @@ if (vscode) {
     if (text && typeof text == 'string') {
       var parsed = JSON.parse(text);
       Object(_import__WEBPACK_IMPORTED_MODULE_0__["loadFile"])(parsed);
+      console.log(_components_ExpressionBar__WEBPACK_IMPORTED_MODULE_1__["ExpandedInput"].input);
+
+      if (_components_ExpressionBar__WEBPACK_IMPORTED_MODULE_1__["ExpandedInput"].input) {
+        _components_ExpressionBar__WEBPACK_IMPORTED_MODULE_1__["ExpandedInput"].input.focus();
+      }
     }
   };
 
@@ -89998,6 +90013,15 @@ if (vscode) {
   if (state) {
     updateContent(state.text);
   }
+
+  document.addEventListener('keydown', function (e) {
+    console.log(e.ctrlKey, e.metaKey, e.which);
+
+    if ((e.ctrlKey || e.metaKey) && (e.which == 89 || e.which == 90)) {
+      e.preventDefault();
+      return false;
+    }
+  });
 }
 
 /* harmony default export */ __webpack_exports__["default"] = (vscode);

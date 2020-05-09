@@ -32,7 +32,7 @@ module.exports.SnowstormEditorProvider = class SnowstormEditorProvider {
 
 		const changeDocumentSubscription = vscode.workspace.onDidChangeTextDocument(e => {
 			if (e.document.uri.toString() === document.uri.toString() && !latest_change_from_snowstorm) {
-				console.log('Snowstorm Updates')
+				console.log('Updating Snowstorm Webview')
 				updateWebview();
 			}
 			latest_change_from_snowstorm = false;
@@ -62,6 +62,9 @@ module.exports.SnowstormEditorProvider = class SnowstormEditorProvider {
 						//	vscode.commands.executeCommand('reOpenWith')
 						//}, 1000)
 					//})
+					break;
+				case 'link':
+					vscode.commands.executeCommand('vscode.open', vscode.Uri.parse(e.link));
 					break;
 				case 'request_texture':
 					let path_arr = document.fileName.split(path.sep);
@@ -152,7 +155,7 @@ module.exports.SnowstormEditorProvider = class SnowstormEditorProvider {
 				if (unmatched) break;
 				end_line--;
 			}
-			if (original[end_i] !== text[text.length - (original.length - end_i)] || end_i <= start_i) {
+			if (original[end_i] !== text[text.length - (original.length - end_i)] || end_i <= start_i || end_text_i <= start_i) {
 				unmatched = true;
 			}
 			if (unmatched) {
@@ -163,7 +166,7 @@ module.exports.SnowstormEditorProvider = class SnowstormEditorProvider {
 			end_i--;
 		}
 
-		text = text.substring(start_i, end_text_i)
+		text = text.substring(start_i, end_text_i);
 
 		const edit = new vscode.WorkspaceEdit();
 		edit.replace(

@@ -97,9 +97,6 @@ export default class Input {
 			}
 			this.update()
 		}
-		if (ExpandedInput.setup && ['molang', 'text', 'list'].includes(this.type)) {
-			this.focus()
-		}
 		if (typeof this.onchange === 'function') {
 			this.onchange(e)
 		}
@@ -108,6 +105,10 @@ export default class Input {
 			this.updatePreview(data)
 		}
 		if (e instanceof Event)	{
+			// User Input
+			if (ExpandedInput.setup && ['molang', 'text', 'list'].includes(this.type)) {
+				this.focus()
+			}
 			registerEdit('change input', event)
 		}
 		return this;

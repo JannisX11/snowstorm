@@ -27,8 +27,11 @@ import vscode from '../vscode_extension'
 const isVSCExtension = !!vscode;
 
 function openLink(link) {
-	if (isVSCExtension) {
-		vscode.env.openExternal(vscode.Uri.parse('https://example.com'));
+	if (vscode) {
+		vscode.postMessage({
+            type: 'link',
+            link
+        });
 	} else {
 		open(link)
 	}
