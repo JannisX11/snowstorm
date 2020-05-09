@@ -1,30 +1,18 @@
-import * as path from 'path';
-import * as vscode from 'vscode';
-import * as fs from 'fs';
+const vscode = require('vscode');
+const path = require('path');
+const fs = require('fs');
 
+module.exports.SnowstormEditorProvider = class SnowstormEditorProvider {
 
-export class SnowstormEditorProvider implements vscode.CustomTextEditorProvider {
-
-	public static register(context: vscode.ExtensionContext): vscode.Disposable { 
-		const provider = new SnowstormEditorProvider(context);
-		const providerRegistration = vscode.window.registerCustomEditorProvider('x11.snowstorm', provider);
-		return providerRegistration;
+	constructor(context) {
+		this.context = context
+	}
+	getRegistration() {
+		return vscode.window.registerCustomEditorProvider('x11.snowstorm', this);
 	}
 
 
-
-	constructor(
-		private readonly context: vscode.ExtensionContext
-	) { }
-
-	/**
-	 * Called when our custom editor is opened.
-	 */
-	public async resolveCustomTextEditor(
-		document: vscode.TextDocument,
-		webviewPanel: vscode.WebviewPanel,
-		_token: vscode.CancellationToken
-	): Promise<void> {
+	resolveCustomTextEditor(document, webviewPanel, _token) {
 
 		webviewPanel.webview.options = {
 			enableScripts: true,
@@ -61,9 +49,13 @@ export class SnowstormEditorProvider implements vscode.CustomTextEditorProvider 
 					latest_change_from_snowstorm = true;
 					break;
 				case 'reopen':
-					//vscode.window.showTextDocument(document, vscode.ViewColumn.Beside)
 					vscode.commands.executeCommand('workbench.action.splitEditor')
-					vscode.commands.executeCommand('vscode.openWith', document.uri, 'default', 'left');
+					vscode.commands.executeCommand('workbench.files.action.toggleEditorType');
+					//vscode.commands.executeCommand('explorer.openWith', document.uri, 'default', 'left');
+					//vscode.commands.executeCommand('workbench.files.action.reopenWithEditor', document.uri, 'default', 'left')
+					//setTimeout(() => {
+					//	console.log('test')
+					//}, 1000)
 					//vscode.commands.executeCommand('workbench.action.splitEditor').then(() => {
 						//setTimeout(() => {
 						//	console.log('test')
@@ -94,11 +86,11 @@ export class SnowstormEditorProvider implements vscode.CustomTextEditorProvider 
 					break;
 			}
 		});
-
+		
 		updateWebview();
 	}
 
-	private getHtmlForWebview(webview: vscode.Webview): string {
+	getHtmlForWebview(webview) {
 
 		const scriptUri = webview.asWebviewUri(vscode.Uri.file(
 			path.join(this.context.extensionPath, 'snowstorm', 'app.js')
@@ -126,7 +118,7 @@ export class SnowstormEditorProvider implements vscode.CustomTextEditorProvider 
 		</html>`
 	}
 
-	private updateText(document: vscode.TextDocument, text: string) {
+	updateText(document, text) {
 
 		let original = document.getText().replace(/\r/g, '');
 

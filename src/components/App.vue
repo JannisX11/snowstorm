@@ -42,7 +42,6 @@ export default {
 			this.tab = tab
 		},
 		openDialog(dialog) {
-			console.log('d', dialog)
 			this.dialog = dialog;
 		},
 		closeDialog() {

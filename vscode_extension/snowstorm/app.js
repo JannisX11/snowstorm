@@ -207,12 +207,19 @@ __webpack_require__.r(__webpack_exports__);
     return {
       code: '{"test": false}',
       tab: 'preview',
+      dialog: null,
       sidebar_width: 440
     };
   },
   methods: {
     setTab: function setTab(tab) {
       this.tab = tab;
+    },
+    openDialog: function openDialog(dialog) {
+      this.dialog = dialog;
+    },
+    closeDialog: function closeDialog() {
+      this.dialog = null;
     },
     setSidebarSize: function setSidebarSize(size) {
       this.sidebar_width = Math.clamp(size, 240, document.body.clientWidth - 240);
@@ -261,6 +268,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue_prism_component__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(vue_prism_component__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _export__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../export */ "./src/export.js");
 /* harmony import */ var _edits__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../edits */ "./src/edits.js");
+/* harmony import */ var _util__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../util */ "./src/util.js");
 //
 //
 //
@@ -270,6 +278,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 
 
 
@@ -293,7 +302,7 @@ function selectText(element) {
   },
   data: function data() {
     return {
-      code: Object(_export__WEBPACK_IMPORTED_MODULE_4__["generateFile"])()
+      code: Object(_util__WEBPACK_IMPORTED_MODULE_6__["compileJSON"])(Object(_export__WEBPACK_IMPORTED_MODULE_4__["generateFile"])())
     };
   },
   methods: {
@@ -306,7 +315,7 @@ function selectText(element) {
     var _this = this;
 
     _edits__WEBPACK_IMPORTED_MODULE_5__["EditListeners"]['code_viewer'] = function () {
-      _this.code = Object(_export__WEBPACK_IMPORTED_MODULE_4__["generateFile"])();
+      _this.code = Object(_util__WEBPACK_IMPORTED_MODULE_6__["compileJSON"])(Object(_export__WEBPACK_IMPORTED_MODULE_4__["generateFile"])());
     };
   },
   destroyed: function destroyed() {
@@ -518,8 +527,8 @@ var Menu = [{
     }
   }, {
     label: 'MoLang Sheet',
-    click: function click() {
-      MolangSheet.open();
+    click: function click(vm) {
+      vm.openDialog('molang_sheet');
     }
   }, {
     label: 'Report a Bug',
@@ -564,6 +573,12 @@ var Menu = [{
       _vscode_extension__WEBPACK_IMPORTED_MODULE_3__["default"].postMessage({
         type: 'reopen'
       });
+    },
+    openDialog: function openDialog(dialog) {
+      this.$emit('opendialog', dialog);
+    },
+    getVM: function getVM() {
+      return this;
     }
   },
   data: function data() {
@@ -585,6 +600,18 @@ var Menu = [{
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -1478,7 +1505,7 @@ exports = module.exports = __webpack_require__(/*! ../../node_modules/css-loader
 
 
 // module
-exports.push([module.i, "\nul#menu_bar[data-v-4a501398] {\n\theight: 32px;\n\tfont-weight: normal;\n\tpadding: 0 8px;\n\tbackground-color: var(--color-bar);\n}\na[data-v-4a501398] {\n\tdisplay: block;\n\tpadding: 2px 20px; \n\tpadding-top: 3px;\n}\na[data-v-4a501398]:hover {\n\tbackground-color: var(--color-interface);\n\tcolor: black;\n}\nul#menu_bar > li[data-v-4a501398] {\n\tdisplay: inline-block;\n}\nul#menu_bar > li > ul[data-v-4a501398] {\n\tdisplay: none;\n\tposition: absolute;\n\tpadding: 0;\n\tz-index: 8;\n\tmin-width: 150px;\n\tbackground-color: var(--color-bar);\n\tbox-shadow: 1px 4px 10px rgba(0, 0, 0, 0.25);\n}\nul#menu_bar > li:hover > ul[data-v-4a501398] {\n\tdisplay: block;\n}\nul#menu_bar > li:hover > a[data-v-4a501398] {\n\tbackground-color: var(--color-interface);\n}\n.mode_selector[data-v-4a501398] {\n\tfloat: right;\n\theight: 100%;\n\tpadding: 2px 10px;\n\tpadding-top: 3px;\n\tcursor: pointer;\n}\n.mode_selector[data-v-4a501398]:hover {\n\tbackground-color: var(--color-interface);\n}\n.mode_selector.selected[data-v-4a501398] {\n\tbackground-color: var(--color-background);\n\tcolor: var(--color-title);\n}\n", ""]);
+exports.push([module.i, "\nul#menu_bar[data-v-4a501398] {\n\theight: 32px;\n\tfont-weight: normal;\n\tpadding: 0 8px;\n\tbackground-color: var(--color-bar);\n\twhite-space: nowrap;\n}\na[data-v-4a501398] {\n\tdisplay: block;\n\tpadding: 2px 20px; \n\tpadding-top: 3px;\n}\na[data-v-4a501398]:hover {\n\tbackground-color: var(--color-interface);\n\tcolor: black;\n}\nul#menu_bar > li[data-v-4a501398] {\n\tdisplay: inline-block;\n}\nul#menu_bar > li > ul[data-v-4a501398] {\n\tdisplay: none;\n\tposition: absolute;\n\tpadding: 0;\n\tz-index: 8;\n\tmin-width: 150px;\n\tbackground-color: var(--color-bar);\n\tbox-shadow: 1px 4px 10px rgba(0, 0, 0, 0.25);\n}\nul#menu_bar > li:hover > ul[data-v-4a501398] {\n\tdisplay: block;\n}\nul#menu_bar > li:hover > a[data-v-4a501398] {\n\tbackground-color: var(--color-interface);\n}\n.mode_selector[data-v-4a501398] {\n\tfloat: right;\n\theight: 100%;\n\tpadding: 2px 10px;\n\tpadding-top: 3px;\n\tcursor: pointer;\n}\n.mode_selector[data-v-4a501398]:hover {\n\tbackground-color: var(--color-interface);\n}\n.mode_selector.selected[data-v-4a501398] {\n\tbackground-color: var(--color-background);\n\tcolor: var(--color-title);\n}\n", ""]);
 
 // exports
 
@@ -1497,7 +1524,7 @@ exports = module.exports = __webpack_require__(/*! ../../node_modules/css-loader
 
 
 // module
-exports.push([module.i, "\n.dialog[data-v-5cc19428] {\n\tposition: absolute;\n\tmargin-left: calc(50% - 400px);\n\twidth: 800px;\n\ttop: 20px;\n\tbackground-color: #ar(--color-background);\n\tbox-shadow: 1px 1px 12px black;\n\tz-index: 50;\n}\n.dialog h3[data-v-5cc19428] {\n\tpadding: 20px 0 5px 0;\n}\n#molang_sheet[data-v-5cc19428] {\n\tpadding: 20px 40px;\n\toverflow-y: scroll;\n\tbottom: 20px;\n}\n", ""]);
+exports.push([module.i, "\n.dialog[data-v-5cc19428] {\n\t\tposition: absolute;\n\t\tmargin-left: calc(50% - 400px);\n        width: 800px;\n        max-width: 100%;\n\t\ttop: 20px;\n\t\tbackground-color: var(--color-background);\n\t\tbox-shadow: 1px 1px 12px black;\n        z-index: 50;\n        overflow: hidden;\n\t\tpadding: 20px 40px;\n\t\tbottom: 20px;\n}\n.scrollable[data-v-5cc19428] {\n        max-height: -webkit-fill-available;\n\t\toverflow-y: scroll;\n}\n.dialog h3[data-v-5cc19428] {\n\t\tpadding: 20px 0 5px 0;\n}\n#molang_sheet code[data-v-5cc19428] {\n\t\tpadding: 2px 8px;\n\t\tcolor: var(--teal);\n\t\tfont-size: 0.9em;\n\t\tbackground-color: var(--color-dark);\n\t\tuser-select: text;\n}\n.close_button[data-v-5cc19428] {\n        position: absolute;\n        top: 0;\n        right: 0;\n}\n", ""]);
 
 // exports
 
@@ -1611,7 +1638,7 @@ exports = module.exports = __webpack_require__(/*! ../../node_modules/css-loader
 
 
 // module
-exports.push([module.i, "\r\n\t/*Setup*/\n::-webkit-scrollbar {\r\n\t\twidth: 8px;\r\n\t\theight: 8px;\n}\n::-webkit-scrollbar-track {\r\n\t\tbackground: var(--color-interface);\n}\n::-webkit-scrollbar-corner {\r\n\t\tbackground: var(--color-interface);\n}\n::-webkit-scrollbar-thumb {\r\n\t\tbackground: var(--color-bar);\n}\n::-webkit-scrollbar-thumb:hover {\r\n\t\tbackground: var(--color-title);\n}\n::selection {\r\n\t\tbackground: var(--color-selection);\n}\n::placeholder {\r\n\t\topacity: 0.6;\n}\n* {\r\n\t\tscrollbar-width: thin;\r\n\t\tscrollbar-color: white var(--color-bar);\n}\nbody {\r\n\t\t--color-background: #29323a;\r\n\t\t--color-interface: #e5ebfa;\r\n\t\t--color-bar: #cfd7ea;\r\n\t\t--color-title: #9aa3b8;\r\n\t\t--color-selection: rgba(110, 142, 191, 0.3);\r\n\t\t--color-highlight: #f7f9ff;\r\n\t\t--color-text: #434b53;\n}\nbody {\r\n\t\t--color-background: #29323a;\r\n\t\t--color-dark: #20272d;\r\n\t\t--color-border: #1a1c1f;\r\n\t\t--color-interface: #29323a;\r\n\t\t--color-bar: #34404a;\r\n\t\t--color-title: #4b5b69;\r\n\t\t--color-selection: rgba(110, 142, 191, 0.3);\r\n\t\t--color-highlight: #f7f9ff;\r\n\t\t--color-text: #bcc3ca;\n}\nh1, h2, h3, h4, h5, h6 {\r\n\t\tmargin: 0;\r\n\t\tfont-weight: inherit;\n}\nul {\r\n\t\tlist-style: none;\r\n\t\tpadding-left: 0;\r\n\t\tmargin: 0;\n}\n* {\r\n\t\tmargin: 0;\r\n        padding: 0;\r\n        box-sizing: border-box;\n}\ninput, select {\r\n\t\tfont-weight: inherit;\r\n\t\tbackground-color: var(--color-dark);\r\n\t\tborder: 1px solid var(--color-border);\r\n\t\tcolor: var(--color-text);\r\n\t\theight: 30px;\r\n\t\tpadding: 4px;\n}\ninput[type=text], input[type=number], input:not([type]) {\r\n\t\tfont-family: 'Inconsolata', monospace;\n}\ninput[type=checkbox] {\r\n\t\theight: 15px;\r\n\t\twidth: 15px;\r\n\t\tvertical-align: middle;\r\n\t\tmargin: 0 0 2px 4px;\r\n\t\tmargin-top: 5px;\n}\n.unicode_icon {\r\n\t\tfont-style: unset;\r\n\t\tdisplay: block;\r\n\t\twidth: 24px;\r\n\t\theight: 24px;\r\n\t\ttext-align: center;\r\n\t\tfont-size: 14pt;\r\n\t\tfont-family: sans-serif;\n}\n.unicode_icon.caret {\r\n\t\tfont-size: 25pt;\r\n\t\toverflow: hidden;\r\n\t\tdisplay: block;\r\n\t\tmargin-top: -4px;\r\n\t\twidth: 12px;\n}\n.unicode_icon.pause {\r\n\t\tmargin-top: -3px;\r\n\t\tfloat: right;\r\n\t\tfont-size: 15pt;\n}\n.unicode_icon.plus {\r\n\t\tfont-size: 18pt;\r\n\t\tmargin-top: -4px;\n}\n.checkerboard {\r\n\t\t--color-checker_offset: var(--color-bar);\r\n\t\t--color-checkerboard: var(--color-interface);\r\n\t\tbackground-color: var(--color-checkerboard) !important;\r\n\t\tbackground-image: linear-gradient(45deg, var(--color-checkerboard) 25%, transparent 25%), linear-gradient(-45deg, var(--color-checkerboard) 25%, transparent 25%), linear-gradient(45deg, transparent 75%, var(--color-checkerboard) 75%), linear-gradient(-45deg, var(--color-checker_offset) 75%, var(--color-checkerboard) 75%);\r\n\t\tbackground-size: 16px 16px;\r\n\t\tbackground-position: 0 0, 0 8px, 8px -8px, -8px 0px;\n}\nselect {\r\n\t\theight: 30px;\n}\ncode {\r\n\t\tpadding: 2px 8px;\r\n\t\tcolor: #1062ab;\r\n\t\tfont-size: 0.9em;\r\n\t\tbackground-color: var(--color-highlight);\r\n\t\tuser-select: auto;\n}\nbody {\r\n\t\timage-rendering: pixelated;\r\n\t\tbackground-color: var(--color-background);\r\n\t\tuser-select: none;\r\n\t\t-moz-user-select: none;\r\n\t\tfont-family: 'Lato', -apple-system, \"Segoe UI\", sans-serif;\r\n\t\theight: 100%;\r\n        width: 100%;\r\n        margin: 0;\r\n        font-size: 11pt;\r\n        font-weight: 400;\r\n        line-height: 1.5;\r\n        color: var(--color-text);\r\n        text-align: left;\n}\r\n\r\n/*Color Picker*/\ndiv.vc-chrome {\r\n\t\twidth: 240px;\r\n\t\tmargin: 2px 0;\r\n\t\tfont-family: inherit;\n}\ndiv.vc-chrome .vc-chrome-body {\r\n\t\tbackground-color: var(--color-interface);\n}\ndiv.vc-chrome .vc-chrome-fields .vc-input__input {\r\n\t\tcolor: var(--color-text);\r\n\t\tbox-shadow: none;\r\n\t\tfont-size: inherit;\r\n\t\tborder: 1px solid var(--color-border);\r\n\t\theight: 24px;\n}\ndiv.vc-chrome .vc-chrome-toggle-icon svg path {\r\n\t\tfill: var(--color-text);\n}\r\n\r\n\r\n\r\n", ""]);
+exports.push([module.i, "\r\n\t/*Setup*/\n::-webkit-scrollbar {\r\n\t\twidth: 8px;\r\n\t\theight: 8px;\n}\n::-webkit-scrollbar-track {\r\n\t\tbackground: var(--color-interface);\n}\n::-webkit-scrollbar-corner {\r\n\t\tbackground: var(--color-interface);\n}\n::-webkit-scrollbar-thumb {\r\n\t\tbackground: var(--color-bar);\n}\n::-webkit-scrollbar-thumb:hover {\r\n\t\tbackground: var(--color-title);\n}\n::selection {\r\n\t\tbackground: var(--color-selection);\n}\n::placeholder {\r\n\t\topacity: 0.6;\n}\n* {\r\n\t\tscrollbar-width: thin;\r\n\t\tscrollbar-color: white var(--color-bar);\n}\nbody {\r\n\t\t--color-background: #29323a;\r\n\t\t--color-interface: #e5ebfa;\r\n\t\t--color-bar: #cfd7ea;\r\n\t\t--color-title: #9aa3b8;\r\n\t\t--color-selection: rgba(110, 142, 191, 0.3);\r\n\t\t--color-highlight: #f7f9ff;\r\n\t\t--color-text: #434b53;\n}\nbody {\r\n\t\t--color-background: #29323a;\r\n\t\t--color-dark: #20272d;\r\n\t\t--color-border: #1a1c1f;\r\n\t\t--color-interface: #29323a;\r\n\t\t--color-bar: #34404a;\r\n\t\t--color-title: #4b5b69;\r\n\t\t--color-selection: rgba(110, 142, 191, 0.3);\r\n\t\t--color-highlight: #f7f9ff;\r\n\t\t--color-text: #bcc3ca;\n}\nh1, h2, h3, h4, h5, h6 {\r\n\t\tmargin: 0;\r\n\t\tfont-weight: inherit;\n}\nul {\r\n\t\tlist-style: none;\r\n\t\tpadding-left: 0;\r\n\t\tmargin: 0;\n}\n* {\r\n\t\tmargin: 0;\r\n        padding: 0;\r\n        box-sizing: border-box;\n}\ninput, select {\r\n\t\tfont-weight: inherit;\r\n\t\tbackground-color: var(--color-dark);\r\n\t\tborder: 1px solid var(--color-border);\r\n\t\tcolor: var(--color-text);\r\n\t\theight: 30px;\r\n\t\tpadding: 4px;\n}\ninput[type=text], input[type=number], input:not([type]) {\r\n\t\tfont-family: 'Inconsolata', monospace;\n}\ninput[type=checkbox] {\r\n\t\theight: 15px;\r\n\t\twidth: 15px;\r\n\t\tvertical-align: middle;\r\n\t\tmargin: 0 0 2px 4px;\r\n\t\tmargin-top: 5px;\n}\n.unicode_icon {\r\n\t\tfont-style: unset;\r\n\t\tdisplay: block;\r\n\t\twidth: 24px;\r\n\t\theight: 24px;\r\n\t\ttext-align: center;\r\n\t\tfont-size: 14pt;\r\n\t\tfont-family: sans-serif;\n}\n.unicode_icon.caret {\r\n\t\tfont-size: 25pt;\r\n\t\toverflow: hidden;\r\n\t\tdisplay: block;\r\n\t\tmargin-top: -4px;\r\n\t\twidth: 12px;\n}\n.unicode_icon.pause {\r\n\t\tmargin-top: -3px;\r\n\t\tfloat: right;\r\n\t\tfont-size: 15pt;\n}\n.unicode_icon.plus {\r\n\t\tfont-size: 18pt;\r\n\t\tmargin-top: -4px;\n}\n.checkerboard {\r\n\t\t--color-checker_offset: var(--color-bar);\r\n\t\t--color-checkerboard: var(--color-interface);\r\n\t\tbackground-color: var(--color-checkerboard) !important;\r\n\t\tbackground-image: linear-gradient(45deg, var(--color-checkerboard) 25%, transparent 25%), linear-gradient(-45deg, var(--color-checkerboard) 25%, transparent 25%), linear-gradient(45deg, transparent 75%, var(--color-checkerboard) 75%), linear-gradient(-45deg, var(--color-checker_offset) 75%, var(--color-checkerboard) 75%);\r\n\t\tbackground-size: 16px 16px;\r\n\t\tbackground-position: 0 0, 0 8px, 8px -8px, -8px 0px;\n}\nselect {\r\n\t\theight: 30px;\n}\nbody {\r\n\t\timage-rendering: pixelated;\r\n\t\tbackground-color: var(--color-background);\r\n\t\tuser-select: none;\r\n\t\t-moz-user-select: none;\r\n\t\tfont-family: 'Lato', -apple-system, \"Segoe UI\", sans-serif;\r\n\t\theight: 100%;\r\n        width: 100%;\r\n        margin: 0;\r\n        font-size: 11pt;\r\n        font-weight: 400;\r\n        line-height: 1.5;\r\n        color: var(--color-text);\r\n        text-align: left;\n}\r\n\r\n/*Color Picker*/\ndiv.vc-chrome {\r\n\t\twidth: 240px;\r\n\t\tmargin: 2px 0;\r\n\t\tfont-family: inherit;\n}\ndiv.vc-chrome .vc-chrome-body {\r\n\t\tbackground-color: var(--color-interface);\n}\ndiv.vc-chrome .vc-chrome-fields .vc-input__input {\r\n\t\tcolor: var(--color-text);\r\n\t\tbox-shadow: none;\r\n\t\tfont-size: inherit;\r\n\t\tborder: 1px solid var(--color-border);\r\n\t\theight: 24px;\n}\ndiv.vc-chrome .vc-chrome-toggle-icon svg path {\r\n\t\tfill: var(--color-text);\n}\r\n\r\n\r\n\r\n", ""]);
 
 // exports
 
@@ -68631,14 +68658,16 @@ var render = function() {
     "div",
     { style: { "--sidebar": _vm.sidebar_width + "px" }, attrs: { id: "app" } },
     [
-      _c("molang-dialog"),
+      _vm.dialog == "molang_sheet"
+        ? _c("molang-dialog", { on: { close: _vm.closeDialog } })
+        : _vm._e(),
       _vm._v(" "),
       _c(
         "header",
         [
           _c("menu-bar", {
             attrs: { selected_tab: _vm.tab },
-            on: { changetab: _vm.setTab }
+            on: { changetab: _vm.setTab, opendialog: _vm.openDialog }
           }),
           _vm._v(" "),
           _c("expression-bar")
@@ -68811,7 +68840,7 @@ var render = function() {
                   key: entry.id,
                   on: {
                     click: function($event) {
-                      return entry.click()
+                      entry.click(_vm.getVM(), $event)
                     }
                   }
                 },
@@ -68893,195 +68922,237 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("div", { staticClass: "dialog", attrs: { id: "molang_sheet" } }, [
+    _c(
+      "div",
+      {
+        staticClass: "tool close_button",
+        on: {
+          click: function($event) {
+            return _vm.$emit("close")
+          }
+        }
+      },
+      [_c("i", { staticClass: "unicode_icon" }, [_vm._v(_vm._s("\u2A09"))])]
+    ),
+    _vm._v(" "),
+    _c("h2", [_vm._v("MoLang Sheet")]),
+    _vm._v(" "),
+    _vm._m(0)
+  ])
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      {
-        staticClass: "dialog",
-        staticStyle: { display: "none" },
-        attrs: { id: "molang_sheet" }
-      },
-      [
-        _c("h1", [_vm._v("MoLang Sheet")]),
-        _vm._v(" "),
-        _c("h3", [_vm._v("Variables")]),
-        _vm._v(" "),
-        _c("ul", [
-          _c("li", [
-            _c("code", [_vm._v("variable.emitter_lifetime")]),
-            _vm._v(" Lifetime of the emitter")
-          ]),
-          _vm._v(" "),
-          _c("li", [
-            _c("code", [_vm._v("variable.emitter_age")]),
-            _vm._v(" Age of the emitter")
-          ]),
-          _vm._v(" "),
-          _c("li", [
-            _c("code", [_vm._v("variable.emitter_random_1")]),
-            _vm._v(" Random number between 0 and 1, constant per emitter loop")
-          ]),
-          _vm._v(" "),
-          _c("li", [
-            _c("code", [_vm._v("variable.emitter_random_2")]),
-            _vm._v(" Random number")
-          ]),
-          _vm._v(" "),
-          _c("li", [
-            _c("code", [_vm._v("variable.emitter_random_3")]),
-            _vm._v(" Random number")
-          ]),
-          _vm._v(" "),
-          _c("li", [
-            _c("code", [_vm._v("variable.emitter_random_4")]),
-            _vm._v(" Random number")
-          ]),
-          _vm._v(" "),
-          _c("li", [
-            _c("code", [_vm._v("variable.particle_lifetime")]),
-            _vm._v(" Lifetime of the particle")
-          ]),
-          _vm._v(" "),
-          _c("li", [
-            _c("code", [_vm._v("variable.particle_age")]),
-            _vm._v(" Age of the particle")
-          ]),
-          _vm._v(" "),
-          _c("li", [
-            _c("code", [_vm._v("variable.particle_random_1")]),
-            _vm._v(" Random number between 0 and 1, constant per particle")
-          ]),
-          _vm._v(" "),
-          _c("li", [
-            _c("code", [_vm._v("variable.particle_random_2")]),
-            _vm._v(" Random number")
-          ]),
-          _vm._v(" "),
-          _c("li", [
-            _c("code", [_vm._v("variable.particle_random_3")]),
-            _vm._v(" Random number")
-          ]),
-          _vm._v(" "),
-          _c("li", [
-            _c("code", [_vm._v("variable.particle_random_4")]),
-            _vm._v(" Random number")
-          ]),
-          _vm._v(" "),
-          _c("li", [
-            _c("code", [_vm._v("variable.entity_scale")]),
-            _vm._v(" Scale of the attached entity")
-          ])
+    return _c("div", { staticClass: "scrollable" }, [
+      _c("h3", [_vm._v("Variables")]),
+      _vm._v(" "),
+      _c("ul", [
+        _c("li", [
+          _c("code", [_vm._v("variable.emitter_lifetime")]),
+          _vm._v(" Lifetime of the emitter")
         ]),
         _vm._v(" "),
-        _c("h3", [_vm._v("Math Operations")]),
-        _vm._v(" "),
-        _c("ul", [
-          _c("li", [
-            _c("code", [_vm._v("Math.abs(n)")]),
-            _vm._v(" Returns the positive value of n.")
-          ]),
-          _vm._v(" "),
-          _c("li", [
-            _c("code", [_vm._v("Math.sin(n)")]),
-            _vm._v(" Sine in degrees")
-          ]),
-          _vm._v(" "),
-          _c("li", [
-            _c("code", [_vm._v("Math.cos(n)")]),
-            _vm._v(" Cosine in degrees")
-          ]),
-          _vm._v(" "),
-          _c("li", [
-            _c("code", [_vm._v("Math.exp(n)")]),
-            _vm._v(" Calculates e to the nth power")
-          ]),
-          _vm._v(" "),
-          _c("li", [
-            _c("code", [_vm._v("Math.ln(n)")]),
-            _vm._v(" Natural logarithm of n")
-          ]),
-          _vm._v(" "),
-          _c("li", [
-            _c("code", [_vm._v("Math.pow(a, n)")]),
-            _vm._v(" Elevates a to the nth power")
-          ]),
-          _vm._v(" "),
-          _c("li", [
-            _c("code", [_vm._v("Math.sqrt(n)")]),
-            _vm._v(" Returns the suare root of n.")
-          ]),
-          _vm._v(" "),
-          _c("li", [
-            _c("code", [_vm._v("Math.random(a, b)")]),
-            _vm._v(" Random number between a and b")
-          ]),
-          _vm._v(" "),
-          _c("li", [
-            _c("code", [_vm._v("Math.ceil(n)")]),
-            _vm._v(" Round n up to nearest integral number")
-          ]),
-          _vm._v(" "),
-          _c("li", [
-            _c("code", [_vm._v("Math.round(n)")]),
-            _vm._v(" Round n to nearest integral number")
-          ]),
-          _vm._v(" "),
-          _c("li", [
-            _c("code", [_vm._v("Math.trunc(n)")]),
-            _vm._v(" Round n towards zero")
-          ]),
-          _vm._v(" "),
-          _c("li", [
-            _c("code", [_vm._v("Math.floor(n)")]),
-            _vm._v(" Round n down to nearest integral number")
-          ]),
-          _vm._v(" "),
-          _c("li", [
-            _c("code", [_vm._v("Math.mod(a, b)")]),
-            _vm._v(" Returns the remainder of a/b.")
-          ]),
-          _vm._v(" "),
-          _c("li", [
-            _c("code", [_vm._v("Math.min(n)")]),
-            _vm._v(" Return lowest value of a or b")
-          ]),
-          _vm._v(" "),
-          _c("li", [
-            _c("code", [_vm._v("Math.max(n)")]),
-            _vm._v(" Return highest value of a or b")
-          ]),
-          _vm._v(" "),
-          _c("li", [
-            _c("code", [_vm._v("Math.clamp(n, min, max)")]),
-            _vm._v(" Clamp n to between min and max inclusive")
-          ]),
-          _vm._v(" "),
-          _c("li", [
-            _c("code", [_vm._v("Math.lerp(a, b, p)")]),
-            _vm._v(" Lerp between a and b using p (number between 0 and 1)")
-          ]),
-          _vm._v(" "),
-          _c("li", [
-            _c("code", [_vm._v("Math.lerprotate(a, b, v)")]),
-            _vm._v(
-              " Lerp the shortest direction around a circle from a degrees to b degrees via v."
-            )
-          ])
+        _c("li", [
+          _c("code", [_vm._v("variable.emitter_age")]),
+          _vm._v(" Age of the emitter")
         ]),
         _vm._v(" "),
-        _c(
-          "a",
-          { attrs: { href: "https://bedrock.dev/1.12.0.0/1.12.0.4/MoLang" } },
-          [_vm._v("Full MoLang Documentation")]
-        )
-      ]
-    )
+        _c("li", [
+          _c("code", [_vm._v("variable.emitter_random_1")]),
+          _vm._v(" Random number between 0 and 1, constant per emitter loop")
+        ]),
+        _vm._v(" "),
+        _c("li", [
+          _c("code", [_vm._v("variable.emitter_random_2")]),
+          _vm._v(" Random number")
+        ]),
+        _vm._v(" "),
+        _c("li", [
+          _c("code", [_vm._v("variable.emitter_random_3")]),
+          _vm._v(" Random number")
+        ]),
+        _vm._v(" "),
+        _c("li", [
+          _c("code", [_vm._v("variable.emitter_random_4")]),
+          _vm._v(" Random number")
+        ]),
+        _vm._v(" "),
+        _c("li", [
+          _c("code", [_vm._v("variable.particle_lifetime")]),
+          _vm._v(" Lifetime of the particle")
+        ]),
+        _vm._v(" "),
+        _c("li", [
+          _c("code", [_vm._v("variable.particle_age")]),
+          _vm._v(" Age of the particle")
+        ]),
+        _vm._v(" "),
+        _c("li", [
+          _c("code", [_vm._v("variable.particle_random_1")]),
+          _vm._v(" Random number between 0 and 1, constant per particle")
+        ]),
+        _vm._v(" "),
+        _c("li", [
+          _c("code", [_vm._v("variable.particle_random_2")]),
+          _vm._v(" Random number")
+        ]),
+        _vm._v(" "),
+        _c("li", [
+          _c("code", [_vm._v("variable.particle_random_3")]),
+          _vm._v(" Random number")
+        ]),
+        _vm._v(" "),
+        _c("li", [
+          _c("code", [_vm._v("variable.particle_random_4")]),
+          _vm._v(" Random number")
+        ]),
+        _vm._v(" "),
+        _c("li", [
+          _c("code", [_vm._v("variable.entity_scale")]),
+          _vm._v(" Scale of the attached entity")
+        ])
+      ]),
+      _vm._v(" "),
+      _c("h3", [_vm._v("Math Operations")]),
+      _vm._v(" "),
+      _c("ul", [
+        _c("li", [
+          _c("code", [_vm._v("Math.abs(n)")]),
+          _vm._v(" Returns the positive value of n.")
+        ]),
+        _vm._v(" "),
+        _c("li", [
+          _c("code", [_vm._v("Math.sin(n)")]),
+          _vm._v(" Sine in degrees")
+        ]),
+        _vm._v(" "),
+        _c("li", [
+          _c("code", [_vm._v("Math.cos(n)")]),
+          _vm._v(" Cosine in degrees")
+        ]),
+        _vm._v(" "),
+        _c("li", [
+          _c("code", [_vm._v("Math.exp(n)")]),
+          _vm._v(" Calculates e to the nth power")
+        ]),
+        _vm._v(" "),
+        _c("li", [
+          _c("code", [_vm._v("Math.ln(n)")]),
+          _vm._v(" Natural logarithm of n")
+        ]),
+        _vm._v(" "),
+        _c("li", [
+          _c("code", [_vm._v("Math.pow(a, n)")]),
+          _vm._v(" Elevates a to the nth power")
+        ]),
+        _vm._v(" "),
+        _c("li", [
+          _c("code", [_vm._v("Math.sqrt(n)")]),
+          _vm._v(" Returns the suare root of n.")
+        ]),
+        _vm._v(" "),
+        _c("li", [
+          _c("code", [_vm._v("Math.random(a, b)")]),
+          _vm._v(" Random number between a and b")
+        ]),
+        _vm._v(" "),
+        _c("li", [
+          _c("code", [_vm._v("Math.ceil(n)")]),
+          _vm._v(" Round n up to nearest integral number")
+        ]),
+        _vm._v(" "),
+        _c("li", [
+          _c("code", [_vm._v("Math.round(n)")]),
+          _vm._v(" Round n to nearest integral number")
+        ]),
+        _vm._v(" "),
+        _c("li", [
+          _c("code", [_vm._v("Math.trunc(n)")]),
+          _vm._v(" Round n towards zero")
+        ]),
+        _vm._v(" "),
+        _c("li", [
+          _c("code", [_vm._v("Math.trunc(n)")]),
+          _vm._v(" Round n towards zero")
+        ]),
+        _vm._v(" "),
+        _c("li", [
+          _c("code", [_vm._v("Math.trunc(n)")]),
+          _vm._v(" Round n towards zero")
+        ]),
+        _vm._v(" "),
+        _c("li", [
+          _c("code", [_vm._v("Math.trunc(n)")]),
+          _vm._v(" Round n towards zero")
+        ]),
+        _vm._v(" "),
+        _c("li", [
+          _c("code", [_vm._v("Math.trunc(n)")]),
+          _vm._v(" Round n towards zero")
+        ]),
+        _vm._v(" "),
+        _c("li", [
+          _c("code", [_vm._v("Math.trunc(n)")]),
+          _vm._v(" Round n towards zero")
+        ]),
+        _vm._v(" "),
+        _c("li", [
+          _c("code", [_vm._v("Math.trunc(n)")]),
+          _vm._v(" Round n towards zero")
+        ]),
+        _vm._v(" "),
+        _c("li", [
+          _c("code", [_vm._v("Math.floor(n)")]),
+          _vm._v(" Round n down to nearest integral number")
+        ]),
+        _vm._v(" "),
+        _c("li", [
+          _c("code", [_vm._v("Math.mod(a, b)")]),
+          _vm._v(" Returns the remainder of a/b.")
+        ]),
+        _vm._v(" "),
+        _c("li", [
+          _c("code", [_vm._v("Math.min(n)")]),
+          _vm._v(" Return lowest value of a or b")
+        ]),
+        _vm._v(" "),
+        _c("li", [
+          _c("code", [_vm._v("Math.max(n)")]),
+          _vm._v(" Return highest value of a or b")
+        ]),
+        _vm._v(" "),
+        _c("li", [
+          _c("code", [_vm._v("Math.clamp(n, min, max)")]),
+          _vm._v(" Clamp n to between min and max inclusive")
+        ]),
+        _vm._v(" "),
+        _c("li", [
+          _c("code", [_vm._v("Math.lerp(a, b, p)")]),
+          _vm._v(" Lerp between a and b using p (number between 0 and 1)")
+        ]),
+        _vm._v(" "),
+        _c("li", [
+          _c("code", [_vm._v("Math.lerprotate(a, b, v)")]),
+          _vm._v(
+            " Lerp the shortest direction around a circle from a degrees to b degrees via v."
+          )
+        ])
+      ]),
+      _vm._v(" "),
+      _c(
+        "a",
+        {
+          attrs: {
+            href: "https://bedrock.dev/1.12.0.0/1.12.0.4/MoLang",
+            target: "_blank"
+          }
+        },
+        [_vm._v("Full MoLang Documentation")]
+      )
+    ])
   }
 ]
 render._withStripped = true
@@ -87231,7 +87302,6 @@ function updateMaterial(cb) {
 }
 
 function loadTexture(url, cb) {
-  console.trace('Loading texture:', url);
   var tex = new three__WEBPACK_IMPORTED_MODULE_0__["TextureLoader"]().load(url, function (a, b) {
     function factorize(input, axis, factor) {
       if (!input.value || !input.value[axis]) return;
@@ -88531,7 +88601,6 @@ var Input = /*#__PURE__*/function () {
         if (this.value instanceof Array) {
           var _this$value;
 
-          console.trace('!!', value, this);
           if (value instanceof Array) (_this$value = this.value).splice.apply(_this$value, [0, Infinity].concat(_toConsumableArray(value)));
         } else {
           this.value = value;
@@ -88545,7 +88614,6 @@ var Input = /*#__PURE__*/function () {
     key: "reset",
     value: function reset() {
       this.set(this.default_value);
-      console.log(this.label, this.default_value, this.value);
 
       if (this.type == 'image') {
         delete this.image;

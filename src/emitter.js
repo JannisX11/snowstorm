@@ -537,7 +537,6 @@ function updateMaterial(cb) {
 
 }
 function loadTexture(url, cb) {
-	console.trace('Loading texture:', url)
 	var tex = new THREE.TextureLoader().load(url, function(a, b) {
 		function factorize(input, axis, factor) {
 			if (!input.value || !input.value[axis]) return;

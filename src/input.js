@@ -162,7 +162,6 @@ export default class Input {
 			this.meta_value = this.options[this.value]
 		} else {
 			if (this.value instanceof Array) {
-				console.trace('!!', value, this)
 				if (value instanceof Array) this.value.splice(0, Infinity, ...value);
 			} else {
 				this.value = value;
@@ -173,7 +172,6 @@ export default class Input {
 	}
 	reset() {
 		this.set(this.default_value);
-		console.log(this.label, this.default_value, this.value)
 		if (this.type == 'image') {
 			delete this.image
 			$('#particle-texture-image .input_texture_preview').css('background-image', `none`)

@@ -3,7 +3,7 @@
 	"displayName": "Snowstorm",
 	"description": "Minecraft Bedrock Edition particle editor",
 	"version": "0.0.1",
-	"enableProposedApi": true,
+	"enableProposedApi": false,
 	"publisher": "JannisX11",
 	"engines": {
 		"vscode": "^1.44.0"
@@ -14,7 +14,7 @@
 	"activationEvents": [
 		"onCustomEditor:x11.snowstorm"
 	],
-	"main": "./out/extension.js",
+	"main": "./src/extension.js",
 	"contributes": {
 		"customEditors": [
 			{
@@ -28,17 +28,6 @@
 			}
 		]
 	},
-	"scripts": {
-		"vscode:prepublish": "npm run compile",
-		"compile": "tsc -p ./",
-		"lint": "tslint -p ./",
-		"watch": "tsc -w -p ./"
-	},
 	"dependencies": {},
-	"devDependencies": {
-		"@types/node": "^12.12.0",
-		"tslint": "^5.19.0",
-		"typescript": "^3.8.3",
-		"@types/vscode": "^1.44.0"
-	}
+	"devDependencies": {}
 }

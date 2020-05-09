@@ -216,7 +216,6 @@ __webpack_require__.r(__webpack_exports__);
       this.tab = tab;
     },
     openDialog: function openDialog(dialog) {
-      console.log('d', dialog);
       this.dialog = dialog;
     },
     closeDialog: function closeDialog() {
@@ -87303,7 +87302,6 @@ function updateMaterial(cb) {
 }
 
 function loadTexture(url, cb) {
-  console.trace('Loading texture:', url);
   var tex = new three__WEBPACK_IMPORTED_MODULE_0__["TextureLoader"]().load(url, function (a, b) {
     function factorize(input, axis, factor) {
       if (!input.value || !input.value[axis]) return;
@@ -88603,7 +88601,6 @@ var Input = /*#__PURE__*/function () {
         if (this.value instanceof Array) {
           var _this$value;
 
-          console.trace('!!', value, this);
           if (value instanceof Array) (_this$value = this.value).splice.apply(_this$value, [0, Infinity].concat(_toConsumableArray(value)));
         } else {
           this.value = value;
@@ -88617,7 +88614,6 @@ var Input = /*#__PURE__*/function () {
     key: "reset",
     value: function reset() {
       this.set(this.default_value);
-      console.log(this.label, this.default_value, this.value);
 
       if (this.type == 'image') {
         delete this.image;
