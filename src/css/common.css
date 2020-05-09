@@ -120,13 +120,6 @@
 	select {
 		height: 30px;
 	}
-	code {
-		padding: 2px 8px;
-		color: #1062ab;
-		font-size: 0.9em;
-		background-color: var(--color-highlight);
-		user-select: auto;
-	}
 	body {
 		image-rendering: pixelated;
 		background-color: var(--color-background);

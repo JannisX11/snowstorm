@@ -3,7 +3,7 @@
         <li v-for="menu in Menu" :key="menu.id">
             <a>{{ menu.label }}</a>
             <ul class="menu_dropdown">
-                <li v-for="entry in menu.children" :key="entry.id" v-on:click="entry.click()">
+                <li v-for="entry in menu.children" :key="entry.id" v-on:click="entry.click(getVM(), $event)">
                     <a>{{ entry.label }}</a>
                 </li>
             </ul>
@@ -58,7 +58,7 @@ const Menu = [
 		label: 'Help',
 		children: [
 			{label: 'Format Documentation', click: () => { openLink('https://bedrock.dev/r/Particles') }},
-			{label: 'MoLang Sheet', click: () => { MolangSheet.open() }},
+			{label: 'MoLang Sheet', click: (vm) => { vm.openDialog('molang_sheet') }},
 			{label: 'Report a Bug', click: () => { openLink('https://github.com/JannisX11/snowstorm/issues') }},
 			{label: 'Discord Channel', click: () => { openLink('https://discord.gg/eGqsNha') }},
 		]
@@ -74,6 +74,7 @@ const Menu = [
 ]
 
 
+
 export default {
     name: 'menu-bar',
     props: {
@@ -87,6 +88,12 @@ export default {
 			vscode.postMessage({
 				type: 'reopen'
 			});
+		},
+		openDialog(dialog) {
+			this.$emit('opendialog', dialog)
+		},
+		getVM() {
+			return this;
 		}
 	},
 	data() {return {
@@ -103,6 +110,7 @@ export default {
 		font-weight: normal;
 		padding: 0 8px;
 		background-color: var(--color-bar);
+		white-space: nowrap;
 	}
 	a {
 		display: block;

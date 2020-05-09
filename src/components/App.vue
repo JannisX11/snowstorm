@@ -1,10 +1,10 @@
 <template>
     <div id="app" :style="{'--sidebar': sidebar_width+'px'}">
 
-		<molang-dialog></molang-dialog>
+		<molang-dialog v-if="dialog == 'molang_sheet'" @close="closeDialog"></molang-dialog>
 
         <header>
-			<menu-bar @changetab="setTab" :selected_tab="tab"></menu-bar>
+			<menu-bar @changetab="setTab" :selected_tab="tab" @opendialog="openDialog"></menu-bar>
 			<expression-bar></expression-bar>
         </header>
 
@@ -34,11 +34,19 @@ export default {
 	data() {return {
 		code: '{"test": false}',
 		tab: 'preview',
+		dialog: null,
 		sidebar_width: 440
 	}},
 	methods: {
 		setTab(tab) {
 			this.tab = tab
+		},
+		openDialog(dialog) {
+			console.log('d', dialog)
+			this.dialog = dialog;
+		},
+		closeDialog() {
+			this.dialog = null;
 		},
 		setSidebarSize(size) {
 			this.sidebar_width = Math.clamp(size, 240, document.body.clientWidth-240)

@@ -15,6 +15,7 @@ import Prism from 'vue-prism-component'
 
 import {generateFile} from '../export'
 import {EditListeners} from '../edits'
+import { compileJSON } from '../util'
 
 
 function selectText(element) {
@@ -26,12 +27,11 @@ function selectText(element) {
     selection.addRange(range);
 }
 
-
 export default {
 	name: 'code-viewer',
 	components: {Prism},
 	data() {return {
-		code: generateFile()
+		code: compileJSON(generateFile())
 	}},
 	methods: {
 		copy() {
@@ -41,7 +41,7 @@ export default {
 	},
 	mounted() {
 		EditListeners['code_viewer'] = () => {
-			this.code = generateFile()
+			this.code = compileJSON(generateFile())
 		}
 	},
 	destroyed() {
