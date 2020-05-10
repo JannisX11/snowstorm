@@ -203,13 +203,13 @@ class Particle {
 		if (!data) data = 0;
 
 		this.geometry = new THREE.PlaneGeometry(1, 1)
-		this.material = System.material.clone();
-		this.mesh = new THREE.Mesh(this.geometry, this.material)
+		this.mesh = new THREE.Mesh(this.geometry, System.material)
 		this.position = this.mesh.position;
 
 		this.speed = data.speed||new THREE.Vector3();
 		this.direction = new THREE.Vector3();
 		this.acceleration = data.acceleration||new THREE.Vector3();
+
 
 		this.add()
 	}
@@ -232,8 +232,6 @@ class Particle {
 		this.age = this.loop_time = 0;
 		this.current_frame = 0;
 		this.random_vars = [Math.random(), Math.random(), Math.random(), Math.random()]
-		this.material.copy(System.material)
-		this.material.needsUpdate = true;
 		var params = this.params()
 
 		this.position.set(0, 0, 0)
@@ -402,21 +400,27 @@ class Particle {
 			}
 		}
 
+
 		//Color
 		if (Data.particle.color.inputs.mode.value === 'expression') {
 			var c = Data.particle.color.inputs.expression.calculate(params)
-			this.material.color.r = c.x;
-			this.material.color.g = c.y;
-			this.material.color.b = c.z;
+			this.setColor(c.x, c.y, c.z);
+
 		} else if (Data.particle.color.inputs.mode.value === 'gradient') {
 			var i = Data.particle.color.inputs.interpolant.calculate(params)
 			var r = Data.particle.color.inputs.range.calculate(params)
 			var c = Data.particle.color.inputs.gradient.calculate((i/r) * 100)
 
-			this.material.color.copy(c)
+			this.setColor(c.r, c.g, c.b);
 		}
 
 		return this;
+	}
+	setColor(r, g, b) {
+		this.mesh.geometry.faces.forEach(face => {
+			face.color.setRGB(r, g, b)
+		})
+		this.mesh.geometry.colorsNeedUpdate = true;
 	}
 	remove() {
 		Emitter.particles.remove(this)
@@ -460,6 +464,7 @@ function initParticles(view_arg) {
 	System.material = new THREE.MeshBasicMaterial({
 		color: 0xffffff,
 		transparent: true,
+		vertexColors: THREE.FaceColors,
 		alphaTest: 0.2
 	});
 	updateMaterial()
@@ -487,6 +492,11 @@ function initParticles(view_arg) {
 	}
 
 	Emitter = new EmitterClass().start()
+
+	System.isSetup = true;
+	if (System.onSetup instanceof Function) {
+		System.onSetup();
+	}
 }
 function startAnimation() {
 	if (System.paused) {
@@ -519,7 +529,7 @@ function updateMaterial(cb) {
 		});
 		function update(event) {
 			if (event.data.type == 'provide_texture') {
-				loadTexture(event.data.url || VanillaTextures[path] || DefaultTex.missing, cb);
+				loadTexture((event.data.url && event.data.url + '?'+Math.floor(Math.random()*1000)) || VanillaTextures[path] || DefaultTex.missing, cb);
 				window.removeEventListener('message', update);
 			}
 		}

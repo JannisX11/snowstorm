@@ -42,8 +42,6 @@ const Menu = [
 		label: 'File',
 		children: [
 			{label: 'New File', click: () => {startNewProject()}},
-			{label: 'Import', click: () => {importFile()}},
-			{label: 'Download', click: () => {downloadFile()}},
 		]
 	},
 	{
@@ -75,6 +73,13 @@ const Menu = [
 		]
 	}
 ]
+
+if (!isVSCExtension) {
+	Menu[0].children.push(
+		{label: 'Import', click: () => {importFile()}},
+		{label: 'Download', click: () => {downloadFile()}}
+	)
+}
 
 
 

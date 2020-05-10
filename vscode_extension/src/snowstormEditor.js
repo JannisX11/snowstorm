@@ -22,17 +22,19 @@ module.exports.SnowstormEditorProvider = class SnowstormEditorProvider {
 
 		let latest_change_from_snowstorm = false;
 
+		console.log('Loading Storm')
+
 		function updateWebview() {
 			webviewPanel.webview.postMessage({
 				type: 'update',
 				text: document.getText(),
 				fromExtension: true
 			});
+			console.log('Updating Document')
 		}
 
 		const changeDocumentSubscription = vscode.workspace.onDidChangeTextDocument(e => {
 			if (e.document.uri.toString() === document.uri.toString() && !latest_change_from_snowstorm) {
-				console.log('Updating Snowstorm Webview')
 				updateWebview();
 			}
 			latest_change_from_snowstorm = false;

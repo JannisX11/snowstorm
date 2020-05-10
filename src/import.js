@@ -1,9 +1,11 @@
 import {IO, pathToExtension} from './util'
 import Molang from 'molangjs'
 import Data, {forEachInput} from './input_structure'
-import {startAnimation, updateMaterial, Flipbook} from './emitter'
+import {startAnimation, updateMaterial, Flipbook, System} from './emitter'
 import tinycolor from 'tinycolor2'
 import vscode from './vscode_extension'
+import Curve from './curves'
+import {ExpandedInput} from './components/ExpressionBar'
 
 import FireSample from '../examples/fire.particle.json'
 import LoadingSample from '../examples/loading.particle.json'
@@ -11,6 +13,7 @@ import MagicSample from '../examples/magic.particle.json'
 import RainSample from '../examples/rain.particle.json'
 import SnowSample from '../examples/snow.particle.json'
 import TrailSample from '../examples/trail.particle.json'
+
 
 const Samples = {
 	fire: FireSample,
@@ -323,6 +326,55 @@ document.body.ondrop = function(event) {
 function loadPreset(id) {
 	loadFile(Samples[id])
 }
+
+
+if (vscode) {
+
+	async function confirmSystemSetup() {
+		if (System.isSetup) return;
+
+		return new Promise((resolve, reject) => {
+			System.onSetup = function() {
+				resolve()
+			}
+		})
+	}
+
+    async function updateContent(text) {
+        if (text && typeof text == 'string') {
+
+			await confirmSystemSetup()
+
+			let parsed = JSON.parse(text)
+			loadFile(parsed, true)
+			if (ExpandedInput.input) {
+				ExpandedInput.input.focus()
+			}
+
+
+        }
+    }
+
+    window.addEventListener('message', event => {
+		const message = event.data; // The json data that the extension sent
+		switch (message.type) {
+			case 'update':
+				const text = message.text;
+
+				updateContent(text);
+
+				vscode.setState({ text });
+
+				return;
+		}
+    });
+    
+    const state = vscode.getState();
+	if (state) {
+		updateContent(state.text);
+	}
+}
+	
 
 export {
 	importFile,

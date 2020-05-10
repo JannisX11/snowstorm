@@ -2,7 +2,7 @@
 	"name": "snowstorm",
 	"displayName": "Snowstorm",
 	"description": "Minecraft Bedrock Edition particle editor",
-	"version": "0.0.1",
+	"version": "0.0.4",
 	"enableProposedApi": false,
 	"publisher": "JannisX11",
 	"engines": {
@@ -14,6 +14,10 @@
 	"activationEvents": [
 		"onCustomEditor:x11.snowstorm"
 	],
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/JannisX11/snowstorm"
+	},
 	"main": "./src/extension.js",
 	"contributes": {
 		"customEditors": [

@@ -15,10 +15,11 @@
 
 <script>
 
-    import * as THREE from 'three'
+    import $ from 'jquery';
+    import * as THREE from 'three';
     import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 
-    import {Emitter, togglePause, startAnimation, initParticles} from './../emitter'
+    import {Emitter, togglePause, startAnimation, initParticles} from './../emitter';
 
     const View = {}
     
@@ -62,6 +63,8 @@
         if (is_ff) document.body.removeChild(download);
 
     }
+
+    
 
     function initPreview(canvas) {
 
@@ -114,6 +117,16 @@
         View.renderer.setPixelRatio(window.devicePixelRatio);
     }
     window.addEventListener('resize', resizeCanvas, false);
+
+    window.addEventListener('keypress', (e) => {
+        var input_focus = $('input:focus, div[contenteditable="true"]:focus, textarea:focus').length
+        if (input_focus) return;
+
+        if (e.which === 32) {
+            startAnimation()
+        }
+    })
+
 
 	View.frames_this_second = 0;
 

@@ -27,7 +27,6 @@ import MolangDialog from './MolangDialog'
 import ExpressionBar from './ExpressionBar'
 
 
-
 export default {
 	name: 'app',
 	components: {Preview, CodeViewer, MenuBar, Sidebar, MolangDialog, ExpressionBar},
