@@ -36,9 +36,10 @@ export default class Gradient extends Input {
         }
         return new THREE.Color(color);
     }
-    change(e) {
+    change(e, node) {
 		this.selected.color = e.hex;
-        registerEdit('change gradient')
+        let is_sliding = node && node.parentNode.querySelector(':active')
+        if (!is_sliding) registerEdit('change gradient')
         return this;
     }
     reset() {

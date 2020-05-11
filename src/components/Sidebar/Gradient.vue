@@ -11,9 +11,9 @@
 			></div>
 		</div>
 		<div v-if="input.selected && input.selected.color">
-		<div class="tool" style="float: right;" v-on:click="input.removePoint()"><i class="unicode_icon">{{'\u2A09'}}</i></div>
+			<div class="tool" style="float: right;" v-on:click="input.removePoint()"><i class="unicode_icon">{{'\u2A09'}}</i></div>
 			<div class="tool" style="float: right;" v-on:click="input.addPoint()"><i class="unicode_icon plus">{{'\uFF0B'}}</i></div>
-			<color-picker v-model="input.selected.color" v-on:input="input.change($event)"></color-picker>
+			<color-picker v-model="input.selected.color" v-on:input="input.change($event, $el)"></color-picker>
 		</div>
 	</div>
 </template>

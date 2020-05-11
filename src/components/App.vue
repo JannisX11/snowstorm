@@ -91,6 +91,9 @@ export default {
 	.tool:hover {
 		color: var(--color-highlight);
 	}
+	.tool > i {
+		pointer-events: none;
+	}
 	.resizer {
 		position: absolute !important;
 		z-index: 12;

@@ -799,7 +799,9 @@ window.addEventListener('keypress', function (e) {
   var input_focus = jquery__WEBPACK_IMPORTED_MODULE_0___default()('input:focus, div[contenteditable="true"]:focus, textarea:focus').length;
   if (input_focus) return;
 
-  if (e.which === 32) {
+  if (e.which === 32 && e.ctrlKey) {
+    Object(_emitter__WEBPACK_IMPORTED_MODULE_3__["togglePause"])();
+  } else if (e.which === 32) {
     Object(_emitter__WEBPACK_IMPORTED_MODULE_3__["startAnimation"])();
   }
 });
@@ -70864,6 +70866,9 @@ var render = function() {
                         on: {
                           input: function($event) {
                             return input.change($event)
+                          },
+                          mouseup: function($event) {
+                            return _vm.console.log("$event")
                           }
                         },
                         model: {
@@ -87479,6 +87484,8 @@ function processEdit(id) {
 }
 
 function registerEdit(id, event) {
+  console.log('registerEdit');
+
   if (event instanceof InputEvent || event instanceof KeyboardEvent) {
     if (timeout) clearTimeout(timeout);
     timeout = setTimeout(function () {
@@ -89446,6 +89453,8 @@ var Input = /*#__PURE__*/function () {
         var data = this.calculate();
         this.updatePreview(data);
       }
+
+      console.log(e, event);
 
       if (e instanceof Event) {
         // User Input

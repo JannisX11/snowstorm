@@ -25,7 +25,7 @@
         </div>
         <div class="curve_footer">
             <div class="fill_line"></div>
-            <div class="tool" v-on:click="curve.remove()">Remove Curve</div>
+            <div class="tool" style="width: auto;" v-on:click="curve.remove()">Remove Curve</div>
         </div>
     </div>
 </template>
@@ -34,7 +34,7 @@
 <script>
 	import InputGroup from './InputGroup'
 	import $ from 'jquery'
-import registerEdit from '../../edits'
+	import registerEdit from '../../edits'
 
 	function toCatmullRomBezier( points, tension = 0.5, closing = false) {
 		// sets tension [0.0, 1.0] +/-
@@ -95,6 +95,8 @@ import registerEdit from '../../edits'
 		},
 		methods: {
 			slideValue(index, event) {
+				if (event.target.classList.contains('curve_node_remover')) return;
+
 				var scope = this.curve;
 				var start = event.clientY;
 				var start_value = scope.nodes[index];

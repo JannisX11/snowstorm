@@ -799,7 +799,9 @@ window.addEventListener('keypress', function (e) {
   var input_focus = jquery__WEBPACK_IMPORTED_MODULE_0___default()('input:focus, div[contenteditable="true"]:focus, textarea:focus').length;
   if (input_focus) return;
 
-  if (e.which === 32) {
+  if (e.which === 32 && e.ctrlKey) {
+    Object(_emitter__WEBPACK_IMPORTED_MODULE_3__["togglePause"])();
+  } else if (e.which === 32) {
     Object(_emitter__WEBPACK_IMPORTED_MODULE_3__["startAnimation"])();
   }
 });
@@ -1049,6 +1051,7 @@ function toCatmullRomBezier(points) {
   },
   methods: {
     slideValue: function slideValue(index, event) {
+      if (event.target.classList.contains('curve_node_remover')) return;
       var scope = this.curve;
       var start = event.clientY;
       var start_value = scope.nodes[index];
@@ -1329,6 +1332,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -1422,7 +1426,7 @@ exports = module.exports = __webpack_require__(/*! ../../node_modules/css-loader
 exports.i(__webpack_require__(/*! -!../../node_modules/css-loader??ref--5-1!../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!./../css/common.css */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./src/css/common.css"), "");
 
 // module
-exports.push([module.i, "\n.tool {\n\tdisplay: inline-block;\n\tpadding: 2px 8px; \n\tpadding-top: 1px;\n\twidth: 35px;\n\theight: 30px;\n\tcursor: pointer;\n}\n.tool:hover {\n\tcolor: var(--color-highlight);\n}\n.resizer {\n\tposition: absolute !important;\n\tz-index: 12;\n}\n.resizer.vertical { /*\t|\t*/\n\tcursor: ew-resize;\n\twidth: 6px;\n}\n.resizer.horizontal { /*\t__\t*/\n\tcursor: ns-resize;\n\theight: 6px;\n}\n.resizer.disabled {\n\tpointer-events: none;\n}\n\n", ""]);
+exports.push([module.i, "\n.tool {\n\tdisplay: inline-block;\n\tpadding: 2px 8px; \n\tpadding-top: 1px;\n\twidth: 35px;\n\theight: 30px;\n\tcursor: pointer;\n}\n.tool:hover {\n\tcolor: var(--color-highlight);\n}\n.tool > i {\n\tpointer-events: none;\n}\n.resizer {\n\tposition: absolute !important;\n\tz-index: 12;\n}\n.resizer.vertical { /*\t|\t*/\n\tcursor: ew-resize;\n\twidth: 6px;\n}\n.resizer.horizontal { /*\t__\t*/\n\tcursor: ns-resize;\n\theight: 6px;\n}\n.resizer.disabled {\n\tpointer-events: none;\n}\n\n", ""]);
 
 // exports
 
@@ -70324,6 +70328,7 @@ var render = function() {
           "div",
           {
             staticClass: "tool",
+            staticStyle: { width: "auto" },
             on: {
               click: function($event) {
                 return _vm.curve.remove()
@@ -70430,7 +70435,7 @@ var render = function() {
             _c("color-picker", {
               on: {
                 input: function($event) {
-                  return _vm.input.change($event)
+                  return _vm.input.change($event, _vm.$el)
                 }
               },
               model: {
@@ -70490,6 +70495,7 @@ var render = function() {
           key: key,
           staticClass: "input_wrapper",
           attrs: {
+            input_type: input.type,
             title: input.info,
             id: _vm.subject_key + "-" + _vm.group_key + "-" + key
           }
@@ -70863,7 +70869,7 @@ var render = function() {
                     ? _c("color-picker", {
                         on: {
                           input: function($event) {
-                            return input.change($event)
+                            return input.change($event, _vm.$el)
                           }
                         },
                         model: {
@@ -87479,6 +87485,8 @@ function processEdit(id) {
 }
 
 function registerEdit(id, event) {
+  console.trace(id);
+
   if (event instanceof InputEvent || event instanceof KeyboardEvent) {
     if (timeout) clearTimeout(timeout);
     timeout = setTimeout(function () {
@@ -88684,11 +88692,10 @@ var Gradient = /*#__PURE__*/function (_Input) {
     }
   }, {
     key: "change",
-    value: function change(e) {
+    value: function change(e, node) {
       this.selected.color = e.hex;
-
-      Object(_edits__WEBPACK_IMPORTED_MODULE_4__["default"])('change gradient');
-
+      var is_sliding = node && node.parentNode.querySelector(':active');
+      if (!is_sliding) Object(_edits__WEBPACK_IMPORTED_MODULE_4__["default"])('change gradient');
       return this;
     }
   }, {
@@ -89408,7 +89415,7 @@ var Input = /*#__PURE__*/function () {
     }
   }, {
     key: "change",
-    value: function change(e) {
+    value: function change(e, node) {
       var scope = this;
 
       if (this.type === 'image' && e) {
@@ -89447,7 +89454,9 @@ var Input = /*#__PURE__*/function () {
         this.updatePreview(data);
       }
 
-      if (e instanceof Event) {
+      var color_input_sliding = this.type == 'color' && node && node.querySelector('.input_wrapper[input_type="color"]:active');
+
+      if (e instanceof Event || this.type == 'color' && !color_input_sliding) {
         // User Input
         if (_components_ExpressionBar__WEBPACK_IMPORTED_MODULE_5__["ExpandedInput"].setup && ['molang', 'text', 'list'].includes(this.type)) {
           this.focus();

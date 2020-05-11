@@ -4,6 +4,7 @@
             class="input_wrapper"
             v-for="(input, key) in group.inputs"
             :key="key"
+            :input_type="input.type"
             v-show="!input.enabled_modes || group._selected_mode === null || input.enabled_modes.includes(group._selected_mode)"
             v-bind:title="input.info"
             v-bind:id="subject_key +'-'+ group_key +'-'+ key"
@@ -77,7 +78,7 @@
                 </select>
 
                 <!--Color-->
-                <color-picker v-if="input.type == 'color'" v-model="input.value" v-on:input="input.change($event)"></color-picker>
+                <color-picker v-if="input.type == 'color'" v-model="input.value" v-on:input="input.change($event, $el)"></color-picker>
 
                 <!--Gradient-->
                 <gradient v-if="input.type == 'gradient'" :input="input"></gradient>

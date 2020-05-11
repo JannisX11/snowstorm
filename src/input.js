@@ -74,7 +74,7 @@ export default class Input {
 		}
 		return this;
 	}
-	change(e) {
+	change(e, node) {
 		var scope = this;
 		if (this.type === 'image' && e) {
 			var file = e.target.files[0];
@@ -104,7 +104,8 @@ export default class Input {
 			var data = this.calculate()
 			this.updatePreview(data)
 		}
-		if (e instanceof Event)	{
+		let color_input_sliding = this.type == 'color' && node && node.querySelector('.input_wrapper[input_type="color"]:active') 
+		if (e instanceof Event || (this.type == 'color' && !color_input_sliding))	{
 			// User Input
 			if (ExpandedInput.setup && ['molang', 'text', 'list'].includes(this.type)) {
 				this.focus()

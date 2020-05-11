@@ -122,7 +122,9 @@
         var input_focus = $('input:focus, div[contenteditable="true"]:focus, textarea:focus').length
         if (input_focus) return;
 
-        if (e.which === 32) {
+        if (e.which === 32 && e.ctrlKey) {
+            togglePause()
+        } else if (e.which === 32) {
             startAnimation()
         }
     })
