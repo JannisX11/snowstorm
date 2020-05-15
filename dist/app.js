@@ -1338,7 +1338,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -70956,16 +70955,12 @@ var render = function() {
                               [
                                 _vm._v(
                                   _vm._s(input.image.width) +
-                                    " " +
-                                    _vm._s("\u2A09") +
-                                    " " +
+                                    " x " +
                                     _vm._s(input.image.width) +
                                     " px"
                                 )
                               ]
-                            ),
-                            _vm._v(" "),
-                            _c("div", [_vm._v(_vm._s(input.image.name))])
+                            )
                           ],
                           2
                         )
@@ -88135,7 +88130,6 @@ function updateMaterial(cb) {
         var uri = event.data.url && event.data.url + '?' + Math.floor(Math.random() * 1000) || VanillaTextures[path];
         loadTexture(uri || _default_textures__WEBPACK_IMPORTED_MODULE_2__["default"].missing, cb);
         _input_structure__WEBPACK_IMPORTED_MODULE_3__["default"].particle.texture.inputs.image.image.data = uri || '';
-        console.log(_input_structure__WEBPACK_IMPORTED_MODULE_3__["default"].particle.texture.inputs.image.image.data);
         window.removeEventListener('message', update);
       }
     };
@@ -88145,12 +88139,14 @@ function updateMaterial(cb) {
       path: path
     });
     window.addEventListener('message', update, false);
-  } else if (_input_structure__WEBPACK_IMPORTED_MODULE_3__["default"].particle.texture.inputs.image.image && _input_structure__WEBPACK_IMPORTED_MODULE_3__["default"].particle.texture.inputs.image.image.data) {
+  } else if (_input_structure__WEBPACK_IMPORTED_MODULE_3__["default"].particle.texture.inputs.image.image && _input_structure__WEBPACK_IMPORTED_MODULE_3__["default"].particle.texture.inputs.image.image.loaded) {
     url = _input_structure__WEBPACK_IMPORTED_MODULE_3__["default"].particle.texture.inputs.image.image.data;
     loadTexture(url, cb);
   } else {
-    url = VanillaTextures[path] || _default_textures__WEBPACK_IMPORTED_MODULE_2__["default"].missing;
-    loadTexture(url, cb);
+    url = VanillaTextures[path];
+    _input_structure__WEBPACK_IMPORTED_MODULE_3__["default"].particle.texture.inputs.image.image.data = url || '';
+    _input_structure__WEBPACK_IMPORTED_MODULE_3__["default"].particle.texture.inputs.image.image.loaded = false;
+    loadTexture(url || _default_textures__WEBPACK_IMPORTED_MODULE_2__["default"].missing, cb);
   }
 }
 
@@ -89485,6 +89481,7 @@ var Input = /*#__PURE__*/function () {
             scope.image.data = reader.result;
             scope.image.width = 0;
             scope.image.height = 0;
+            scope.image.loaded = true;
             scope.updatePreview(scope.image);
           };
 
@@ -89587,6 +89584,7 @@ var Input = /*#__PURE__*/function () {
       if (this.type == 'image') {
         this.image.data = '';
         this.image.name = '';
+        this.image.loaded = false;
         this.image.width = 0;
         this.image.height = 0;
         jquery__WEBPACK_IMPORTED_MODULE_3___default()('#particle-texture-image .input_texture_preview').css('background-image', "none");

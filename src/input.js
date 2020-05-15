@@ -96,6 +96,7 @@ export default class Input {
 					scope.image.data = reader.result;
 					scope.image.width = 0;
 					scope.image.height = 0;
+					scope.image.loaded = true;
 					scope.updatePreview(scope.image)
 				}
 				reader.readAsDataURL(file)
@@ -187,6 +188,7 @@ export default class Input {
 		if (this.type == 'image') {
 			this.image.data = '';
 			this.image.name = '';
+			this.image.loaded = false;
 			this.image.width = 0;
 			this.image.height = 0;
 			$('#particle-texture-image .input_texture_preview').css('background-image', `none`)

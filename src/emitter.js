@@ -532,20 +532,21 @@ function updateMaterial(cb) {
 				let uri = (event.data.url && event.data.url + '?'+Math.floor(Math.random()*1000)) || VanillaTextures[path];
 				loadTexture(uri || DefaultTex.missing, cb);
 				Data.particle.texture.inputs.image.image.data = uri || '';
-				console.log( Data.particle.texture.inputs.image.image.data)
 				window.removeEventListener('message', update);
 			}
 		}
 		window.addEventListener('message', update, false);
 
-	} else if (Data.particle.texture.inputs.image.image && Data.particle.texture.inputs.image.image.data) {
+	} else if (Data.particle.texture.inputs.image.image && Data.particle.texture.inputs.image.image.loaded) {
 
 		url = Data.particle.texture.inputs.image.image.data;
 		loadTexture(url, cb)
 
 	} else {
-		url = VanillaTextures[path] || DefaultTex.missing;
-		loadTexture(url, cb)
+		url = VanillaTextures[path];
+		Data.particle.texture.inputs.image.image.data = url || '';
+		Data.particle.texture.inputs.image.image.loaded = false;
+		loadTexture(url || DefaultTex.missing, cb)
 	}
 }
 
