@@ -415,12 +415,13 @@ const Data = {
 						updateMaterial()
 					}
 				}),
-				...(!vscode && {image: new Input({
+				image: new Input({
 					type: 'image',
-					updatePreview: function() {
+					allow_upload: !vscode,
+					updatePreview: function(src) {
 						updateMaterial()
 					}
-				})} ),
+				}),
 				mode: new Input({
 					type: 'select',
 					label: 'UV Mode',

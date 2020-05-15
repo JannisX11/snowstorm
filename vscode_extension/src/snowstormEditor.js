@@ -128,6 +128,17 @@ module.exports.SnowstormEditorProvider = class SnowstormEditorProvider {
 		let original = document.getText().replace(/\r/g, '');
 
 		if (text === original) return;
+
+		if (!text || !original || text.substr(0, 16) !== original.substr(0, 16)) {
+
+			const edit = new vscode.WorkspaceEdit();
+			edit.replace(
+				document.uri,
+				new vscode.Range(0, 0, document.lineCount, 0),
+				text);
+			
+			return vscode.workspace.applyEdit(edit);
+		}
 		
 		// Find start and end of change
 		let start_i = 0;

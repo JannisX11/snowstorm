@@ -29,7 +29,7 @@
                     </li>
                 </ul>
             </template>
-            <div v-else class="input_right" :axes="input.axis_count" :class="{expandable: input.expandable, expanded: input.expanded}">
+            <div v-else class="input_right" :axes="input.axis_count" :class="{expandable: input.expandable, expanded: input.expanded, full_width: !input.label}">
 
                 <template v-if="input.axis_count == 1">
                     <!--Text-->
@@ -86,10 +86,15 @@
                 <!--Image-->
                 <template v-if="input.type == 'image'">
                     <div class="input_texture_wrapper checkerboard">
-                        <div class="input_texture_preview" :style="{'background-image': `url(${input.image_data})`}"></div>
+                        <img v-if="input.image && input.image.data" :src="input.image.data" @load="input.updateImageWidth($event)" />
                     </div>
-                    <div class="tool" v-on:click="input.reset()"><i class="unicode_icon">{{'\u2A09'}}</i></div>
-                    <input  v-bind:id="key" type="file" accept=".png" v-on:change="input.change($event)">
+                    <div class="meta">
+                        <template v-if="input.allow_upload">
+                            <div class="tool" v-on:click="input.reset()"><i class="unicode_icon">{{'\u2A09'}}</i></div>
+                            <input  v-bind:id="key" type="file" accept=".png" v-on:change="input.change($event)">
+                        </template>
+                        <div id="image_resolution_label">{{input.image.width}} x {{input.image.width}} px</div>
+                    </div>
                 </template>
             </div>
         </li>
@@ -138,6 +143,9 @@ export default {
 		width: calc(100% - 110px);
 		margin-left: 4px;
 	}
+	.input_right.full_width {
+		width: calc(100% - 8px);
+	}
 	.input_right.expandable {
 		width: calc(100% - 134px);
 	}
@@ -167,18 +175,18 @@ export default {
 	}
 
 	input#image {
-		width: 100%;
+		width: calc(100% - 40px);
 	}
 	.input_texture_wrapper {
 		display: block;
-		height: 48px;
-		width: 48px;
-		min-height: 48px;
-		min-width: 48px;
+		height: 128px;
+		width: 128px;
 		margin-right: 8px;
-		margin-left: 44px;
+        margin-left: 8px;
+        flex-shrink: 0;
+        box-sizing: content-box;
 	}
-	.input_texture_preview {
+	.input_texture_wrapper img {
         width: 100%;
         height: 100%;
 		background-size: contain;

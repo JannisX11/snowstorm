@@ -529,13 +529,16 @@ function updateMaterial(cb) {
 		});
 		function update(event) {
 			if (event.data.type == 'provide_texture') {
-				loadTexture((event.data.url && event.data.url + '?'+Math.floor(Math.random()*1000)) || VanillaTextures[path] || DefaultTex.missing, cb);
+				let uri = (event.data.url && event.data.url + '?'+Math.floor(Math.random()*1000)) || VanillaTextures[path];
+				loadTexture(uri || DefaultTex.missing, cb);
+				Data.particle.texture.inputs.image.image.data = uri || '';
+				console.log( Data.particle.texture.inputs.image.image.data)
 				window.removeEventListener('message', update);
 			}
 		}
 		window.addEventListener('message', update, false);
 
-	} else if (Data.particle.texture.inputs.image && Data.particle.texture.inputs.image.image) {
+	} else if (Data.particle.texture.inputs.image.image && Data.particle.texture.inputs.image.image.data) {
 
 		url = Data.particle.texture.inputs.image.image.data;
 		loadTexture(url, cb)
@@ -544,8 +547,8 @@ function updateMaterial(cb) {
 		url = VanillaTextures[path] || DefaultTex.missing;
 		loadTexture(url, cb)
 	}
-
 }
+
 function loadTexture(url, cb) {
 	var tex = new THREE.TextureLoader().load(url, function(a, b) {
 		function factorize(input, axis, factor) {
@@ -555,7 +558,7 @@ function loadTexture(url, cb) {
 			if (isNaN(val)) {
 				arr[axis] = `${factor} * (${val})`
 			} else {
-				arr[axis] = factor * parseFloat(val);
+				arr[axis] = Math.round(factor * parseFloat(val) * 10000) / 10000;
 			}
 			input.value = arr;
 		}

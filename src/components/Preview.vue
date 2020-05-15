@@ -188,4 +188,9 @@
 		float: right;
 		background: transparent;
 	}
+	.unicode_icon.pause {
+		margin-top: -4px;
+		float: right;
+		font-size: 15pt;
+	}
 </style>

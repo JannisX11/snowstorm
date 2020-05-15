@@ -44,7 +44,13 @@ export default class Input {
 			this.value = []
 		} else if (this.type === 'image') {
 			this.value = '';
-			this.image_data = '';
+			this.image = {
+				name: '',
+				data: '',
+				width: 0,
+				height: 0,
+			}
+			this.allow_upload = data.allow_upload;
 		} else if ((this.type === 'text' || this.type === 'molang') && !this.value) {
 			this.value = '';
 		} else if (this.type === 'checkbox' && !this.value) {
@@ -58,6 +64,11 @@ export default class Input {
 		if (this.expandable) {
 			this.expanded = !this.expanded;
 		}
+	}
+	updateImageWidth(event, th) {
+		let img = event.path[0];
+		this.image.width = img.naturalWidth;
+		this.image.height = img.naturalHeight;
 	}
 	update(Data) {
 		var scope = this;
@@ -81,11 +92,10 @@ export default class Input {
 			if (file) {
 				var reader = new FileReader()
 				reader.onloadend = function() {
-					scope.image = {
-						name: file.name,
-						data: reader.result
-					}
-					scope.image_data = reader.result
+					scope.image.name = file.name;
+					scope.image.data = reader.result;
+					scope.image.width = 0;
+					scope.image.height = 0;
 					scope.updatePreview(scope.image)
 				}
 				reader.readAsDataURL(file)
@@ -105,7 +115,7 @@ export default class Input {
 			this.updatePreview(data)
 		}
 		let color_input_sliding = this.type == 'color' && node && node.querySelector('.input_wrapper[input_type="color"]:active') 
-		if (e instanceof Event || (this.type == 'color' && !color_input_sliding))	{
+		if (e instanceof Event || (this.type == 'color' && node && !color_input_sliding))	{
 			// User Input
 			if (ExpandedInput.setup && ['molang', 'text', 'list'].includes(this.type)) {
 				this.focus()
@@ -175,7 +185,10 @@ export default class Input {
 	reset() {
 		this.set(this.default_value);
 		if (this.type == 'image') {
-			delete this.image
+			this.image.data = '';
+			this.image.name = '';
+			this.image.width = 0;
+			this.image.height = 0;
 			$('#particle-texture-image .input_texture_preview').css('background-image', `none`)
 			this.updatePreview()
 		}

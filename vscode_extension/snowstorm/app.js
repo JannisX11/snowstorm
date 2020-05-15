@@ -1051,6 +1051,7 @@ function toCatmullRomBezier(points) {
   },
   methods: {
     slideValue: function slideValue(index, event) {
+      if (event.target.classList.contains('curve_node_remover')) return;
       var scope = this.curve;
       var start = event.clientY;
       var start_value = scope.nodes[index];
@@ -1331,6 +1332,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -1424,7 +1432,7 @@ exports = module.exports = __webpack_require__(/*! ../../node_modules/css-loader
 exports.i(__webpack_require__(/*! -!../../node_modules/css-loader??ref--5-1!../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!./../css/common.css */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./src/css/common.css"), "");
 
 // module
-exports.push([module.i, "\n.tool {\n\tdisplay: inline-block;\n\tpadding: 2px 8px; \n\tpadding-top: 1px;\n\twidth: 35px;\n\theight: 30px;\n\tcursor: pointer;\n}\n.tool:hover {\n\tcolor: var(--color-highlight);\n}\n.resizer {\n\tposition: absolute !important;\n\tz-index: 12;\n}\n.resizer.vertical { /*\t|\t*/\n\tcursor: ew-resize;\n\twidth: 6px;\n}\n.resizer.horizontal { /*\t__\t*/\n\tcursor: ns-resize;\n\theight: 6px;\n}\n.resizer.disabled {\n\tpointer-events: none;\n}\n\n", ""]);
+exports.push([module.i, "\n.tool {\n\tdisplay: inline-block;\n\tpadding: 2px 8px; \n\tpadding-top: 1px;\n\twidth: 35px;\n\theight: 30px;\n\tcursor: pointer;\n}\n.tool:hover {\n\tcolor: var(--color-highlight);\n}\n.tool > i {\n\tpointer-events: none;\n}\n.resizer {\n\tposition: absolute !important;\n\tz-index: 12;\n}\n.resizer.vertical { /*\t|\t*/\n\tcursor: ew-resize;\n\twidth: 6px;\n}\n.resizer.horizontal { /*\t__\t*/\n\tcursor: ns-resize;\n\theight: 6px;\n}\n.resizer.disabled {\n\tpointer-events: none;\n}\n\n", ""]);
 
 // exports
 
@@ -1576,7 +1584,7 @@ exports = module.exports = __webpack_require__(/*! ../../node_modules/css-loader
 
 
 // module
-exports.push([module.i, "\nmain#preview[data-v-48e6f1c8] {\n\t\tposition: relative;\n}\n#canvas_wrapper[data-v-48e6f1c8] {\n\t\theight: calc(100% - 28px);\n\t\twidth: 100%;\n}\ncanvas[data-v-48e6f1c8] {\n\t\theight: 100%;\n\t\twidth: 100%;\n}\nfooter[data-v-48e6f1c8] {\n\t\twidth: 100%;\n\t\tfont-size: 1.1em;\n        height: 28px;\n        padding-left: 6px;\n        background-color: var(--color-bar);\n        border-top: 1px solid var(--color-border);\n}\nfooter > *[data-v-48e6f1c8] {\n\t\tpadding: 2px 8px; \n\t\tpadding-top: 2px;\n        background-color: var(--color-bar);\n        float: left;\n}\ndiv.stat[data-v-48e6f1c8] {\n        text-align: right;\n\t\tfloat: right;\n\t\tbackground: transparent;\n}\n", ""]);
+exports.push([module.i, "\nmain#preview[data-v-48e6f1c8] {\n\t\tposition: relative;\n}\n#canvas_wrapper[data-v-48e6f1c8] {\n\t\theight: calc(100% - 28px);\n\t\twidth: 100%;\n}\ncanvas[data-v-48e6f1c8] {\n\t\theight: 100%;\n\t\twidth: 100%;\n}\nfooter[data-v-48e6f1c8] {\n\t\twidth: 100%;\n\t\tfont-size: 1.1em;\n        height: 28px;\n        padding-left: 6px;\n        background-color: var(--color-bar);\n        border-top: 1px solid var(--color-border);\n}\nfooter > *[data-v-48e6f1c8] {\n\t\tpadding: 2px 8px; \n\t\tpadding-top: 2px;\n        background-color: var(--color-bar);\n        float: left;\n}\ndiv.stat[data-v-48e6f1c8] {\n        text-align: right;\n\t\tfloat: right;\n\t\tbackground: transparent;\n}\n.unicode_icon.pause[data-v-48e6f1c8] {\n\t\tmargin-top: -4px;\n\t\tfloat: right;\n\t\tfont-size: 15pt;\n}\n", ""]);
 
 // exports
 
@@ -1652,7 +1660,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.input_wrapper[data-v-64472bb8] {\n\t\tmargin: 2px 0;\n}\n.input_wrapper > label[data-v-64472bb8] {\n\t\twidth: 100px;\n\t\ttext-align: right;\n\t\tmargin: 3px 0;\n}\n.input_right[data-v-64472bb8] {\n\t\tdisplay: inline-flex;\n\t\tvertical-align: top;\n\t\twidth: calc(100% - 110px);\n\t\tmargin-left: 4px;\n}\n.input_right.expandable[data-v-64472bb8] {\n\t\twidth: calc(100% - 134px);\n}\n.input_right[axes=\"1\"] input[data-v-64472bb8]:not([type=\"checkbox\"]), .input_right[axes=\"1\"] select[data-v-64472bb8]:not([type=\"checkbox\"]) {\n\t\twidth: 100%;\n}\n.input_right.expanded[data-v-64472bb8] {\n\t\tdisplay: block;\n\t\twidth: calc(100% - 7px);\n}\n.input_right.expanded input[data-v-64472bb8] {\n\t\twidth: 100% !important;\n\t\tdisplay: block;\n}\n.tool.input_expand_button[data-v-64472bb8] {\n\t\tfloat: right;\n\t\twidth: 22px;\n\t\tpadding-left: 3px;\n}\n.input_list li[data-v-64472bb8] {\n        margin: 2px 0;\n}\nul.input_list input[data-v-64472bb8] {\n\t\twidth: calc(100% - 100px);\n\t\tmargin-left: 62px;\n}\ninput#image[data-v-64472bb8] {\n\t\twidth: 100%;\n}\n.input_texture_wrapper[data-v-64472bb8] {\n\t\tdisplay: block;\n\t\theight: 48px;\n\t\twidth: 48px;\n\t\tmin-height: 48px;\n\t\tmin-width: 48px;\n\t\tmargin-right: 8px;\n\t\tmargin-left: 44px;\n}\n.input_texture_preview[data-v-64472bb8] {\n        width: 100%;\n        height: 100%;\n\t\tbackground-size: contain;\n\t\tbackground-repeat: no-repeat;\n}\n.input_vector[data-v-64472bb8] {\n\t\twidth: 40px;\n\t\tflex-grow: 1;\n        margin-left: 2px;\n}\n.input_vector[data-v-64472bb8]:first-child {\n        margin-left: 0;\n}\n.list_add_tool[data-v-64472bb8] {\n        vertical-align: sub;\n}\n", ""]);
+exports.push([module.i, "\n.input_wrapper[data-v-64472bb8] {\n\t\tmargin: 2px 0;\n}\n.input_wrapper > label[data-v-64472bb8] {\n\t\twidth: 100px;\n\t\ttext-align: right;\n\t\tmargin: 3px 0;\n}\n.input_right[data-v-64472bb8] {\n\t\tdisplay: inline-flex;\n\t\tvertical-align: top;\n\t\twidth: calc(100% - 110px);\n\t\tmargin-left: 4px;\n}\n.input_right.full_width[data-v-64472bb8] {\n\t\twidth: calc(100% - 8px);\n}\n.input_right.expandable[data-v-64472bb8] {\n\t\twidth: calc(100% - 134px);\n}\n.input_right[axes=\"1\"] input[data-v-64472bb8]:not([type=\"checkbox\"]), .input_right[axes=\"1\"] select[data-v-64472bb8]:not([type=\"checkbox\"]) {\n\t\twidth: 100%;\n}\n.input_right.expanded[data-v-64472bb8] {\n\t\tdisplay: block;\n\t\twidth: calc(100% - 7px);\n}\n.input_right.expanded input[data-v-64472bb8] {\n\t\twidth: 100% !important;\n\t\tdisplay: block;\n}\n.tool.input_expand_button[data-v-64472bb8] {\n\t\tfloat: right;\n\t\twidth: 22px;\n\t\tpadding-left: 3px;\n}\n.input_list li[data-v-64472bb8] {\n        margin: 2px 0;\n}\nul.input_list input[data-v-64472bb8] {\n\t\twidth: calc(100% - 100px);\n\t\tmargin-left: 62px;\n}\ninput#image[data-v-64472bb8] {\n\t\twidth: calc(100% - 40px);\n}\n.input_texture_wrapper[data-v-64472bb8] {\n\t\tdisplay: block;\n\t\theight: 128px;\n\t\twidth: 128px;\n\t\tmargin-right: 8px;\n        margin-left: 8px;\n        flex-shrink: 0;\n        box-sizing: content-box;\n}\n.input_texture_wrapper img[data-v-64472bb8] {\n        width: 100%;\n        height: 100%;\n\t\tbackground-size: contain;\n\t\tbackground-repeat: no-repeat;\n}\n.input_vector[data-v-64472bb8] {\n\t\twidth: 40px;\n\t\tflex-grow: 1;\n        margin-left: 2px;\n}\n.input_vector[data-v-64472bb8]:first-child {\n        margin-left: 0;\n}\n.list_add_tool[data-v-64472bb8] {\n        vertical-align: sub;\n}\n", ""]);
 
 // exports
 
@@ -1671,7 +1679,7 @@ exports = module.exports = __webpack_require__(/*! ../../node_modules/css-loader
 
 
 // module
-exports.push([module.i, "\r\n\t/*Setup*/\n::-webkit-scrollbar {\r\n\t\twidth: 8px;\r\n\t\theight: 8px;\n}\n::-webkit-scrollbar-track {\r\n\t\tbackground: var(--color-interface);\n}\n::-webkit-scrollbar-corner {\r\n\t\tbackground: var(--color-interface);\n}\n::-webkit-scrollbar-thumb {\r\n\t\tbackground: var(--color-bar);\n}\n::-webkit-scrollbar-thumb:hover {\r\n\t\tbackground: var(--color-title);\n}\n::selection {\r\n\t\tbackground: var(--color-selection);\n}\n::placeholder {\r\n\t\topacity: 0.6;\n}\n* {\r\n\t\tscrollbar-width: thin;\r\n\t\tscrollbar-color: white var(--color-bar);\n}\nbody {\r\n\t\t--color-background: #29323a;\r\n\t\t--color-interface: #e5ebfa;\r\n\t\t--color-bar: #cfd7ea;\r\n\t\t--color-title: #9aa3b8;\r\n\t\t--color-selection: rgba(110, 142, 191, 0.3);\r\n\t\t--color-highlight: #f7f9ff;\r\n\t\t--color-text: #434b53;\n}\nbody {\r\n\t\t--color-background: #29323a;\r\n\t\t--color-dark: #20272d;\r\n\t\t--color-border: #1a1c1f;\r\n\t\t--color-interface: #29323a;\r\n\t\t--color-bar: #34404a;\r\n\t\t--color-title: #4b5b69;\r\n\t\t--color-selection: rgba(110, 142, 191, 0.3);\r\n\t\t--color-highlight: #f7f9ff;\r\n\t\t--color-text: #bcc3ca;\n}\nh1, h2, h3, h4, h5, h6 {\r\n\t\tmargin: 0;\r\n\t\tfont-weight: inherit;\n}\nul {\r\n\t\tlist-style: none;\r\n\t\tpadding-left: 0;\r\n\t\tmargin: 0;\n}\n* {\r\n\t\tmargin: 0;\r\n        padding: 0;\r\n        box-sizing: border-box;\n}\ninput, select {\r\n\t\tfont-weight: inherit;\r\n\t\tbackground-color: var(--color-dark);\r\n\t\tborder: 1px solid var(--color-border);\r\n\t\tcolor: var(--color-text);\r\n\t\theight: 30px;\r\n\t\tpadding: 4px;\n}\ninput[type=text], input[type=number], input:not([type]) {\r\n\t\tfont-family: 'Inconsolata', monospace;\n}\ninput[type=checkbox] {\r\n\t\theight: 15px;\r\n\t\twidth: 15px;\r\n\t\tvertical-align: middle;\r\n\t\tmargin: 0 0 2px 4px;\r\n\t\tmargin-top: 5px;\n}\n.unicode_icon {\r\n\t\tfont-style: unset;\r\n\t\tdisplay: block;\r\n\t\twidth: 24px;\r\n\t\theight: 24px;\r\n\t\ttext-align: center;\r\n\t\tfont-size: 14pt;\r\n\t\tfont-family: sans-serif;\n}\n.unicode_icon.caret {\r\n\t\tfont-size: 25pt;\r\n\t\toverflow: hidden;\r\n\t\tdisplay: block;\r\n\t\tmargin-top: -4px;\r\n\t\twidth: 12px;\n}\n.unicode_icon.pause {\r\n\t\tmargin-top: -3px;\r\n\t\tfloat: right;\r\n\t\tfont-size: 15pt;\n}\n.unicode_icon.plus {\r\n\t\tfont-size: 18pt;\r\n\t\tmargin-top: -4px;\n}\n.checkerboard {\r\n\t\t--color-checker_offset: var(--color-bar);\r\n\t\t--color-checkerboard: var(--color-interface);\r\n\t\tbackground-color: var(--color-checkerboard) !important;\r\n\t\tbackground-image: linear-gradient(45deg, var(--color-checkerboard) 25%, transparent 25%), linear-gradient(-45deg, var(--color-checkerboard) 25%, transparent 25%), linear-gradient(45deg, transparent 75%, var(--color-checkerboard) 75%), linear-gradient(-45deg, var(--color-checker_offset) 75%, var(--color-checkerboard) 75%);\r\n\t\tbackground-size: 16px 16px;\r\n\t\tbackground-position: 0 0, 0 8px, 8px -8px, -8px 0px;\n}\nselect {\r\n\t\theight: 30px;\n}\nbody {\r\n\t\timage-rendering: pixelated;\r\n\t\tbackground-color: var(--color-background);\r\n\t\tuser-select: none;\r\n\t\t-moz-user-select: none;\r\n\t\tfont-family: 'Lato', -apple-system, \"Segoe UI\", sans-serif;\r\n\t\theight: 100%;\r\n        width: 100%;\r\n        margin: 0;\r\n        font-size: 11pt;\r\n        font-weight: 400;\r\n        line-height: 1.5;\r\n        color: var(--color-text);\r\n        text-align: left;\n}\r\n\r\n/*Color Picker*/\ndiv.vc-chrome {\r\n\t\twidth: 240px;\r\n\t\tmargin: 2px 0;\r\n\t\tfont-family: inherit;\n}\ndiv.vc-chrome .vc-chrome-body {\r\n\t\tbackground-color: var(--color-interface);\n}\ndiv.vc-chrome .vc-chrome-fields .vc-input__input {\r\n\t\tcolor: var(--color-text);\r\n\t\tbox-shadow: none;\r\n\t\tfont-size: inherit;\r\n\t\tborder: 1px solid var(--color-border);\r\n\t\theight: 24px;\n}\ndiv.vc-chrome .vc-chrome-toggle-icon svg path {\r\n\t\tfill: var(--color-text);\n}\r\n\r\n\r\n\r\n", ""]);
+exports.push([module.i, "\r\n\t/*Setup*/\n::-webkit-scrollbar {\r\n\t\twidth: 8px;\r\n\t\theight: 8px;\n}\n::-webkit-scrollbar-track {\r\n\t\tbackground: var(--color-interface);\n}\n::-webkit-scrollbar-corner {\r\n\t\tbackground: var(--color-interface);\n}\n::-webkit-scrollbar-thumb {\r\n\t\tbackground: var(--color-bar);\n}\n::-webkit-scrollbar-thumb:hover {\r\n\t\tbackground: var(--color-title);\n}\n::selection {\r\n\t\tbackground: var(--color-selection);\n}\n::placeholder {\r\n\t\topacity: 0.6;\n}\n* {\r\n\t\tscrollbar-width: thin;\r\n\t\tscrollbar-color: white var(--color-bar);\n}\nbody {\r\n\t\t--color-background: #29323a;\r\n\t\t--color-interface: #e5ebfa;\r\n\t\t--color-bar: #cfd7ea;\r\n\t\t--color-title: #9aa3b8;\r\n\t\t--color-selection: rgba(110, 142, 191, 0.3);\r\n\t\t--color-highlight: #f7f9ff;\r\n\t\t--color-text: #434b53;\n}\nbody {\r\n\t\t--color-background: #29323a;\r\n\t\t--color-dark: #20272d;\r\n\t\t--color-border: #1a1c1f;\r\n\t\t--color-interface: #29323a;\r\n\t\t--color-bar: #34404a;\r\n\t\t--color-title: #4b5b69;\r\n\t\t--color-selection: rgba(110, 142, 191, 0.3);\r\n\t\t--color-highlight: #f7f9ff;\r\n\t\t--color-text: #bcc3ca;\n}\nh1, h2, h3, h4, h5, h6 {\r\n\t\tmargin: 0;\r\n\t\tfont-weight: inherit;\n}\nul {\r\n\t\tlist-style: none;\r\n\t\tpadding-left: 0;\r\n\t\tmargin: 0;\n}\n* {\r\n\t\tmargin: 0;\r\n        padding: 0;\r\n        box-sizing: border-box;\n}\ninput, select {\r\n\t\tfont-weight: inherit;\r\n\t\tbackground-color: var(--color-dark);\r\n\t\tborder: 1px solid var(--color-border);\r\n\t\tcolor: var(--color-text);\r\n\t\theight: 30px;\r\n\t\tpadding: 4px;\n}\ninput[type=text], input[type=number], input:not([type]) {\r\n\t\tfont-family: 'Inconsolata', monospace;\n}\ninput[type=checkbox] {\r\n\t\theight: 15px;\r\n\t\twidth: 15px;\r\n\t\tvertical-align: middle;\r\n\t\tmargin: 0 0 2px 4px;\r\n\t\tmargin-top: 5px;\n}\ninput[type=file] {\r\n        padding: 1px;\r\n        border: none;\r\n        background-color: initial;\n}\n.unicode_icon {\r\n\t\tfont-style: unset;\r\n\t\tdisplay: block;\r\n\t\twidth: 24px;\r\n\t\theight: 24px;\r\n\t\ttext-align: center;\r\n\t\tfont-size: 14pt;\r\n\t\tfont-family: sans-serif;\n}\n.unicode_icon.caret {\r\n\t\tfont-size: 25pt;\r\n\t\toverflow: hidden;\r\n\t\tdisplay: block;\r\n\t\tmargin-top: -4px;\r\n\t\twidth: 12px;\n}\n.unicode_icon.plus {\r\n\t\tfont-size: 18pt;\r\n\t\tmargin-top: -4px;\n}\n.checkerboard {\r\n\t\t--color-checker_offset: var(--color-bar);\r\n\t\t--color-checkerboard: var(--color-interface);\r\n\t\tbackground-color: var(--color-checkerboard) !important;\r\n\t\tbackground-image: linear-gradient(45deg, var(--color-checkerboard) 25%, transparent 25%), linear-gradient(-45deg, var(--color-checkerboard) 25%, transparent 25%), linear-gradient(45deg, transparent 75%, var(--color-checkerboard) 75%), linear-gradient(-45deg, var(--color-checker_offset) 75%, var(--color-checkerboard) 75%);\r\n\t\tbackground-size: 16px 16px;\r\n\t\tbackground-position: 0 0, 0 8px, 8px -8px, -8px 0px;\n}\nselect {\r\n\t\theight: 30px;\n}\nbody {\r\n\t\timage-rendering: pixelated;\r\n\t\tbackground-color: var(--color-background);\r\n\t\tuser-select: none;\r\n\t\t-moz-user-select: none;\r\n\t\tfont-family: 'Lato', -apple-system, \"Segoe UI\", sans-serif;\r\n\t\theight: 100%;\r\n        width: 100%;\r\n        margin: 0;\r\n        font-size: 11pt;\r\n        font-weight: 400;\r\n        line-height: 1.5;\r\n        color: var(--color-text);\r\n        text-align: left;\n}\r\n\r\n/*Color Picker*/\ndiv.vc-chrome {\r\n\t\twidth: 240px;\r\n\t\tmargin: 2px 0;\r\n\t\tfont-family: inherit;\n}\ndiv.vc-chrome .vc-chrome-body {\r\n\t\tbackground-color: var(--color-interface);\n}\ndiv.vc-chrome .vc-chrome-fields .vc-input__input {\r\n\t\tcolor: var(--color-text);\r\n\t\tbox-shadow: none;\r\n\t\tfont-size: inherit;\r\n\t\tborder: 1px solid var(--color-border);\r\n\t\theight: 24px;\n}\ndiv.vc-chrome .vc-chrome-toggle-icon svg path {\r\n\t\tfill: var(--color-text);\n}\r\n\r\n\r\n\r\n", ""]);
 
 // exports
 
@@ -70326,6 +70334,7 @@ var render = function() {
           "div",
           {
             staticClass: "tool",
+            staticStyle: { width: "auto" },
             on: {
               click: function($event) {
                 return _vm.curve.remove()
@@ -70432,7 +70441,7 @@ var render = function() {
             _c("color-picker", {
               on: {
                 input: function($event) {
-                  return _vm.input.change($event)
+                  return _vm.input.change($event, _vm.$el)
                 }
               },
               model: {
@@ -70492,6 +70501,7 @@ var render = function() {
           key: key,
           staticClass: "input_wrapper",
           attrs: {
+            input_type: input.type,
             title: input.info,
             id: _vm.subject_key + "-" + _vm.group_key + "-" + key
           }
@@ -70608,7 +70618,8 @@ var render = function() {
                   staticClass: "input_right",
                   class: {
                     expandable: input.expandable,
-                    expanded: input.expanded
+                    expanded: input.expanded,
+                    full_width: !input.label
                   },
                   attrs: { axes: input.axis_count }
                 },
@@ -70865,10 +70876,7 @@ var render = function() {
                     ? _c("color-picker", {
                         on: {
                           input: function($event) {
-                            return input.change($event)
-                          },
-                          mouseup: function($event) {
-                            return _vm.console.log("$event")
+                            return input.change($event, _vm.$el)
                           }
                         },
                         model: {
@@ -70891,41 +70899,76 @@ var render = function() {
                           "div",
                           { staticClass: "input_texture_wrapper checkerboard" },
                           [
-                            _c("div", {
-                              staticClass: "input_texture_preview",
-                              style: {
-                                "background-image":
-                                  "url(" + input.image_data + ")"
-                              }
-                            })
+                            input.image && input.image.data
+                              ? _c("img", {
+                                  attrs: { src: input.image.data },
+                                  on: {
+                                    load: function($event) {
+                                      return input.updateImageWidth($event)
+                                    }
+                                  }
+                                })
+                              : _vm._e()
                           ]
                         ),
                         _vm._v(" "),
                         _c(
                           "div",
-                          {
-                            staticClass: "tool",
-                            on: {
-                              click: function($event) {
-                                return input.reset()
-                              }
-                            }
-                          },
+                          { staticClass: "meta" },
                           [
-                            _c("i", { staticClass: "unicode_icon" }, [
-                              _vm._v(_vm._s("\u2A09"))
-                            ])
-                          ]
-                        ),
-                        _vm._v(" "),
-                        _c("input", {
-                          attrs: { id: key, type: "file", accept: ".png" },
-                          on: {
-                            change: function($event) {
-                              return input.change($event)
-                            }
-                          }
-                        })
+                            input.allow_upload
+                              ? [
+                                  _c(
+                                    "div",
+                                    {
+                                      staticClass: "tool",
+                                      on: {
+                                        click: function($event) {
+                                          return input.reset()
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _c("i", { staticClass: "unicode_icon" }, [
+                                        _vm._v(_vm._s("\u2A09"))
+                                      ])
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _c("input", {
+                                    attrs: {
+                                      id: key,
+                                      type: "file",
+                                      accept: ".png"
+                                    },
+                                    on: {
+                                      change: function($event) {
+                                        return input.change($event)
+                                      }
+                                    }
+                                  })
+                                ]
+                              : _vm._e(),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              { attrs: { id: "image_resolution_label" } },
+                              [
+                                _vm._v(
+                                  _vm._s(input.image.width) +
+                                    " " +
+                                    _vm._s("\u2A09") +
+                                    " " +
+                                    _vm._s(input.image.width) +
+                                    " px"
+                                )
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c("div", [_vm._v(_vm._s(input.image.name))])
+                          ],
+                          2
+                        )
                       ]
                     : _vm._e()
                 ],
@@ -87484,8 +87527,6 @@ function processEdit(id) {
 }
 
 function registerEdit(id, event) {
-  console.log('registerEdit');
-
   if (event instanceof InputEvent || event instanceof KeyboardEvent) {
     if (timeout) clearTimeout(timeout);
     timeout = setTimeout(function () {
@@ -88091,7 +88132,10 @@ function updateMaterial(cb) {
   if (_vscode_extension__WEBPACK_IMPORTED_MODULE_4__["default"] && path) {
     var update = function update(event) {
       if (event.data.type == 'provide_texture') {
-        loadTexture(event.data.url && event.data.url + '?' + Math.floor(Math.random() * 1000) || VanillaTextures[path] || _default_textures__WEBPACK_IMPORTED_MODULE_2__["default"].missing, cb);
+        var uri = event.data.url && event.data.url + '?' + Math.floor(Math.random() * 1000) || VanillaTextures[path];
+        loadTexture(uri || _default_textures__WEBPACK_IMPORTED_MODULE_2__["default"].missing, cb);
+        _input_structure__WEBPACK_IMPORTED_MODULE_3__["default"].particle.texture.inputs.image.image.data = uri || '';
+        console.log(_input_structure__WEBPACK_IMPORTED_MODULE_3__["default"].particle.texture.inputs.image.image.data);
         window.removeEventListener('message', update);
       }
     };
@@ -88101,7 +88145,7 @@ function updateMaterial(cb) {
       path: path
     });
     window.addEventListener('message', update, false);
-  } else if (_input_structure__WEBPACK_IMPORTED_MODULE_3__["default"].particle.texture.inputs.image && _input_structure__WEBPACK_IMPORTED_MODULE_3__["default"].particle.texture.inputs.image.image) {
+  } else if (_input_structure__WEBPACK_IMPORTED_MODULE_3__["default"].particle.texture.inputs.image.image && _input_structure__WEBPACK_IMPORTED_MODULE_3__["default"].particle.texture.inputs.image.image.data) {
     url = _input_structure__WEBPACK_IMPORTED_MODULE_3__["default"].particle.texture.inputs.image.image.data;
     loadTexture(url, cb);
   } else {
@@ -88120,7 +88164,7 @@ function loadTexture(url, cb) {
       if (isNaN(val)) {
         arr[axis] = "".concat(factor, " * (").concat(val, ")");
       } else {
-        arr[axis] = factor * parseFloat(val);
+        arr[axis] = Math.round(factor * parseFloat(val) * 10000) / 10000;
       }
 
       input.value = arr;
@@ -88691,11 +88735,10 @@ var Gradient = /*#__PURE__*/function (_Input) {
     }
   }, {
     key: "change",
-    value: function change(e) {
+    value: function change(e, node) {
       this.selected.color = e.hex;
-
-      Object(_edits__WEBPACK_IMPORTED_MODULE_4__["default"])('change gradient');
-
+      var is_sliding = node && node.parentNode.querySelector(':active');
+      if (!is_sliding) Object(_edits__WEBPACK_IMPORTED_MODULE_4__["default"])('change gradient');
       return this;
     }
   }, {
@@ -89375,7 +89418,13 @@ var Input = /*#__PURE__*/function () {
       this.value = [];
     } else if (this.type === 'image') {
       this.value = '';
-      this.image_data = '';
+      this.image = {
+        name: '',
+        data: '',
+        width: 0,
+        height: 0
+      };
+      this.allow_upload = data.allow_upload;
     } else if ((this.type === 'text' || this.type === 'molang') && !this.value) {
       this.value = '';
     } else if (this.type === 'checkbox' && !this.value) {
@@ -89393,6 +89442,13 @@ var Input = /*#__PURE__*/function () {
       if (this.expandable) {
         this.expanded = !this.expanded;
       }
+    }
+  }, {
+    key: "updateImageWidth",
+    value: function updateImageWidth(event, th) {
+      var img = event.path[0];
+      this.image.width = img.naturalWidth;
+      this.image.height = img.naturalHeight;
     }
   }, {
     key: "update",
@@ -89415,7 +89471,7 @@ var Input = /*#__PURE__*/function () {
     }
   }, {
     key: "change",
-    value: function change(e) {
+    value: function change(e, node) {
       var scope = this;
 
       if (this.type === 'image' && e) {
@@ -89425,11 +89481,10 @@ var Input = /*#__PURE__*/function () {
           var reader = new FileReader();
 
           reader.onloadend = function () {
-            scope.image = {
-              name: file.name,
-              data: reader.result
-            };
-            scope.image_data = reader.result;
+            scope.image.name = file.name;
+            scope.image.data = reader.result;
+            scope.image.width = 0;
+            scope.image.height = 0;
             scope.updatePreview(scope.image);
           };
 
@@ -89454,9 +89509,9 @@ var Input = /*#__PURE__*/function () {
         this.updatePreview(data);
       }
 
-      console.log(e, event);
+      var color_input_sliding = this.type == 'color' && node && node.querySelector('.input_wrapper[input_type="color"]:active');
 
-      if (e instanceof Event) {
+      if (e instanceof Event || this.type == 'color' && node && !color_input_sliding) {
         // User Input
         if (_components_ExpressionBar__WEBPACK_IMPORTED_MODULE_5__["ExpandedInput"].setup && ['molang', 'text', 'list'].includes(this.type)) {
           this.focus();
@@ -89530,7 +89585,10 @@ var Input = /*#__PURE__*/function () {
       this.set(this.default_value);
 
       if (this.type == 'image') {
-        delete this.image;
+        this.image.data = '';
+        this.image.name = '';
+        this.image.width = 0;
+        this.image.height = 0;
         jquery__WEBPACK_IMPORTED_MODULE_3___default()('#particle-texture-image .input_texture_preview').css('background-image', "none");
         this.updatePreview();
       }
@@ -89570,12 +89628,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _emitter__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./emitter */ "./src/emitter.js");
 /* harmony import */ var _vscode_extension__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./vscode_extension */ "./src/vscode_extension.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 
 
@@ -89993,7 +90045,7 @@ var Data = {
     texture: {
       label: 'Texture',
       _folded: true,
-      inputs: _objectSpread({
+      inputs: {
         path: new _input__WEBPACK_IMPORTED_MODULE_0__["default"]({
           type: 'text',
           info: 'Path to the texture, starting from the texture pack. Example: textures/particle/snowflake',
@@ -90002,15 +90054,14 @@ var Data = {
           updatePreview: function updatePreview() {
             Object(_emitter__WEBPACK_IMPORTED_MODULE_2__["updateMaterial"])();
           }
-        })
-      }, !_vscode_extension__WEBPACK_IMPORTED_MODULE_3__["default"] && {
+        }),
         image: new _input__WEBPACK_IMPORTED_MODULE_0__["default"]({
           type: 'image',
-          updatePreview: function updatePreview() {
+          allow_upload: !_vscode_extension__WEBPACK_IMPORTED_MODULE_3__["default"],
+          updatePreview: function updatePreview(src) {
             Object(_emitter__WEBPACK_IMPORTED_MODULE_2__["updateMaterial"])();
           }
-        })
-      }, {
+        }),
         mode: new _input__WEBPACK_IMPORTED_MODULE_0__["default"]({
           type: 'select',
           label: 'UV Mode',
@@ -90060,7 +90111,7 @@ var Data = {
           type: 'checkbox',
           enabled_modes: ['animated']
         })
-      })
+      }
     },
     color: {
       label: 'Color & Light',

@@ -84,6 +84,11 @@
 		margin: 0 0 2px 4px;
 		margin-top: 5px;
 	}
+	input[type=file] {
+        padding: 1px;
+        border: none;
+        background-color: initial;
+	}
 	.unicode_icon {
 		font-style: unset;
 		display: block;
@@ -99,11 +104,6 @@
 		display: block;
 		margin-top: -4px;
 		width: 12px;
-	}
-	.unicode_icon.pause {
-		margin-top: -3px;
-		float: right;
-		font-size: 15pt;
 	}
 	.unicode_icon.plus {
 		font-size: 18pt;
