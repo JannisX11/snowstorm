@@ -3,6 +3,8 @@
 
 		<molang-dialog v-if="dialog == 'molang_sheet'" @close="closeDialog"></molang-dialog>
 
+		<info-box v-if="showVSCodeInfoBox" @close="closeInfoBox">Snowstorm is now available as an extension for VSCode!</info-box>
+
         <header>
 			<menu-bar @changetab="setTab" :selected_tab="tab" @opendialog="openDialog"></menu-bar>
 			<expression-bar></expression-bar>
@@ -25,15 +27,22 @@ import Preview from './Preview';
 import CodeViewer from './CodeViewer';
 import MolangDialog from './MolangDialog'
 import ExpressionBar from './ExpressionBar'
+import InfoBox from './InfoBox'
+import vscode from '../vscode_extension';
+
+let startup_count = localStorage.getItem('snowstorm_startup_count') || 0;
+startup_count ++;
+localStorage.setItem('snowstorm_startup_count', startup_count)
 
 
 export default {
 	name: 'app',
-	components: {Preview, CodeViewer, MenuBar, Sidebar, MolangDialog, ExpressionBar},
+	components: {Preview, CodeViewer, MenuBar, Sidebar, MolangDialog, ExpressionBar, InfoBox},
 	data() {return {
-		code: '{"test": false}',
+		code: '',
 		tab: 'preview',
 		dialog: null,
+		showVSCodeInfoBox: (!vscode && [1, 3, 7, 11, 24].includes(startup_count)),
 		sidebar_width: 440
 	}},
 	methods: {
@@ -45,6 +54,9 @@ export default {
 		},
 		closeDialog() {
 			this.dialog = null;
+		},
+		closeInfoBox() {
+			this.showVSCodeInfoBox = false;
 		},
 		setSidebarSize(size) {
 			this.sidebar_width = Math.clamp(size, 240, document.body.clientWidth-240)
