@@ -99,6 +99,7 @@ class Curve {
 		var position = Molang.parse(this.inputs.input.value, params);
 		var range = Molang.parse(this.inputs.range.value, params);
 		position = (position/range) || 0;
+		if (position === Infinity) position = 0;
 		if (this.inputs.mode.value == 'linear') {
 
 			var segments = this.nodes.length-1;

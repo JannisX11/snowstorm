@@ -54,7 +54,7 @@ class EmitterClass {
 		var obj = {
 			"variable.entity_scale": 1
 		};
-		obj["variable.emitter_lifetime"] = this.lifetime;
+		obj["variable.emitter_lifetime"] = this.active_time;
 		obj["variable.emitter_age"] = this.age;
 		obj["variable.emitter_random_1"] = this.random_vars[0];
 		obj["variable.emitter_random_2"] = this.random_vars[1];
@@ -411,6 +411,9 @@ class Particle {
 			var r = Data.particle.color.inputs.range.calculate(params)
 			var c = Data.particle.color.inputs.gradient.calculate((i/r) * 100)
 
+			this.setColor(c.r, c.g, c.b);
+		} else {
+			var c = Data.particle.color.inputs.picker.calculate()
 			this.setColor(c.r, c.g, c.b);
 		}
 

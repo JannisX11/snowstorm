@@ -48,6 +48,7 @@ const Menu = [
 		label: 'Examples',
 		children: [
 			{label: 'Loading', 	click: () => {loadPreset('loading')}},
+			{label: 'Rainbow', 	click: () => {loadPreset('rainbow')}},
 			{label: 'Rain', 	click: () => {loadPreset('rain')}},
 			{label: 'Snow', 	click: () => {loadPreset('snow')}},
 			{label: 'Fire', 	click: () => {loadPreset('fire')}},

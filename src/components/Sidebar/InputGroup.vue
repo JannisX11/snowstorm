@@ -184,6 +184,7 @@ export default {
 		margin-right: 8px;
         margin-left: 8px;
         flex-shrink: 0;
+        border: 1px solid var(--color-border);
         box-sizing: content-box;
 	}
 	.input_texture_wrapper img {

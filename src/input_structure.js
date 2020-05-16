@@ -491,11 +491,7 @@ const Data = {
 					label: 'Color',
 					type: 'color',
 					enabled_modes: ['static'],
-					info: 'Set a static color for all emitted particles',
-					updatePreview: (c) => {
-						if (!c) return;
-						System.material.color.copy(c)
-					}
+					info: 'Set a static color for all emitted particles'
 				}),
 				interpolant: new Input({
 					label: 'Interpolant',

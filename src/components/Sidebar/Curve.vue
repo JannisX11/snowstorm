@@ -174,6 +174,10 @@
 				if (v) this.updateSVG()
 				this.curve.svg_needs_update = false;
 			}
+		},
+		mounted() {
+			this.updateSVG()
+			this.curve.svg_needs_update = false;
 		}
 	}
 </script>

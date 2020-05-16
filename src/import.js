@@ -9,6 +9,7 @@ import {ExpandedInput} from './components/ExpressionBar'
 
 import FireSample from '../examples/fire.particle.json'
 import LoadingSample from '../examples/loading.particle.json'
+import RainbowSample from '../examples/rainbow.particle.json'
 import MagicSample from '../examples/magic.particle.json'
 import RainSample from '../examples/rain.particle.json'
 import SnowSample from '../examples/snow.particle.json'
@@ -18,6 +19,7 @@ import TrailSample from '../examples/trail.particle.json'
 const Samples = {
 	fire: FireSample,
 	loading: LoadingSample,
+	rainbow: RainbowSample,
 	magic: MagicSample,
 	rain: RainSample,
 	snow: SnowSample,
@@ -277,6 +279,7 @@ function loadFile(data) {
 		}
 		if (Data.particle.texture.inputs.path.value) {
 			updateMaterial(startAnimation)
+			setTimeout(updateMaterial, 250)
 		} else {
 			startAnimation()
 		}

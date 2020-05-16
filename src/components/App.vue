@@ -30,9 +30,11 @@ import ExpressionBar from './ExpressionBar'
 import InfoBox from './InfoBox'
 import vscode from '../vscode_extension';
 
-let startup_count = localStorage.getItem('snowstorm_startup_count') || 0;
-startup_count ++;
-localStorage.setItem('snowstorm_startup_count', startup_count)
+if (!vscode) {
+	var startup_count = localStorage.getItem('snowstorm_startup_count') || 0;
+	startup_count ++;
+	localStorage.setItem('snowstorm_startup_count', startup_count)
+}
 
 
 export default {

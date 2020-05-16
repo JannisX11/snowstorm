@@ -1,5 +1,4 @@
 <template>
-    
     <main id="preview" class="preview selected">
         <div id="canvas_wrapper">
             <canvas id="canvas" ref="canvas"></canvas>
