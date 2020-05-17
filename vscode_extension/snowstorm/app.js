@@ -88862,7 +88862,7 @@ function getName() {
 function downloadFile() {
   var content = Object(_util__WEBPACK_IMPORTED_MODULE_1__["compileJSON"])(generateFile());
   _util__WEBPACK_IMPORTED_MODULE_1__["IO"]["export"]({
-    name: getName() + '.json',
+    name: getName() + '.particle.json',
     content: content
   });
 }

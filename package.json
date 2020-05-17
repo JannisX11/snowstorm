@@ -1,7 +1,7 @@
 {
 	"name": "snowstorm",
 	"version": "2.0.0",
-	"description": "A web-based particle generator",
+	"description": "Minecraft Bedrock Edition particle editor",
 	"author": {
 		"name": "JannisX11",
 		"email": "info@blockbench.net"
