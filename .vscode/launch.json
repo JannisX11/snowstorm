@@ -1,0 +1,12 @@
+{
+	"version": "0.2.0",
+	"configurations": [
+		{
+			"name": "Run Extension",
+			"type": "extensionHost",
+			"request": "launch",
+			"runtimeExecutable": "${execPath}/vscode_extension",
+			"args": ["--extensionDevelopmentPath=${workspaceFolder}/vscode_extension"]
+		}
+	]
+}

@@ -1,11 +1,13 @@
 # Snowstorm
-Minecraft Bedrock Particle Generator
 
-## Credits
-- Vue: https://vuejs.org
-- jQuery: https://jquery.com
-- ThreeJS: https://threejs.org
-- MolangJS: https://github.com/JannisX11/MolangJS
-- prism: https://prismjs.com
-- Vue-Color: https://www.npmjs.com/package/vue-color
-- File Saver: http://purl.eligrey.com/github/FileSaver.js
+Custom editor for Minecraft Bedrock Edition particle files. Available as a web app and VSCode Extension:
+* **Web App:** [github.com/JannisX11/snowstorm](https://jannisx11.github.io/snowstorm/)
+* **VSCode Extension:** [github.com/JannisX11/snowstorm](https://marketplace.visualstudio.com/items?itemName=JannisX11.snowstorm)
+
+
+
+## Interface
+
+
+
+![Image](https://i.imgur.com/6QIlzcq.png)
