@@ -88237,6 +88237,8 @@ var Particle = /*#__PURE__*/function () {
             this.setFrame(this.current_frame);
           }
         }
+      } else {
+        this.setFrame(0);
       } //Color
 
 

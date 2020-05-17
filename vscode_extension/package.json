@@ -2,13 +2,13 @@
 	"name": "snowstorm",
 	"displayName": "Snowstorm",
 	"description": "Minecraft Bedrock Edition particle editor",
-	"version": "0.0.6",
+	"version": "0.0.7",
 	"enableProposedApi": false,
 	"publisher": "JannisX11",
 	"engines": {
 		"vscode": "^1.44.0"
 	},
-	"icon": "./icon.png",
+	"icon": "icon.png",
 	"categories": [
 		"Other"
 	],

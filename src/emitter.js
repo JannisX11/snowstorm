@@ -398,6 +398,8 @@ class Particle {
 					this.setFrame(this.current_frame);
 				}
 			}
+		} else {
+			this.setFrame(0);
 		}
 
 

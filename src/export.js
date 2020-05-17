@@ -351,7 +351,7 @@ function getName() {
 function downloadFile() {
 	var content = compileJSON(generateFile())
 	IO.export({
-		name: getName()+'.json',
+		name: getName()+'.particle.json',
 		content: content
 	})
 }

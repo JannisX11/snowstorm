@@ -130,6 +130,17 @@ module.exports = JSON.parse("{\"format_version\":\"1.10.0\",\"particle_effect\":
 
 /***/ }),
 
+/***/ "./examples/rainbow.particle.json":
+/*!****************************************!*\
+  !*** ./examples/rainbow.particle.json ***!
+  \****************************************/
+/*! exports provided: format_version, particle_effect, default */
+/***/ (function(module) {
+
+module.exports = JSON.parse("{\"format_version\":\"1.10.0\",\"particle_effect\":{\"description\":{\"identifier\":\"snowstorm:rainbow\",\"basic_render_parameters\":{\"material\":\"particles_alpha\",\"texture\":\"textures/particle/particles\"}},\"curves\":{\"variable.rainbow\":{\"type\":\"catmull_rom\",\"input\":\"variable.particle_random_2\",\"horizontal_range\":1,\"nodes\":[1,0,1,1.18]},\"variable.psize\":{\"type\":\"catmull_rom\",\"input\":\"variable.particle_age\",\"horizontal_range\":\"variable.particle_lifetime\",\"nodes\":[0,0,1,0,0]}},\"components\":{\"minecraft:emitter_initialization\":{\"creation_expression\":\"variable.radius = 2.5;\"},\"minecraft:emitter_rate_steady\":{\"spawn_rate\":250,\"max_particles\":500},\"minecraft:emitter_lifetime_looping\":{\"active_time\":2},\"minecraft:emitter_shape_point\":{\"offset\":[\"math.cos(variable.emitter_age * 90) * (2.5-variable.particle_random_2)\",\"math.sin(variable.emitter_age * 90) * (2.5-variable.particle_random_2)\",0]},\"minecraft:particle_lifetime_expression\":{\"max_lifetime\":1.5},\"minecraft:particle_initial_speed\":0,\"minecraft:particle_motion_dynamic\":{\"linear_acceleration\":[0,1,0]},\"minecraft:particle_appearance_billboard\":{\"size\":[\"0.12 * variable.psize\",\"0.12 * variable.psize\"],\"facing_camera_mode\":\"rotate_xyz\",\"uv\":{\"texture_width\":128,\"texture_height\":128,\"uv\":[32,88],\"uv_size\":[8,8]}},\"minecraft:particle_appearance_tinting\":{\"color\":{\"interpolant\":\"variable.rainbow\",\"gradient\":{\"0.0\":\"#d71c1c\",\"0.16\":\"#ffdf00\",\"0.33\":\"#08ff00\",\"0.5\":\"#00ffff\",\"0.67\":\"#0000ff\",\"0.83\":\"#ff00ff\",\"1.0\":\"#e21111\"}}}}}}");
+
+/***/ }),
+
 /***/ "./examples/snow.particle.json":
 /*!*************************************!*\
   !*** ./examples/snow.particle.json ***!
@@ -213,10 +224,9 @@ __webpack_require__.r(__webpack_exports__);
 
 
 if (!_vscode_extension__WEBPACK_IMPORTED_MODULE_7__["default"]) {
-  var _startup_count = localStorage.getItem('snowstorm_startup_count') || 0;
-
-  _startup_count++;
-  localStorage.setItem('snowstorm_startup_count', _startup_count);
+  var startup_count = localStorage.getItem('snowstorm_startup_count') || 0;
+  startup_count++;
+  localStorage.setItem('snowstorm_startup_count', startup_count);
 }
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -539,6 +549,11 @@ var Menu = [{
       Object(_import__WEBPACK_IMPORTED_MODULE_1__["loadPreset"])('loading');
     }
   }, {
+    label: 'Rainbow',
+    click: function click() {
+      Object(_import__WEBPACK_IMPORTED_MODULE_1__["loadPreset"])('rainbow');
+    }
+  }, {
     label: 'Rain',
     click: function click() {
       Object(_import__WEBPACK_IMPORTED_MODULE_1__["loadPreset"])('rain');
@@ -738,7 +753,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var three__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! three */ "./node_modules/three/build/three.module.js");
 /* harmony import */ var three_examples_jsm_controls_OrbitControls_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! three/examples/jsm/controls/OrbitControls.js */ "./node_modules/three/examples/jsm/controls/OrbitControls.js");
 /* harmony import */ var _emitter__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./../emitter */ "./src/emitter.js");
-//
 //
 //
 //
@@ -1159,6 +1173,10 @@ function toCatmullRomBezier(points) {
       if (v) this.updateSVG();
       this.curve.svg_needs_update = false;
     }
+  },
+  mounted: function mounted() {
+    this.updateSVG();
+    this.curve.svg_needs_update = false;
   }
 });
 
@@ -1719,7 +1737,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.input_wrapper[data-v-64472bb8] {\n\t\tmargin: 2px 0;\n}\n.input_wrapper > label[data-v-64472bb8] {\n\t\twidth: 100px;\n\t\ttext-align: right;\n\t\tmargin: 3px 0;\n}\n.input_right[data-v-64472bb8] {\n\t\tdisplay: inline-flex;\n\t\tvertical-align: top;\n\t\twidth: calc(100% - 110px);\n\t\tmargin-left: 4px;\n}\n.input_right.full_width[data-v-64472bb8] {\n\t\twidth: calc(100% - 8px);\n}\n.input_right.expandable[data-v-64472bb8] {\n\t\twidth: calc(100% - 134px);\n}\n.input_right[axes=\"1\"] input[data-v-64472bb8]:not([type=\"checkbox\"]), .input_right[axes=\"1\"] select[data-v-64472bb8]:not([type=\"checkbox\"]) {\n\t\twidth: 100%;\n}\n.input_right.expanded[data-v-64472bb8] {\n\t\tdisplay: block;\n\t\twidth: calc(100% - 7px);\n}\n.input_right.expanded input[data-v-64472bb8] {\n\t\twidth: 100% !important;\n\t\tdisplay: block;\n}\n.tool.input_expand_button[data-v-64472bb8] {\n\t\tfloat: right;\n\t\twidth: 22px;\n\t\tpadding-left: 3px;\n}\n.input_list li[data-v-64472bb8] {\n        margin: 2px 0;\n}\nul.input_list input[data-v-64472bb8] {\n\t\twidth: calc(100% - 100px);\n\t\tmargin-left: 62px;\n}\ninput#image[data-v-64472bb8] {\n\t\twidth: calc(100% - 40px);\n}\n.input_texture_wrapper[data-v-64472bb8] {\n\t\tdisplay: block;\n\t\theight: 128px;\n\t\twidth: 128px;\n\t\tmargin-right: 8px;\n        margin-left: 8px;\n        flex-shrink: 0;\n        box-sizing: content-box;\n}\n.input_texture_wrapper img[data-v-64472bb8] {\n        width: 100%;\n        height: 100%;\n\t\tbackground-size: contain;\n\t\tbackground-repeat: no-repeat;\n}\n.input_vector[data-v-64472bb8] {\n\t\twidth: 40px;\n\t\tflex-grow: 1;\n        margin-left: 2px;\n}\n.input_vector[data-v-64472bb8]:first-child {\n        margin-left: 0;\n}\n.list_add_tool[data-v-64472bb8] {\n        vertical-align: sub;\n}\n", ""]);
+exports.push([module.i, "\n.input_wrapper[data-v-64472bb8] {\n\t\tmargin: 2px 0;\n}\n.input_wrapper > label[data-v-64472bb8] {\n\t\twidth: 100px;\n\t\ttext-align: right;\n\t\tmargin: 3px 0;\n}\n.input_right[data-v-64472bb8] {\n\t\tdisplay: inline-flex;\n\t\tvertical-align: top;\n\t\twidth: calc(100% - 110px);\n\t\tmargin-left: 4px;\n}\n.input_right.full_width[data-v-64472bb8] {\n\t\twidth: calc(100% - 8px);\n}\n.input_right.expandable[data-v-64472bb8] {\n\t\twidth: calc(100% - 134px);\n}\n.input_right[axes=\"1\"] input[data-v-64472bb8]:not([type=\"checkbox\"]), .input_right[axes=\"1\"] select[data-v-64472bb8]:not([type=\"checkbox\"]) {\n\t\twidth: 100%;\n}\n.input_right.expanded[data-v-64472bb8] {\n\t\tdisplay: block;\n\t\twidth: calc(100% - 7px);\n}\n.input_right.expanded input[data-v-64472bb8] {\n\t\twidth: 100% !important;\n\t\tdisplay: block;\n}\n.tool.input_expand_button[data-v-64472bb8] {\n\t\tfloat: right;\n\t\twidth: 22px;\n\t\tpadding-left: 3px;\n}\n.input_list li[data-v-64472bb8] {\n        margin: 2px 0;\n}\nul.input_list input[data-v-64472bb8] {\n\t\twidth: calc(100% - 100px);\n\t\tmargin-left: 62px;\n}\ninput#image[data-v-64472bb8] {\n\t\twidth: calc(100% - 40px);\n}\n.input_texture_wrapper[data-v-64472bb8] {\n\t\tdisplay: block;\n\t\theight: 128px;\n\t\twidth: 128px;\n\t\tmargin-right: 8px;\n        margin-left: 8px;\n        flex-shrink: 0;\n        border: 1px solid var(--color-border);\n        box-sizing: content-box;\n}\n.input_texture_wrapper img[data-v-64472bb8] {\n        width: 100%;\n        height: 100%;\n\t\tbackground-size: contain;\n\t\tbackground-repeat: no-repeat;\n}\n.input_vector[data-v-64472bb8] {\n\t\twidth: 40px;\n\t\tflex-grow: 1;\n        margin-left: 2px;\n}\n.input_vector[data-v-64472bb8]:first-child {\n        margin-left: 0;\n}\n.list_add_tool[data-v-64472bb8] {\n        vertical-align: sub;\n}\n", ""]);
 
 // exports
 
@@ -70123,7 +70141,7 @@ var render = function() {
                 staticClass: "unicode_icon",
                 staticStyle: { "font-size": "13pt" }
               },
-              [_vm._v(_vm._s("\u25C0"))]
+              [_vm._v(_vm._s("\u25B6"))]
             )
           ]
         ),
@@ -70141,7 +70159,7 @@ var render = function() {
           },
           [
             _c("i", { staticClass: "unicode_icon pause" }, [
-              _vm._v(_vm._s("\u23EF"))
+              _vm._v(_vm._s("\u23F8"))
             ])
           ]
         ),
@@ -87648,6 +87666,7 @@ var Curve = /*#__PURE__*/function () {
       var position = molangjs__WEBPACK_IMPORTED_MODULE_1___default.a.parse(this.inputs.input.value, params);
       var range = molangjs__WEBPACK_IMPORTED_MODULE_1___default.a.parse(this.inputs.range.value, params);
       position = position / range || 0;
+      if (position === Infinity) position = 0;
 
       if (this.inputs.mode.value == 'linear') {
         var segments = this.nodes.length - 1;
@@ -87842,7 +87861,7 @@ var EmitterClass = /*#__PURE__*/function () {
       var obj = {
         "variable.entity_scale": 1
       };
-      obj["variable.emitter_lifetime"] = this.lifetime;
+      obj["variable.emitter_lifetime"] = this.active_time;
       obj["variable.emitter_age"] = this.age;
       obj["variable.emitter_random_1"] = this.random_vars[0];
       obj["variable.emitter_random_2"] = this.random_vars[1];
@@ -88218,6 +88237,8 @@ var Particle = /*#__PURE__*/function () {
             this.setFrame(this.current_frame);
           }
         }
+      } else {
+        this.setFrame(0);
       } //Color
 
 
@@ -88228,6 +88249,9 @@ var Particle = /*#__PURE__*/function () {
         var i = _input_structure__WEBPACK_IMPORTED_MODULE_3__["default"].particle.color.inputs.interpolant.calculate(params);
         var r = _input_structure__WEBPACK_IMPORTED_MODULE_3__["default"].particle.color.inputs.range.calculate(params);
         var c = _input_structure__WEBPACK_IMPORTED_MODULE_3__["default"].particle.color.inputs.gradient.calculate(i / r * 100);
+        this.setColor(c.r, c.g, c.b);
+      } else {
+        var c = _input_structure__WEBPACK_IMPORTED_MODULE_3__["default"].particle.color.inputs.picker.calculate();
         this.setColor(c.r, c.g, c.b);
       }
 
@@ -89065,14 +89089,16 @@ __webpack_require__.r(__webpack_exports__);
 var _examples_fire_particle_json__WEBPACK_IMPORTED_MODULE_9___namespace = /*#__PURE__*/__webpack_require__.t(/*! ../examples/fire.particle.json */ "./examples/fire.particle.json", 1);
 /* harmony import */ var _examples_loading_particle_json__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../examples/loading.particle.json */ "./examples/loading.particle.json");
 var _examples_loading_particle_json__WEBPACK_IMPORTED_MODULE_10___namespace = /*#__PURE__*/__webpack_require__.t(/*! ../examples/loading.particle.json */ "./examples/loading.particle.json", 1);
-/* harmony import */ var _examples_magic_particle_json__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../examples/magic.particle.json */ "./examples/magic.particle.json");
-var _examples_magic_particle_json__WEBPACK_IMPORTED_MODULE_11___namespace = /*#__PURE__*/__webpack_require__.t(/*! ../examples/magic.particle.json */ "./examples/magic.particle.json", 1);
-/* harmony import */ var _examples_rain_particle_json__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../examples/rain.particle.json */ "./examples/rain.particle.json");
-var _examples_rain_particle_json__WEBPACK_IMPORTED_MODULE_12___namespace = /*#__PURE__*/__webpack_require__.t(/*! ../examples/rain.particle.json */ "./examples/rain.particle.json", 1);
-/* harmony import */ var _examples_snow_particle_json__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../examples/snow.particle.json */ "./examples/snow.particle.json");
-var _examples_snow_particle_json__WEBPACK_IMPORTED_MODULE_13___namespace = /*#__PURE__*/__webpack_require__.t(/*! ../examples/snow.particle.json */ "./examples/snow.particle.json", 1);
-/* harmony import */ var _examples_trail_particle_json__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../examples/trail.particle.json */ "./examples/trail.particle.json");
-var _examples_trail_particle_json__WEBPACK_IMPORTED_MODULE_14___namespace = /*#__PURE__*/__webpack_require__.t(/*! ../examples/trail.particle.json */ "./examples/trail.particle.json", 1);
+/* harmony import */ var _examples_rainbow_particle_json__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../examples/rainbow.particle.json */ "./examples/rainbow.particle.json");
+var _examples_rainbow_particle_json__WEBPACK_IMPORTED_MODULE_11___namespace = /*#__PURE__*/__webpack_require__.t(/*! ../examples/rainbow.particle.json */ "./examples/rainbow.particle.json", 1);
+/* harmony import */ var _examples_magic_particle_json__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../examples/magic.particle.json */ "./examples/magic.particle.json");
+var _examples_magic_particle_json__WEBPACK_IMPORTED_MODULE_12___namespace = /*#__PURE__*/__webpack_require__.t(/*! ../examples/magic.particle.json */ "./examples/magic.particle.json", 1);
+/* harmony import */ var _examples_rain_particle_json__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../examples/rain.particle.json */ "./examples/rain.particle.json");
+var _examples_rain_particle_json__WEBPACK_IMPORTED_MODULE_13___namespace = /*#__PURE__*/__webpack_require__.t(/*! ../examples/rain.particle.json */ "./examples/rain.particle.json", 1);
+/* harmony import */ var _examples_snow_particle_json__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../examples/snow.particle.json */ "./examples/snow.particle.json");
+var _examples_snow_particle_json__WEBPACK_IMPORTED_MODULE_14___namespace = /*#__PURE__*/__webpack_require__.t(/*! ../examples/snow.particle.json */ "./examples/snow.particle.json", 1);
+/* harmony import */ var _examples_trail_particle_json__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../examples/trail.particle.json */ "./examples/trail.particle.json");
+var _examples_trail_particle_json__WEBPACK_IMPORTED_MODULE_15___namespace = /*#__PURE__*/__webpack_require__.t(/*! ../examples/trail.particle.json */ "./examples/trail.particle.json", 1);
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -89095,13 +89121,15 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
 
 
 
+
 var Samples = {
   fire: _examples_fire_particle_json__WEBPACK_IMPORTED_MODULE_9__,
   loading: _examples_loading_particle_json__WEBPACK_IMPORTED_MODULE_10__,
-  magic: _examples_magic_particle_json__WEBPACK_IMPORTED_MODULE_11__,
-  rain: _examples_rain_particle_json__WEBPACK_IMPORTED_MODULE_12__,
-  snow: _examples_snow_particle_json__WEBPACK_IMPORTED_MODULE_13__,
-  trail: _examples_trail_particle_json__WEBPACK_IMPORTED_MODULE_14__
+  rainbow: _examples_rainbow_particle_json__WEBPACK_IMPORTED_MODULE_11__,
+  magic: _examples_magic_particle_json__WEBPACK_IMPORTED_MODULE_12__,
+  rain: _examples_rain_particle_json__WEBPACK_IMPORTED_MODULE_13__,
+  snow: _examples_snow_particle_json__WEBPACK_IMPORTED_MODULE_14__,
+  trail: _examples_trail_particle_json__WEBPACK_IMPORTED_MODULE_15__
 };
 
 function loadFile(data) {
@@ -89409,6 +89437,7 @@ function loadFile(data) {
 
     if (_input_structure__WEBPACK_IMPORTED_MODULE_3__["default"].particle.texture.inputs.path.value) {
       Object(_emitter__WEBPACK_IMPORTED_MODULE_4__["updateMaterial"])(_emitter__WEBPACK_IMPORTED_MODULE_4__["startAnimation"]);
+      setTimeout(_emitter__WEBPACK_IMPORTED_MODULE_4__["updateMaterial"], 250);
     } else {
       Object(_emitter__WEBPACK_IMPORTED_MODULE_4__["startAnimation"])();
     }
@@ -90356,11 +90385,7 @@ var Data = {
           label: 'Color',
           type: 'color',
           enabled_modes: ['static'],
-          info: 'Set a static color for all emitted particles',
-          updatePreview: function updatePreview(c) {
-            if (!c) return;
-            _emitter__WEBPACK_IMPORTED_MODULE_2__["System"].material.color.copy(c);
-          }
+          info: 'Set a static color for all emitted particles'
         }),
         interpolant: new _input__WEBPACK_IMPORTED_MODULE_0__["default"]({
           label: 'Interpolant',
