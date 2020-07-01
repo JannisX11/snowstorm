@@ -172,6 +172,7 @@ function loadFile(data) {
 				Data.particle.rotation.inputs.rotation.set(comp('particle_motion_parametric').rotation)
 			}
 			if (comp('particle_motion_collision')) {
+				Data.particle.collision.inputs.enabled.set(comp('particle_motion_collision').enabled || true)
 				Data.particle.collision.inputs.collision_drag.set(comp('particle_motion_collision').collision_drag)
 				Data.particle.collision.inputs.coefficient_of_restitution.set(comp('particle_motion_collision').coefficient_of_restitution)
 				Data.particle.collision.inputs.collision_radius.set(comp('particle_motion_collision').collision_radius)
