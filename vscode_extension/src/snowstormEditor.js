@@ -39,9 +39,23 @@ module.exports.SnowstormEditorProvider = class SnowstormEditorProvider {
 			}
 			latest_change_from_snowstorm = false;
 		});
+		const saveDocumentSubscription = vscode.workspace.onWillSaveTextDocument(e => {
+			if (e.document.uri.toString() === document.uri.toString()) {
+				webviewPanel.webview.postMessage({
+					type: 'request_content_update',
+					fromExtension: true
+				});
+				setTimeout(() => {
+					e.document.save();
+				}, 60)
+				return false;
+			}
+			return true;
+		})
 
 		webviewPanel.onDidDispose(() => {
 			changeDocumentSubscription.dispose();
+			saveDocumentSubscription.dispose();
 		});
 
 		webviewPanel.webview.onDidReceiveMessage(e => {

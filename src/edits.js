@@ -5,6 +5,7 @@ import {compileJSON} from './util'
 const EditListeners = {};
 let timeout;
 let typing_merge_threshold = 600;
+let last_edit_id = '';
 
 function processEdit(id) {
     if (vscode) {
@@ -22,7 +23,23 @@ function processEdit(id) {
     }
 }
 
+function wrapTimeoutInit() {
+    if (timeout) {
+        clearTimeout(timeout);
+        processEdit(last_edit_id)
+    }
+}
+window.addEventListener('message', event => {
+    const message = event.data;
+    switch (message.type) {
+        case 'request_content_update':
+            wrapTimeoutInit()
+            return;
+    }
+});
+
 export default function registerEdit(id, event) {
+    last_edit_id = id;
     if (event instanceof InputEvent || event instanceof KeyboardEvent) {
         if (timeout) clearTimeout(timeout);
         timeout = setTimeout(() => {

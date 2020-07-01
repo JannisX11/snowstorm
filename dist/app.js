@@ -87751,6 +87751,7 @@ __webpack_require__.r(__webpack_exports__);
 var EditListeners = {};
 var timeout;
 var typing_merge_threshold = 600;
+var last_edit_id = '';
 
 function processEdit(id) {
   if (_vscode_extension__WEBPACK_IMPORTED_MODULE_0__["default"]) {
@@ -87767,7 +87768,25 @@ function processEdit(id) {
   }
 }
 
+function wrapTimeoutInit() {
+  if (timeout) {
+    clearTimeout(timeout);
+    processEdit(last_edit_id);
+  }
+}
+
+window.addEventListener('message', function (event) {
+  var message = event.data;
+
+  switch (message.type) {
+    case 'request_content_update':
+      wrapTimeoutInit();
+      return;
+  }
+});
 function registerEdit(id, event) {
+  last_edit_id = id;
+
   if (event instanceof InputEvent || event instanceof KeyboardEvent) {
     if (timeout) clearTimeout(timeout);
     timeout = setTimeout(function () {
