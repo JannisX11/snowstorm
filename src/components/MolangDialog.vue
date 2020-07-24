@@ -32,15 +32,6 @@
                 <li><code>Math.ceil(n)</code> Round n up to nearest integral number</li>
                 <li><code>Math.round(n)</code> Round n to nearest integral number</li>
                 <li><code>Math.trunc(n)</code> Round n towards zero</li>
-                
-                <li><code>Math.trunc(n)</code> Round n towards zero</li>
-                <li><code>Math.trunc(n)</code> Round n towards zero</li>
-                <li><code>Math.trunc(n)</code> Round n towards zero</li>
-                <li><code>Math.trunc(n)</code> Round n towards zero</li>
-                <li><code>Math.trunc(n)</code> Round n towards zero</li>
-                <li><code>Math.trunc(n)</code> Round n towards zero</li>
-
-
                 <li><code>Math.floor(n)</code> Round n down to nearest integral number</li>
                 <li><code>Math.mod(a, b)</code> Returns the remainder of a/b.</li>
                 <li><code>Math.min(n)</code> Return lowest value of a or b</li>
@@ -49,7 +40,7 @@
                 <li><code>Math.lerp(a, b, p)</code> Lerp between a and b using p (number between 0 and 1)</li>
                 <li><code>Math.lerprotate(a, b, v)</code> Lerp the shortest direction around a circle from a degrees to b degrees via v.</li>
             </ul>
-            <a href="https://bedrock.dev/1.12.0.0/1.12.0.4/MoLang" target="_blank">Full MoLang Documentation</a>
+            <a href="https://bedrock.dev/docs/stable/MoLang" target="_blank">Full MoLang Documentation</a>
         </div>
     </div>
 </template>
@@ -73,9 +64,10 @@ export default {
         overflow: hidden;
 		padding: 20px 40px;
 		bottom: 20px;
+        display: flex;
+        flex-direction: column;
 	}
 	.scrollable {
-        max-height: -webkit-fill-available;
 		overflow-y: scroll;
 	}
 	.dialog h3 {

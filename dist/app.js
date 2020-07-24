@@ -723,15 +723,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'molang-dialog'
 });
@@ -822,7 +813,7 @@ function initPreview(canvas) {
   View.controls.zoomSpeed = 1.4;
   View.scene = new three__WEBPACK_IMPORTED_MODULE_1__["Scene"]();
   View.helper = new CustomAxesHelper(1);
-  View.grid = new three__WEBPACK_IMPORTED_MODULE_1__["GridHelper"](128, 128, gizmo_colors.grid, gizmo_colors.grid);
+  View.grid = new three__WEBPACK_IMPORTED_MODULE_1__["GridHelper"](64, 64, gizmo_colors.grid, gizmo_colors.grid);
   View.grid.position.y -= 0.0005;
   View.scene.add(View.helper);
   View.scene.add(View.grid);
@@ -1642,7 +1633,7 @@ exports = module.exports = __webpack_require__(/*! ../../node_modules/css-loader
 
 
 // module
-exports.push([module.i, "\n.dialog[data-v-5cc19428] {\n\t\tposition: absolute;\n\t\tmargin-left: calc(50% - 400px);\n        width: 800px;\n        max-width: 100%;\n\t\ttop: 20px;\n\t\tbackground-color: var(--color-background);\n\t\tbox-shadow: 1px 1px 12px black;\n        z-index: 50;\n        overflow: hidden;\n\t\tpadding: 20px 40px;\n\t\tbottom: 20px;\n}\n.scrollable[data-v-5cc19428] {\n        max-height: -webkit-fill-available;\n\t\toverflow-y: scroll;\n}\n.dialog h3[data-v-5cc19428] {\n\t\tpadding: 20px 0 5px 0;\n}\n#molang_sheet code[data-v-5cc19428] {\n\t\tpadding: 2px 8px;\n\t\tcolor: var(--teal);\n\t\tfont-size: 0.9em;\n\t\tbackground-color: var(--color-dark);\n\t\tuser-select: text;\n}\n.close_button[data-v-5cc19428] {\n        position: absolute;\n        top: 0;\n        right: 0;\n}\n", ""]);
+exports.push([module.i, "\n.dialog[data-v-5cc19428] {\n\t\tposition: absolute;\n\t\tmargin-left: calc(50% - 400px);\n        width: 800px;\n        max-width: 100%;\n\t\ttop: 20px;\n\t\tbackground-color: var(--color-background);\n\t\tbox-shadow: 1px 1px 12px black;\n        z-index: 50;\n        overflow: hidden;\n\t\tpadding: 20px 40px;\n\t\tbottom: 20px;\n        display: flex;\n        flex-direction: column;\n}\n.scrollable[data-v-5cc19428] {\n\t\toverflow-y: scroll;\n}\n.dialog h3[data-v-5cc19428] {\n\t\tpadding: 20px 0 5px 0;\n}\n#molang_sheet code[data-v-5cc19428] {\n\t\tpadding: 2px 8px;\n\t\tcolor: var(--teal);\n\t\tfont-size: 0.9em;\n\t\tbackground-color: var(--color-dark);\n\t\tuser-select: text;\n}\n.close_button[data-v-5cc19428] {\n        position: absolute;\n        top: 0;\n        right: 0;\n}\n", ""]);
 
 // exports
 
@@ -1661,7 +1652,7 @@ exports = module.exports = __webpack_require__(/*! ../../node_modules/css-loader
 
 
 // module
-exports.push([module.i, "\nmain#preview[data-v-48e6f1c8] {\n\t\tposition: relative;\n}\n#canvas_wrapper[data-v-48e6f1c8] {\n\t\theight: calc(100% - 28px);\n\t\twidth: 100%;\n}\ncanvas[data-v-48e6f1c8] {\n\t\theight: 100%;\n\t\twidth: 100%;\n}\nfooter[data-v-48e6f1c8] {\n\t\twidth: 100%;\n\t\tfont-size: 1.1em;\n        height: 28px;\n        padding-left: 6px;\n        background-color: var(--color-bar);\n        border-top: 1px solid var(--color-border);\n}\nfooter > *[data-v-48e6f1c8] {\n\t\tpadding: 2px 8px; \n\t\tpadding-top: 2px;\n        background-color: var(--color-bar);\n        float: left;\n}\ndiv.stat[data-v-48e6f1c8] {\n        text-align: right;\n\t\tfloat: right;\n\t\tbackground: transparent;\n}\n.unicode_icon.pause[data-v-48e6f1c8] {\n\t\tmargin-top: -4px;\n\t\tfloat: right;\n\t\tfont-size: 15pt;\n}\n", ""]);
+exports.push([module.i, "\nmain#preview[data-v-48e6f1c8] {\n\t\tposition: relative;\n}\n#canvas_wrapper[data-v-48e6f1c8] {\n\t\theight: calc(100% - 28px);\n\t\twidth: 100%;\n}\ncanvas[data-v-48e6f1c8] {\n\t\theight: 100%;\n\t\twidth: 100%;\n}\nfooter[data-v-48e6f1c8] {\n\t\twidth: 100%;\n\t\tfont-size: 1.1em;\n        height: 28px;\n        padding-left: 6px;\n        background-color: var(--color-bar);\n        border-top: 1px solid var(--color-border);\n}\nfooter > *[data-v-48e6f1c8] {\n\t\tpadding: 2px 8px; \n\t\tpadding-top: 2px;\n        background-color: var(--color-bar);\n        float: left;\n}\ndiv.stat[data-v-48e6f1c8] {\n        text-align: right;\n\t\tfloat: right;\n\t\tbackground: transparent;\n}\n.unicode_icon.pause[data-v-48e6f1c8] {\n        margin-top: -4px;\n        float: right;\n        font-size: 20pt;\n        font-weight: bold;\n        height: 23px;\n        overflow: hidden;\n}\n", ""]);
 
 // exports
 
@@ -70013,36 +70004,6 @@ var staticRenderFns = [
         ]),
         _vm._v(" "),
         _c("li", [
-          _c("code", [_vm._v("Math.trunc(n)")]),
-          _vm._v(" Round n towards zero")
-        ]),
-        _vm._v(" "),
-        _c("li", [
-          _c("code", [_vm._v("Math.trunc(n)")]),
-          _vm._v(" Round n towards zero")
-        ]),
-        _vm._v(" "),
-        _c("li", [
-          _c("code", [_vm._v("Math.trunc(n)")]),
-          _vm._v(" Round n towards zero")
-        ]),
-        _vm._v(" "),
-        _c("li", [
-          _c("code", [_vm._v("Math.trunc(n)")]),
-          _vm._v(" Round n towards zero")
-        ]),
-        _vm._v(" "),
-        _c("li", [
-          _c("code", [_vm._v("Math.trunc(n)")]),
-          _vm._v(" Round n towards zero")
-        ]),
-        _vm._v(" "),
-        _c("li", [
-          _c("code", [_vm._v("Math.trunc(n)")]),
-          _vm._v(" Round n towards zero")
-        ]),
-        _vm._v(" "),
-        _c("li", [
           _c("code", [_vm._v("Math.floor(n)")]),
           _vm._v(" Round n down to nearest integral number")
         ]),
@@ -70084,7 +70045,7 @@ var staticRenderFns = [
         "a",
         {
           attrs: {
-            href: "https://bedrock.dev/1.12.0.0/1.12.0.4/MoLang",
+            href: "https://bedrock.dev/docs/stable/MoLang",
             target: "_blank"
           }
         },
@@ -70159,7 +70120,7 @@ var render = function() {
           },
           [
             _c("i", { staticClass: "unicode_icon pause" }, [
-              _vm._v(_vm._s("\u23F8"))
+              _vm._v(_vm._s("\u2016"))
             ])
           ]
         ),

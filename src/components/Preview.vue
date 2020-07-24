@@ -5,7 +5,7 @@
         </div>
         <footer>
             <div class="tool" @click="startAnimation()" title="Play"><i class="unicode_icon" style="font-size: 13pt;">{{'\u25B6'}}</i></div>
-            <div class="tool" @click="togglePause()" title="Pause"><i class="unicode_icon pause">{{'\u23F8'}}</i></div>
+            <div class="tool" @click="togglePause()" title="Pause"><i class="unicode_icon pause">{{'\u2016'}}</i></div>
             <div class="stat" style="width: 66px;">{{fps}} FPS</div>
             <div class="stat">{{particles}} P</div>
         </footer>
@@ -85,7 +85,7 @@
         View.scene = new THREE.Scene()
 
         View.helper = new CustomAxesHelper(1);
-        View.grid = new THREE.GridHelper(128, 128, gizmo_colors.grid, gizmo_colors.grid);
+        View.grid = new THREE.GridHelper(64, 64, gizmo_colors.grid, gizmo_colors.grid);
         View.grid.position.y -= 0.0005
         View.scene.add(View.helper);
         View.scene.add(View.grid);
@@ -188,8 +188,11 @@
 		background: transparent;
 	}
 	.unicode_icon.pause {
-		margin-top: -4px;
-		float: right;
-		font-size: 15pt;
+        margin-top: -4px;
+        float: right;
+        font-size: 20pt;
+        font-weight: bold;
+        height: 23px;
+        overflow: hidden;
 	}
 </style>
