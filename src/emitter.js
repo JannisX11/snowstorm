@@ -102,18 +102,17 @@ class EmitterClass {
 		})
 
 		this.age += 1/30;
-		var age = Math.roundTo(this.age, 5);
 		if (this.mode == 'looping') {
 			//Looping
-			if (this.enabled && age >= this.active_time) {
+			if (this.enabled && Math.roundTo(this.age, 5) >= this.active_time) {
 				this.stop()
 			}
-			if (!this.enabled && age >= this.sleep_time) {
+			if (!this.enabled && Math.roundTo(this.age, 5) >= this.sleep_time) {
 				this.start()
 			}
 		} else if (this.mode == 'once') {
 			//Once
-			if (this.enabled && age >= this.active_time) {
+			if (this.enabled && Math.roundTo(this.age, 5) >= this.active_time) {
 				this.stop()
 			}
 		} else if (this.mode === 'expression') {
