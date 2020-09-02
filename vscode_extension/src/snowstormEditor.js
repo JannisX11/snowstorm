@@ -66,7 +66,7 @@ module.exports.SnowstormEditorProvider = class SnowstormEditorProvider {
 					break;
 				case 'reopen':
 					vscode.commands.executeCommand('workbench.action.splitEditor')
-					vscode.commands.executeCommand('workbench.files.action.toggleEditorType');
+					vscode.commands.executeCommand('workbench.action.toggleEditorType');
 					//vscode.commands.executeCommand('explorer.openWith', document.uri, 'default', 'left');
 					//vscode.commands.executeCommand('workbench.files.action.reopenWithEditor', document.uri, 'default', 'left')
 					//setTimeout(() => {
