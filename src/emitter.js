@@ -342,7 +342,7 @@ class Particle {
 			this.speed.addScaledVector(this.acceleration, 1/30);
 			this.position.addScaledVector(this.speed, 1/30);
 			if (Data.particle.lifetime.inputs.kill_plane.value) {
-				var plane = Data.particle.lifetime.inputs.kill_plane.calculate();
+				var plane = Data.particle.lifetime.inputs.kill_plane.calculate(undefined, THREE.Plane);
 				var start_point = new THREE.Vector3().copy(this.position).addScaledVector(this.speed, -1/30);
 				var line = new THREE.Line3(start_point, this.position)
 				if (plane.intersectsLine(line)) {
@@ -405,7 +405,7 @@ class Particle {
 		//Color
 		if (Data.particle.color.inputs.mode.value === 'expression') {
 			var c = Data.particle.color.inputs.expression.calculate(params)
-			this.setColor(c.x, c.y, c.z);
+			this.setColor(c.x, c.y, c.z, c.w);
 
 		} else if (Data.particle.color.inputs.mode.value === 'gradient') {
 			var i = Data.particle.color.inputs.interpolant.calculate(params)
@@ -415,7 +415,7 @@ class Particle {
 			this.setColor(c.r, c.g, c.b);
 		} else {
 			var c = Data.particle.color.inputs.picker.calculate()
-			this.setColor(c.r, c.g, c.b);
+			this.setColor(c.r, c.g, c.b, c.a);
 		}
 
 		return this;

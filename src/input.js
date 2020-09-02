@@ -125,7 +125,7 @@ export default class Input {
 		}
 		return this;
 	}
-	calculate(opts) {
+	calculate(opts, type) {
 		var scope = this;
 		function getV(v) {
 			if (scope.type === 'molang') {
@@ -137,12 +137,21 @@ export default class Input {
 		var data;
 		if (this.type === 'molang' || this.type === 'number') {
 			if (this.axis_count === 4) {
-				var data = new THREE.Plane().setComponents(
-					getV(this.value[0]),
-					getV(this.value[1]),
-					getV(this.value[2]),
-					getV(this.value[3])
-				)
+				if (type == THREE.Plane) {
+					var data = new THREE.Plane().setComponents(
+						getV(this.value[0]),
+						getV(this.value[1]),
+						getV(this.value[2]),
+						getV(this.value[3])
+					)
+				} else {
+					var data = new THREE.Vector4(
+						getV(this.value[0]),
+						getV(this.value[1]),
+						getV(this.value[2]),
+						getV(this.value[3])
+					)
+				}
 			} else if (this.axis_count === 3) {
 				var data = new THREE.Vector3(
 					getV(this.value[0]),
@@ -159,8 +168,13 @@ export default class Input {
 			}
 		} else if (this.type === 'color') {
 			var val = (this.value && this.value.hsl) ? this.value.hex : this.value;
-			var c = tinycolor(val).toHex();
-			var data = new THREE.Color('#'+c)
+			var c = tinycolor(val).toRgb();
+			if (c.a == undefined) c.a = 1;
+			var data = new THREE.Color(
+				255 - (255-c.r) * c.a,
+				255 - (255-c.r) * c.a,
+				255 - (255-c.r) * c.a
+			)
 
 		} else {
 			var data = this.value

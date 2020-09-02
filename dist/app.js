@@ -88160,7 +88160,7 @@ var Particle = /*#__PURE__*/function () {
         this.position.addScaledVector(this.speed, 1 / 30);
 
         if (_input_structure__WEBPACK_IMPORTED_MODULE_3__["default"].particle.lifetime.inputs.kill_plane.value) {
-          var plane = _input_structure__WEBPACK_IMPORTED_MODULE_3__["default"].particle.lifetime.inputs.kill_plane.calculate();
+          var plane = _input_structure__WEBPACK_IMPORTED_MODULE_3__["default"].particle.lifetime.inputs.kill_plane.calculate(undefined, three__WEBPACK_IMPORTED_MODULE_0__["Plane"]);
           var start_point = new three__WEBPACK_IMPORTED_MODULE_0__["Vector3"]().copy(this.position).addScaledVector(this.speed, -1 / 30);
           var line = new three__WEBPACK_IMPORTED_MODULE_0__["Line3"](start_point, this.position);
 
@@ -88223,7 +88223,7 @@ var Particle = /*#__PURE__*/function () {
 
       if (_input_structure__WEBPACK_IMPORTED_MODULE_3__["default"].particle.color.inputs.mode.value === 'expression') {
         var c = _input_structure__WEBPACK_IMPORTED_MODULE_3__["default"].particle.color.inputs.expression.calculate(params);
-        this.setColor(c.x, c.y, c.z);
+        this.setColor(c.x, c.y, c.z, c.w);
       } else if (_input_structure__WEBPACK_IMPORTED_MODULE_3__["default"].particle.color.inputs.mode.value === 'gradient') {
         var i = _input_structure__WEBPACK_IMPORTED_MODULE_3__["default"].particle.color.inputs.interpolant.calculate(params);
         var r = _input_structure__WEBPACK_IMPORTED_MODULE_3__["default"].particle.color.inputs.range.calculate(params);
@@ -88231,7 +88231,7 @@ var Particle = /*#__PURE__*/function () {
         this.setColor(c.r, c.g, c.b);
       } else {
         var c = _input_structure__WEBPACK_IMPORTED_MODULE_3__["default"].particle.color.inputs.picker.calculate();
-        this.setColor(c.r, c.g, c.b);
+        this.setColor(c.r, c.g, c.b, c.a);
       }
 
       return this;
@@ -88796,7 +88796,7 @@ function generateFile() {
       b: 1
     })) {
       comps['minecraft:particle_appearance_tinting'] = {
-        color: [static_color.r, static_color.g, static_color.b]
+        color: [static_color.r, static_color.g, static_color.b, static_color.a]
       };
     }
   } else if (getValue(2, 'color', 'mode') === 'gradient') {
@@ -89756,7 +89756,7 @@ var Input = /*#__PURE__*/function () {
     }
   }, {
     key: "calculate",
-    value: function calculate(opts) {
+    value: function calculate(opts, type) {
       var scope = this;
 
       function getV(v) {
@@ -89771,7 +89771,11 @@ var Input = /*#__PURE__*/function () {
 
       if (this.type === 'molang' || this.type === 'number') {
         if (this.axis_count === 4) {
-          var data = new three__WEBPACK_IMPORTED_MODULE_0__["Plane"]().setComponents(getV(this.value[0]), getV(this.value[1]), getV(this.value[2]), getV(this.value[3]));
+          if (type == three__WEBPACK_IMPORTED_MODULE_0__["Plane"]) {
+            var data = new three__WEBPACK_IMPORTED_MODULE_0__["Plane"]().setComponents(getV(this.value[0]), getV(this.value[1]), getV(this.value[2]), getV(this.value[3]));
+          } else {
+            var data = new three__WEBPACK_IMPORTED_MODULE_0__["Vector4"](getV(this.value[0]), getV(this.value[1]), getV(this.value[2]), getV(this.value[3]));
+          }
         } else if (this.axis_count === 3) {
           var data = new three__WEBPACK_IMPORTED_MODULE_0__["Vector3"](getV(this.value[0]), getV(this.value[1]), getV(this.value[2]));
         } else if (this.axis_count === 2) {
@@ -89781,8 +89785,9 @@ var Input = /*#__PURE__*/function () {
         }
       } else if (this.type === 'color') {
         var val = this.value && this.value.hsl ? this.value.hex : this.value;
-        var c = tinycolor2__WEBPACK_IMPORTED_MODULE_2___default()(val).toHex();
-        var data = new three__WEBPACK_IMPORTED_MODULE_0__["Color"]('#' + c);
+        var c = tinycolor2__WEBPACK_IMPORTED_MODULE_2___default()(val).toRgb();
+        if (c.a == undefined) c.a = 1;
+        var data = new three__WEBPACK_IMPORTED_MODULE_0__["Color"](255 - (255 - c.r) * c.a, 255 - (255 - c.r) * c.a, 255 - (255 - c.r) * c.a);
       } else {
         var data = this.value;
       }
@@ -90386,8 +90391,8 @@ var Data = {
         }),
         expression: new _input__WEBPACK_IMPORTED_MODULE_0__["default"]({
           label: 'Color',
-          info: 'Set the color per particle using MoLang expressions in RGB channels between 0 and 1',
-          axis_count: 3,
+          info: 'Set the color per particle using MoLang expressions in RGBA channels between 0 and 1',
+          axis_count: 4,
           enabled_modes: ['expression']
         }),
         light: new _input__WEBPACK_IMPORTED_MODULE_0__["default"]({

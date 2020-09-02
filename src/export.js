@@ -308,6 +308,7 @@ function generateFile() {
 					static_color.r,
 					static_color.g,
 					static_color.b,
+					static_color.a,
 				]
 			}
 		}
