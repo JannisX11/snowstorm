@@ -167,6 +167,7 @@
 	canvas {
 		height: 100%;
 		width: 100%;
+        outline: none;
 	}
 	footer {
 		width: 100%;

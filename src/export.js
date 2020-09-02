@@ -308,7 +308,6 @@ function generateFile() {
 					static_color.r,
 					static_color.g,
 					static_color.b,
-					1
 				]
 			}
 		}
@@ -330,7 +329,6 @@ function generateFile() {
 					color[i] = `Math.clamp(${s}, 0, 1)`
 				}
 			})
-			color.push(1)
 			comps['minecraft:particle_appearance_tinting'] = {
 				color: color
 			}

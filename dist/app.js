@@ -1652,7 +1652,7 @@ exports = module.exports = __webpack_require__(/*! ../../node_modules/css-loader
 
 
 // module
-exports.push([module.i, "\nmain#preview[data-v-48e6f1c8] {\n\t\tposition: relative;\n}\n#canvas_wrapper[data-v-48e6f1c8] {\n\t\theight: calc(100% - 28px);\n\t\twidth: 100%;\n}\ncanvas[data-v-48e6f1c8] {\n\t\theight: 100%;\n\t\twidth: 100%;\n}\nfooter[data-v-48e6f1c8] {\n\t\twidth: 100%;\n\t\tfont-size: 1.1em;\n        height: 28px;\n        padding-left: 6px;\n        background-color: var(--color-bar);\n        border-top: 1px solid var(--color-border);\n}\nfooter > *[data-v-48e6f1c8] {\n\t\tpadding: 2px 8px; \n\t\tpadding-top: 2px;\n        background-color: var(--color-bar);\n        float: left;\n}\ndiv.stat[data-v-48e6f1c8] {\n        text-align: right;\n\t\tfloat: right;\n\t\tbackground: transparent;\n}\n.unicode_icon.pause[data-v-48e6f1c8] {\n        margin-top: -4px;\n        float: right;\n        font-size: 20pt;\n        font-weight: bold;\n        height: 23px;\n        overflow: hidden;\n}\n", ""]);
+exports.push([module.i, "\nmain#preview[data-v-48e6f1c8] {\n\t\tposition: relative;\n}\n#canvas_wrapper[data-v-48e6f1c8] {\n\t\theight: calc(100% - 28px);\n\t\twidth: 100%;\n}\ncanvas[data-v-48e6f1c8] {\n\t\theight: 100%;\n\t\twidth: 100%;\n        outline: none;\n}\nfooter[data-v-48e6f1c8] {\n\t\twidth: 100%;\n\t\tfont-size: 1.1em;\n        height: 28px;\n        padding-left: 6px;\n        background-color: var(--color-bar);\n        border-top: 1px solid var(--color-border);\n}\nfooter > *[data-v-48e6f1c8] {\n\t\tpadding: 2px 8px; \n\t\tpadding-top: 2px;\n        background-color: var(--color-bar);\n        float: left;\n}\ndiv.stat[data-v-48e6f1c8] {\n        text-align: right;\n\t\tfloat: right;\n\t\tbackground: transparent;\n}\n.unicode_icon.pause[data-v-48e6f1c8] {\n        margin-top: -4px;\n        float: right;\n        font-size: 20pt;\n        font-weight: bold;\n        height: 23px;\n        overflow: hidden;\n}\n", ""]);
 
 // exports
 
@@ -88796,7 +88796,7 @@ function generateFile() {
       b: 1
     })) {
       comps['minecraft:particle_appearance_tinting'] = {
-        color: [static_color.r, static_color.g, static_color.b, 1]
+        color: [static_color.r, static_color.g, static_color.b]
       };
     }
   } else if (getValue(2, 'color', 'mode') === 'gradient') {
@@ -88816,7 +88816,6 @@ function generateFile() {
           color[i] = "Math.clamp(".concat(s, ", 0, 1)");
         }
       });
-      color.push(1);
       comps['minecraft:particle_appearance_tinting'] = {
         color: color
       };
