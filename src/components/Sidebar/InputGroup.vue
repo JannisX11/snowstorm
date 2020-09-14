@@ -93,7 +93,7 @@
                             <div class="tool" v-on:click="input.reset()"><i class="unicode_icon">{{'\u2A09'}}</i></div>
                             <input  v-bind:id="key" type="file" accept=".png" v-on:change="input.change($event)">
                         </template>
-                        <div id="image_resolution_label">{{input.image.width}} x {{input.image.width}} px</div>
+                        <div id="image_resolution_label">{{input.image.width}} x {{input.image.height}} px</div>
                     </div>
                 </template>
             </div>
