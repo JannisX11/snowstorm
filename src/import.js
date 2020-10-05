@@ -1,5 +1,5 @@
 import {IO, pathToExtension} from './util'
-import Molang from 'molangjs'
+import Molang from './molang'
 import Data, {forEachInput} from './input_structure'
 import {startAnimation, updateMaterial, Flipbook, System} from './emitter'
 import tinycolor from 'tinycolor2'

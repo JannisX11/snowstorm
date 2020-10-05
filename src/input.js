@@ -1,5 +1,5 @@
 import * as THREE from 'three'
-import Molang from 'molangjs'
+import Molang from './molang'
 import tinycolor from 'tinycolor2'
 import $ from 'jquery'
 import registerEdit from './edits'

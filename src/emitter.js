@@ -1,5 +1,5 @@
 import * as THREE from 'three'
-import Molang from 'molangjs'
+import Molang from './molang'
 import DefaultTex from './default_textures'
 
 import Data, {forEachInput} from './input_structure'

@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import Molang from 'molangjs'
+import Molang from './molang'
 import * as THREE from 'three'
 import {Emitter} from './emitter'
 import Data from './input_structure'
