@@ -17,6 +17,7 @@
     import $ from 'jquery';
     import * as THREE from 'three';
     import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
+    import Wintersky from './../../../wintersky';
 
     import {Emitter, togglePause, startAnimation, initParticles} from './../emitter';
 
@@ -102,7 +103,7 @@
         View.renderer.render(View.scene, View.camera);
         View.frames_this_second++;
 
-        Emitter.tickParticleRotation()
+        Wintersky.updateFacingRotation(View.camera);
     }
     function resizeCanvas() {
         var wrapper = View.canvas.parentNode;

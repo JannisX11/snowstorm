@@ -5,11 +5,13 @@ import $ from 'jquery'
 import registerEdit from './edits'
 
 import {ExpandedInput} from './components/ExpressionBar'
+import { Config } from './emitter'
 
 export default class Input {
 	constructor(data) {
 		this.type = data.type||'molang';
 		this.isInput = true;
+		this.id = data.id;
 		this.label = data.label;
 		this.info = data.info;
 		this.placeholder = data.placeholder;
@@ -31,19 +33,19 @@ export default class Input {
 		this.onchange = data.onchange;
 		if (this.type === 'select') {
 			if (!this.value) {
-				this.value = Object.keys(this.options)[0]
+				//this.value = Object.keys(this.options)[0]
 			}
 			this.meta_value = this.options[this.value]
 
 		} else if (this.type === 'color' && !this.value) {
-			this.value = '#ffffff';
+			//this.value = '#ffffff';
 
 		} else if (this.axis_count > 1 && !this.value) {
-			this.value = []
+			//this.value = []
 		} else if (this.type === 'list' && !this.value) {
-			this.value = []
+			//this.value = []
 		} else if (this.type === 'image') {
-			this.value = '';
+			//this.value = '';
 			this.image = {
 				name: '',
 				data: '',
@@ -52,13 +54,24 @@ export default class Input {
 			}
 			this.allow_upload = data.allow_upload;
 		} else if ((this.type === 'text' || this.type === 'molang') && !this.value) {
-			this.value = '';
+			//this.value = '';
 		} else if (this.type === 'checkbox' && !this.value) {
-			this.value = '';
+			//this.value = '';
 		} else if (this.type === 'number' && !this.value) {
-			this.value = 0;
+			//this.value = 0;
 		}
-		this.default_value = JSON.parse(JSON.stringify(this.value));
+		this._value = Config[this.id];
+
+	}
+	get value() {
+		return this._value;
+	}
+	set value(v) {
+		this._value = v;
+		Config.set(this.id, v);
+		if (this.type == 'select') {
+			this.meta_value = this.options[this.value];
+		}
 	}
 	toggleExpand() {
 		if (this.expandable) {
@@ -184,7 +197,7 @@ export default class Input {
 		return this;
 	}
 	reset() {
-		this.set(this.default_value);
+		//this.set(this.default_value);
 		if (this.type == 'image') {
 			this.image.data = '';
 			this.image.name = '';
