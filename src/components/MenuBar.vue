@@ -61,6 +61,7 @@ const Menu = [
 		children: [
 			{label: 'Format Documentation', click: () => { openLink('https://bedrock.dev/r/Particles') }},
 			{label: 'MoLang Sheet', click: (vm) => { vm.openDialog('molang_sheet') }},
+			{label: 'MoLang Grapher', click: () => { openLink('https://jannisx11.github.io/molang-grapher/') }},
 			{label: 'Report a Bug', click: () => { openLink('https://github.com/JannisX11/snowstorm/issues') }},
 			{label: 'Discord Channel', click: () => { openLink('https://discord.gg/eGqsNha') }},
 		]

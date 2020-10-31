@@ -592,6 +592,11 @@ var Menu = [{
       vm.openDialog('molang_sheet');
     }
   }, {
+    label: 'MoLang Grapher',
+    click: function click() {
+      openLink('https://jannisx11.github.io/molang-grapher/');
+    }
+  }, {
     label: 'Report a Bug',
     click: function click() {
       openLink('https://github.com/JannisX11/snowstorm/issues');
