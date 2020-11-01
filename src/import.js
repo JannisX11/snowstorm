@@ -1,5 +1,4 @@
 /*
-import Molang from './molang'
 import tinycolor from 'tinycolor2'
 import Curve from './curves'
 
@@ -52,6 +51,7 @@ import MagicSample from '../examples/magic.particle.json'
 import RainSample from '../examples/rain.particle.json'
 import SnowSample from '../examples/snow.particle.json'
 import TrailSample from '../examples/trail.particle.json'
+import Curve from './curves'
 
 
 const Samples = {
@@ -68,12 +68,22 @@ function updateInputsFromConfig() {
 	forEachInput(input => {
 		input.value = Config[input.id];
 	})
+	Data.effect.curves.curves.splice(0, Infinity);
+	for (var id in Config.curves) {
+		let data = Config.curves[id];
+		let curve = new Curve(data);
+		curve.inputs.id.value = id;
+		Data.effect.curves.curves.push(curve);
+		Config.curves[id] = curve.config;
+		curve.updateMinMax();
+	}
 }
 //function importFile() {}
 function loadFile(data) {
 	if (data && data.particle_effect && startNewProject()) {
 		Config.setFromJSON(data);
 		updateInputsFromConfig();
+		Emitter.playLoop();
 	}
 }
 

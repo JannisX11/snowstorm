@@ -85,7 +85,7 @@ function updateMaterial(cb) {
 		url = VanillaTextures[path];
 		Data.particle.texture.inputs.image.image.data = url || '';
 		Data.particle.texture.inputs.image.image.loaded = false;
-		loadTexture(url || DefaultTex.missing, cb)
+		loadTexture(url || DefaultTex.missing, cb) 
 	}
 }*/
 

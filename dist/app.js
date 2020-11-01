@@ -55591,6 +55591,7 @@ function toCatmullRomBezier(points) {
   },
   watch: {
     'curve.svg_needs_update': function curveSvg_needs_update(v) {
+      console.log('udpateSVG');
       if (v) this.updateSVG();
       this.curve.svg_needs_update = false;
     }
@@ -67151,404 +67152,6 @@ if ( typeof noGlobal === "undefined" ) {
 
 return jQuery;
 } );
-
-
-/***/ }),
-
-/***/ "./node_modules/molangjs/dist/molang.cjs.js":
-/*!**************************************************!*\
-  !*** ./node_modules/molangjs/dist/molang.cjs.js ***!
-  \**************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var MathUtil = {
-	random(a, b) {
-		return a + Math.random() * (b-a)
-	},
-	clamp(number, min, max) {
-		if (number > max) number = max;
-		if (number < min || isNaN(number)) number = min;
-		return number;
-	}
-};
-
-/**
- * Author: JannisX11
- * License: MIT
- */
-
-
-// Util
-function trimInput(string) {
-	string = string.toLowerCase();
-	string = string.replace(/;\s+/g, ';').replace(/;\s*$/, '').trim();
-	return string;
-}
-
-
-
-function Molang() {
-
-	const self = this;
-
-	this.global_variables = {};
-	this.cache_enabled = true;
-	this.use_radians = false;
-
-	let cached = {};
-	let current_variables = {};
-
-
-	// Tree Types
-	function Expression(string) {
-		this.original_input = string;
-		this.lines = string.split(';').map(line => {
-			return iterateString(line);
-		});
-	}
-	function Comp(operator, a, b, c) {
-		this.operator = operator;
-		this.a = iterateString(a);
-		if (b !== undefined) this.b = iterateString(b);
-		if (c !== undefined) this.c = iterateString(c);
-	}
-	function Allocation(name, value) {
-		this.value = iterateString(value);
-		this.name = name;
-	}
-	function Statement(type, value) {
-		this.value = iterateString(value);
-		this.type = type;
-	}
-
-	let angleFactor = () => this.use_radians ? 1 : (Math.PI/180);
-
-	function calculate(expression, variables) {
-		current_variables = variables||{};
-		var i = 0;
-		for (var line of expression.lines) {
-			let result = iterateExp(line);
-			i++;
-			if (i == expression.lines.length || (line instanceof Statement && line.type === 'return')) {
-				return result;
-			}
-		}
-		return 0;
-	}
-	
-	function iterateString(s) {
-		//Iterates through string, returns float, string or comp;
-		if (!s) return 0;
-		if (!isNaN(s)) return parseFloat(s);
-	
-		s = s.replace(/\s/g, '');
-	
-		while (canTrimParentheses(s)) {
-			s = s.substr(1, s.length-2);
-		}
-	
-		//Statement
-		var match = s.length > 5 && s.match(/^return/);
-		if (match) {
-			return new Statement(match[0], s.substr(match[0].length))
-		}
-	
-		//allocation
-		var match = s.length > 6 && s.match(/(temp|variable)\.\w+=/);
-		if (match) {
-			let name = match[0].replace(/=$/, '');
-			let value = s.substr(match.index + match[0].length);
-			return new Allocation(name, value)
-		}
-	
-		//ternary
-		var split = splitString(s, '?');
-		if (split) {
-			let ab = splitString(split[1], ':');
-			if (ab && ab.length) {
-				return new Comp(10, split[0], ab[0], ab[1]);
-			}
-		}
-	
-		//2 part operators
-		var comp = (
-			testOp(s, '&&', 11) ||
-			testOp(s, '||', 12) ||
-			testOp(s, '<', 13) ||
-			testOp(s, '<=', 14) ||
-			testOp(s, '>', 15) ||
-			testOp(s, '>=', 16) ||
-			testOp(s, '==', 17) ||
-			testOp(s, '!=', 18) ||
-	
-			testOp(s, '+', 1, true) ||
-			testMinus(s, '-', 2, true) ||
-			testOp(s, '*', 3) ||
-			testOp(s, '/', 4)
-		);
-		if (comp) return comp;
-	
-		if (s.substr(0, 5) === 'math.') {
-			if (s.substr(0, 7) === 'math.pi') {
-				return Math.PI
-			}
-			let begin = s.search(/\(/);
-			let operator = s.substr(5, begin-5);
-			let inner = s.substr(begin+1, s.length-begin-2);
-			let params = splitString(inner, ',')||[inner];
-			if (params.length > 1) {
-				var last2 = splitString(params[1], ',');
-				if (last2 && last2.length > 1) {
-					params[1] = last2[0];
-					params[2] = last2[1];
-				}
-			}
-	
-			switch (operator) {
-				case 'abs':
-					return new Comp(20, params[0]);
-				case 'sin':
-					return new Comp(21, params[0]);
-				case 'cos':
-					return new Comp(22, params[0]);
-				case 'exp':
-					return new Comp(23, params[0]);
-				case 'ln':
-					return new Comp(24, params[0]);
-				case 'pow':
-					return new Comp(25, params[0], params[1]);
-				case 'sqrt':
-					return new Comp(26, params[0]);
-				case 'random':
-					return new Comp(27, params[0], params[1]);
-				case 'ceil':
-					return new Comp(28, params[0]);
-				case 'round':
-					return new Comp(29, params[0]);
-				case 'trunc':
-					return new Comp(30, params[0]);
-				case 'floor':
-					return new Comp(31, params[0]);
-				case 'mod':
-					return new Comp(32, params[0], params[1]);
-				case 'min':
-					return new Comp(33, params[0], params[1]);
-				case 'max':
-					return new Comp(34, params[0], params[1]);
-				case 'clamp':
-					return new Comp(35, params[0], params[1], params[2]);
-				case 'lerp':
-					return new Comp(36, params[0], params[1], params[2]);
-				case 'lerprotate':
-					return new Comp(37, params[0], params[1], params[2]);
-			}
-		}
-		split = s.match(/[a-zA-Z0-9._]{2,}/g);
-		if (split && split.length === 1) {
-			return s;
-		}
-		return 0;
-	}
-	function canTrimParentheses(s) {
-		if (s.substr(0, 1) === '(' && s.substr(-1) === ')') {
-			let level = 0;
-			for (var i = 0; i < s.length-1; i++) {
-				switch (s[i]) {
-					case '(': level++; break;
-					case ')': level--; break;
-				}
-				if (level == 0) return false;
-			}
-			return true;
-		}
-	}
-	function testOp(s, char, operator, inverse) {
-	
-		var split = splitString(s, char, inverse);
-		if (split) {
-			return new Comp(operator, split[0], split[1])
-		}
-	}
-	function testMinus(s, char, operator, inverse) {
-	
-		var split = splitString(s, char, inverse);
-		if (split) {
-			if (split[0].length === 0) {
-				return new Comp(operator, 0, split[1])
-			} else if ('+*/<>=|&?:'.includes(split[0].substr(-1)) === false) {
-				return new Comp(operator, split[0], split[1])
-			}
-		}
-	}
-	function splitString(s, char, inverse) {
-		var direction = inverse ? -1 : 1;
-		var i = inverse ? s.length-1 : 0;
-		var level = 0;
-		var is_string = typeof char === 'string';
-		while (inverse ? i >= 0 : i < s.length) {
-			if (s[i] === '(') {
-				level += direction;
-			} else if (s[i] === ')') {
-				level -= direction;
-			} else if (level === 0) {
-				var letters = s.substr(i, char.length);
-				if (is_string && letters === char) {
-					return [
-						s.substr(0, i),
-						s.substr(i+char.length)
-					];
-				} else if (!is_string) {
-					for (var xi = 0; xi < char.length; xi++) {
-						if (char[xi] === letters) {
-							return [
-								s.substr(0, i),
-								s.substr(i+char[xi].length)
-							];
-						}
-					}
-				}
-			}
-			i += direction;
-		}
-	}
-	function iterateExp(T) {
-		if (typeof T === 'number') {
-			return T
-		} else if (typeof T === 'string') {
-			var val = current_variables[T];
-			if (val === undefined) {
-				if (T === 'true') {
-					return 1;
-				} else if (T === 'false') {
-					return 0;
-				} else {
-					val = self.global_variables[T];
-				}
-			}
-			if (val === undefined && typeof self.variableHandler === 'function') {
-				val = self.variableHandler(T, current_variables);
-			}
-			if (typeof val === 'string') {
-				val = self.parse(val, current_variables);
-			}
-			return val||0;
-	
-		} else if (T instanceof Statement) {
-			return iterateExp(T.value);
-	
-		} else if (T instanceof Allocation) {
-			return current_variables[T.name] = iterateExp(T.value);
-	
-		} else if (T instanceof Comp) {
-			switch (T.operator) {
-				//Basic
-				case 1:
-					return iterateExp(T.a) + iterateExp(T.b);
-				case 2:
-					return iterateExp(T.a) - iterateExp(T.b);
-				case 3:
-					return iterateExp(T.a) * iterateExp(T.b);
-				case 4:
-					return iterateExp(T.a) / iterateExp(T.b);
-				//Logical
-				case 10:
-					return iterateExp(T.a) ? iterateExp(T.b) : iterateExp(T.c);
-				case 11:
-					return iterateExp(T.a) && iterateExp(T.b) ? 1 : 0;
-				case 12:
-					return iterateExp(T.a) || iterateExp(T.b) ? 1 : 0;
-				case 13:
-					return iterateExp(T.a) < iterateExp(T.b) ? 1 : 0;
-				case 14:
-					return iterateExp(T.a) <= iterateExp(T.b) ? 1 : 0;
-				case 15:
-					return iterateExp(T.a) > iterateExp(T.b) ? 1 : 0;
-				case 16:
-					return iterateExp(T.a) >= iterateExp(T.b) ? 1 : 0;
-				case 17:
-					return iterateExp(T.a) === iterateExp(T.b) ? 1 : 0;
-				case 18:
-					return iterateExp(T.a) !== iterateExp(T.b) ? 1 : 0;
-				//Math
-				case 20:
-					return Math.abs(iterateExp(T.a));
-				case 21:
-					return Math.sin(iterateExp(T.a) * angleFactor());
-				case 22:
-					return Math.cos(iterateExp(T.a) * angleFactor());
-				case 23:
-					return Math.exp(iterateExp(T.a));
-				case 24:
-					return Math.log(iterateExp(T.a));
-				case 25:
-					return Math.pow(iterateExp(T.a), iterateExp(T.b));
-				case 26:
-					return Math.sqrt(iterateExp(T.a));
-				case 27:
-					return MathUtil.random(iterateExp(T.a), iterateExp(T.b), iterateExp(T.c));
-				case 28:
-					return Math.ceil(iterateExp(T.a));
-				case 29:
-					return Math.round(iterateExp(T.a));
-				case 30:
-					return Math.trunc(iterateExp(T.a));
-				case 31:
-					return Math.floor(iterateExp(T.a));
-				case 32:
-					return iterateExp(T.a) % iterateExp(T.b);
-				case 33:
-					return Math.min(iterateExp(T.a), iterateExp(T.b));
-				case 34:
-					return Math.max(iterateExp(T.a), iterateExp(T.b));
-				case 35:
-					return MathUtil.clamp(iterateExp(T.a), iterateExp(T.b), iterateExp(T.c));
-				case 36:
-					let n1 = iterateExp(T.a);
-					return n1 + (iterateExp(T.b) - n1) * iterateExp(T.c);
-				case 37:
-					let radify = n => (((n + 180) % 360) +180) % 360;
-					let a = radify(iterateExp(T.a));
-					let b = radify(iterateExp(T.b));
-					let i = iterateExp(T.c);
-	
-					if (a > b) [a, b] = [b, a];
-					var diff = b-a;
-					if (diff > 180) {
-						return radify(b + i * (360-diff));
-					} else {
-						return a + i * diff;
-					}
-			}
-		}
-		return 0;
-	}
-
-
-	this.parse = (input, variables) => {
-		if (typeof input === 'number') {
-			return isNaN(input) ? 0 : input
-		}
-		if (typeof input !== 'string') return 0;
-		input = trimInput(input);
-	
-		if (this.cache_enabled && cached[input]) {
-			var expression = cached[input];
-		} else {
-			var expression = new Expression(input);
-			if (this.cache_enabled) {
-				cached[input] = expression;
-			}
-		}
-		var value = calculate(expression, variables);
-		return value;
-	};
-}
-
-module.exports = Molang;
 
 
 /***/ }),
@@ -142005,15 +141608,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateCurvesPanel", function() { return updateCurvesPanel; });
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _molang__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./molang */ "./src/molang.js");
-/* harmony import */ var three__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! three */ "./node_modules/three/build/three.module.js");
-/* harmony import */ var _emitter__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./emitter */ "./src/emitter.js");
-/* harmony import */ var _input_structure__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./input_structure */ "./src/input_structure.js");
-/* harmony import */ var _input__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./input */ "./src/input.js");
-/* harmony import */ var _util__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./util */ "./src/util.js");
-/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
-/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_7__);
-/* harmony import */ var _edits__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./edits */ "./src/edits.js");
+/* harmony import */ var _emitter__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./emitter */ "./src/emitter.js");
+/* harmony import */ var _input_structure__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./input_structure */ "./src/input_structure.js");
+/* harmony import */ var _input__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./input */ "./src/input.js");
+/* harmony import */ var _util__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./util */ "./src/util.js");
+/* harmony import */ var _edits__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./edits */ "./src/edits.js");
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -142027,32 +141626,32 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 
 
-
-
-
 var Curve = /*#__PURE__*/function () {
   function Curve() {
     var _this = this;
 
+    var data = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
+
     _classCallCheck(this, Curve);
 
     var scope = this;
-    this.uuid = Object(_util__WEBPACK_IMPORTED_MODULE_6__["guid"])();
+    this.uuid = Object(_util__WEBPACK_IMPORTED_MODULE_4__["guid"])();
     this.svg_needs_update = false;
     this.inputs = {
-      id: new _input__WEBPACK_IMPORTED_MODULE_5__["default"]({
+      id: new _input__WEBPACK_IMPORTED_MODULE_3__["default"]({
         label: 'Name',
         info: 'The MoLang variable to be used later in MoLang expressions. Must begin with "variable."',
         placeholder: 'variable.curve1',
         type: 'text',
         onchange: function onchange() {
-          _emitter__WEBPACK_IMPORTED_MODULE_3__["Emitter"].curves[this.value] = scope;
+          scope.updateName(this.value);
         }
       }),
-      mode: new _input__WEBPACK_IMPORTED_MODULE_5__["default"]({
+      mode: new _input__WEBPACK_IMPORTED_MODULE_3__["default"]({
         type: 'select',
         label: 'Mode',
         info: 'Curve interpolation type',
+        value: data.mode,
         options: {
           catmull_rom: 'Catmull Rom',
           linear: 'Linear' //bezier: 'Bezier',
@@ -142062,23 +141661,41 @@ var Curve = /*#__PURE__*/function () {
           scope.updateSVG();
         }
       }),
-      input: new _input__WEBPACK_IMPORTED_MODULE_5__["default"]({
+      input: new _input__WEBPACK_IMPORTED_MODULE_3__["default"]({
         label: 'Input',
         info: 'Horizontal input',
-        type: 'molang'
+        type: 'molang',
+        value: data.input
       }),
-      range: new _input__WEBPACK_IMPORTED_MODULE_5__["default"]({
+      range: new _input__WEBPACK_IMPORTED_MODULE_3__["default"]({
         label: 'Range',
         info: 'Horizontal range that the input is mapped to',
-        type: 'molang'
+        type: 'molang',
+        value: data.range
       })
     };
-    this.nodes = [0, 1, 0];
+    this.inputs.mode.value = 'catmull_rom';
+    this.nodes = data.nodes instanceof Array ? data.nodes : [0, 1, 0];
     this.svg_data = '';
     this.vertical_line_data = '';
     this.horizontal_line_data = '';
     this.min = 0;
     this.max = 1;
+    this.config = {
+      get input() {
+        return scope.inputs.input.value;
+      },
+
+      get range() {
+        return scope.inputs.range.value;
+      },
+
+      get mode() {
+        return scope.inputs.mode.value;
+      },
+
+      nodes: this.nodes
+    };
     setTimeout(function () {
       vue__WEBPACK_IMPORTED_MODULE_0___default.a.nextTick(function () {
         return _this.updateSVG();
@@ -142107,6 +141724,22 @@ var Curve = /*#__PURE__*/function () {
       this.updateSVG();
     }
   }, {
+    key: "updateName",
+    value: function updateName(new_name) {
+      _emitter__WEBPACK_IMPORTED_MODULE_1__["Config"].curves[new_name] = this.config;
+      console.log(this.config, this.config.mode);
+
+      for (var key in _emitter__WEBPACK_IMPORTED_MODULE_1__["Config"].curves) {
+        if (_emitter__WEBPACK_IMPORTED_MODULE_1__["Config"].curves[key] != this && !_input_structure__WEBPACK_IMPORTED_MODULE_2__["default"].effect.curves.curves.find(function (curve) {
+          return curve.inputs.id.value == key;
+        })) {
+          delete _emitter__WEBPACK_IMPORTED_MODULE_1__["Config"].curves[key];
+        }
+      }
+
+      return this;
+    }
+  }, {
     key: "addNode",
     value: function addNode(index, event) {
       var value = 0;
@@ -142117,7 +141750,7 @@ var Curve = /*#__PURE__*/function () {
 
       this.nodes.splice(index, 0, Math.round(value * 100) / 100);
       this.updateSVG();
-      Object(_edits__WEBPACK_IMPORTED_MODULE_8__["default"])('add curve node');
+      Object(_edits__WEBPACK_IMPORTED_MODULE_5__["default"])('add curve node');
     }
   }, {
     key: "removeNode",
@@ -142125,7 +141758,7 @@ var Curve = /*#__PURE__*/function () {
       if (this.nodes.length <= 2) return;
       this.nodes.splice(index, 1);
       this.updateSVG();
-      Object(_edits__WEBPACK_IMPORTED_MODULE_8__["default"])('remove curve node');
+      Object(_edits__WEBPACK_IMPORTED_MODULE_5__["default"])('remove curve node');
     }
   }, {
     key: "setNode",
@@ -142135,38 +141768,11 @@ var Curve = /*#__PURE__*/function () {
       this.updateMinMax();
     }
   }, {
-    key: "calculate",
-    value: function calculate(params) {
-      var position = _molang__WEBPACK_IMPORTED_MODULE_1__["default"].parse(this.inputs.input.value, params);
-      var range = _molang__WEBPACK_IMPORTED_MODULE_1__["default"].parse(this.inputs.range.value, params);
-      position = position / range || 0;
-      if (position === Infinity) position = 0;
-
-      if (this.inputs.mode.value == 'linear') {
-        var segments = this.nodes.length - 1;
-        position *= segments;
-        var index = Math.floor(position);
-        var blend = position % 1;
-        var difference = this.nodes[index + 1] - this.nodes[index];
-        var value = this.nodes[index] + difference * blend;
-        return value;
-      } else if (this.inputs.mode.value == 'catmull_rom') {
-        var vectors = [];
-        this.nodes.forEach(function (val, i) {
-          vectors.push(new three__WEBPACK_IMPORTED_MODULE_2__["Vector2"](i - 1, val));
-        });
-        var curve = new three__WEBPACK_IMPORTED_MODULE_2__["SplineCurve"](vectors);
-        var segments = this.nodes.length - 3;
-        position *= segments;
-        var pso = (position + 1) / (segments + 2);
-        return curve.getPoint(pso).y;
-      }
-    }
-  }, {
     key: "remove",
     value: function remove() {
-      _input_structure__WEBPACK_IMPORTED_MODULE_4__["default"].effect.curves.curves.remove(this);
-      Object(_edits__WEBPACK_IMPORTED_MODULE_8__["default"])('remove curve');
+      delete _emitter__WEBPACK_IMPORTED_MODULE_1__["Config"].curves[this.inputs.id.value];
+      _input_structure__WEBPACK_IMPORTED_MODULE_2__["default"].effect.curves.curves.remove(this);
+      Object(_edits__WEBPACK_IMPORTED_MODULE_5__["default"])('remove curve');
     }
   }]);
 
@@ -142174,9 +141780,9 @@ var Curve = /*#__PURE__*/function () {
 }();
 
 function updateCurvesPanel() {
-  if (_input_structure__WEBPACK_IMPORTED_MODULE_4__["default"].effect.curves._folded) return;
+  if (_input_structure__WEBPACK_IMPORTED_MODULE_2__["default"].effect.curves._folded) return;
   vue__WEBPACK_IMPORTED_MODULE_0___default.a.nextTick(function () {
-    _input_structure__WEBPACK_IMPORTED_MODULE_4__["default"].effect.curves.curves.forEach(function (curve) {
+    _input_structure__WEBPACK_IMPORTED_MODULE_2__["default"].effect.curves.curves.forEach(function (curve) {
       curve.svg_needs_update = true;
     });
   });
@@ -142349,7 +141955,7 @@ function updateMaterial(cb) {
 		url = VanillaTextures[path];
 		Data.particle.texture.inputs.image.image.data = url || '';
 		Data.particle.texture.inputs.image.image.loaded = false;
-		loadTexture(url || DefaultTex.missing, cb)
+		loadTexture(url || DefaultTex.missing, cb) 
 	}
 }*/
 
@@ -143047,6 +142653,7 @@ var _examples_rain_particle_json__WEBPACK_IMPORTED_MODULE_10___namespace = /*#__
 var _examples_snow_particle_json__WEBPACK_IMPORTED_MODULE_11___namespace = /*#__PURE__*/__webpack_require__.t(/*! ../examples/snow.particle.json */ "./examples/snow.particle.json", 1);
 /* harmony import */ var _examples_trail_particle_json__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../examples/trail.particle.json */ "./examples/trail.particle.json");
 var _examples_trail_particle_json__WEBPACK_IMPORTED_MODULE_12___namespace = /*#__PURE__*/__webpack_require__.t(/*! ../examples/trail.particle.json */ "./examples/trail.particle.json", 1);
+/* harmony import */ var _curves__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./curves */ "./src/curves.js");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -143054,7 +142661,6 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
 /*
-import Molang from './molang'
 import tinycolor from 'tinycolor2'
 import Curve from './curves'
 
@@ -143105,6 +142711,7 @@ function importFile() {
 
 
 
+
 var Samples = {
   fire: _examples_fire_particle_json__WEBPACK_IMPORTED_MODULE_6__,
   loading: _examples_loading_particle_json__WEBPACK_IMPORTED_MODULE_7__,
@@ -143119,6 +142726,16 @@ function updateInputsFromConfig() {
   Object(_input_structure__WEBPACK_IMPORTED_MODULE_5__["forEachInput"])(function (input) {
     input.value = _emitter__WEBPACK_IMPORTED_MODULE_2__["Config"][input.id];
   });
+  _input_structure__WEBPACK_IMPORTED_MODULE_5__["default"].effect.curves.curves.splice(0, Infinity);
+
+  for (var id in _emitter__WEBPACK_IMPORTED_MODULE_2__["Config"].curves) {
+    var data = _emitter__WEBPACK_IMPORTED_MODULE_2__["Config"].curves[id];
+    var curve = new _curves__WEBPACK_IMPORTED_MODULE_13__["default"](data);
+    curve.inputs.id.value = id;
+    _input_structure__WEBPACK_IMPORTED_MODULE_5__["default"].effect.curves.curves.push(curve);
+    _emitter__WEBPACK_IMPORTED_MODULE_2__["Config"].curves[id] = curve.config;
+    curve.updateMinMax();
+  }
 } //function importFile() {}
 
 
@@ -143126,6 +142743,7 @@ function loadFile(data) {
   if (data && data.particle_effect && startNewProject()) {
     _emitter__WEBPACK_IMPORTED_MODULE_2__["Config"].setFromJSON(data);
     updateInputsFromConfig();
+    _emitter__WEBPACK_IMPORTED_MODULE_2__["Emitter"].playLoop();
   }
 }
 
@@ -143263,14 +142881,13 @@ if (_vscode_extension__WEBPACK_IMPORTED_MODULE_3__["default"]) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Input; });
 /* harmony import */ var three__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! three */ "./node_modules/three/build/three.module.js");
-/* harmony import */ var _molang__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./molang */ "./src/molang.js");
-/* harmony import */ var tinycolor2__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! tinycolor2 */ "./node_modules/tinycolor2/tinycolor.js");
-/* harmony import */ var tinycolor2__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(tinycolor2__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
-/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _edits__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./edits */ "./src/edits.js");
-/* harmony import */ var _components_ExpressionBar__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/ExpressionBar */ "./src/components/ExpressionBar.vue");
-/* harmony import */ var _emitter__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./emitter */ "./src/emitter.js");
+/* harmony import */ var tinycolor2__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! tinycolor2 */ "./node_modules/tinycolor2/tinycolor.js");
+/* harmony import */ var tinycolor2__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(tinycolor2__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _edits__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./edits */ "./src/edits.js");
+/* harmony import */ var _components_ExpressionBar__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/ExpressionBar */ "./src/components/ExpressionBar.vue");
+/* harmony import */ var _emitter__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./emitter */ "./src/emitter.js");
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
 
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -143288,7 +142905,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
 
 
 
@@ -143346,7 +142962,11 @@ var Input = /*#__PURE__*/function () {
     } else if (this.type === 'number' && !this.value) {//this.value = 0;
     }
 
-    this.value = _emitter__WEBPACK_IMPORTED_MODULE_6__["Config"][this.id];
+    if (this.id) {
+      this.value = _emitter__WEBPACK_IMPORTED_MODULE_5__["Config"][this.id];
+    } else if (data.value) {
+      this.value = data.value;
+    }
   }
 
   _createClass(Input, [{
@@ -143408,7 +143028,7 @@ var Input = /*#__PURE__*/function () {
 
       if (this.type === 'select') {
         if (e) {
-          this.value = jquery__WEBPACK_IMPORTED_MODULE_3___default()(e.target).find('option:selected').attr('id');
+          this.value = jquery__WEBPACK_IMPORTED_MODULE_2___default()(e.target).find('option:selected').attr('id');
         }
 
         this.update();
@@ -143427,49 +143047,14 @@ var Input = /*#__PURE__*/function () {
 
       if (e instanceof Event || this.type == 'color' && node && !color_input_sliding) {
         // User Input
-        if (_components_ExpressionBar__WEBPACK_IMPORTED_MODULE_5__["ExpandedInput"].setup && ['molang', 'text', 'list'].includes(this.type)) {
+        if (_components_ExpressionBar__WEBPACK_IMPORTED_MODULE_4__["ExpandedInput"].setup && ['molang', 'text', 'list'].includes(this.type)) {
           this.focus();
         }
 
-        Object(_edits__WEBPACK_IMPORTED_MODULE_4__["default"])('change input', event);
+        Object(_edits__WEBPACK_IMPORTED_MODULE_3__["default"])('change input', event);
       }
 
       return this;
-    }
-  }, {
-    key: "calculate",
-    value: function calculate(opts) {
-      var scope = this;
-
-      function getV(v) {
-        if (scope.type === 'molang') {
-          return _molang__WEBPACK_IMPORTED_MODULE_1__["default"].parse(v, opts);
-        } else if (scope.type === 'number') {
-          return parseFloat(v) || 0;
-        }
-      }
-
-      var data;
-
-      if (this.type === 'molang' || this.type === 'number') {
-        if (this.axis_count === 4) {
-          var data = new three__WEBPACK_IMPORTED_MODULE_0__["Plane"]().setComponents(getV(this.value[0]), getV(this.value[1]), getV(this.value[2]), getV(this.value[3]));
-        } else if (this.axis_count === 3) {
-          var data = new three__WEBPACK_IMPORTED_MODULE_0__["Vector3"](getV(this.value[0]), getV(this.value[1]), getV(this.value[2]));
-        } else if (this.axis_count === 2) {
-          var data = new three__WEBPACK_IMPORTED_MODULE_0__["Vector2"](getV(this.value[0]), getV(this.value[1]));
-        } else {
-          var data = getV(this.value);
-        }
-      } else if (this.type === 'color') {
-        var val = this.value && this.value.hsl ? this.value.hex : this.value;
-        var c = tinycolor2__WEBPACK_IMPORTED_MODULE_2___default()(val).toHex();
-        var data = new three__WEBPACK_IMPORTED_MODULE_0__["Color"]('#' + c);
-      } else {
-        var data = this.value;
-      }
-
-      return data;
     }
   }, {
     key: "set",
@@ -143503,7 +143088,7 @@ var Input = /*#__PURE__*/function () {
         this.image.loaded = false;
         this.image.width = 0;
         this.image.height = 0;
-        jquery__WEBPACK_IMPORTED_MODULE_3___default()('#particle-texture-image .input_texture_preview').css('background-image', "none");
+        jquery__WEBPACK_IMPORTED_MODULE_2___default()('#particle-texture-image .input_texture_preview').css('background-image', "none");
         this.updatePreview();
       }
 
@@ -143512,10 +143097,10 @@ var Input = /*#__PURE__*/function () {
   }, {
     key: "focus",
     value: function focus(axis) {
-      _components_ExpressionBar__WEBPACK_IMPORTED_MODULE_5__["ExpandedInput"].input = this;
-      if (axis !== undefined) _components_ExpressionBar__WEBPACK_IMPORTED_MODULE_5__["ExpandedInput"].axis = axis;
-      var val = this.axis_count > 1 || this.type == 'list' ? this.value[_components_ExpressionBar__WEBPACK_IMPORTED_MODULE_5__["ExpandedInput"].axis] : this.value;
-      _components_ExpressionBar__WEBPACK_IMPORTED_MODULE_5__["ExpandedInput"].updateText(val, this.type == 'molang' ? 'molang' : 'none');
+      _components_ExpressionBar__WEBPACK_IMPORTED_MODULE_4__["ExpandedInput"].input = this;
+      if (axis !== undefined) _components_ExpressionBar__WEBPACK_IMPORTED_MODULE_4__["ExpandedInput"].axis = axis;
+      var val = this.axis_count > 1 || this.type == 'list' ? this.value[_components_ExpressionBar__WEBPACK_IMPORTED_MODULE_4__["ExpandedInput"].axis] : this.value;
+      _components_ExpressionBar__WEBPACK_IMPORTED_MODULE_4__["ExpandedInput"].updateText(val, this.type == 'molang' ? 'molang' : 'none');
       return this;
     }
   }, {
@@ -143525,7 +143110,7 @@ var Input = /*#__PURE__*/function () {
     },
     set: function set(v) {
       this._value = v;
-      _emitter__WEBPACK_IMPORTED_MODULE_6__["Config"].set(this.id, v);
+      if (this.id) _emitter__WEBPACK_IMPORTED_MODULE_5__["Config"].set(this.id, v);
 
       if (this.type == 'select') {
         this.meta_value = this.options[v];
@@ -144215,23 +143800,6 @@ forEachInput(function (input) {
 window.Data = Data;
 /* harmony default export */ __webpack_exports__["default"] = (Data);
 
-
-/***/ }),
-
-/***/ "./src/molang.js":
-/*!***********************!*\
-  !*** ./src/molang.js ***!
-  \***********************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var molangjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! molangjs */ "./node_modules/molangjs/dist/molang.cjs.js");
-/* harmony import */ var molangjs__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(molangjs__WEBPACK_IMPORTED_MODULE_0__);
-
-var Molang = new molangjs__WEBPACK_IMPORTED_MODULE_0___default.a();
-/* harmony default export */ __webpack_exports__["default"] = (Molang);
 
 /***/ }),
 

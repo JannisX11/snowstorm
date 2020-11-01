@@ -1,5 +1,4 @@
 import * as THREE from 'three'
-import Molang from './molang'
 import tinycolor from 'tinycolor2'
 import $ from 'jquery'
 import registerEdit from './edits'
@@ -61,7 +60,11 @@ export default class Input {
 		} else if (this.type === 'number' && !this.value) {
 			//this.value = 0;
 		}
-		this.value = Config[this.id];
+		if (this.id) {
+			this.value = Config[this.id];
+		} else if (data.value) {
+			this.value = data.value;
+		}
 
 	}
 	get value() {
@@ -69,7 +72,7 @@ export default class Input {
 	}
 	set value(v) {
 		this._value = v;
-		Config.set(this.id, v);
+		if (this.id) Config.set(this.id, v);
 		if (this.type == 'select') {
 			this.meta_value = this.options[v];
 		}
@@ -138,48 +141,6 @@ export default class Input {
 			registerEdit('change input', event)
 		}
 		return this;
-	}
-	calculate(opts) {
-		var scope = this;
-		function getV(v) {
-			if (scope.type === 'molang') {
-				return Molang.parse(v, opts)
-			} else if (scope.type === 'number') {
-				return parseFloat(v)||0;
-			}
-		}
-		var data;
-		if (this.type === 'molang' || this.type === 'number') {
-			if (this.axis_count === 4) {
-				var data = new THREE.Plane().setComponents(
-					getV(this.value[0]),
-					getV(this.value[1]),
-					getV(this.value[2]),
-					getV(this.value[3])
-				)
-			} else if (this.axis_count === 3) {
-				var data = new THREE.Vector3(
-					getV(this.value[0]),
-					getV(this.value[1]),
-					getV(this.value[2])
-				)
-			} else if (this.axis_count === 2) {
-				var data = new THREE.Vector2(
-					getV(this.value[0]),
-					getV(this.value[1])
-				)
-			} else {
-				var data = getV(this.value)
-			}
-		} else if (this.type === 'color') {
-			var val = (this.value && this.value.hsl) ? this.value.hex : this.value;
-			var c = tinycolor(val).toHex();
-			var data = new THREE.Color('#'+c)
-
-		} else {
-			var data = this.value
-		}
-		return data;
 	}
 	set(value) {
 		var scope = this;

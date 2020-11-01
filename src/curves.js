@@ -1,15 +1,12 @@
 import Vue from 'vue'
-import Molang from './molang'
-import * as THREE from 'three'
-import {Emitter} from './emitter'
+import {Emitter, Config} from './emitter'
 import Data from './input_structure'
 import Input from './input'
 import {guid} from './util'
-import $ from 'jquery'
 import registerEdit from './edits'
 
 class Curve {
-	constructor() {
+	constructor(data = 0) {
 		var scope = this;
 		this.uuid = guid();
 		this.svg_needs_update = false;
@@ -21,13 +18,14 @@ class Curve {
 				placeholder: 'variable.curve1',
 				type: 'text',
 				onchange() {
-					Emitter.curves[this.value] = scope;
+					scope.updateName(this.value);
 				}
 			}),
 			mode: new Input({
 				type: 'select',
 				label: 'Mode',
 				info: 'Curve interpolation type',
+				value: data.mode,
 				options: {
 					catmull_rom: 'Catmull Rom',
 					linear: 'Linear',
@@ -40,21 +38,31 @@ class Curve {
 			input: new Input({
 				label: 'Input',
 				info: 'Horizontal input',
-				type: 'molang'
+				type: 'molang',
+				value: data.input
 			}),
 			range: new Input({
 				label: 'Range',
 				info: 'Horizontal range that the input is mapped to',
-				type: 'molang'
+				type: 'molang',
+				value: data.range
 			})
 		}
-		this.nodes = [0, 1, 0]
+		this.inputs.mode.value = 'catmull_rom';
+		this.nodes = data.nodes instanceof Array ? data.nodes : [0, 1, 0];
 		this.svg_data = '';
 		this.vertical_line_data = '';
 		this.horizontal_line_data = '';
 
 		this.min = 0;
 		this.max = 1;
+
+		this.config = {
+			get input() {return scope.inputs.input.value;},
+			get range() {return scope.inputs.range.value;},
+			get mode() {return scope.inputs.mode.value;},
+			nodes: this.nodes
+		}
 
 		setTimeout(() => {
 			Vue.nextTick(() => this.updateSVG())
@@ -73,6 +81,16 @@ class Curve {
 		this.min = Math.clamp(Math.round(this.min*100)/100, -100, 0);
 		this.max = Math.clamp(Math.round(this.max*100)/100, 0, 100);
 		this.updateSVG();
+	}
+	updateName(new_name) {
+		Config.curves[new_name] = this.config;
+		console.log(this.config, this.config.mode)
+		for (var key in Config.curves) {
+			if (Config.curves[key] != this && !Data.effect.curves.curves.find(curve => curve.inputs.id.value == key)) {
+				delete Config.curves[key];
+			}
+		}
+		return this;
 	}
 	addNode(index, event) {
 		var value = 0;
@@ -95,35 +113,8 @@ class Curve {
 		this.nodes.splice(index, 1, value);
 		this.updateMinMax();
 	}
-	calculate(params) {
-		var position = Molang.parse(this.inputs.input.value, params);
-		var range = Molang.parse(this.inputs.range.value, params);
-		position = (position/range) || 0;
-		if (position === Infinity) position = 0;
-		if (this.inputs.mode.value == 'linear') {
-
-			var segments = this.nodes.length-1;
-			position *= segments
-			var index = Math.floor(position);
-			var blend = position%1;
-			var difference = this.nodes[index+1] - this.nodes[index];
-			var value = this.nodes[index] + difference * blend;
-			return value;
-
-		} else if (this.inputs.mode.value == 'catmull_rom') {
-			var vectors = [];
-			this.nodes.forEach((val, i) => {
-				vectors.push(new THREE.Vector2(i-1, val))
-			})
-			var curve = new THREE.SplineCurve(vectors);
-
-			var segments = this.nodes.length-3;
-			position *= segments
-			var pso = (position+1)/(segments+2)
-			return curve.getPoint(pso).y;
-		}
-	}
 	remove() {
+		delete Config.curves[this.inputs.id.value];
 		Data.effect.curves.curves.remove(this);
 		registerEdit('remove curve')
 	}
