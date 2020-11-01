@@ -6,34 +6,15 @@ import vscode from './vscode_extension'
 
 import Wintersky from './../../wintersky'
 
-console.log(Wintersky)
+console.log('config')
 
 const Config = new Wintersky.Config();
 const Emitter = new Wintersky.Emitter(Config);
 window.Emitter = Emitter;
 
 
-setInterval(function() {
-	if (Emitter && Emitter.tick && !Emitter.paused) {
-		Emitter.tick()
-	}
-}, 1000/30)
-
-
 function initParticles(View) {	
 	View.scene.add(Wintersky.space);
-}
-function startAnimation() {
-	if (Emitter.paused) {
-		togglePause()
-	}
-	for (var i = Emitter.particles.length-1; i >= 0; i--) {
-		Emitter.particles[i].remove()
-	}
-	Emitter.start()
-}
-function togglePause() {
-	Emitter.paused = !Emitter.paused;
 }
 
 Wintersky.fetchTexture = function(config) {
@@ -146,5 +127,5 @@ function loadTexture(url, cb) {
 }
 
 
-export {Emitter, Config, startAnimation, updateMaterial, togglePause, initParticles}
+export {Emitter, Config, updateMaterial, initParticles}
 

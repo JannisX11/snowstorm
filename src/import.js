@@ -41,7 +41,7 @@ function importFile() {
 import {IO, pathToExtension} from './util'
 import {Config} from './emitter'
 import vscode from './vscode_extension'
-import {startAnimation} from './emitter'
+import {Emitter} from './emitter'
 import {ExpandedInput} from './components/ExpressionBar'
 import Data, {forEachInput} from './input_structure'
 
@@ -105,7 +105,7 @@ document.body.ondrop = function(event) {
 			reader.onloadend = function() {
 
 				loadFile(JSON.parse(reader.result))
-				startAnimation()
+				Emitter.playLoop();
 			}
 			reader.readAsText(file)
 			event.preventDefault()

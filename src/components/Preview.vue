@@ -4,6 +4,16 @@
             <canvas id="canvas" ref="canvas"></canvas>
         </div>
         <footer>
+            <select id="loop_mode" v-model="loop_mode" @change="changeLoopMode()">
+                <option id="auto">Auto</option>
+                <option id="looping">Looping</option>
+                <option id="once">Once</option>
+            </select>
+            <select id="parent_mode" v-model="parent_mode" @change="changeParentMode()">
+                <option id="world">World</option>
+                <option id="entity">Entity</option>
+                <option id="locator">Locator</option>
+            </select>
             <div class="tool" @click="startAnimation()" title="Play"><i class="unicode_icon" style="font-size: 13pt;">{{'\u25B6'}}</i></div>
             <div class="tool" @click="togglePause()" title="Pause"><i class="unicode_icon pause">{{'\u2016'}}</i></div>
             <div class="stat" style="width: 66px;">{{fps}} FPS</div>
@@ -19,7 +29,7 @@
     import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
     import Wintersky from './../../../wintersky';
 
-    import {Emitter, togglePause, startAnimation, initParticles} from './../emitter';
+    import {Emitter, initParticles} from './../emitter';
 
     const View = {}
     
@@ -65,6 +75,13 @@
     }
 
     
+    function startAnimation() {
+        Emitter.stopLoop().playLoop();
+    }
+    function togglePause() {
+        Emitter.toggleLoop();
+    }
+
 
     function initPreview(canvas) {
 
@@ -137,10 +154,18 @@
         data() {return {
             fps: 0,
             particles: 0,
+            loop_mode: 'Auto',
+            parent_mode: 'World',
         }},
         methods: {
             updateSize() {
                 resizeCanvas()
+            },
+            changeLoopMode() {
+                Emitter.loop_mode = this.loop_mode.toLowerCase();
+            },
+            changeParentMode() {
+                Emitter.parent_mode = this.parent_mode.toLowerCase();
             },
             startAnimation,
             togglePause
@@ -174,7 +199,6 @@
 		width: 100%;
 		font-size: 1.1em;
         height: 28px;
-        padding-left: 6px;
         background-color: var(--color-bar);
         border-top: 1px solid var(--color-border);
 	}	
@@ -184,6 +208,13 @@
         background-color: var(--color-bar);
         float: left;
 	}
+    select {
+        appearance: none;
+        background-color: var(--color-dark);
+        border-top: none;
+        height: 27px;
+        margin-right: 4px;
+    }
 	div.stat {
         text-align: right;
 		float: right;

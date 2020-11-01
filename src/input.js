@@ -18,7 +18,7 @@ export default class Input {
 		this.required = data.required == true;
 		this.expanded = data.expanded == true;
 		this.expandable = ['molang', 'text', 'number'].includes(this.type);
-		this.value = data.value;
+		//if () this._value = data.value;
 		if (this.type === 'gradient') this.value = data.value || [];
 
 		this.options = data.options;
@@ -35,7 +35,8 @@ export default class Input {
 			if (!this.value) {
 				//this.value = Object.keys(this.options)[0]
 			}
-			this.meta_value = this.options[this.value]
+			//this.meta_value = this.options[this.value]
+			//console.log(this.value, this.meta_value, this.options, this.id)
 
 		} else if (this.type === 'color' && !this.value) {
 			//this.value = '#ffffff';
@@ -60,7 +61,7 @@ export default class Input {
 		} else if (this.type === 'number' && !this.value) {
 			//this.value = 0;
 		}
-		this._value = Config[this.id];
+		this.value = Config[this.id];
 
 	}
 	get value() {
@@ -70,7 +71,7 @@ export default class Input {
 		this._value = v;
 		Config.set(this.id, v);
 		if (this.type == 'select') {
-			this.meta_value = this.options[this.value];
+			this.meta_value = this.options[v];
 		}
 	}
 	toggleExpand() {
