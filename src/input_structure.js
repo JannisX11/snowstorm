@@ -142,7 +142,7 @@ const Data = {
 						once: 'Once',
 						expression: 'Expression'
 					},
-					updatePreview: (m) => {Emitter.mode = m}
+					//updatePreview: (m) => {Emitter.mode = m}
 				}),
 				active_time: new Input({
 					id: 'emitter_lifetime_active_time',
@@ -151,14 +151,14 @@ const Data = {
 					enabled_modes: ['looping', 'once'],
 					required: true,
 					value: 1,
-					updatePreview: (v) => {Emitter.active_time = v}
+					//updatePreview: (v) => {Emitter.active_time = v}
 				}),
 				sleep_time: new Input({
 					id: 'emitter_lifetime_sleep_time',
 					label: 'Sleep Time',
 					info: 'emitter will pause emitting particles for this time per loop',
 					enabled_modes: ['looping'],
-					updatePreview: (v) => {Emitter.sleep_time = v}
+					//updatePreview: (v) => {Emitter.sleep_time = v}
 				}),
 				activation: new Input({
 					id: 'emitter_lifetime_activation',
@@ -192,7 +192,7 @@ const Data = {
 						//custom: 'Custom',
 						entity_aabb: 'Entity Bounding Box',
 					},
-					updatePreview: (m) => {Emitter.shape = m}
+					//updatePreview: (m) => {Emitter.shape = m}
 				}),
 				offset: new Input({
 					id: 'emitter_shape_offset',

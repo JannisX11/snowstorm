@@ -1,5 +1,3 @@
-import * as THREE from 'three'
-import tinycolor from 'tinycolor2'
 import $ from 'jquery'
 import registerEdit from './edits'
 
@@ -72,6 +70,13 @@ export default class Input {
 	}
 	set value(v) {
 		this._value = v;
+		if (this.type == 'number') {
+			if (v instanceof Array) {
+				v.forEach((n, i) => {v[i] = parseFloat(n)})
+			} else {
+				v = parseFloat(v);
+			}
+		}
 		if (this.id) Config.set(this.id, v);
 		if (this.type == 'select') {
 			this.meta_value = this.options[v];

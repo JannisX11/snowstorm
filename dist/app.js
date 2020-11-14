@@ -211,6 +211,63 @@ var Config = /*#__PURE__*/function () {
       this.texture.image.src = img;
       this.texture.magFilter = THREE.NearestFilter;
       this.texture.minFilter = THREE.NearestFilter;
+
+      for (var key in Config.types) {
+        var type = Config.types[key];
+        var value;
+
+        switch (type.type) {
+          case 'string':
+            value = '';
+            break;
+
+          case 'molang':
+            value = '';
+            break;
+
+          case 'number':
+            value = 0;
+            break;
+
+          case 'boolean':
+            value = false;
+            break;
+
+          case 'color':
+            value = '#ffffff';
+            break;
+
+          case 'object':
+            value = {};
+            break;
+        }
+
+        if (type.array) {
+          this[key] = [];
+
+          if (type.dimensions) {
+            for (var i = 0; i < type.dimensions; i++) {
+              if (type.type == 'object') value = {};
+              this[key].push(value);
+            }
+          }
+        } else {
+          this[key] = value;
+        }
+      }
+
+      this.emitter_rate_mode = 'steady';
+      this.emitter_lifetime_mode = 'once';
+      this.emitter_shape_mode = 'point';
+      this.particle_appearance_facing_camera_mode = 'rotate_xyz';
+      this.particle_appearance_material = 'particles_alpha';
+      this.particle_direction_mode = 'outwards';
+      this.particle_motion_mode = 'dynamic';
+      this.particle_rotation_mode = 'dynamic';
+      this.particle_texture_mode = 'static';
+      this.particle_lifetime_mode = 'time';
+      this.particle_color_mode = 'static';
+      /*
       this.identifier = '';
       this.file_path = '';
       this.curves = {};
@@ -218,39 +275,30 @@ var Config = /*#__PURE__*/function () {
       this.space_local_rotation = false;
       this.variables_creation_vars = [];
       this.variables_tick_vars = [];
-      this.emitter_rate_mode = 'steady';
-      this.emitter_rate_rate = '';
+      		this.emitter_rate_rate = '';
       this.emitter_rate_amount = '';
       this.emitter_rate_maximum = '';
-      this.emitter_lifetime_mode = 'once';
       this.emitter_lifetime_active_time = '';
       this.emitter_lifetime_sleep_time = '';
       this.emitter_lifetime_activation = '';
       this.emitter_lifetime_expiration = '';
-      this.emitter_shape_mode = 'point';
       this.emitter_shape_offset = [0, 0, 0];
       this.emitter_shape_radius = '';
       this.emitter_shape_half_dimensions = [0, 0, 0];
       this.emitter_shape_plane_normal = [0, 0, 0];
       this.emitter_shape_surface_only = false;
-      this.particle_appearance_size = [0, 0];
-      this.particle_appearance_facing_camera_mode = 'rotate_xyz';
-      this.particle_appearance_material = 'particles_alpha';
-      this.particle_direction_mode = 'outwards';
+      		this.particle_appearance_size = [0, 0];
       this.particle_direction_direction = [0, 0, 0];
-      this.particle_motion_mode = 'dynamic';
       this.particle_motion_linear_speed = '';
       this.particle_motion_linear_acceleration = [0, 0, 0];
       this.particle_motion_linear_drag_coefficient = '';
       this.particle_motion_relative_position = [];
       this.particle_motion_direction = [];
-      this.particle_rotation_mode = 'dynamic';
       this.particle_rotation_initial_rotation = '';
       this.particle_rotation_rotation_rate = '';
       this.particle_rotation_rotation_acceleration = '';
       this.particle_rotation_rotation_drag_coefficient = '';
       this.particle_rotation_rotation = '';
-      this.particle_lifetime_mode = 'time';
       this.particle_lifetime_max_lifetime = '';
       this.particle_lifetime_kill_plane = [0, 0, 0, 0];
       this.particle_lifetime_expiration_expression = '';
@@ -259,8 +307,6 @@ var Config = /*#__PURE__*/function () {
       this.particle_texture_width = 0;
       this.particle_texture_height = 0;
       this.particle_texture_path = '';
-      this.particle_texture_image = '';
-      this.particle_texture_mode = 'static';
       this.particle_texture_uv = [0, 0];
       this.particle_texture_uv_size = [0, 0];
       this.particle_texture_uv_step = [0, 0];
@@ -268,7 +314,6 @@ var Config = /*#__PURE__*/function () {
       this.particle_texture_max_frame = '';
       this.particle_texture_stretch_to_lifetime = false;
       this.particle_texture_loop = false;
-      this.particle_color_mode = 'static';
       this.particle_color_static = '#ffffff';
       this.particle_color_interpolant = '';
       this.particle_color_range = 0;
@@ -280,22 +325,24 @@ var Config = /*#__PURE__*/function () {
       this.particle_collision_coefficient_of_restitution = 0;
       this.particle_collision_collision_radius = 0;
       this.particle_collision_expire_on_contact = false;
+      */
+
       return this;
     }
   }, {
     key: "set",
     value: function set(key, val) {
-      if (this[key] == undefined || val == undefined || val == null) return;
+      if (Config.types[key] == undefined || val == undefined || val == null) return;
 
-      if (this[key] instanceof Array) {
+      if (Config.types[key].array) {
         var _this$key;
 
         (_this$key = this[key]).splice.apply(_this$key, [0, Infinity].concat(_toConsumableArray(val)));
       } else if (typeof this[key] == 'string') {
         this[key] = val.toString();
-      } else if (typeof this[key] == 'number' && typeof val == 'number') {
+      } else if (Config.types[key].type == 'number' && typeof val == 'number') {
         this[key] = val;
-      } else if (typeof this[key] == 'boolean') {
+      } else if (Config.types[key].type == 'boolean') {
         this[key] = !!val;
       }
 
@@ -658,6 +705,243 @@ var Config = /*#__PURE__*/function () {
   return Config;
 }();
 
+Config.types = {
+  identifier: {
+    type: 'string'
+  },
+  file_path: {
+    type: 'string'
+  },
+  curves: {
+    type: 'object'
+  },
+  space_local_position: {
+    type: 'boolean'
+  },
+  space_local_rotation: {
+    type: 'boolean'
+  },
+  variables_creation_vars: {
+    type: 'string',
+    array: true
+  },
+  variables_tick_vars: {
+    type: 'string',
+    array: true
+  },
+  emitter_rate_mode: {
+    type: 'string'
+  },
+  emitter_rate_rate: {
+    type: 'molang'
+  },
+  emitter_rate_amount: {
+    type: 'molang'
+  },
+  emitter_rate_maximum: {
+    type: 'molang'
+  },
+  emitter_lifetime_mode: {
+    type: 'string'
+  },
+  emitter_lifetime_active_time: {
+    type: 'molang'
+  },
+  emitter_lifetime_sleep_time: {
+    type: 'molang'
+  },
+  emitter_lifetime_activation: {
+    type: 'molang'
+  },
+  emitter_lifetime_expiration: {
+    type: 'molang'
+  },
+  emitter_shape_mode: {
+    type: 'string'
+  },
+  emitter_shape_offset: {
+    type: 'molang',
+    array: true,
+    dimensions: 3
+  },
+  emitter_shape_radius: {
+    type: 'molang'
+  },
+  emitter_shape_half_dimensions: {
+    type: 'molang',
+    array: true,
+    dimensions: 3
+  },
+  emitter_shape_plane_normal: {
+    type: 'molang',
+    array: true,
+    dimensions: 3
+  },
+  emitter_shape_surface_only: {
+    type: 'boolean'
+  },
+  particle_appearance_size: {
+    type: 'molang',
+    array: true,
+    dimensions: 2
+  },
+  particle_appearance_facing_camera_mode: {
+    type: 'string'
+  },
+  particle_appearance_material: {
+    type: 'string'
+  },
+  particle_direction_mode: {
+    type: 'string'
+  },
+  particle_direction_direction: {
+    type: 'molang',
+    array: true,
+    dimensions: 3
+  },
+  particle_motion_mode: {
+    type: 'string'
+  },
+  particle_motion_linear_speed: {
+    type: 'molang'
+  },
+  particle_motion_linear_acceleration: {
+    type: 'molang',
+    array: true,
+    dimensions: 3
+  },
+  particle_motion_linear_drag_coefficient: {
+    type: 'molang'
+  },
+  particle_motion_relative_position: {
+    type: 'molang',
+    array: true,
+    dimensions: 3
+  },
+  particle_motion_direction: {
+    type: 'molang',
+    array: true,
+    dimensions: 3
+  },
+  particle_rotation_mode: {
+    type: 'string'
+  },
+  particle_rotation_initial_rotation: {
+    type: 'molang'
+  },
+  particle_rotation_rotation_rate: {
+    type: 'molang'
+  },
+  particle_rotation_rotation_acceleration: {
+    type: 'molang'
+  },
+  particle_rotation_rotation_drag_coefficient: {
+    type: 'molang'
+  },
+  particle_rotation_rotation: {
+    type: 'molang'
+  },
+  particle_lifetime_mode: {
+    type: 'string'
+  },
+  particle_lifetime_max_lifetime: {
+    type: 'molang'
+  },
+  particle_lifetime_kill_plane: {
+    type: 'molang',
+    array: true,
+    dimensions: 4
+  },
+  particle_lifetime_expiration_expression: {
+    type: 'molang'
+  },
+  particle_lifetime_expire_in: {
+    type: 'string',
+    array: true
+  },
+  particle_lifetime_expire_outside: {
+    type: 'string',
+    array: true
+  },
+  particle_texture_width: {
+    type: 'number'
+  },
+  particle_texture_height: {
+    type: 'number'
+  },
+  particle_texture_path: {
+    type: 'string'
+  },
+  particle_texture_mode: {
+    type: 'string'
+  },
+  particle_texture_uv: {
+    type: 'molang',
+    array: true,
+    dimensions: 2
+  },
+  particle_texture_uv_size: {
+    type: 'molang',
+    array: true,
+    dimensions: 2
+  },
+  particle_texture_uv_step: {
+    type: 'molang',
+    array: true,
+    dimensions: 2
+  },
+  particle_texture_frames_per_second: {
+    type: 'number'
+  },
+  particle_texture_max_frame: {
+    type: 'molang'
+  },
+  particle_texture_stretch_to_lifetime: {
+    type: 'boolean'
+  },
+  particle_texture_loop: {
+    type: 'boolean'
+  },
+  particle_color_mode: {
+    type: 'string'
+  },
+  particle_color_static: {
+    type: 'color'
+  },
+  particle_color_interpolant: {
+    type: 'molang'
+  },
+  particle_color_range: {
+    type: 'number'
+  },
+  particle_color_gradient: {
+    type: 'object',
+    array: true
+  },
+  particle_color_expression: {
+    type: 'molang',
+    array: true,
+    dimensions: 3
+  },
+  particle_color_light: {
+    type: 'boolean'
+  },
+  particle_collision_enabled: {
+    type: 'boolean'
+  },
+  particle_collision_collision_drag: {
+    type: 'number'
+  },
+  particle_collision_coefficient_of_restitution: {
+    type: 'number'
+  },
+  particle_collision_collision_radius: {
+    type: 'number'
+  },
+  particle_collision_expire_on_contact: {
+    type: 'boolean'
+  }
+};
 Wintersky.Config = Config;
 var MathUtil = (_MathUtil = {
   roundTo: function roundTo(num, digits) {
@@ -142022,65 +142306,62 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _input_structure__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./input_structure */ "./src/input_structure.js");
 /* harmony import */ var _util__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./util */ "./src/util.js");
 /* harmony import */ var _emitter__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./emitter */ "./src/emitter.js");
+function _createForOfIteratorHelper(o, allowArrayLike) { var it; if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = o[Symbol.iterator](); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 
 
 
-function getValue(subject, group, key, curve_key) {
-  if (typeof subject === 'number') {
-    switch (subject) {
-      case 0:
-        subject = 'effect';
-        break;
 
-      case 1:
-        subject = 'emitter';
-        break;
-
-      case 2:
-        subject = 'particle';
-        break;
+function processValue(v, type) {
+  if (type.type === 'molang') {
+    if (!isNaN(v)) {
+      v = parseFloat(v);
     }
+
+    if (!v) v = 0;
+  } else if (type.type === 'number' && _typeof(v) !== type.type) {
+    v = parseFloat(v) || 0;
   }
 
-  var input;
+  return v;
+}
 
-  if (group == 'curves') {
-    input = _input_structure__WEBPACK_IMPORTED_MODULE_0__["default"].effect.curves.curves[key].inputs[curve_key];
-  } else {
-    input = _input_structure__WEBPACK_IMPORTED_MODULE_0__["default"][subject][group].inputs[key];
-  }
+function getValue(key, required) {
+  var value = _emitter__WEBPACK_IMPORTED_MODULE_2__["Config"][key];
+  var type = _emitter__WEBPACK_IMPORTED_MODULE_2__["Config"].constructor.types[key];
 
-  var original_value = input.value;
+  if (type.array) {
+    var result = [];
 
-  function processValue(v) {
-    if (input.type === 'molang') {
-      if (!isNaN(v)) {
-        v = parseFloat(v);
+    var _iterator = _createForOfIteratorHelper(value),
+        _step;
+
+    try {
+      for (_iterator.s(); !(_step = _iterator.n()).done;) {
+        var num = _step.value;
+        result.push(processValue(num, type));
       }
-
-      if (!v) v = 0;
-    } else if (input.type === 'number') {
-      v = parseFloat(v) || 0;
+    } catch (err) {
+      _iterator.e(err);
+    } finally {
+      _iterator.f();
     }
 
-    return v;
-  }
-
-  if (input.axis_count > 1) {
-    var value = [];
-
-    for (var i = 0; i < input.axis_count; i++) {
-      value[i] = processValue(original_value[i]);
-    }
-
-    if (value.allEqual(0) && !input.required) value = undefined;
+    if (!result.find(function (v) {
+      return v;
+    }) && !required) result = undefined;
   } else {
-    var value = processValue(original_value);
-    if (!value && !input.required) value = undefined;
+    var result = processValue(value, type);
+    if (!result && !required) result = undefined;
   }
 
-  return value;
+  return result;
 }
 
 function generateFile() {
@@ -142088,37 +142369,61 @@ function generateFile() {
     format_version: '1.10.0',
     particle_effect: {
       description: {
-        identifier: _input_structure__WEBPACK_IMPORTED_MODULE_0__["default"].effect.meta.inputs.identifier.value,
+        identifier: _emitter__WEBPACK_IMPORTED_MODULE_2__["Config"].identifier,
         basic_render_parameters: {
-          material: getValue(2, 'appearance', 'material'),
-          texture: getValue(2, 'texture', 'path') || 'textures/blocks/wool_colored_white'
+          material: getValue('particle_appearance_material', true),
+          texture: getValue('particle_texture_path') || 'textures/blocks/wool_colored_white'
         }
       }
     }
   }; //Curves
 
-  if (_input_structure__WEBPACK_IMPORTED_MODULE_0__["default"].effect.curves.curves.length) {
-    var json_curves = {};
-    _input_structure__WEBPACK_IMPORTED_MODULE_0__["default"].effect.curves.curves.forEach(function (curve, i) {
-      if (!curve.inputs.id.value) return;
-      var json_curve = {
-        type: getValue(0, 'curves', i, 'mode'),
-        input: getValue(0, 'curves', i, 'input'),
-        horizontal_range: getValue(0, 'curves', i, 'range'),
-        nodes: curve.nodes.slice()
-      };
-      json_curves[curve.inputs.id.value] = json_curve;
-    });
+  var json_curves = {};
 
-    if (Object.keys(json_curves).length) {
-      file.particle_effect.curves = json_curves;
-    }
+  for (var key in _emitter__WEBPACK_IMPORTED_MODULE_2__["Config"].curves) {
+    var curve = _emitter__WEBPACK_IMPORTED_MODULE_2__["Config"].curves[key];
+    var json_curve = {
+      type: processValue(curve.mode, {
+        type: 'string'
+      }),
+      input: processValue(curve.input, {
+        type: 'molang'
+      }),
+      horizontal_range: processValue(curve.range, {
+        type: 'molang'
+      }),
+      nodes: curve.nodes.slice()
+    };
+    json_curves[key] = json_curve;
   }
+
+  if (Object.keys(json_curves).length) {
+    file.particle_effect.curves = json_curves;
+  }
+  /*
+  if (Data.effect.curves.curves.length) {
+  	var json_curves = {};
+  	Data.effect.curves.curves.forEach((curve, i) => {
+  		if (!curve.inputs.id.value) return;
+  		var json_curve = {
+  			type: getValue(0, 'curves', i, 'mode'),
+  			input: getValue(0, 'curves', i, 'input'),
+  			horizontal_range: getValue(0, 'curves', i, 'range'),
+  			nodes: curve.nodes.slice()
+  		}
+  		json_curves[curve.inputs.id.value] = json_curve
+  	})
+  	if (Object.keys(json_curves).length) {
+  		file.particle_effect.curves  = json_curves;
+  	}
+  }
+  */
+
 
   var comps = file.particle_effect.components = {}; //Emitter Components
 
-  if (getValue(0, 'variables', 'creation_vars').length) {
-    var s = getValue(0, 'variables', 'creation_vars').join(';');
+  if (getValue('variables_creation_vars')) {
+    var s = getValue('variables_creation_vars').join(';');
     s = s.replace(/;;/g, ';');
 
     if (s) {
@@ -142128,8 +142433,8 @@ function generateFile() {
     }
   }
 
-  if (getValue(0, 'variables', 'tick_vars').length) {
-    var s = getValue(0, 'variables', 'tick_vars').join(';');
+  if (getValue('variables_tick_vars')) {
+    var s = getValue('variables_tick_vars').join(';');
     s = s.replace(/;;/g, ';');
 
     if (s) {
@@ -142138,55 +142443,55 @@ function generateFile() {
     }
   }
 
-  if (getValue(0, 'space', 'local_position')) {
+  if (getValue('space_local_position', 'boolean')) {
     comps['minecraft:emitter_local_space'] = {
-      position: getValue(0, 'space', 'local_position'),
-      rotation: getValue(0, 'space', 'local_rotation')
+      position: getValue('space_local_position', 'boolean'),
+      rotation: getValue('space_local_rotation', 'boolean')
     };
   } //Rate
 
 
-  var mode = getValue(1, 'rate', 'mode');
+  var mode = getValue('emitter_rate_mode');
 
   if (mode === 'instant') {
     comps['minecraft:emitter_rate_instant'] = {
-      num_particles: getValue(1, 'rate', 'amount')
+      num_particles: getValue('emitter_rate_amount')
     };
   } else if (mode === 'steady') {
     comps['minecraft:emitter_rate_steady'] = {
-      spawn_rate: getValue(1, 'rate', 'rate'),
-      max_particles: getValue(1, 'rate', 'maximum')
+      spawn_rate: getValue('emitter_rate_rate'),
+      max_particles: getValue('emitter_rate_maximum')
     };
   } //Lifetime
 
 
-  var mode = getValue(1, 'lifetime', 'mode');
+  var mode = getValue('emitter_lifetime_mode');
 
   if (mode) {
     if (mode === 'looping') {
       comps['minecraft:emitter_lifetime_looping'] = {
-        active_time: getValue(1, 'lifetime', 'active_time'),
-        sleep_time: getValue(1, 'lifetime', 'sleep_time')
+        active_time: getValue('emitter_lifetime_active_time'),
+        sleep_time: getValue('emitter_lifetime_sleep_time')
       };
     } else if (mode === 'once') {
       comps['minecraft:emitter_lifetime_once'] = {
-        active_time: getValue(1, 'lifetime', 'active_time')
+        active_time: getValue('emitter_lifetime_active_time')
       };
     } else if (mode === 'expression') {
       comps['minecraft:emitter_lifetime_expression'] = {
-        activation_expression: getValue(1, 'lifetime', 'activation'),
-        expiration_expression: getValue(1, 'lifetime', 'expiration')
+        activation_expression: getValue('emitter_lifetime_activation'),
+        expiration_expression: getValue('emitter_lifetime_expiration')
       };
     } else if (mode === 'events') {
       comps['minecraft:emitter_lifetime_events'] = {
-        sleep_time: getValue(1, 'lifetime', 'sleep_time'),
-        active_time: getValue(1, 'lifetime', 'active_time')
+        sleep_time: getValue('emitter_lifetime_sleep_time'),
+        active_time: getValue('emitter_lifetime_active_time')
       };
     }
   } //Direction
 
 
-  var mode = getValue(2, 'direction', 'mode');
+  var mode = getValue('particle_direction_mode');
   var direction = undefined;
 
   if (mode) {
@@ -142195,12 +142500,12 @@ function generateFile() {
     } else if (mode === 'outwards') {
       direction = 'outwards';
     } else if (mode === 'direction') {
-      direction = getValue(2, 'direction', 'direction');
+      direction = getValue('particle_direction_direction');
     }
   } //Shape
 
 
-  var mode = getValue(1, 'shape', 'mode');
+  var mode = getValue('emitter_shape_mode');
 
   if (mode) {
     if (mode === 'point') {
@@ -142209,25 +142514,25 @@ function generateFile() {
       }
 
       comps['minecraft:emitter_shape_point'] = {
-        offset: getValue(1, 'shape', 'offset'),
+        offset: getValue('emitter_shape_offset'),
         direction: direction
       };
     } else if (mode === 'sphere') {
       comps['minecraft:emitter_shape_sphere'] = {
-        offset: getValue(1, 'shape', 'offset'),
-        radius: getValue(1, 'shape', 'radius'),
-        surface_only: getValue(1, 'shape', 'surface_only'),
+        offset: getValue('emitter_shape_offset'),
+        radius: getValue('emitter_shape_radius'),
+        surface_only: getValue('emitter_shape_surface_only'),
         direction: direction
       };
     } else if (mode === 'box') {
       comps['minecraft:emitter_shape_box'] = {
-        offset: getValue(1, 'shape', 'offset'),
-        half_dimensions: getValue(1, 'shape', 'half_dimensions'),
-        surface_only: getValue(1, 'shape', 'surface_only'),
+        offset: getValue('emitter_shape_offset'),
+        half_dimensions: getValue('emitter_shape_half_dimensions'),
+        surface_only: getValue('emitter_shape_surface_only'),
         direction: direction
       };
     } else if (mode === 'disc') {
-      var plane_normal = getValue(1, 'shape', 'plane_normal');
+      var plane_normal = getValue('emitter_shape_plane_normal');
 
       if (plane_normal) {
         switch (plane_normal.join('')) {
@@ -142246,10 +142551,10 @@ function generateFile() {
       }
 
       comps['minecraft:emitter_shape_disc'] = {
-        offset: getValue(1, 'shape', 'offset'),
-        radius: getValue(1, 'shape', 'radius'),
+        offset: getValue('emitter_shape_offset'),
+        radius: getValue('emitter_shape_radius'),
         plane_normal: plane_normal,
-        surface_only: getValue(1, 'shape', 'surface_only'),
+        surface_only: getValue('emitter_shape_surface_only'),
         direction: direction
       };
     } else if (mode === 'custom') {
@@ -142258,12 +142563,12 @@ function generateFile() {
       }
 
       comps['minecraft:emitter_shape_custom'] = {
-        offset: getValue(1, 'shape', 'offset'),
+        offset: getValue('emitter_shape_offset'),
         direction: direction
       };
     } else if (mode === 'entity_aabb') {
       comps['minecraft:emitter_shape_entity_aabb'] = {
-        surface_only: getValue(1, 'shape', 'surface_only'),
+        surface_only: getValue('emitter_shape_surface_only'),
         direction: direction
       };
     }
@@ -142273,23 +142578,23 @@ function generateFile() {
 
   var lifetime_comp = comps['minecraft:particle_lifetime_expression'] = {};
 
-  if (getValue(2, 'lifetime', 'mode') === 'time') {
-    lifetime_comp.max_lifetime = getValue(2, 'lifetime', 'max_lifetime');
+  if (getValue('particle_lifetime_mode') === 'time') {
+    lifetime_comp.max_lifetime = getValue('particle_lifetime_max_lifetime');
   } else {
-    lifetime_comp.expiration_expression = getValue(2, 'lifetime', 'expiration_expression');
+    lifetime_comp.expiration_expression = getValue('particle_lifetime_expiration_expression');
   }
 
-  if (getValue(2, 'lifetime', 'expire_in').length) {
-    comps['minecraft:particle_expire_if_in_blocks'] = getValue(2, 'lifetime', 'expire_in');
+  if (getValue('particle_lifetime_expire_in')) {
+    comps['minecraft:particle_expire_if_in_blocks'] = getValue('particle_lifetime_expire_in');
   }
 
-  if (getValue(2, 'lifetime', 'expire_outside').length) {
-    comps['minecraft:particle_expire_if_not_in_blocks'] = getValue(2, 'lifetime', 'expire_outside');
+  if (getValue('particle_lifetime_expire_outside')) {
+    comps['minecraft:particle_expire_if_not_in_blocks'] = getValue('particle_lifetime_expire_outside');
   } //Spin
 
 
-  var init_rot = getValue(2, 'rotation', 'initial_rotation');
-  var init_rot_rate = getValue(2, 'rotation', 'rotation_rate');
+  var init_rot = getValue('particle_rotation_initial_rotation');
+  var init_rot_rate = getValue('particle_rotation_rotation_rate');
 
   if (init_rot || init_rot_rate) {
     comps['minecraft:particle_initial_spin'] = {
@@ -142298,98 +142603,104 @@ function generateFile() {
     };
   }
 
-  comps['minecraft:particle_initial_speed'] = getValue(2, 'motion', 'linear_speed');
+  comps['minecraft:particle_initial_speed'] = getValue('particle_motion_linear_speed');
   /*
-  mode = getValue(2, 'init', 'mode')
+  mode = getValue('particle_init_mode')
   if (mode === 'linear') {
-  	comps['minecraft:particle_initial_speed'] = getValue(2, 'init', 'linear_speed')||0;
+  	comps['minecraft:particle_initial_speed'] = getValue('particle_init_linear_speed')||0;
   } else {
-  	comps['minecraft:particle_initial_speed'] = getValue(2, 'init', 'direction_speed');
+  	comps['minecraft:particle_initial_speed'] = getValue('particle_init_direction_speed');
   }*/
   //Motion
 
-  var mode = getValue(2, 'motion', 'mode');
+  var mode = getValue('particle_motion_mode');
 
   if (mode) {
     if (mode === 'dynamic') {
       comps['minecraft:particle_motion_dynamic'] = {
-        linear_acceleration: getValue(2, 'motion', 'linear_acceleration'),
-        linear_drag_coefficient: getValue(2, 'motion', 'linear_drag_coefficient'),
-        rotation_acceleration: getValue(2, 'rotation', 'rotation_acceleration'),
-        rotation_drag_coefficient: getValue(2, 'rotation', 'rotation_drag_coefficient')
+        linear_acceleration: getValue('particle_motion_linear_acceleration'),
+        linear_drag_coefficient: getValue('particle_motion_linear_drag_coefficient'),
+        rotation_acceleration: getValue('particle_rotation_rotation_acceleration'),
+        rotation_drag_coefficient: getValue('particle_rotation_rotation_drag_coefficient')
       };
     } else if (mode === 'parametric') {
       comps['minecraft:particle_motion_parametric'] = {
-        relative_position: getValue(2, 'motion', 'relative_position'),
-        direction: getValue(2, 'motion', 'direction'),
-        rotation: getValue(2, 'rotation', 'rotation')
+        relative_position: getValue('particle_motion_relative_position'),
+        direction: getValue('particle_motion_direction'),
+        rotation: getValue('particle_rotation_rotation')
       };
     }
   } //Kill Plane
 
 
-  comps['minecraft:particle_kill_plane'] = getValue(2, 'lifetime', 'kill_plane'); //Texture
+  comps['minecraft:particle_kill_plane'] = getValue('particle_lifetime_kill_plane'); //Texture
 
   var tex_comp = comps['minecraft:particle_appearance_billboard'] = {
-    size: getValue(2, 'appearance', 'size'),
-    facing_camera_mode: getValue(2, 'appearance', 'facing_camera_mode'),
+    size: getValue('particle_appearance_size'),
+    facing_camera_mode: getValue('particle_appearance_facing_camera_mode'),
     uv: {
-      texture_width: Flipbook.width,
-      texture_height: Flipbook.height
+      texture_width: _emitter__WEBPACK_IMPORTED_MODULE_2__["Config"].particle_texture_width,
+      texture_height: _emitter__WEBPACK_IMPORTED_MODULE_2__["Config"].particle_texture_height
     }
   };
 
-  if (getValue(2, 'texture', 'mode') === 'static') {
-    tex_comp.uv.uv = getValue(2, 'texture', 'uv') || [0, 0];
-    tex_comp.uv.uv_size = getValue(2, 'texture', 'uv_size') || [1, 1];
+  if (getValue('particle_texture_mode') === 'static') {
+    tex_comp.uv.uv = getValue('particle_texture_uv') || [0, 0];
+    tex_comp.uv.uv_size = getValue('particle_texture_uv_size') || [1, 1];
   } else {
-    var fb = tex_comp.uv.flipbook = {
-      base_UV: getValue(2, 'texture', 'uv'),
-      size_UV: getValue(2, 'texture', 'uv_size'),
-      step_UV: getValue(2, 'texture', 'uv_step'),
-      frames_per_second: getValue(2, 'texture', 'frames_per_second'),
-      max_frame: getValue(2, 'texture', 'max_frame'),
-      stretch_to_lifetime: getValue(2, 'texture', 'stretch_to_lifetime'),
-      loop: getValue(2, 'texture', 'loop')
+    tex_comp.uv.flipbook = {
+      base_UV: getValue('particle_texture_uv'),
+      size_UV: getValue('particle_texture_uv_size'),
+      step_UV: getValue('particle_texture_uv_step'),
+      frames_per_second: getValue('particle_texture_frames_per_second'),
+      max_frame: getValue('particle_texture_max_frame'),
+      stretch_to_lifetime: getValue('particle_texture_stretch_to_lifetime'),
+      loop: getValue('particle_texture_loop')
     };
   } //Collision
 
 
-  if (getValue(2, 'collision', 'enabled')) {
+  if (getValue('particle_collision_enabled')) {
     comps['minecraft:particle_motion_collision'] = {
-      collision_drag: getValue(2, 'collision', 'collision_drag'),
-      coefficient_of_restitution: getValue(2, 'collision', 'coefficient_of_restitution'),
-      collision_radius: getValue(2, 'collision', 'collision_radius'),
-      expire_on_contact: getValue(2, 'collision', 'expire_on_contact')
+      collision_drag: getValue('particle_collision_collision_drag'),
+      coefficient_of_restitution: getValue('particle_collision_coefficient_of_restitution'),
+      collision_radius: getValue('particle_collision_collision_radius'),
+      expire_on_contact: getValue('particle_collision_expire_on_contact')
     };
   }
 
-  if (getValue(2, 'color', 'light')) {
+  if (getValue('particle_color_light')) {
     comps['minecraft:particle_appearance_lighting'] = {};
   }
 
-  if (getValue(2, 'color', 'mode') === 'static') {
-    var static_color = _input_structure__WEBPACK_IMPORTED_MODULE_0__["default"].particle.color.inputs.picker.calculate();
-
-    if (!static_color.equals({
-      r: 1,
-      g: 1,
-      b: 1
-    })) {
-      comps['minecraft:particle_appearance_tinting'] = {
-        color: [static_color.r, static_color.g, static_color.b]
-      };
+  if (getValue('particle_color_mode') === 'static') {
+    /* todo
+    let value = Data.particle.color.inputs.picker.value;
+    var val = (this.value && this.value.hsl) ? this.value.hex : this.value;
+    var c = tinycolor(val).toHex();
+    var data = new THREE.Color('#'+c)
+    
+    var static_color = Data.particle.color.inputs.picker.calculate()
+    if (!static_color.equals({r: 1, g: 1, b: 1})) {
+    	comps['minecraft:particle_appearance_tinting'] = {
+    		color: [
+    			static_color.r,
+    			static_color.g,
+    			static_color.b,
+    		]
+    	}
     }
-  } else if (getValue(2, 'color', 'mode') === 'gradient') {
-    var range = getValue(2, 'color', 'range');
+    */
+  } else if (getValue('particle_color_mode') === 'gradient') {
+    var range = getValue('particle_color_range');
     comps['minecraft:particle_appearance_tinting'] = {
       color: {
-        interpolant: getValue(2, 'color', 'interpolant'),
+        interpolant: getValue('particle_color_interpolant'),
         gradient: _input_structure__WEBPACK_IMPORTED_MODULE_0__["default"].particle.color.inputs.gradient["export"](range)
       }
     };
   } else {
-    var color = getValue(2, 'color', 'expression');
+    var color = getValue('particle_color_expression');
 
     if (color instanceof Array) {
       color.forEach(function (s, i) {
@@ -142880,14 +143191,11 @@ if (_vscode_extension__WEBPACK_IMPORTED_MODULE_3__["default"]) {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Input; });
-/* harmony import */ var three__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! three */ "./node_modules/three/build/three.module.js");
-/* harmony import */ var tinycolor2__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! tinycolor2 */ "./node_modules/tinycolor2/tinycolor.js");
-/* harmony import */ var tinycolor2__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(tinycolor2__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
-/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _edits__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./edits */ "./src/edits.js");
-/* harmony import */ var _components_ExpressionBar__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/ExpressionBar */ "./src/components/ExpressionBar.vue");
-/* harmony import */ var _emitter__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./emitter */ "./src/emitter.js");
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _edits__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./edits */ "./src/edits.js");
+/* harmony import */ var _components_ExpressionBar__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/ExpressionBar */ "./src/components/ExpressionBar.vue");
+/* harmony import */ var _emitter__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./emitter */ "./src/emitter.js");
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
 
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -142905,8 +143213,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-
 
 
 
@@ -142963,7 +143269,7 @@ var Input = /*#__PURE__*/function () {
     }
 
     if (this.id) {
-      this.value = _emitter__WEBPACK_IMPORTED_MODULE_5__["Config"][this.id];
+      this.value = _emitter__WEBPACK_IMPORTED_MODULE_3__["Config"][this.id];
     } else if (data.value) {
       this.value = data.value;
     }
@@ -143028,7 +143334,7 @@ var Input = /*#__PURE__*/function () {
 
       if (this.type === 'select') {
         if (e) {
-          this.value = jquery__WEBPACK_IMPORTED_MODULE_2___default()(e.target).find('option:selected').attr('id');
+          this.value = jquery__WEBPACK_IMPORTED_MODULE_0___default()(e.target).find('option:selected').attr('id');
         }
 
         this.update();
@@ -143047,11 +143353,11 @@ var Input = /*#__PURE__*/function () {
 
       if (e instanceof Event || this.type == 'color' && node && !color_input_sliding) {
         // User Input
-        if (_components_ExpressionBar__WEBPACK_IMPORTED_MODULE_4__["ExpandedInput"].setup && ['molang', 'text', 'list'].includes(this.type)) {
+        if (_components_ExpressionBar__WEBPACK_IMPORTED_MODULE_2__["ExpandedInput"].setup && ['molang', 'text', 'list'].includes(this.type)) {
           this.focus();
         }
 
-        Object(_edits__WEBPACK_IMPORTED_MODULE_3__["default"])('change input', event);
+        Object(_edits__WEBPACK_IMPORTED_MODULE_1__["default"])('change input', event);
       }
 
       return this;
@@ -143088,7 +143394,7 @@ var Input = /*#__PURE__*/function () {
         this.image.loaded = false;
         this.image.width = 0;
         this.image.height = 0;
-        jquery__WEBPACK_IMPORTED_MODULE_2___default()('#particle-texture-image .input_texture_preview').css('background-image', "none");
+        jquery__WEBPACK_IMPORTED_MODULE_0___default()('#particle-texture-image .input_texture_preview').css('background-image', "none");
         this.updatePreview();
       }
 
@@ -143097,10 +143403,10 @@ var Input = /*#__PURE__*/function () {
   }, {
     key: "focus",
     value: function focus(axis) {
-      _components_ExpressionBar__WEBPACK_IMPORTED_MODULE_4__["ExpandedInput"].input = this;
-      if (axis !== undefined) _components_ExpressionBar__WEBPACK_IMPORTED_MODULE_4__["ExpandedInput"].axis = axis;
-      var val = this.axis_count > 1 || this.type == 'list' ? this.value[_components_ExpressionBar__WEBPACK_IMPORTED_MODULE_4__["ExpandedInput"].axis] : this.value;
-      _components_ExpressionBar__WEBPACK_IMPORTED_MODULE_4__["ExpandedInput"].updateText(val, this.type == 'molang' ? 'molang' : 'none');
+      _components_ExpressionBar__WEBPACK_IMPORTED_MODULE_2__["ExpandedInput"].input = this;
+      if (axis !== undefined) _components_ExpressionBar__WEBPACK_IMPORTED_MODULE_2__["ExpandedInput"].axis = axis;
+      var val = this.axis_count > 1 || this.type == 'list' ? this.value[_components_ExpressionBar__WEBPACK_IMPORTED_MODULE_2__["ExpandedInput"].axis] : this.value;
+      _components_ExpressionBar__WEBPACK_IMPORTED_MODULE_2__["ExpandedInput"].updateText(val, this.type == 'molang' ? 'molang' : 'none');
       return this;
     }
   }, {
@@ -143110,7 +143416,18 @@ var Input = /*#__PURE__*/function () {
     },
     set: function set(v) {
       this._value = v;
-      if (this.id) _emitter__WEBPACK_IMPORTED_MODULE_5__["Config"].set(this.id, v);
+
+      if (this.type == 'number') {
+        if (v instanceof Array) {
+          v.forEach(function (n, i) {
+            v[i] = parseFloat(n);
+          });
+        } else {
+          v = parseFloat(v);
+        }
+      }
+
+      if (this.id) _emitter__WEBPACK_IMPORTED_MODULE_3__["Config"].set(this.id, v);
 
       if (this.type == 'select') {
         this.meta_value = this.options[v];
@@ -143285,10 +143602,8 @@ var Data = {
             looping: 'Looping',
             once: 'Once',
             expression: 'Expression'
-          },
-          updatePreview: function updatePreview(m) {
-            _emitter__WEBPACK_IMPORTED_MODULE_2__["Emitter"].mode = m;
-          }
+          } //updatePreview: (m) => {Emitter.mode = m}
+
         }),
         active_time: new _input__WEBPACK_IMPORTED_MODULE_0__["default"]({
           id: 'emitter_lifetime_active_time',
@@ -143296,19 +143611,15 @@ var Data = {
           info: '',
           enabled_modes: ['looping', 'once'],
           required: true,
-          value: 1,
-          updatePreview: function updatePreview(v) {
-            _emitter__WEBPACK_IMPORTED_MODULE_2__["Emitter"].active_time = v;
-          }
+          value: 1 //updatePreview: (v) => {Emitter.active_time = v}
+
         }),
         sleep_time: new _input__WEBPACK_IMPORTED_MODULE_0__["default"]({
           id: 'emitter_lifetime_sleep_time',
           label: 'Sleep Time',
           info: 'emitter will pause emitting particles for this time per loop',
-          enabled_modes: ['looping'],
-          updatePreview: function updatePreview(v) {
-            _emitter__WEBPACK_IMPORTED_MODULE_2__["Emitter"].sleep_time = v;
-          }
+          enabled_modes: ['looping'] //updatePreview: (v) => {Emitter.sleep_time = v}
+
         }),
         activation: new _input__WEBPACK_IMPORTED_MODULE_0__["default"]({
           id: 'emitter_lifetime_activation',
@@ -143341,10 +143652,8 @@ var Data = {
             disc: 'Disc',
             //custom: 'Custom',
             entity_aabb: 'Entity Bounding Box'
-          },
-          updatePreview: function updatePreview(m) {
-            _emitter__WEBPACK_IMPORTED_MODULE_2__["Emitter"].shape = m;
-          }
+          } //updatePreview: (m) => {Emitter.shape = m}
+
         }),
         offset: new _input__WEBPACK_IMPORTED_MODULE_0__["default"]({
           id: 'emitter_shape_offset',
