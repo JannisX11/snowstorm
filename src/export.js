@@ -241,13 +241,6 @@ function generateFile() {
 		}
 	}
 	comps['minecraft:particle_initial_speed'] = getValue('particle_motion_linear_speed');
-	/*
-	mode = getValue('particle_init_mode')
-	if (mode === 'linear') {
-		comps['minecraft:particle_initial_speed'] = getValue('particle_init_linear_speed')||0;
-	} else {
-		comps['minecraft:particle_initial_speed'] = getValue('particle_init_direction_speed');
-	}*/
 
 	//Motion
 	var mode = getValue('particle_motion_mode')
@@ -256,15 +249,27 @@ function generateFile() {
 			comps['minecraft:particle_motion_dynamic'] = {
 				linear_acceleration: getValue('particle_motion_linear_acceleration'),
 				linear_drag_coefficient: getValue('particle_motion_linear_drag_coefficient'),
-				rotation_acceleration: getValue('particle_rotation_rotation_acceleration'),
-				rotation_drag_coefficient: getValue('particle_rotation_rotation_drag_coefficient'),
 			}
 		} else if (mode === 'parametric') {
 			comps['minecraft:particle_motion_parametric'] = {
 				relative_position: getValue('particle_motion_relative_position'),
 				direction: getValue('particle_motion_direction'),
-				rotation: getValue('particle_rotation_rotation'),
 			}
+		}
+	}
+
+	//Rotation
+	var mode = getValue('particle_rotation_mode')
+	if (mode) {
+		if (mode === 'dynamic') {
+			if (!comps['minecraft:particle_motion_dynamic']) comps['minecraft:particle_motion_dynamic'] = {};
+			let dyn_mo = comps['minecraft:particle_motion_dynamic'];
+			dyn_mo.rotation_acceleration = getValue('particle_rotation_rotation_acceleration');
+			dyn_mo.rotation_drag_coefficient = getValue('particle_rotation_rotation_drag_coefficient');
+
+		} else if (mode === 'parametric') {
+			if (!comps['minecraft:particle_motion_parametric']) comps['minecraft:particle_motion_parametric'] = {};
+			comps['minecraft:particle_motion_parametric'].rotation = getValue('particle_rotation_rotation')
 		}
 	}
 
@@ -295,12 +300,19 @@ function generateFile() {
 		}
 	}
 	//Collision
-	if (getValue('particle_collision_enabled')) {
+	let collision_enabled = getValue('particle_collision_enabled'),
+		collision_collision_drag = getValue('particle_collision_collision_drag'),
+		collision_coefficient_of_restitution = getValue('particle_collision_coefficient_of_restitution'),
+		collision_collision_radius = getValue('particle_collision_collision_radius'),
+		collision_expire_on_contact = getValue('particle_collision_expire_on_contact');
+	if ((collision_enabled || collision_collision_drag || collision_coefficient_of_restitution || collision_collision_radius || collision_expire_on_contact) && collision_enabled != 'false') {
+		if (collision_enabled == 'true') collision_enabled = undefined;
 		comps['minecraft:particle_motion_collision'] = {
-			collision_drag: getValue('particle_collision_collision_drag'),
-			coefficient_of_restitution: getValue('particle_collision_coefficient_of_restitution'),
-			collision_radius: getValue('particle_collision_collision_radius'),
-			expire_on_contact: getValue('particle_collision_expire_on_contact'),
+			enabled: collision_enabled,
+			collision_drag: collision_collision_drag,
+			coefficient_of_restitution: collision_coefficient_of_restitution,
+			collision_radius: collision_collision_radius,
+			expire_on_contact: collision_expire_on_contact,
 		}
 	}
 	if (getValue('particle_color_light')) {
@@ -308,31 +320,20 @@ function generateFile() {
 	}
 	if (getValue('particle_color_mode') === 'static') {
 
-		/* todo
-		let value = Data.particle.color.inputs.picker.value;
-		var val = (this.value && this.value.hsl) ? this.value.hex : this.value;
-		var c = tinycolor(val).toHex();
-		var data = new THREE.Color('#'+c)
-
-
-		var static_color = Data.particle.color.inputs.picker.calculate()
-		if (!static_color.equals({r: 1, g: 1, b: 1})) {
+		
+		let value = getValue('particle_color_static')
+		if (value.substr(1, 6).toLowerCase() != 'ffffff') {
 			comps['minecraft:particle_appearance_tinting'] = {
-				color: [
-					static_color.r,
-					static_color.g,
-					static_color.b,
-				]
+				color: value.substr(0, 7)
 			}
 		}
-		*/
 	} else if (getValue('particle_color_mode') === 'gradient') {
 
 		let range = getValue('particle_color_range')
 		comps['minecraft:particle_appearance_tinting'] = {
 			color: {
 				interpolant: getValue('particle_color_interpolant'),
-				gradient: Data.particle.color.inputs.gradient.export(range)
+				gradient: Data.particle.color.inputs.gradient.export(range||1)
 			}
 		}
 

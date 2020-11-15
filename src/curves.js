@@ -84,7 +84,6 @@ class Curve {
 	}
 	updateName(new_name) {
 		Config.curves[new_name] = this.config;
-		console.log(this.config, this.config.mode)
 		for (var key in Config.curves) {
 			if (Config.curves[key] != this && !Data.effect.curves.curves.find(curve => curve.inputs.id.value == key)) {
 				delete Config.curves[key];

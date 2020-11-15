@@ -171,7 +171,6 @@
 		},
 		watch: {
 			'curve.svg_needs_update'(v) {
-				console.log('udpateSVG')
 				if (v) this.updateSVG()
 				this.curve.svg_needs_update = false;
 			}

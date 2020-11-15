@@ -590,7 +590,7 @@ const Data = {
 				enabled: new Input({
 					id: 'particle_collision_enabled',
 					label: 'Enabled',
-					type: 'checkbox',
+					info: 'Enables collision when true / non-zero',
 				}),
 				collision_drag: new Input({
 					id: 'particle_collision_collision_drag',

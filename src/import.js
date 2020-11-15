@@ -67,6 +67,9 @@ const Samples = {
 function updateInputsFromConfig() {
 	forEachInput(input => {
 		input.value = Config[input.id];
+		if (input.type === 'select') {
+			input.update(Data)
+		}
 	})
 	Data.effect.curves.curves.splice(0, Infinity);
 	for (var id in Config.curves) {
@@ -83,7 +86,7 @@ function loadFile(data) {
 	if (data && data.particle_effect && startNewProject()) {
 		Config.setFromJSON(data);
 		updateInputsFromConfig();
-		Emitter.playLoop();
+		Emitter.stop(true).playLoop();
 	}
 }
 
@@ -96,13 +99,17 @@ function importFile() {
 		}
 	})
 }
-function startNewProject() {
-	if (vscode || confirm('This action may clear your current work. Do you want to continue?')) {
+function startNewProject(force) {
+	if (vscode || force || confirm('This action may clear your current work. Do you want to continue?')) {
 		Config.reset();
 		updateInputsFromConfig();
 		return true;
 	}
 }
+
+document.addEventListener('readystatechange', () => {
+	Emitter.start().playLoop();
+});
 
 document.ondragover = function(event) {
 	event.preventDefault()

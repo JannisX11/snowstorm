@@ -213,7 +213,7 @@
         background-color: var(--color-dark);
         border-top: none;
         height: 27px;
-        margin-right: 4px;
+        margin-left: 4px;
     }
 	div.stat {
         text-align: right;
