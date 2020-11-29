@@ -243,14 +243,20 @@ function generateFile() {
 	var mode = getValue('particle_rotation_mode')
 	if (mode) {
 		if (mode === 'dynamic') {
-			if (!comps['minecraft:particle_motion_dynamic']) comps['minecraft:particle_motion_dynamic'] = {};
-			let dyn_mo = comps['minecraft:particle_motion_dynamic'];
-			dyn_mo.rotation_acceleration = getValue('particle_rotation_rotation_acceleration');
-			dyn_mo.rotation_drag_coefficient = getValue('particle_rotation_rotation_drag_coefficient');
-
+			let rotation_acceleration = getValue('particle_rotation_rotation_acceleration');
+			let rotation_drag_coefficient = getValue('particle_rotation_rotation_drag_coefficient');
+			if (rotation_acceleration || rotation_drag_coefficient) {
+				if (!comps['minecraft:particle_motion_dynamic']) comps['minecraft:particle_motion_dynamic'] = {};
+				let dyn_mo = comps['minecraft:particle_motion_dynamic'];
+				dyn_mo.rotation_acceleration = rotation_acceleration;
+				dyn_mo.rotation_drag_coefficient = rotation_drag_coefficient;
+			}
 		} else if (mode === 'parametric') {
-			if (!comps['minecraft:particle_motion_parametric']) comps['minecraft:particle_motion_parametric'] = {};
-			comps['minecraft:particle_motion_parametric'].rotation = getValue('particle_rotation_rotation')
+			let rotation = getValue('particle_rotation_rotation');
+			if (rotation) {
+				if (!comps['minecraft:particle_motion_parametric']) comps['minecraft:particle_motion_parametric'] = {};
+				comps['minecraft:particle_motion_parametric'].rotation = rotation;
+			}
 		}
 	}
 
@@ -307,6 +313,7 @@ function generateFile() {
 			let color = value.match(/.{2}/g).map(c => {
 				return parseInt(c, 16) / 255;
 			})
+			if (color.length == 3) color[3] = 1;
 			comps['minecraft:particle_appearance_tinting'] = {
 				color
 			}

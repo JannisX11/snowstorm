@@ -154,7 +154,7 @@
         data() {return {
             fps: 0,
             particles: 0,
-            loop_mode: 'Auto',
+            loop_mode: 'Looping',
             parent_mode: 'World',
         }},
         methods: {

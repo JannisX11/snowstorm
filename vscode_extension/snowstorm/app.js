@@ -892,7 +892,7 @@ View.frames_this_second = 0;
     return {
       fps: 0,
       particles: 0,
-      loop_mode: 'Auto',
+      loop_mode: 'Looping',
       parent_mode: 'World'
     };
   },
@@ -141583,6 +141583,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+wintersky__WEBPACK_IMPORTED_MODULE_2___default.a.global_options.loop_mode = 'looping';
 var Config = new wintersky__WEBPACK_IMPORTED_MODULE_2___default.a.Config();
 var Emitter = new wintersky__WEBPACK_IMPORTED_MODULE_2___default.a.Emitter(Config);
 window.Emitter = Emitter;
@@ -141607,10 +141608,8 @@ wintersky__WEBPACK_IMPORTED_MODULE_2___default.a.fetchTexture = function (config
     return new Promise(function (resolve, reject) {
       function update(event) {
         if (event.data.type == 'provide_texture') {
-          var uri = event.data.url && event.data.url + '?' + Math.floor(Math.random() * 1000); //Data.particle.texture.inputs.image.image.data = uri || '';
-
+          var uri = event.data.url && event.data.url + '?' + Math.floor(Math.random() * 1000);
           window.removeEventListener('message', update);
-          console.log('---URI---', uri, path);
           resolve(uri);
         }
       }
@@ -141945,13 +141944,22 @@ function generateFile() {
 
   if (mode) {
     if (mode === 'dynamic') {
-      if (!comps['minecraft:particle_motion_dynamic']) comps['minecraft:particle_motion_dynamic'] = {};
-      var dyn_mo = comps['minecraft:particle_motion_dynamic'];
-      dyn_mo.rotation_acceleration = getValue('particle_rotation_rotation_acceleration');
-      dyn_mo.rotation_drag_coefficient = getValue('particle_rotation_rotation_drag_coefficient');
+      var rotation_acceleration = getValue('particle_rotation_rotation_acceleration');
+      var rotation_drag_coefficient = getValue('particle_rotation_rotation_drag_coefficient');
+
+      if (rotation_acceleration || rotation_drag_coefficient) {
+        if (!comps['minecraft:particle_motion_dynamic']) comps['minecraft:particle_motion_dynamic'] = {};
+        var dyn_mo = comps['minecraft:particle_motion_dynamic'];
+        dyn_mo.rotation_acceleration = rotation_acceleration;
+        dyn_mo.rotation_drag_coefficient = rotation_drag_coefficient;
+      }
     } else if (mode === 'parametric') {
-      if (!comps['minecraft:particle_motion_parametric']) comps['minecraft:particle_motion_parametric'] = {};
-      comps['minecraft:particle_motion_parametric'].rotation = getValue('particle_rotation_rotation');
+      var rotation = getValue('particle_rotation_rotation');
+
+      if (rotation) {
+        if (!comps['minecraft:particle_motion_parametric']) comps['minecraft:particle_motion_parametric'] = {};
+        comps['minecraft:particle_motion_parametric'].rotation = rotation;
+      }
     }
   } //Kill Plane
 
@@ -142012,6 +142020,7 @@ function generateFile() {
         return parseInt(c, 16) / 255;
       });
 
+      if (_color.length == 3) _color[3] = 1;
       comps['minecraft:particle_appearance_tinting'] = {
         color: _color
       };
@@ -142343,10 +142352,14 @@ function updateInputsFromConfig() {
 } //function importFile() {}
 
 
+function updateConfig(data) {
+  _emitter__WEBPACK_IMPORTED_MODULE_2__["Config"].setFromJSON(data);
+  updateInputsFromConfig();
+}
+
 function loadFile(data) {
   if (data && data.particle_effect && startNewProject()) {
-    _emitter__WEBPACK_IMPORTED_MODULE_2__["Config"].setFromJSON(data);
-    updateInputsFromConfig();
+    updateConfig(data);
     _emitter__WEBPACK_IMPORTED_MODULE_2__["Emitter"].stop(true).playLoop();
     Object(_edits__WEBPACK_IMPORTED_MODULE_14__["default"])('load file');
   }
@@ -142436,7 +142449,7 @@ if (_vscode_extension__WEBPACK_IMPORTED_MODULE_3__["default"]) {
 
             case 3:
               parsed = JSON.parse(text);
-              loadFile(parsed, true);
+              updateConfig(parsed, true);
 
               if (_components_ExpressionBar__WEBPACK_IMPORTED_MODULE_4__["ExpandedInput"].input) {
                 _components_ExpressionBar__WEBPACK_IMPORTED_MODULE_4__["ExpandedInput"].input.focus();

@@ -3,6 +3,8 @@ import vscode from './vscode_extension'
 
 import Wintersky from 'wintersky'
 
+Wintersky.global_options.loop_mode = 'looping';
+
 const Config = new Wintersky.Config();
 const Emitter = new Wintersky.Emitter(Config);
 window.Emitter = Emitter;
@@ -28,9 +30,7 @@ Wintersky.fetchTexture = function(config) {
 			function update(event) {
 				if (event.data.type == 'provide_texture') {
 					let uri = (event.data.url && event.data.url + '?'+Math.floor(Math.random()*1000));
-					//Data.particle.texture.inputs.image.image.data = uri || '';
 					window.removeEventListener('message', update);
-					console.log('---URI---', uri, path)
 					resolve(uri);
 				}
 			}

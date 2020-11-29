@@ -44,10 +44,13 @@ function updateInputsFromConfig() {
 	}
 }
 //function importFile() {}
+function updateConfig(data) {
+	Config.setFromJSON(data);
+	updateInputsFromConfig();
+}
 function loadFile(data) {
 	if (data && data.particle_effect && startNewProject()) {
-		Config.setFromJSON(data);
-		updateInputsFromConfig();
+		updateConfig(data);
 		Emitter.stop(true).playLoop();
 		registerEdit('load file')
 	}
@@ -109,7 +112,7 @@ if (vscode) {
 			await confirmSystemSetup()
 
 			let parsed = JSON.parse(text)
-			loadFile(parsed, true)
+			updateConfig(parsed, true)
 			if (ExpandedInput.input) {
 				ExpandedInput.input.focus()
 			}
