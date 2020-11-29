@@ -1,46 +1,35 @@
 import Data from './input_structure'
 import {compileJSON, IO} from './util'
 
-import {Flipbook} from './emitter'
+import {Config} from './emitter'
 
-function getValue(subject, group, key, curve_key) {
-	if (typeof subject === 'number') {
-		switch (subject) {
-			case 0: subject = 'effect'; break;
-			case 1: subject = 'emitter'; break;
-			case 2: subject = 'particle'; break;
+function processValue(v, type) {
+	if (type.type === 'molang') {
+		if (!isNaN(v)) {
+			v = parseFloat(v)
 		}
+		if (!v) v = 0;
+	} else if (type.type === 'number' && typeof v !== type.type) {
+		v = parseFloat(v)||0;
 	}
-	var input;
-	if (group == 'curves') {
-		input = Data.effect.curves.curves[key].inputs[curve_key]
-	} else {
-		input = Data[subject][group].inputs[key];
-	}
-	var original_value = input.value;
+	return v;
+}
+function getValue(key, required) {
 
-	function processValue(v) {
-		if (input.type === 'molang') {
-			if (!isNaN(v)) {
-				v = parseFloat(v)
-			}
-			if (!v) v = 0;
-		} else if (input.type === 'number') {
-			v = parseFloat(v)||0;
+	let value = Config[key];
+	let type = Config.constructor.types[key];
+
+	if (type.array) {
+		var result = [];
+		for (var num of value) {
+			result.push(processValue(num, type));
 		}
-		return v;
-	}
-	if (input.axis_count > 1) {
-		var value = [];
-		for (var i = 0; i < input.axis_count; i++) {
-			value[i] = processValue(original_value[i])
-		}
-		if (value.allEqual(0) && !input.required) value = undefined;
+		if (!result.find(v => v) && !required) result = undefined;
 	} else {
-		var value = processValue(original_value);
-		if (!value && !input.required) value = undefined;
+		var result = processValue(value, type);
+		if (!result && !required) result = undefined;
 	}
-	return value;
+	return result;
 }
 
 
@@ -49,38 +38,36 @@ function generateFile() {
 		format_version: '1.10.0',
 		particle_effect: {
 			description: {
-				identifier: Data.effect.meta.inputs.identifier.value,
+				identifier: Config.identifier,
 				basic_render_parameters: {
-					material: getValue(2, 'appearance', 'material'),
-					texture: getValue(2, 'texture', 'path') || 'textures/blocks/wool_colored_white'
+					material: getValue('particle_appearance_material', true),
+					texture: getValue('particle_texture_path') || 'textures/blocks/wool_colored_white'
 				}
 			}
 		}
 	}
 
 	//Curves
-	if (Data.effect.curves.curves.length) {
-		var json_curves = {};
-		Data.effect.curves.curves.forEach((curve, i) => {
-			if (!curve.inputs.id.value) return;
-			var json_curve = {
-				type: getValue(0, 'curves', i, 'mode'),
-				input: getValue(0, 'curves', i, 'input'),
-				horizontal_range: getValue(0, 'curves', i, 'range'),
-				nodes: curve.nodes.slice()
-			}
-			json_curves[curve.inputs.id.value] = json_curve
-		})
-		if (Object.keys(json_curves).length) {
-			file.particle_effect.curves  = json_curves;
+	var json_curves = {};
+	for (var key in Config.curves) {
+		let curve = Config.curves[key];
+		var json_curve = {
+			type: processValue(curve.mode, {type: 'string'}),
+			input: processValue(curve.input, {type: 'molang'}),
+			horizontal_range: processValue(curve.range, {type: 'molang'}),
+			nodes: curve.nodes.slice()
 		}
+		json_curves[key] = json_curve
+	}
+	if (Object.keys(json_curves).length) {
+		file.particle_effect.curves  = json_curves;
 	}
 
 	var comps = file.particle_effect.components = {};
 
 	//Emitter Components
-	if (getValue(0, 'variables', 'creation_vars').length) {
-		var s = getValue(0, 'variables', 'creation_vars').join(';')
+	if (getValue('variables_creation_vars')) {
+		var s = getValue('variables_creation_vars').join(';')
 		s = s.replace(/;;/g, ';')
 		if (s) {
 			comps['minecraft:emitter_initialization'] = {
@@ -88,58 +75,58 @@ function generateFile() {
 			}
 		}
 	}
-	if (getValue(0, 'variables', 'tick_vars').length) {
-		var s = getValue(0, 'variables', 'tick_vars').join(';')
+	if (getValue('variables_tick_vars')) {
+		var s = getValue('variables_tick_vars').join(';')
 		s = s.replace(/;;/g, ';')
 		if (s) {
 			if (!comps['minecraft:emitter_initialization']) comps['minecraft:emitter_initialization'] = {};
 			comps['minecraft:emitter_initialization'].per_update_expression = s+';'
 		}
 	}
-	if (getValue(0, 'space', 'local_position')) {
+	if (getValue('space_local_position', 'boolean')) {
 		comps['minecraft:emitter_local_space'] = {
-			position: getValue(0, 'space', 'local_position'),
-			rotation: getValue(0, 'space', 'local_rotation'),
+			position: getValue('space_local_position', 'boolean'),
+			rotation: getValue('space_local_rotation', 'boolean'),
 		}
 	}
 	//Rate
-	var mode = getValue(1, 'rate', 'mode')
+	var mode = getValue('emitter_rate_mode')
 	if (mode === 'instant') {
 		comps['minecraft:emitter_rate_instant'] = {
-			num_particles: getValue(1, 'rate', 'amount'),
+			num_particles: getValue('emitter_rate_amount'),
 		}
 	} else if (mode === 'steady') {
 		comps['minecraft:emitter_rate_steady'] = {
-			spawn_rate: getValue(1, 'rate', 'rate'),
-			max_particles: getValue(1, 'rate', 'maximum'),
+			spawn_rate: getValue('emitter_rate_rate'),
+			max_particles: getValue('emitter_rate_maximum'),
 		}
 	}
 	//Lifetime
-	var mode = getValue(1, 'lifetime', 'mode')
+	var mode = getValue('emitter_lifetime_mode')
 	if (mode) {
 		if (mode === 'looping') {
 			comps['minecraft:emitter_lifetime_looping'] = {
-				active_time: getValue(1, 'lifetime', 'active_time'),
-				sleep_time: getValue(1, 'lifetime', 'sleep_time'),
+				active_time: getValue('emitter_lifetime_active_time'),
+				sleep_time: getValue('emitter_lifetime_sleep_time'),
 			}
 		} else if (mode === 'once') {
 			comps['minecraft:emitter_lifetime_once'] = {
-				active_time: getValue(1, 'lifetime', 'active_time'),
+				active_time: getValue('emitter_lifetime_active_time'),
 			}
 		} else if (mode === 'expression') {
 			comps['minecraft:emitter_lifetime_expression'] = {
-				activation_expression: getValue(1, 'lifetime', 'activation'),
-				expiration_expression: getValue(1, 'lifetime', 'expiration'),
+				activation_expression: getValue('emitter_lifetime_activation'),
+				expiration_expression: getValue('emitter_lifetime_expiration'),
 			}
 		} else if (mode === 'events') {
 			comps['minecraft:emitter_lifetime_events'] = {
-				sleep_time: getValue(1, 'lifetime', 'sleep_time'),
-				active_time: getValue(1, 'lifetime', 'active_time'),
+				sleep_time: getValue('emitter_lifetime_sleep_time'),
+				active_time: getValue('emitter_lifetime_active_time'),
 			}
 		}
 	}
 	//Direction
-	var mode = getValue(2, 'direction', 'mode');
+	var mode = getValue('particle_direction_mode');
 	var direction = undefined;
 	if (mode) {
 		if (mode === 'inwards') {
@@ -147,36 +134,36 @@ function generateFile() {
 		} else if (mode === 'outwards') {
 			direction = 'outwards'
 		} else if (mode === 'direction') {
-			direction = getValue(2, 'direction', 'direction')
+			direction = getValue('particle_direction_direction')
 		}
 	}
 	//Shape
-	var mode = getValue(1, 'shape', 'mode')
+	var mode = getValue('emitter_shape_mode')
 	if (mode) {
 		if (mode === 'point') {
 			if (typeof direction === 'string') {
 				direction = undefined;
 			}
 			comps['minecraft:emitter_shape_point'] = {
-				offset: getValue(1, 'shape', 'offset'),
+				offset: getValue('emitter_shape_offset'),
 				direction: direction
 			}
 		} else if (mode === 'sphere') {
 			comps['minecraft:emitter_shape_sphere'] = {
-				offset: getValue(1, 'shape', 'offset'),
-				radius: getValue(1, 'shape', 'radius'),
-				surface_only: getValue(1, 'shape', 'surface_only'),
+				offset: getValue('emitter_shape_offset'),
+				radius: getValue('emitter_shape_radius'),
+				surface_only: getValue('emitter_shape_surface_only'),
 				direction: direction
 			}
 		} else if (mode === 'box') {
 			comps['minecraft:emitter_shape_box'] = {
-				offset: getValue(1, 'shape', 'offset'),
-				half_dimensions: getValue(1, 'shape', 'half_dimensions'),
-				surface_only: getValue(1, 'shape', 'surface_only'),
+				offset: getValue('emitter_shape_offset'),
+				half_dimensions: getValue('emitter_shape_half_dimensions'),
+				surface_only: getValue('emitter_shape_surface_only'),
 				direction: direction
 			}
 		} else if (mode === 'disc') {
-			let plane_normal = getValue(1, 'shape', 'plane_normal')
+			let plane_normal = getValue('emitter_shape_plane_normal')
 			if (plane_normal) {
 				switch (plane_normal.join('')) {
 					case '100': plane_normal = 'x'; break;
@@ -185,10 +172,10 @@ function generateFile() {
 				}
 			}
 			comps['minecraft:emitter_shape_disc'] = {
-				offset: getValue(1, 'shape', 'offset'),
-				radius: getValue(1, 'shape', 'radius'),
+				offset: getValue('emitter_shape_offset'),
+				radius: getValue('emitter_shape_radius'),
 				plane_normal,
-				surface_only: getValue(1, 'shape', 'surface_only'),
+				surface_only: getValue('emitter_shape_surface_only'),
 				direction: direction
 			}
 		} else if (mode === 'custom') {
@@ -196,12 +183,12 @@ function generateFile() {
 				direction = undefined;
 			}
 			comps['minecraft:emitter_shape_custom'] = {
-				offset: getValue(1, 'shape', 'offset'),
+				offset: getValue('emitter_shape_offset'),
 				direction: direction
 			}
 		} else if (mode === 'entity_aabb') {
 			comps['minecraft:emitter_shape_entity_aabb'] = {
-				surface_only: getValue(1, 'shape', 'surface_only'),
+				surface_only: getValue('emitter_shape_surface_only'),
 				direction: direction
 			}
 		}
@@ -213,116 +200,129 @@ function generateFile() {
 
 	//Lifetime
 	var lifetime_comp = comps['minecraft:particle_lifetime_expression'] = {}
-	if (getValue(2, 'lifetime', 'mode') === 'time') {
-		lifetime_comp.max_lifetime = getValue(2, 'lifetime', 'max_lifetime')
+	if (getValue('particle_lifetime_mode') === 'time') {
+		lifetime_comp.max_lifetime = getValue('particle_lifetime_max_lifetime')
 	} else {
-		lifetime_comp.expiration_expression = getValue(2, 'lifetime', 'expiration_expression')
+		lifetime_comp.expiration_expression = getValue('particle_lifetime_expiration_expression')
 	}
-	if (getValue(2, 'lifetime', 'expire_in').length) {
-		comps['minecraft:particle_expire_if_in_blocks'] = getValue(2, 'lifetime', 'expire_in')
+	if (getValue('particle_lifetime_expire_in')) {
+		comps['minecraft:particle_expire_if_in_blocks'] = getValue('particle_lifetime_expire_in')
 	}
-	if (getValue(2, 'lifetime', 'expire_outside').length) {
-		comps['minecraft:particle_expire_if_not_in_blocks'] = getValue(2, 'lifetime', 'expire_outside')
+	if (getValue('particle_lifetime_expire_outside')) {
+		comps['minecraft:particle_expire_if_not_in_blocks'] = getValue('particle_lifetime_expire_outside')
 	}
 
 	//Spin
-	var init_rot = getValue(2, 'rotation', 'initial_rotation')
-	var init_rot_rate = getValue(2, 'rotation', 'rotation_rate')
+	var init_rot = getValue('particle_rotation_initial_rotation')
+	var init_rot_rate = getValue('particle_rotation_rotation_rate')
 	if (init_rot || init_rot_rate) {
 		comps['minecraft:particle_initial_spin'] = {
 			rotation: init_rot||undefined,
 			rotation_rate: init_rot_rate||undefined
 		}
 	}
-	comps['minecraft:particle_initial_speed'] = getValue(2, 'motion', 'linear_speed');
-	/*
-	mode = getValue(2, 'init', 'mode')
-	if (mode === 'linear') {
-		comps['minecraft:particle_initial_speed'] = getValue(2, 'init', 'linear_speed')||0;
-	} else {
-		comps['minecraft:particle_initial_speed'] = getValue(2, 'init', 'direction_speed');
-	}*/
+	comps['minecraft:particle_initial_speed'] = getValue('particle_motion_linear_speed');
 
 	//Motion
-	var mode = getValue(2, 'motion', 'mode')
+	var mode = getValue('particle_motion_mode')
 	if (mode) {
 		if (mode === 'dynamic') {
 			comps['minecraft:particle_motion_dynamic'] = {
-				linear_acceleration: getValue(2, 'motion', 'linear_acceleration'),
-				linear_drag_coefficient: getValue(2, 'motion', 'linear_drag_coefficient'),
-				rotation_acceleration: getValue(2, 'rotation', 'rotation_acceleration'),
-				rotation_drag_coefficient: getValue(2, 'rotation', 'rotation_drag_coefficient'),
+				linear_acceleration: getValue('particle_motion_linear_acceleration'),
+				linear_drag_coefficient: getValue('particle_motion_linear_drag_coefficient'),
 			}
 		} else if (mode === 'parametric') {
 			comps['minecraft:particle_motion_parametric'] = {
-				relative_position: getValue(2, 'motion', 'relative_position'),
-				direction: getValue(2, 'motion', 'direction'),
-				rotation: getValue(2, 'rotation', 'rotation'),
+				relative_position: getValue('particle_motion_relative_position'),
+				direction: getValue('particle_motion_direction'),
 			}
+		}
+	}
+
+	//Rotation
+	var mode = getValue('particle_rotation_mode')
+	if (mode) {
+		if (mode === 'dynamic') {
+			if (!comps['minecraft:particle_motion_dynamic']) comps['minecraft:particle_motion_dynamic'] = {};
+			let dyn_mo = comps['minecraft:particle_motion_dynamic'];
+			dyn_mo.rotation_acceleration = getValue('particle_rotation_rotation_acceleration');
+			dyn_mo.rotation_drag_coefficient = getValue('particle_rotation_rotation_drag_coefficient');
+
+		} else if (mode === 'parametric') {
+			if (!comps['minecraft:particle_motion_parametric']) comps['minecraft:particle_motion_parametric'] = {};
+			comps['minecraft:particle_motion_parametric'].rotation = getValue('particle_rotation_rotation')
 		}
 	}
 
 	//Kill Plane
-	comps['minecraft:particle_kill_plane'] = getValue(2, 'lifetime', 'kill_plane');
+	comps['minecraft:particle_kill_plane'] = getValue('particle_lifetime_kill_plane');
 	
 	//Texture
 	var tex_comp = comps['minecraft:particle_appearance_billboard'] = {
-		size: getValue(2, 'appearance', 'size'),
-		facing_camera_mode: getValue(2, 'appearance', 'facing_camera_mode'),
+		size: getValue('particle_appearance_size'),
+		facing_camera_mode: getValue('particle_appearance_facing_camera_mode'),
 		uv: {
-			texture_width: Flipbook.width,
-			texture_height: Flipbook.height,
+			texture_width: Config.particle_texture_width,
+			texture_height: Config.particle_texture_height,
 		}
 	}
-	if (getValue(2, 'texture', 'mode') === 'static') {
-		tex_comp.uv.uv = getValue(2, 'texture', 'uv')||[0, 0];
-		tex_comp.uv.uv_size = getValue(2, 'texture', 'uv_size')||[1, 1];
+	if (getValue('particle_texture_mode') === 'static') {
+		tex_comp.uv.uv = getValue('particle_texture_uv')||[0, 0];
+		tex_comp.uv.uv_size = getValue('particle_texture_uv_size')||[1, 1];
 	} else {
-		var fb = tex_comp.uv.flipbook = {
-			base_UV: getValue(2, 'texture', 'uv'),
-			size_UV: getValue(2, 'texture', 'uv_size'),
-			step_UV: getValue(2, 'texture', 'uv_step'),
-			frames_per_second: getValue(2, 'texture', 'frames_per_second'),
-			max_frame: getValue(2, 'texture', 'max_frame'),
-			stretch_to_lifetime: getValue(2, 'texture', 'stretch_to_lifetime'),
-			loop: getValue(2, 'texture', 'loop'),
+		tex_comp.uv.flipbook = {
+			base_UV: getValue('particle_texture_uv'),
+			size_UV: getValue('particle_texture_uv_size'),
+			step_UV: getValue('particle_texture_uv_step'),
+			frames_per_second: getValue('particle_texture_frames_per_second'),
+			max_frame: getValue('particle_texture_max_frame'),
+			stretch_to_lifetime: getValue('particle_texture_stretch_to_lifetime'),
+			loop: getValue('particle_texture_loop'),
 		}
 	}
 	//Collision
-	if (getValue(2, 'collision', 'enabled')) {
+	let collision_enabled = getValue('particle_collision_enabled'),
+		collision_collision_drag = getValue('particle_collision_collision_drag'),
+		collision_coefficient_of_restitution = getValue('particle_collision_coefficient_of_restitution'),
+		collision_collision_radius = getValue('particle_collision_collision_radius'),
+		collision_expire_on_contact = getValue('particle_collision_expire_on_contact');
+	if ((collision_enabled || collision_collision_drag || collision_coefficient_of_restitution || collision_collision_radius || collision_expire_on_contact) && collision_enabled != 'false') {
+		if (collision_enabled == 'true') collision_enabled = undefined;
 		comps['minecraft:particle_motion_collision'] = {
-			collision_drag: getValue(2, 'collision', 'collision_drag'),
-			coefficient_of_restitution: getValue(2, 'collision', 'coefficient_of_restitution'),
-			collision_radius: getValue(2, 'collision', 'collision_radius'),
-			expire_on_contact: getValue(2, 'collision', 'expire_on_contact'),
+			enabled: collision_enabled,
+			collision_drag: collision_collision_drag,
+			coefficient_of_restitution: collision_coefficient_of_restitution,
+			collision_radius: collision_collision_radius,
+			expire_on_contact: collision_expire_on_contact,
 		}
 	}
-	if (getValue(2, 'color', 'light')) {
+	if (getValue('particle_color_light')) {
 		comps['minecraft:particle_appearance_lighting'] = {}
 	}
-	if (getValue(2, 'color', 'mode') === 'static') {
-		var static_color = Data.particle.color.inputs.picker.calculate()
-		if (!static_color.equals({r: 1, g: 1, b: 1})) {
+	if (getValue('particle_color_mode') === 'static') {
+
+		
+		let value = getValue('particle_color_static').substr(1, 8)
+		if (value.toLowerCase() != 'ffffff') {
+			let color = value.match(/.{2}/g).map(c => {
+				return parseInt(c, 16) / 255;
+			})
 			comps['minecraft:particle_appearance_tinting'] = {
-				color: [
-					static_color.r,
-					static_color.g,
-					static_color.b,
-				]
+				color
 			}
 		}
-	} else if (getValue(2, 'color', 'mode') === 'gradient') {
+	} else if (getValue('particle_color_mode') === 'gradient') {
 
-		let range = getValue(2, 'color', 'range')
+		let range = getValue('particle_color_range')
 		comps['minecraft:particle_appearance_tinting'] = {
 			color: {
-				interpolant: getValue(2, 'color', 'interpolant'),
-				gradient: Data.particle.color.inputs.gradient.export(range)
+				interpolant: getValue('particle_color_interpolant'),
+				gradient: Data.particle.color.inputs.gradient.export(range||1)
 			}
 		}
 
 	} else {
-		var color = getValue(2, 'color', 'expression')
+		var color = getValue('particle_color_expression')
 		if (color instanceof Array) {
 			color.forEach((s, i) => {
 				if (typeof s === 'string' && !s.toLowerCase().match(/^math\.clamp/)) {

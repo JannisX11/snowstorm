@@ -84,16 +84,16 @@
                 <gradient v-if="input.type == 'gradient'" :input="input"></gradient>
 
                 <!--Image-->
-                <template v-if="input.type == 'image'">
-                    <div class="input_texture_wrapper checkerboard">
-                        <img v-if="input.image && input.image.data" :src="input.image.data" @load="input.updateImageWidth($event)" />
+                <template v-if="input.type == 'image' && !input.image.hidden">
+                    <div class="input_texture_wrapper checkerboard" v-html="input.image_element.outerHTML">
+                        
                     </div>
                     <div class="meta">
                         <template v-if="input.allow_upload">
                             <div class="tool" v-on:click="input.reset()"><i class="unicode_icon">{{'\u2A09'}}</i></div>
                             <input  v-bind:id="key" type="file" accept=".png" v-on:change="input.change($event)">
                         </template>
-                        <div id="image_resolution_label">{{input.image.width}} x {{input.image.height}} px</div>
+                        <div id="image_resolution_label">{{input.image_element.naturalWidth}} x {{input.image_element.naturalHeight}} px</div>
                     </div>
                 </template>
             </div>
@@ -159,6 +159,7 @@ export default {
 	.input_right.expanded input {
 		width: 100% !important;
 		display: block;
+        margin-left: 0;
 	}
 	.tool.input_expand_button {
 		float: right;
@@ -187,12 +188,6 @@ export default {
         border: 1px solid var(--color-border);
         box-sizing: content-box;
 	}
-	.input_texture_wrapper img {
-        width: 100%;
-        height: 100%;
-		background-size: contain;
-		background-repeat: no-repeat;
-	}
 	.input_vector {
 		width: 40px;
 		flex-grow: 1;
@@ -204,4 +199,13 @@ export default {
     .list_add_tool {
         vertical-align: sub;
     }
+</style>
+
+<style>
+	.input_texture_wrapper img {
+        width: 100%;
+        height: 100%;
+		background-size: contain;
+		background-repeat: no-repeat;
+	}
 </style>

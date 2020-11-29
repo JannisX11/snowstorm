@@ -22,7 +22,7 @@ module.exports.SnowstormEditorProvider = class SnowstormEditorProvider {
 
 		let latest_change_from_snowstorm = false;
 
-		console.log('Loading Storm')
+		console.log('Loading Snowstorm')
 
 		function updateWebview() {
 			webviewPanel.webview.postMessage({
@@ -30,7 +30,6 @@ module.exports.SnowstormEditorProvider = class SnowstormEditorProvider {
 				text: document.getText(),
 				fromExtension: true
 			});
-			console.log('Updating Document')
 		}
 
 		const changeDocumentSubscription = vscode.workspace.onDidChangeTextDocument(e => {
@@ -67,17 +66,6 @@ module.exports.SnowstormEditorProvider = class SnowstormEditorProvider {
 				case 'reopen':
 					vscode.commands.executeCommand('workbench.action.splitEditor')
 					vscode.commands.executeCommand('workbench.action.toggleEditorType');
-					//vscode.commands.executeCommand('explorer.openWith', document.uri, 'default', 'left');
-					//vscode.commands.executeCommand('workbench.files.action.reopenWithEditor', document.uri, 'default', 'left')
-					//setTimeout(() => {
-					//	console.log('test')
-					//}, 1000)
-					//vscode.commands.executeCommand('workbench.action.splitEditor').then(() => {
-						//setTimeout(() => {
-						//	console.log('test')
-						//	vscode.commands.executeCommand('reOpenWith')
-						//}, 1000)
-					//})
 					break;
 				case 'link':
 					vscode.commands.executeCommand('vscode.open', vscode.Uri.parse(e.link));
@@ -154,7 +142,7 @@ module.exports.SnowstormEditorProvider = class SnowstormEditorProvider {
 			return vscode.workspace.applyEdit(edit);
 		}
 		
-		// Find start and end of change
+		// Find start of change
 		let start_i = 0;
 		let start_line = 0;
 		let start_pos = 0;
@@ -171,6 +159,7 @@ module.exports.SnowstormEditorProvider = class SnowstormEditorProvider {
 			start_i++;
 		}
 
+		// Find end of change
 		let total_lines = (original.match(/\n/g) || []).length + 1;
 		let end_i = original.length-1;
 		let end_text_i = text.length;
@@ -182,7 +171,7 @@ module.exports.SnowstormEditorProvider = class SnowstormEditorProvider {
 				if (unmatched) break;
 				end_line--;
 			}
-			if (original[end_i] !== text[text.length - (original.length - end_i)] || end_i <= start_i || end_text_i <= start_i) {
+			if (original[end_i] !== text[text.length - (original.length - end_i)] || end_i < start_i || end_text_i <= start_i) {
 				unmatched = true;
 			}
 			if (unmatched) {

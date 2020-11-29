@@ -1,22 +1,20 @@
-import * as THREE from 'three'
-import Molang from './molang'
-import tinycolor from 'tinycolor2'
 import $ from 'jquery'
 import registerEdit from './edits'
 
 import {ExpandedInput} from './components/ExpressionBar'
+import { Config, updateMaterial } from './emitter'
 
 export default class Input {
 	constructor(data) {
 		this.type = data.type||'molang';
 		this.isInput = true;
+		this.id = data.id;
 		this.label = data.label;
 		this.info = data.info;
 		this.placeholder = data.placeholder;
 		this.required = data.required == true;
 		this.expanded = data.expanded == true;
 		this.expandable = ['molang', 'text', 'number'].includes(this.type);
-		this.value = data.value;
 		if (this.type === 'gradient') this.value = data.value || [];
 
 		this.options = data.options;
@@ -29,46 +27,44 @@ export default class Input {
 
 		this.updatePreview = data.updatePreview;
 		this.onchange = data.onchange;
-		if (this.type === 'select') {
-			if (!this.value) {
-				this.value = Object.keys(this.options)[0]
-			}
-			this.meta_value = this.options[this.value]
-
-		} else if (this.type === 'color' && !this.value) {
-			this.value = '#ffffff';
-
-		} else if (this.axis_count > 1 && !this.value) {
-			this.value = []
-		} else if (this.type === 'list' && !this.value) {
-			this.value = []
-		} else if (this.type === 'image') {
-			this.value = '';
+		if (this.type === 'image') {			
 			this.image = {
 				name: '',
 				data: '',
-				width: 0,
-				height: 0,
+				hidden: false,
 			}
+			this.image_element = Emitter.config.texture.image;
 			this.allow_upload = data.allow_upload;
-		} else if ((this.type === 'text' || this.type === 'molang') && !this.value) {
-			this.value = '';
-		} else if (this.type === 'checkbox' && !this.value) {
-			this.value = '';
-		} else if (this.type === 'number' && !this.value) {
-			this.value = 0;
+
 		}
-		this.default_value = JSON.parse(JSON.stringify(this.value));
+		if (this.id) {
+			this.value = Config[this.id];
+		} else if (data.value) {
+			this.value = data.value;
+		}
+
+	}
+	get value() {
+		return this._value;
+	}
+	set value(v) {
+		this._value = v;
+		if (this.type == 'number') {
+			if (v instanceof Array) {
+				v.forEach((n, i) => {v[i] = parseFloat(n)})
+			} else {
+				v = parseFloat(v);
+			}
+		}
+		if (this.id) Config.set(this.id, v);
+		if (this.type == 'select') {
+			this.meta_value = this.options[v];
+		}
 	}
 	toggleExpand() {
 		if (this.expandable) {
 			this.expanded = !this.expanded;
 		}
-	}
-	updateImageWidth(event, th) {
-		let img = event.path[0];
-		this.image.width = img.naturalWidth;
-		this.image.height = img.naturalHeight;
 	}
 	update(Data) {
 		var scope = this;
@@ -94,10 +90,10 @@ export default class Input {
 				reader.onloadend = function() {
 					scope.image.name = file.name;
 					scope.image.data = reader.result;
-					scope.image.width = 0;
-					scope.image.height = 0;
 					scope.image.loaded = true;
-					scope.updatePreview(scope.image)
+					scope.image.hidden = true;
+					scope.image.hidden = false;
+					updateMaterial();
 				}
 				reader.readAsDataURL(file)
 			}
@@ -108,12 +104,14 @@ export default class Input {
 			}
 			this.update()
 		}
+		if (this.type === 'color') {
+			if (typeof this.value == 'object') this.value = this.value.hex8;
+		}
 		if (typeof this.onchange === 'function') {
 			this.onchange(e)
 		}
-		if (typeof this.updatePreview === 'function' && this.type !== 'image') {
-			var data = this.calculate()
-			this.updatePreview(data)
+		if (typeof this.updatePreview === 'function') {
+			this.updatePreview(this.value)
 		}
 		let color_input_sliding = this.type == 'color' && node && node.querySelector('.input_wrapper[input_type="color"]:active') 
 		if (e instanceof Event || (this.type == 'color' && node && !color_input_sliding))	{
@@ -124,48 +122,6 @@ export default class Input {
 			registerEdit('change input', event)
 		}
 		return this;
-	}
-	calculate(opts) {
-		var scope = this;
-		function getV(v) {
-			if (scope.type === 'molang') {
-				return Molang.parse(v, opts)
-			} else if (scope.type === 'number') {
-				return parseFloat(v)||0;
-			}
-		}
-		var data;
-		if (this.type === 'molang' || this.type === 'number') {
-			if (this.axis_count === 4) {
-				var data = new THREE.Plane().setComponents(
-					getV(this.value[0]),
-					getV(this.value[1]),
-					getV(this.value[2]),
-					getV(this.value[3])
-				)
-			} else if (this.axis_count === 3) {
-				var data = new THREE.Vector3(
-					getV(this.value[0]),
-					getV(this.value[1]),
-					getV(this.value[2])
-				)
-			} else if (this.axis_count === 2) {
-				var data = new THREE.Vector2(
-					getV(this.value[0]),
-					getV(this.value[1])
-				)
-			} else {
-				var data = getV(this.value)
-			}
-		} else if (this.type === 'color') {
-			var val = (this.value && this.value.hsl) ? this.value.hex : this.value;
-			var c = tinycolor(val).toHex();
-			var data = new THREE.Color('#'+c)
-
-		} else {
-			var data = this.value
-		}
-		return data;
 	}
 	set(value) {
 		var scope = this;
@@ -184,15 +140,17 @@ export default class Input {
 		return this;
 	}
 	reset() {
-		this.set(this.default_value);
+		//this.set(this.default_value);
 		if (this.type == 'image') {
 			this.image.data = '';
 			this.image.name = '';
 			this.image.loaded = false;
-			this.image.width = 0;
-			this.image.height = 0;
+			this.image.hidden = true;
+			this.image.hidden = false;
 			$('#particle-texture-image .input_texture_preview').css('background-image', `none`)
-			this.updatePreview()
+		}
+		if (typeof this.updatePreview === 'function') {
+			this.updatePreview(this.value)
 		}
 		return this;
 	}
