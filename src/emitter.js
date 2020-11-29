@@ -1,7 +1,7 @@
 import Data from './input_structure'
 import vscode from './vscode_extension'
 
-import Wintersky from './../../wintersky'
+import Wintersky from 'wintersky'
 
 const Config = new Wintersky.Config();
 const Emitter = new Wintersky.Emitter(Config);

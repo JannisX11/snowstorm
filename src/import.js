@@ -13,6 +13,7 @@ import RainSample from '../examples/rain.particle.json'
 import SnowSample from '../examples/snow.particle.json'
 import TrailSample from '../examples/trail.particle.json'
 import Curve from './curves'
+import registerEdit from './edits'
 
 
 const Samples = {
