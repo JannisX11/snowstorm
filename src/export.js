@@ -63,25 +63,6 @@ function generateFile() {
 		file.particle_effect.curves  = json_curves;
 	}
 
-	/*
-	if (Data.effect.curves.curves.length) {
-		var json_curves = {};
-		Data.effect.curves.curves.forEach((curve, i) => {
-			if (!curve.inputs.id.value) return;
-			var json_curve = {
-				type: getValue(0, 'curves', i, 'mode'),
-				input: getValue(0, 'curves', i, 'input'),
-				horizontal_range: getValue(0, 'curves', i, 'range'),
-				nodes: curve.nodes.slice()
-			}
-			json_curves[curve.inputs.id.value] = json_curve
-		})
-		if (Object.keys(json_curves).length) {
-			file.particle_effect.curves  = json_curves;
-		}
-	}
-	*/
-
 	var comps = file.particle_effect.components = {};
 
 	//Emitter Components
@@ -321,10 +302,13 @@ function generateFile() {
 	if (getValue('particle_color_mode') === 'static') {
 
 		
-		let value = getValue('particle_color_static')
-		if (value.substr(1, 6).toLowerCase() != 'ffffff') {
+		let value = getValue('particle_color_static').substr(1, 8)
+		if (value.toLowerCase() != 'ffffff') {
+			let color = value.match(/.{2}/g).map(c => {
+				return parseInt(c, 16) / 255;
+			})
 			comps['minecraft:particle_appearance_tinting'] = {
-				color: value.substr(0, 7)
+				color
 			}
 		}
 	} else if (getValue('particle_color_mode') === 'gradient') {

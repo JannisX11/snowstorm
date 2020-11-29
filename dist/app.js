@@ -190,12 +190,26 @@ function parseColor(input) {
 
 var Config = /*#__PURE__*/function () {
   function Config(config) {
+    var _this = this;
+
     var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
 
     _classCallCheck(this, Config);
 
     this.texture = new THREE.Texture(new Image());
+
+    this.texture.image.onload = function () {
+      _this.texture.needsUpdate = true;
+      _this.particle_texture_width = _this.texture.image.naturalWidth;
+      _this.particle_texture_height = _this.texture.image.naturalHeight;
+
+      if (typeof _this.onTextureUpdate == 'function') {
+        _this.onTextureUpdate();
+      }
+    };
+
     this.reset();
+    this.onTextureUpdate = null;
 
     if (config && config.particle_effect) {
       this.setFromJSON(config);
@@ -274,66 +288,6 @@ var Config = /*#__PURE__*/function () {
       this.particle_appearance_size = ['0.2', '0.2'];
       this.particle_lifetime_max_lifetime = '1';
       this.particle_texture_uv_size = ['16', '16'];
-      /*
-      this.identifier = '';
-      this.file_path = '';
-      this.curves = {};
-      this.space_local_position = false;
-      this.space_local_rotation = false;
-      this.variables_creation_vars = [];
-      this.variables_tick_vars = [];
-      		this.emitter_rate_rate = '';
-      this.emitter_rate_amount = '';
-      this.emitter_rate_maximum = '';
-      this.emitter_lifetime_active_time = '';
-      this.emitter_lifetime_sleep_time = '';
-      this.emitter_lifetime_activation = '';
-      this.emitter_lifetime_expiration = '';
-      this.emitter_shape_offset = [0, 0, 0];
-      this.emitter_shape_radius = '';
-      this.emitter_shape_half_dimensions = [0, 0, 0];
-      this.emitter_shape_plane_normal = [0, 0, 0];
-      this.emitter_shape_surface_only = false;
-      		this.particle_appearance_size = [0, 0];
-      this.particle_direction_direction = [0, 0, 0];
-      this.particle_motion_linear_speed = '';
-      this.particle_motion_linear_acceleration = [0, 0, 0];
-      this.particle_motion_linear_drag_coefficient = '';
-      this.particle_motion_relative_position = [];
-      this.particle_motion_direction = [];
-      this.particle_rotation_initial_rotation = '';
-      this.particle_rotation_rotation_rate = '';
-      this.particle_rotation_rotation_acceleration = '';
-      this.particle_rotation_rotation_drag_coefficient = '';
-      this.particle_rotation_rotation = '';
-      this.particle_lifetime_max_lifetime = '';
-      this.particle_lifetime_kill_plane = [0, 0, 0, 0];
-      this.particle_lifetime_expiration_expression = '';
-      this.particle_lifetime_expire_in = [];
-      this.particle_lifetime_expire_outside = [];
-      this.particle_texture_width = 0;
-      this.particle_texture_height = 0;
-      this.particle_texture_path = '';
-      this.particle_texture_uv = [0, 0];
-      this.particle_texture_uv_size = [0, 0];
-      this.particle_texture_uv_step = [0, 0];
-      this.particle_texture_frames_per_second = 0;
-      this.particle_texture_max_frame = '';
-      this.particle_texture_stretch_to_lifetime = false;
-      this.particle_texture_loop = false;
-      this.particle_color_static = '#ffffff';
-      this.particle_color_interpolant = '';
-      this.particle_color_range = 0;
-      this.particle_color_gradient = [];
-      this.particle_color_expression = [];
-      this.particle_color_light = false;
-      this.particle_collision_enabled = false;
-      this.particle_collision_collision_drag = 0;
-      this.particle_collision_coefficient_of_restitution = 0;
-      this.particle_collision_collision_radius = 0;
-      this.particle_collision_expire_on_contact = false;
-      */
-
       return this;
     }
   }, {
@@ -688,11 +642,11 @@ var Config = /*#__PURE__*/function () {
   }, {
     key: "updateTexture",
     value: function updateTexture() {
-      var _this = this;
+      var _this2 = this;
 
       var continueLoading = function continueLoading(url) {
         if (!url) {
-          switch (_this.particle_texture_path) {
+          switch (_this2.particle_texture_path) {
             case 'textures/particle/particles':
               url = img$1;
               break;
@@ -716,13 +670,7 @@ var Config = /*#__PURE__*/function () {
           }
         }
 
-        _this.texture.image.src = url;
-
-        _this.texture.image.onload = function () {
-          _this.texture.needsUpdate = true;
-          _this.particle_texture_width = _this.texture.image.naturalWidth;
-          _this.particle_texture_height = _this.texture.image.naturalHeight;
-        };
+        _this2.texture.image.src = url;
       };
 
       if (typeof Wintersky.fetchTexture == 'function') {
@@ -1396,7 +1344,7 @@ function calculateCurve(emitter, curve, params) {
 
 var Emitter = /*#__PURE__*/function () {
   function Emitter(config) {
-    var _this2 = this;
+    var _this3 = this;
 
     var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
 
@@ -1407,7 +1355,7 @@ var Emitter = /*#__PURE__*/function () {
     this.Molang = new Molang__default['default']();
 
     this.Molang.variableHandler = function (key, params) {
-      return _this2.creation_values[key] || _this2.tick_values[key] || _this2.config.curves[key] && calculateCurve(_this2, _this2.config.curves[key], params);
+      return _this3.creation_values[key] || _this3.tick_values[key] || _this3.config.curves[key] && calculateCurve(_this3, _this3.config.curves[key], params);
     };
 
     var global_scale = Wintersky.global_options._scale;
@@ -1461,10 +1409,10 @@ var Emitter = /*#__PURE__*/function () {
   }, {
     key: "calculate",
     value: function calculate(input, variables, datatype) {
-      var _this3 = this;
+      var _this4 = this;
 
       var getV = function getV(v) {
-        return _this3.Molang.parse(v, variables);
+        return _this4.Molang.parse(v, variables);
       };
 
       var data;
@@ -1501,10 +1449,10 @@ var Emitter = /*#__PURE__*/function () {
   }, {
     key: "updateFacingRotation",
     value: function updateFacingRotation(camera) {
-      var _this4 = this;
+      var _this5 = this;
 
       this.particles.forEach(function (p) {
-        switch (_this4.config.particle_appearance_facing_camera_mode) {
+        switch (_this5.config.particle_appearance_facing_camera_mode) {
           case 'lookat_xyz':
             p.mesh.lookAt(camera.position);
             break;
@@ -1702,7 +1650,7 @@ var Emitter = /*#__PURE__*/function () {
   }, {
     key: "playLoop",
     value: function playLoop() {
-      var _this5 = this;
+      var _this6 = this;
 
       if (!this.initialized || this.age == 0) {
         this.start();
@@ -1711,7 +1659,7 @@ var Emitter = /*#__PURE__*/function () {
       this.paused = false;
       clearInterval(this.tick_interval);
       this.tick_interval = setInterval(function () {
-        _this5.tick();
+        _this6.tick();
       }, 1000 / Wintersky.global_options.tick_rate);
       return this;
     }
@@ -54927,14 +54875,16 @@ module.exports = __webpack_require__(/*! regenerator-runtime */ "./node_modules/
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _MenuBar__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./MenuBar */ "./src/components/MenuBar.vue");
-/* harmony import */ var _Sidebar__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Sidebar */ "./src/components/Sidebar.vue");
-/* harmony import */ var _Preview__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Preview */ "./src/components/Preview.vue");
-/* harmony import */ var _CodeViewer__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./CodeViewer */ "./src/components/CodeViewer.vue");
-/* harmony import */ var _MolangDialog__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./MolangDialog */ "./src/components/MolangDialog.vue");
-/* harmony import */ var _ExpressionBar__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./ExpressionBar */ "./src/components/ExpressionBar.vue");
-/* harmony import */ var _InfoBox__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./InfoBox */ "./src/components/InfoBox.vue");
-/* harmony import */ var _vscode_extension__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../vscode_extension */ "./src/vscode_extension.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _MenuBar__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./MenuBar */ "./src/components/MenuBar.vue");
+/* harmony import */ var _Sidebar__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Sidebar */ "./src/components/Sidebar.vue");
+/* harmony import */ var _Preview__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Preview */ "./src/components/Preview.vue");
+/* harmony import */ var _CodeViewer__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./CodeViewer */ "./src/components/CodeViewer.vue");
+/* harmony import */ var _MolangDialog__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./MolangDialog */ "./src/components/MolangDialog.vue");
+/* harmony import */ var _ExpressionBar__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./ExpressionBar */ "./src/components/ExpressionBar.vue");
+/* harmony import */ var _InfoBox__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./InfoBox */ "./src/components/InfoBox.vue");
+/* harmony import */ var _vscode_extension__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../vscode_extension */ "./src/vscode_extension.js");
 //
 //
 //
@@ -54966,7 +54916,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-if (!_vscode_extension__WEBPACK_IMPORTED_MODULE_7__["default"]) {
+
+if (!_vscode_extension__WEBPACK_IMPORTED_MODULE_8__["default"]) {
   var startup_count = localStorage.getItem('snowstorm_startup_count') || 0;
   startup_count++;
   localStorage.setItem('snowstorm_startup_count', startup_count);
@@ -54975,26 +54926,31 @@ if (!_vscode_extension__WEBPACK_IMPORTED_MODULE_7__["default"]) {
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'app',
   components: {
-    Preview: _Preview__WEBPACK_IMPORTED_MODULE_2__["default"],
-    CodeViewer: _CodeViewer__WEBPACK_IMPORTED_MODULE_3__["default"],
-    MenuBar: _MenuBar__WEBPACK_IMPORTED_MODULE_0__["default"],
-    Sidebar: _Sidebar__WEBPACK_IMPORTED_MODULE_1__["default"],
-    MolangDialog: _MolangDialog__WEBPACK_IMPORTED_MODULE_4__["default"],
-    ExpressionBar: _ExpressionBar__WEBPACK_IMPORTED_MODULE_5__["default"],
-    InfoBox: _InfoBox__WEBPACK_IMPORTED_MODULE_6__["default"]
+    Preview: _Preview__WEBPACK_IMPORTED_MODULE_3__["default"],
+    CodeViewer: _CodeViewer__WEBPACK_IMPORTED_MODULE_4__["default"],
+    MenuBar: _MenuBar__WEBPACK_IMPORTED_MODULE_1__["default"],
+    Sidebar: _Sidebar__WEBPACK_IMPORTED_MODULE_2__["default"],
+    MolangDialog: _MolangDialog__WEBPACK_IMPORTED_MODULE_5__["default"],
+    ExpressionBar: _ExpressionBar__WEBPACK_IMPORTED_MODULE_6__["default"],
+    InfoBox: _InfoBox__WEBPACK_IMPORTED_MODULE_7__["default"]
   },
   data: function data() {
     return {
       code: '',
       tab: 'preview',
       dialog: null,
-      showVSCodeInfoBox: !_vscode_extension__WEBPACK_IMPORTED_MODULE_7__["default"] && [1, 3, 7, 11, 24].includes(startup_count),
+      showVSCodeInfoBox: !_vscode_extension__WEBPACK_IMPORTED_MODULE_8__["default"] && [1, 3, 7, 11, 24].includes(startup_count),
       sidebar_width: 440
     };
   },
   methods: {
     setTab: function setTab(tab) {
+      var _this = this;
+
       this.tab = tab;
+      vue__WEBPACK_IMPORTED_MODULE_0___default.a.nextTick(function () {
+        _this.$refs.preview.updateSize();
+      });
     },
     openDialog: function openDialog(dialog) {
       this.dialog = dialog;
@@ -55011,13 +54967,13 @@ if (!_vscode_extension__WEBPACK_IMPORTED_MODULE_7__["default"]) {
       this.$refs.sidebar.updateSize();
     },
     resizeSidebarStart: function resizeSidebarStart(start_event) {
-      var _this = this;
+      var _this2 = this;
 
       var scope = this;
       var original_width = this.sidebar_width;
 
       var move = function move(move_event) {
-        _this.setSidebarSize(original_width + move_event.clientX - start_event.clientX);
+        _this2.setSidebarSize(original_width + move_event.clientX - start_event.clientX);
       };
 
       var stop = function stop() {
@@ -55646,8 +55602,10 @@ View.frames_this_second = 0;
     setInterval(function () {
       _this.fps = View.frames_this_second;
       View.frames_this_second = 0;
-      _this.particles = _emitter__WEBPACK_IMPORTED_MODULE_4__["Emitter"].particles.length;
     }, 1000);
+    setInterval(function () {
+      _this.particles = _emitter__WEBPACK_IMPORTED_MODULE_4__["Emitter"].particles.length;
+    }, 200);
   }
 });
 
@@ -143257,24 +143215,32 @@ function initParticles(View) {
   View.scene.add(_wintersky__WEBPACK_IMPORTED_MODULE_2___default.a.space);
 }
 
+Config.onTextureUpdate = function () {
+  _input_structure__WEBPACK_IMPORTED_MODULE_0__["default"].particle.texture.inputs.image.image.hidden = true;
+  _input_structure__WEBPACK_IMPORTED_MODULE_0__["default"].particle.texture.inputs.image.image.hidden = false;
+};
+
 _wintersky__WEBPACK_IMPORTED_MODULE_2___default.a.fetchTexture = function (config) {
   var path = config.particle_texture_path;
 
   if (_vscode_extension__WEBPACK_IMPORTED_MODULE_1__["default"] && path) {
-    var update = function update(event) {
-      if (event.data.type == 'provide_texture') {
-        var uri = event.data.url && event.data.url + '?' + Math.floor(Math.random() * 1000) || VanillaTextures[path]; //Data.particle.texture.inputs.image.image.data = uri || '';
-
-        window.removeEventListener('message', update);
-        return uri;
-      }
-    };
-
     _vscode_extension__WEBPACK_IMPORTED_MODULE_1__["default"].postMessage({
       type: 'request_texture',
       path: path
     });
-    window.addEventListener('message', update, false);
+    return new Promise(function (resolve, reject) {
+      function update(event) {
+        if (event.data.type == 'provide_texture') {
+          var uri = event.data.url && event.data.url + '?' + Math.floor(Math.random() * 1000); //Data.particle.texture.inputs.image.image.data = uri || '';
+
+          window.removeEventListener('message', update);
+          console.log('---URI---', uri, path);
+          resolve(uri);
+        }
+      }
+
+      window.addEventListener('message', update, false);
+    });
   } else if (_input_structure__WEBPACK_IMPORTED_MODULE_0__["default"].particle.texture.inputs.image.image && _input_structure__WEBPACK_IMPORTED_MODULE_0__["default"].particle.texture.inputs.image.image.loaded) {
     return _input_structure__WEBPACK_IMPORTED_MODULE_0__["default"].particle.texture.inputs.image.image.data;
   }
@@ -143396,25 +143362,6 @@ function generateFile() {
   if (Object.keys(json_curves).length) {
     file.particle_effect.curves = json_curves;
   }
-  /*
-  if (Data.effect.curves.curves.length) {
-  	var json_curves = {};
-  	Data.effect.curves.curves.forEach((curve, i) => {
-  		if (!curve.inputs.id.value) return;
-  		var json_curve = {
-  			type: getValue(0, 'curves', i, 'mode'),
-  			input: getValue(0, 'curves', i, 'input'),
-  			horizontal_range: getValue(0, 'curves', i, 'range'),
-  			nodes: curve.nodes.slice()
-  		}
-  		json_curves[curve.inputs.id.value] = json_curve
-  	})
-  	if (Object.keys(json_curves).length) {
-  		file.particle_effect.curves  = json_curves;
-  	}
-  }
-  */
-
 
   var comps = file.particle_effect.components = {}; //Emitter Components
 
@@ -143682,11 +143629,15 @@ function generateFile() {
   }
 
   if (getValue('particle_color_mode') === 'static') {
-    var value = getValue('particle_color_static');
+    var value = getValue('particle_color_static').substr(1, 8);
 
-    if (value.substr(1, 6).toLowerCase() != 'ffffff') {
+    if (value.toLowerCase() != 'ffffff') {
+      var _color = value.match(/.{2}/g).map(function (c) {
+        return parseInt(c, 16) / 255;
+      });
+
       comps['minecraft:particle_appearance_tinting'] = {
-        color: value.substr(0, 7)
+        color: _color
       };
     }
   } else if (getValue('particle_color_mode') === 'gradient') {

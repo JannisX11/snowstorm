@@ -1,42 +1,3 @@
-/*
-import tinycolor from 'tinycolor2'
-import Curve from './curves'
-
-
-
-
-function loadFile(data) {
-
-
-
-	if (data && data.particle_effect && startNewProject()) {
-
-		Config
-	}
-}
-function startNewProject() {
-	if (vscode || confirm('This action may clear your current work. Do you want to continue?')) {
-		forEachInput(input => {
-			input.reset()
-		})
-		Data.effect.curves.curves.splice(0);
-		updateMaterial(startAnimation)
-		return true;
-	}
-}
-
-function importFile() {
-	IO.import({
-		extensions: ['json']
-	}, (files) => {
-		if (files[0]) {
-			loadFile(JSON.parse(files[0].content))
-			startAnimation()
-		}
-	})
-}
-*/
-
 import {IO, pathToExtension} from './util'
 import {Config} from './emitter'
 import vscode from './vscode_extension'
@@ -87,6 +48,7 @@ function loadFile(data) {
 		Config.setFromJSON(data);
 		updateInputsFromConfig();
 		Emitter.stop(true).playLoop();
+		registerEdit('load file')
 	}
 }
 
@@ -138,14 +100,6 @@ function loadPreset(id) {
 if (vscode) {
 	
 	async function confirmSystemSetup() {
-		/*
-		if (System.isSetup) return;
-
-		return new Promise((resolve, reject) => {
-			System.onSetup = function() {
-				resolve()
-			}
-		})*/
 	}
 
     async function updateContent(text) {
@@ -158,8 +112,6 @@ if (vscode) {
 			if (ExpandedInput.input) {
 				ExpandedInput.input.focus()
 			}
-
-
         }
     }
 

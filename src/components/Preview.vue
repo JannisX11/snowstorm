@@ -175,8 +175,10 @@
             setInterval(() => {
                 this.fps = View.frames_this_second;
                 View.frames_this_second = 0;
-                this.particles = Emitter.particles.length;
             }, 1000)
+            setInterval(() => {
+                this.particles = Emitter.particles.length;
+            }, 200)
         }
     }
     export {View}
