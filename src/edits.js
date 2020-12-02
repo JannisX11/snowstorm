@@ -38,9 +38,9 @@ window.addEventListener('message', event => {
     }
 });
 
-export default function registerEdit(id, event) {
+export default function registerEdit(id, event, cooldown) {
     last_edit_id = id;
-    if (event instanceof InputEvent || event instanceof KeyboardEvent) {
+    if (event instanceof InputEvent || event instanceof KeyboardEvent || cooldown) {
         if (timeout) clearTimeout(timeout);
         timeout = setTimeout(() => {
             processEdit(id);

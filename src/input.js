@@ -112,13 +112,13 @@ export default class Input {
 		if (typeof this.updatePreview === 'function') {
 			this.updatePreview(this.value)
 		}
-		let color_input_sliding = this.type == 'color' && node && node.querySelector('.input_wrapper[input_type="color"]:active') 
-		if (e instanceof Event || (this.type == 'color' && node && !color_input_sliding))	{
+		let color_input_sliding = this.type == 'color' && node && node.querySelector('.input_wrapper[input_type="color"]:active');
+		if (e instanceof Event || (this.type == 'color' && node))	{
 			// User Input
 			if (ExpandedInput.setup && ['molang', 'text', 'list'].includes(this.type)) {
 				this.focus()
 			}
-			registerEdit('change input', event)
+			registerEdit('change input', e, this.type == 'color' && node)
 		}
 		return this;
 	}

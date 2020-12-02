@@ -2,6 +2,7 @@ import Data from './input_structure'
 import {compileJSON, IO} from './util'
 
 import {Config} from './emitter'
+import { MathUtils } from 'three';
 
 function processValue(v, type) {
 	if (type.type === 'molang') {
@@ -277,9 +278,9 @@ function generateFile() {
 		tex_comp.uv.uv_size = getValue('particle_texture_uv_size')||[1, 1];
 	} else {
 		tex_comp.uv.flipbook = {
-			base_UV: getValue('particle_texture_uv'),
-			size_UV: getValue('particle_texture_uv_size'),
-			step_UV: getValue('particle_texture_uv_step'),
+			base_UV: getValue('particle_texture_uv', true),
+			size_UV: getValue('particle_texture_uv_size', true),
+			step_UV: getValue('particle_texture_uv_step', true),
 			frames_per_second: getValue('particle_texture_frames_per_second'),
 			max_frame: getValue('particle_texture_max_frame'),
 			stretch_to_lifetime: getValue('particle_texture_stretch_to_lifetime'),
@@ -334,8 +335,11 @@ function generateFile() {
 			color.forEach((s, i) => {
 				if (typeof s === 'string' && !s.toLowerCase().match(/^math\.clamp/)) {
 					color[i] = `Math.clamp(${s}, 0, 1)`
+				} else if (typeof s == 'number') {
+					color[i] = MathUtils.clamp(s, 0, 1);
 				}
 			})
+			if (!color[3]) color[3] = 1;
 			comps['minecraft:particle_appearance_tinting'] = {
 				color: color
 			}

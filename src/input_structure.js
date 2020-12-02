@@ -546,7 +546,7 @@ const Data = {
 					label: 'Color',
 					type: 'color',
 					enabled_modes: ['static'],
-					info: 'Set a static color for all emitted particles'
+					info: 'Set a static color for all emitted particles. Transparency is supported when the material is "Blend".'
 				}),
 				interpolant: new Input({
 					id: 'particle_color_interpolant',
@@ -572,8 +572,8 @@ const Data = {
 				expression: new Input({
 					id: 'particle_color_expression',
 					label: 'Color',
-					info: 'Set the color per particle using MoLang expressions in RGB channels between 0 and 1',
-					axis_count: 3,
+					info: 'Set the color per particle using MoLang expressions in RGBA channels between 0 and 1. Alpha channel display is only supported with "Blend" material.',
+					axis_count: 4,
 					enabled_modes: ['expression']
 				}),
 				light: new Input({

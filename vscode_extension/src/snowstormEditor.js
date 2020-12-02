@@ -120,7 +120,7 @@ module.exports.SnowstormEditorProvider = class SnowstormEditorProvider {
 			</head>
 			<body>
 				<div id="app"></div>
-				<script src="${scriptUri}"></script>
+				<script src="${scriptUri}" charset="utf-8"></script>
 			</body>
 		</html>`
 	}
