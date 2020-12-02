@@ -1,4 +1,3 @@
-import $ from 'jquery'
 import tinycolor from 'tinycolor2'
 
 function bbuid(l) {
@@ -241,12 +240,12 @@ function compileJSON(object, options) {
 const IO = {
 	import: function (options, cb) {
 		if (typeof options !== 'object') {options = {}}
-		$('<input '+
-			'type="file'+
-			'" accept=".'+(options.extensions ? options.extensions.join(',.'): '')+
-			'" multiple="'+(options.multiple === true)+
-		'">').change(function(e) {
-			var input = this;
+		let input = document.createElement('input');
+		input.type = 'file';
+		input.accept = options.extensions ? '.' + options.extensions.join(',.') : '';
+		input.multiple = options.multiple === true;
+		console.log(input);
+		input.onchange = function(e) {
 			var results = [];
 			var result_count = 0;
 			var i = 0;
@@ -289,7 +288,8 @@ const IO = {
 					i++;
 				})()
 			}
-		}).click()
+		}
+		input.click();
 	},
 	export: function(options, cb) {
 		if (!options) return;

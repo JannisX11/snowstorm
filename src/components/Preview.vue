@@ -24,7 +24,6 @@
 
 <script>
 
-    import $ from 'jquery';
     import * as THREE from 'three';
     import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
     import Wintersky from 'wintersky';
@@ -136,7 +135,7 @@
     window.addEventListener('resize', resizeCanvas, false);
 
     window.addEventListener('keypress', (e) => {
-        var input_focus = $('input:focus, div[contenteditable="true"]:focus, textarea:focus').length
+        var input_focus = document.querySelector('input:focus, div[contenteditable="true"]:focus, textarea:focus')
         if (input_focus) return;
 
         if (e.which === 32 && e.ctrlKey) {

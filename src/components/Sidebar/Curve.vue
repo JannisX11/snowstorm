@@ -33,8 +33,15 @@
 
 <script>
 	import InputGroup from './InputGroup'
-	import $ from 'jquery'
 	import registerEdit from '../../edits'
+
+	function calculateOffset(element) {
+		var rect = element.getBoundingClientRect();
+		return [
+			rect.left + window.scrollX,
+			rect.top + window.scrollY,
+		]
+	}
 
 	function toCatmullRomBezier( points, tension = 0.5, closing = false) {
 		// sets tension [0.0, 1.0] +/-
@@ -121,17 +128,15 @@
 				curve.svg_data = '';
 				curve.vertical_line_data = '';
 
-				var points = $(`.curve[uuid=${curve.uuid}] .curve_node .curve_point`)
+				var points = document.querySelectorAll(`.curve[uuid="${curve.uuid}"] .curve_node .curve_point`)
 				if (!points.length) return curve;
 
-
-				var parent_offset = $(`.curve[uuid=${curve.uuid}] .curve_display`).offset().left + 1;
-				var start = points.first().offset().left+5 - parent_offset;
-				var end = points.last().offset().left+5 - parent_offset;
+				var parent_offset = calculateOffset(document.querySelector(`.curve[uuid="${curve.uuid}"] .curve_display`))[0] + 1;
+				var start = calculateOffset(points[0])[0] + 5 - parent_offset;
+				var end = calculateOffset(points[points.length-1])[0] + 5 - parent_offset;
 				var width = end-start;
 				var gap = width / (curve.nodes.length-1);
 				if (!width) return;
-				$(`.curve[uuid=${curve.uuid}] .curve_display > svg`)
 
 				function getPoint(index, raw) {
 					var point = [

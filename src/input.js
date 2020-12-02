@@ -1,4 +1,3 @@
-import $ from 'jquery'
 import registerEdit from './edits'
 
 import {ExpandedInput} from './components/ExpressionBar'
@@ -100,7 +99,7 @@ export default class Input {
 		}
 		if (this.type === 'select') {
 			if (e) {
-				this.value = $(e.target).find('option:selected').attr('id')
+				this.value = e.target.selectedOptions[0].id;
 			}
 			this.update()
 		}
@@ -147,7 +146,7 @@ export default class Input {
 			this.image.loaded = false;
 			this.image.hidden = true;
 			this.image.hidden = false;
-			$('#particle-texture-image .input_texture_preview').css('background-image', `none`)
+			//document.querySelector('#particle-texture-image .input_texture_preview').css('background-image', `none`)
 		}
 		if (typeof this.updatePreview === 'function') {
 			this.updatePreview(this.value)

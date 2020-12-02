@@ -5,7 +5,6 @@
 </template>
 
 <script>
-import $ from 'jquery'
 import App from "./App";
 
 import "prismjs";
