@@ -161,7 +161,7 @@ export default {
 		background-color: var(--color-interface);
 	}
 	.mode_selector.selected {
-		background-color: var(--color-background);
+		background-color: var(--color-dark);
 		color: var(--color-title);
 	}
 </style>

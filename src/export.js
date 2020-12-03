@@ -232,6 +232,7 @@ function generateFile() {
 				linear_acceleration: getValue('particle_motion_linear_acceleration'),
 				linear_drag_coefficient: getValue('particle_motion_linear_drag_coefficient'),
 			}
+			if (!comps['minecraft:particle_initial_speed']) comps['minecraft:particle_initial_speed'] = 0;
 		} else if (mode === 'parametric') {
 			comps['minecraft:particle_motion_parametric'] = {
 				relative_position: getValue('particle_motion_relative_position'),

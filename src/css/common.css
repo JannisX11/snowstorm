@@ -143,7 +143,7 @@
 /*Color Picker*/
 	
 	div.vc-chrome {
-		width: 240px;
+		width: 310px;
 		margin: 2px 0;
 		font-family: inherit;
 	}
@@ -159,6 +159,10 @@
 	}
 	div.vc-chrome .vc-chrome-toggle-icon svg path {
 		fill: var(--color-text);
+	}
+	.vc-chrome-saturation-wrap .vc-saturation-circle {
+		margin-top: -5px;
+		margin-left: -4px;
 	}
 
 

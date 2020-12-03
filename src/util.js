@@ -244,7 +244,6 @@ const IO = {
 		input.type = 'file';
 		input.accept = options.extensions ? '.' + options.extensions.join(',.') : '';
 		input.multiple = options.multiple === true;
-		console.log(input);
 		input.onchange = function(e) {
 			var results = [];
 			var result_count = 0;
