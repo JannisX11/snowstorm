@@ -9,7 +9,8 @@
             </ul>
         </li>
 		<template v-if="isVSCExtension">
-        	<li class="mode_selector" @click="openCodeViewer()">View Code</li>
+        	<li class="mode_selector" @click="openCodeViewer(true)" title="Open Code View to Side"><i class="unicode_icon split">{{'\u2385'}}</i></li>
+        	<li class="mode_selector" @click="openCodeViewer(false)" title="Open as Code View">Open Code</li>
 		</template>
 		<template v-else>
         	<li class="mode_selector code" :class="{selected: selected_tab == 'code'}" @click="$emit('changetab', 'code')">Code</li>
@@ -94,9 +95,9 @@ export default {
         changeTab() {
             this.$emit('setTab')
 		},
-		openCodeViewer() {
+		openCodeViewer(side) {
 			vscode.postMessage({
-				type: 'reopen'
+				type: 'view_code', side
 			});
 		},
 		openDialog(dialog) {
@@ -124,7 +125,7 @@ export default {
 	}
 	a {
 		display: block;
-		padding: 2px 20px; 
+		padding: 2px 12px; 
 		padding-top: 3px;
 	}
 	a:hover {
@@ -152,7 +153,7 @@ export default {
 	.mode_selector {
 		float: right;
 		height: 100%;
-		padding: 2px 10px;
+		padding: 2px 8px;
 		padding-top: 3px;
 		cursor: pointer;
 	}

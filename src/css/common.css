@@ -109,6 +109,10 @@
 		font-size: 18pt;
 		margin-top: -4px;
 	}
+	.unicode_icon.split {
+		font-size: 22pt;
+		margin-top: -12px;
+	}
 	.checkerboard {
 		--color-checker_offset: var(--color-bar);
 		--color-checkerboard: var(--color-interface);

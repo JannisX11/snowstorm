@@ -63,8 +63,8 @@ module.exports.SnowstormEditorProvider = class SnowstormEditorProvider {
 					this.updateText(document, e.content);
 					latest_change_from_snowstorm = true;
 					break;
-				case 'reopen':
-					vscode.commands.executeCommand('workbench.action.splitEditor')
+				case 'view_code':
+					if (e.side) vscode.commands.executeCommand('workbench.action.splitEditor')
 					vscode.commands.executeCommand('workbench.action.toggleEditorType');
 					break;
 				case 'link':
