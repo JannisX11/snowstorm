@@ -3,7 +3,6 @@ import vscode from './vscode_extension'
 
 import Wintersky from 'wintersky'
 
-Wintersky.global_options.loop_mode = 'looping';
 
 const Config = new Wintersky.Config();
 const Emitter = new Wintersky.Emitter(Config);
