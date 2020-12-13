@@ -1,18 +1,35 @@
 <template>
     <div id="expression_bar">
-		<prism-editor v-model="code" :value="code" @change="updateInput($event, true)" :language="language" :line-numbers="false" ref="input" />
+		<prism-editor v-model="code" :value="code" @change="updateInput($event, true)" :highlight="highlighter" :line-numbers="false" ref="input" />
     </div>
 </template>
 
 <script>
 import App from "./App";
 
-import "prismjs";
+import 'vue-prism-editor/dist/prismeditor.min.css';
+import Prism from 'prismjs/components/prism-core';
+import {PrismEditor} from "vue-prism-editor";
 import "prismjs/themes/prism-okaidia.css";
-import 'molangjs/syntax/molang-prism-syntax';
 
-import "vue-prism-editor/dist/VuePrismEditor.css";
-import PrismEditor from "vue-prism-editor";
+
+const Molang = {
+	'string': /("|')(?:\\(?:\r\n|[\s\S])|(?!\1)[^\\\r\n])*\1/,
+    'function-name': /\b(?!\d)math\.\w+(?=[\t ]*\()/i,
+    'selector': /\b(?!\d)(query|variable|temp|context|math|q|v|t|c)\.\w+/i,
+    'boolean': /\b(?:true|false)\b/i,
+	'number': /(?:\b\d+(?:\.\d+)?(?:[ed][+-]\d+)?|&h[a-f\d]+)\b[%&!#]?/i,
+	'operator': /&&|\|\||[-+*/!<>]=?|[:?=]/i,
+	'keyword': /\b(Return)\b/i,
+	'punctuation': /[.,;()[\]{}]/,
+};
+const Languages = {
+	'molang': Molang,
+	'generic': {
+		'namespace': /.*:/,
+		'punctuation': /[.,;()//[\]{}]/,
+	}
+};
 
 const ExpandedInput = {
     input: 0,
@@ -28,9 +45,12 @@ export default {
 	components: {PrismEditor},
 	data() {return {
 		code: '',
-		language: 'molang'
+		language: 'generic'
 	}},
 	methods: {
+		highlighter() {
+			return Prism.highlight(this.code, Languages[this.language])
+		},
 		updateInput(text, edit) {
 			if (!text && typeof text !== 'string' && typeof text !== 'number') text = '';
 
@@ -70,44 +90,43 @@ export {ExpandedInput}
 <style scoped>
 	#expression_bar {
 		width: 100%;
-		height: 32px;
-		padding-left: 4px;
+		min-height: 20px;
 		background-color: var(--color-dark);
 		border-bottom: 1px solid var(--color-border);
 		position: absolute;
 		height: auto;
 		z-index: 3;
+		font-family: 'Inconsolata', monospace;
+		outline: none;
+		padding: 5px 8px;
 	}
-	#expression_bar input {
+</style>>
+
+
+<style>
+	/*
+	#expression_bar textarea {
+		padding-left: 4px;
 		background-color: transparent;
 		width: 100%;
 		border: none;
 		height: 32px;
-		padding: 5px 8px;
 		opacity: 0.8;
 		float: left;
 		color: white;
+		outline: none;
 	}
-	#expression_bar input:focus {
+	#expression_bar textarea:focus {
 		opacity: 1;
-	}
-</style>>
-
-<style>
-	#expression_bar .prism-editor-wrapper {
-		overflow-y: hidden;
-		min-height: 30px;
+	}*/
+	#expression_bar textarea {
+		outline: none;
 	}
 	#expression_bar pre {
-		padding: 4px;
-		min-height: 30px;
-		background-color: transparent;
-		cursor: default;
+		color: var(--color-text);
 	}
-	#expression_bar pre code {
-		color: #bec2ca;
-		padding: 0;
-		cursor: auto;
+	#expression_bar .prism-editor-wrapper {
+		overflow-y: hidden;
 	}
 
 	#expression_bar pre .token.punctuation {

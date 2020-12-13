@@ -42,7 +42,7 @@
 		"vue": "^2.6.12",
 		"vue-color": "^2.7.1",
 		"vue-prism-component": "^1.2.0",
-		"vue-prism-editor": "^0.6.1",
+		"vue-prism-editor": "^1.2.2",
 		"wintersky": "^0.1.3"
 	}
 }

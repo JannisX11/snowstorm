@@ -139,14 +139,12 @@ export default class Input {
 		return this;
 	}
 	reset() {
-		//this.set(this.default_value);
 		if (this.type == 'image') {
 			this.image.data = '';
 			this.image.name = '';
 			this.image.loaded = false;
 			this.image.hidden = true;
 			this.image.hidden = false;
-			//document.querySelector('#particle-texture-image .input_texture_preview').css('background-image', `none`)
 		}
 		if (typeof this.updatePreview === 'function') {
 			this.updatePreview(this.value)
@@ -157,7 +155,7 @@ export default class Input {
 		ExpandedInput.input = this;
 		if (axis !== undefined) ExpandedInput.axis = axis;
 		var val = (this.axis_count > 1 || this.type == 'list') ? this.value[ExpandedInput.axis] : this.value
-		ExpandedInput.updateText(val, this.type == 'molang' ? 'molang' : 'none');
+		ExpandedInput.updateText(val, this.type == 'molang' ? 'molang' : 'generic');
 		return this;
 	}
 }
