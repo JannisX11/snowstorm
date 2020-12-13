@@ -10,14 +10,14 @@
             </svg>
             <ul class="curve_controls">
                 <li class="curve_add" :key="'add_0'" @click="curve.addNode(0, $event)"></li>
-                <template v-for="(value, index) in curve.nodes">
-                    <li class="curve_node" :key="'node_'+index" @mousedown="slideValue(index, $event)">
+                <template v-for="(value, index) in curve.nodes" :key="'node_'+index">
+                    <li class="curve_node" @mousedown="slideValue(index, $event)">
                         <div class="curve_point" :style="{bottom: ((value-curve.min)/(curve.max-curve.min))*140 + 'px'}"><label>{{value}}</label></div>
                         <div class="curve_node_remover tool" @click="curve.removeNode(index, $event)">
 							<i class="unicode_icon">{{'\u2A09'}}</i>
                         </div>
                     </li>
-                    <li class="curve_add" :key="'add_'+index+1" @click="curve.addNode(index+1, $event)"></li>
+                    <li class="curve_add" @click="curve.addNode(index+1, $event)"></li>
                 </template>
             </ul>
             <div class="curve_max_num">{{curve.max}}</div>

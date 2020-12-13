@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import Vue from 'vue';
+import {nextTick} from 'vue';
 import MenuBar from './MenuBar';
 import Sidebar from './Sidebar';
 import Preview from './Preview';
@@ -51,7 +51,7 @@ export default {
 	methods: {
 		setTab(tab) {
 			this.tab = tab
-			Vue.nextTick(() => {
+			nextTick(() => {
 				this.$refs.preview.updateSize();
 			})
 		},

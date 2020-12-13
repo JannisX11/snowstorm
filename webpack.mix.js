@@ -1,8 +1,10 @@
 let mix = require('laravel-mix');
+require("laravel-mix-vue3");
 let {WebpackBundleSizeAnalyzerPlugin} = require('webpack-bundle-size-analyzer');
 let alias = {
 	'three/examples/jsm/controls/OrbitControls.js': path.join(__dirname, 'node_modules/three/examples/jsm/controls/OrbitControls.js'),
 	'three': path.join(__dirname, 'node_modules/three/build/three.module.js'),
+	'vue': 'vue/dist/vue.esm-bundler.js',
 	'wintersky': path.join(__dirname, 'node_modules/wintersky/dist/wintersky.esm.js')
 }
 if (process.env.NODE_ENV == 'development' && __dirname.includes('snowstorm\\snowstorm')) {
@@ -32,5 +34,5 @@ mix.webpackConfig({
 	]
 });
 
-mix.js('src/app.js', 'dist/')
+mix.vue3('src/app.js', 'dist/')
 	.setPublicPath('dist');

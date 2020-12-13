@@ -23,11 +23,15 @@
 		"build-extension": "cd ./vscode_extension && vsce package"
 	},
 	"devDependencies": {
+		"@types/webpack-env": "^1.16.0",
+		"@vue/compiler-sfc": "^3.0.4",
 		"cross-env": "^7.0.3",
 		"laravel-mix": "^5.0.9",
+		"laravel-mix-vue3": "^0.7.0",
 		"sass": "^1.29.0",
 		"sass-loader": "^8.0.2",
 		"url-loader": "^4.1.1",
+		"vue-loader": "^16.1.1",
 		"vue-template-compiler": "^2.6.12",
 		"webpack": "^4.44.2",
 		"webpack-bundle-size-analyzer": "^3.1.0",
@@ -39,10 +43,10 @@
 		"prismjs": "^1.22.0",
 		"three": "^0.122.0",
 		"tinycolor2": "^1.4.2",
-		"vue": "^2.6.12",
+		"vue": "^3.0.4",
 		"vue-color": "^2.7.1",
 		"vue-prism-component": "^1.2.0",
-		"vue-prism-editor": "^0.6.1",
+		"vue-prism-editor": "^2.0.0-alpha.2",
 		"wintersky": "^0.1.3"
 	}
 }

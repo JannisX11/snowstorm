@@ -1,4 +1,4 @@
-import Vue from 'vue'
+import {nextTick} from 'vue'
 import {Emitter, Config} from './emitter'
 import Data from './input_structure'
 import Input from './input'
@@ -65,7 +65,7 @@ class Curve {
 		}
 
 		setTimeout(() => {
-			Vue.nextTick(() => this.updateSVG())
+			nextTick(() => this.updateSVG())
 		}, 20);
 	}
 	updateSVG() {
@@ -123,7 +123,7 @@ class Curve {
 
 function updateCurvesPanel() {
 	if (Data.effect.curves._folded) return;
-	Vue.nextTick(() => {
+	nextTick(() => {
 		Data.effect.curves.curves.forEach(curve => {
 			curve.svg_needs_update = true;
 		})

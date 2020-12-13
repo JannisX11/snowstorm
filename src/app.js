@@ -1,9 +1,9 @@
-import Vue from 'vue'
+import {createApp} from 'vue'
 import App from './components/App'
 import './vscode_extension'
 import './browser'
 
-new Vue({
+createApp({
     components: { App },
     template: '<App/>'
- }).$mount('#app')
+}).mount('#app')
