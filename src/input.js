@@ -80,6 +80,9 @@ export default class Input {
 		}
 		return this;
 	}
+	emitInput(value) {
+		this.change(event)
+	}
 	change(e, node) {
 		var scope = this;
 		if (this.type === 'image' && e) {
@@ -116,7 +119,7 @@ export default class Input {
 		if (e instanceof Event || (this.type == 'color' && node))	{
 			// User Input
 			if (ExpandedInput.setup && ['molang', 'text', 'list'].includes(this.type)) {
-				this.focus()
+				this.updateExpressionBar(false);
 			}
 			registerEdit('change input', e, this.type == 'color' && node)
 		}
@@ -151,11 +154,15 @@ export default class Input {
 		}
 		return this;
 	}
+	updateExpressionBar(focusing) {
+		var val = (this.axis_count > 1 || this.type == 'list') ? this.value[ExpandedInput.axis] : this.value
+		ExpandedInput.updateText(val, this.type == 'molang' ? 'molang' : 'generic', focusing);
+		return this;
+	}
 	focus(axis) {
 		ExpandedInput.input = this;
 		if (axis !== undefined) ExpandedInput.axis = axis;
-		var val = (this.axis_count > 1 || this.type == 'list') ? this.value[ExpandedInput.axis] : this.value
-		ExpandedInput.updateText(val, this.type == 'molang' ? 'molang' : 'generic');
+		this.updateExpressionBar(true);
 		return this;
 	}
 }

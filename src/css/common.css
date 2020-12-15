@@ -166,4 +166,50 @@
 	}
 
 
+/* Prism Editor */
 
+.prism-editor-wrapper {
+	background-color: var(--color-dark);
+	height: auto;
+	z-index: 3;
+	font-family: 'Inconsolata', monospace;
+	outline: none;
+	padding: 4px;
+	padding-bottom: 2px;
+	font-size: 15px;
+	width: fit-content;
+	min-width: 100%;
+}
+.prism-editor-wrapper .prism-editor__editor, .prism-editor-wrapper .prism-editor__textarea {
+	white-space: nowrap;
+}
+.prism_editor_outer_wrapper {
+	border: 1px solid var(--color-border);
+	width: 100%;
+	overflow-x: auto;
+}
+.prism-editor-wrapper textarea {
+	outline: none;
+}
+.prism-editor-wrapper pre {
+	color: var(--color-text);
+}
+.prism-editor-wrapper .prism-editor-wrapper {
+	overflow-y: hidden;
+}
+
+.prism-editor-wrapper pre .token.punctuation {
+	color: #5ba8c5
+}
+.prism-editor-wrapper pre .token.operator, .prism-editor-wrapper pre .token.keyword {
+	color: #fc2f40
+}
+.prism-editor-wrapper pre .token.number, .prism-editor-wrapper pre .token.boolean {
+	color: #b99cff
+}
+.prism-editor-wrapper pre .token.function-name {
+	color: #94e400
+}
+.prism-editor-wrapper pre .token.selector {
+	color: #92dcff;
+}

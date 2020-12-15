@@ -33,12 +33,14 @@
 
                 <template v-if="input.axis_count == 1">
                     <!--Text-->
-                    <input
-                        v-if="input.type == 'text' || input.type == 'molang'"
-                        v-model="input.value"
-                        v-bind:placeholder="input.placeholder"
-                        v-on:input="input.change($event)"
-                        v-on:focus="input.focus(-1, $event)">
+                    <div class="prism_editor_outer_wrapper" v-if="input.type == 'text' || input.type == 'molang'">
+                        <prism-editor :highlight="input.type == 'molang' ? highlightMolang : highlightGeneric" language="" :line-numbers="false"
+                            v-model="input.value"
+                            :value="input.value.toString()"
+                            v-bind:placeholder="input.placeholder"
+                            v-on:input="input.emitInput($event)"
+                            v-on:focus="input.focus(-1, $event)" />
+                    </div>
                     <!--Number-->
                     <input
                         v-if="input.type == 'number'" type="number"
@@ -49,14 +51,15 @@
                 <template v-else>
                     <!--Text-->
                     <template v-if="input.type == 'text' || input.type == 'molang'">
-                        <input class="input_vector"
-                            v-for="i in input.axis_count"
-                            :key="i"
-                            v-model="input.value[i-1]"
-                            v-bind:index="i-1"
-                            v-bind:placeholder="input.placeholder"
-                            v-on:input="input.change($event)"
-                            v-on:focus="input.focus(i-1, $event)">
+                        <div class="prism_editor_outer_wrapper input_vector" v-for="i in input.axis_count" :key="i">
+                            <prism-editor :highlight="input.type == 'molang' ? highlightMolang : highlightGeneric"  :line-numbers="false"
+                                v-model="input.value[i-1]"
+                                :value="input.value[i-1].toString()"
+                                v-bind:index="i-1"
+                                v-bind:placeholder="input.placeholder"
+                                v-on:input="input.emitInput($event)"
+                                v-on:focus="input.focus(i-1, $event)" />
+                        </div>
                     </template>
                     <!--Number-->
                     <template v-if="input.type == 'number'">
@@ -106,6 +109,18 @@
 import VueColor from 'vue-color'
 import Gradient from './Gradient';
 
+
+
+import 'vue-prism-editor/dist/prismeditor.min.css';
+import Prism from 'prismjs/components/prism-core';
+import {PrismEditor} from "vue-prism-editor";
+import "prismjs/themes/prism-okaidia.css";
+
+import Languages from './../../languages';
+
+
+
+
 export default {
     name: 'input-group',
     props: {
@@ -114,10 +129,17 @@ export default {
         subject_key: String
     },
     components: {
+	    PrismEditor,
         'color-picker': VueColor.Chrome,
         Gradient
     },
     methods: {
+        highlightMolang(code) {
+			return Prism.highlight(code, Languages.molang)
+        },
+        highlightGeneric(code) {
+			return Prism.highlight(code, Languages.generic)
+        },
         toggleExpand(input) {
             if (input.expandable) {
                 input.expanded = !input.expanded;
@@ -156,7 +178,7 @@ export default {
 		display: block;
 		width: calc(100% - 7px);
 	}
-	.input_right.expanded input {
+	.input_right.expanded input, .input_right.expanded .input_vector  {
 		width: 100% !important;
 		display: block;
         margin-left: 0;
