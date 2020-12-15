@@ -68,20 +68,20 @@ function generateFile() {
 
 	//Emitter Components
 	if (getValue('variables_creation_vars')) {
-		var s = getValue('variables_creation_vars').join(';')
-		s = s.replace(/;;/g, ';')
+		var s = getValue('variables_creation_vars').join(';')+';';
+		s = s.replace(/;;+/g, ';')
 		if (s) {
 			comps['minecraft:emitter_initialization'] = {
-				creation_expression: s+';',
+				creation_expression: s,
 			}
 		}
 	}
 	if (getValue('variables_tick_vars')) {
-		var s = getValue('variables_tick_vars').join(';')
-		s = s.replace(/;;/g, ';')
+		var s = getValue('variables_tick_vars').join(';')+';';
+		s = s.replace(/;;+/g, ';')
 		if (s) {
 			if (!comps['minecraft:emitter_initialization']) comps['minecraft:emitter_initialization'] = {};
-			comps['minecraft:emitter_initialization'].per_update_expression = s+';'
+			comps['minecraft:emitter_initialization'].per_update_expression = s;
 		}
 	}
 	if (getValue('space_local_position', 'boolean')) {

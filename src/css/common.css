@@ -73,6 +73,7 @@
 		color: var(--color-text);
 		height: 30px;
 		padding: 4px;
+		outline: none;
 	}
 	input[type=text], input[type=number], input:not([type]) {
 		font-family: Consolas, "Courier New", monospace;;

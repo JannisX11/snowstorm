@@ -43,7 +43,7 @@ export default {
 
 			if (!ExpandedInput.input || !edit) return;
 			var input = ExpandedInput.input;
-			if (input.axis_count > 1 || input.type == 'list') {
+			if (input.axis_count != 1) {
 				var arr = [];
 				for (var i = 0; i < input.axis_count; i++) {
 					arr[i] = (i == ExpandedInput.axis) ? text : input.value[i];

@@ -47,7 +47,8 @@ const Data = {
 					label: 'Start Variables',
 					info: 'Set up MoLang Variables when the emitter starts',
 					placeholder: 'variable.name = value',
-					type: 'list',
+					type: 'molang',
+					axis_count: -1,
 					onchange: function() {
 						Emitter.creation_variables = {};
 						this.value.forEach((s, i) => {
@@ -64,7 +65,8 @@ const Data = {
 					label: 'Tick Variables',
 					info: 'MoLang Variables that get processed for every Emitter update',
 					placeholder: 'variable.name = value',
-					type: 'list',
+					type: 'molang',
+					axis_count: -1,
 					onchange: function() {
 						Emitter.tick_variables = {};
 						this.value.forEach((s, i) => {
@@ -434,14 +436,16 @@ const Data = {
 					label: 'Kill in Blocks',
 					info: 'List of blocks to that let the particle expire on contact. Block IDs have a namespace and are separated by a space character.',
 					placeholder: 'minecraft:stone',
-					type: 'list'
+					axis_count: -1,
+					type: 'text'
 				}),
 				expire_outside: new Input({
 					id: 'particle_lifetime_expire_outside',
 					label: 'Only in Blocks',
 					info: 'List of blocks outside of which the particle expires. Block IDs have a namespace and are separated by a space character.',
 					placeholder: 'minecraft:air',
-					type: 'list'
+					axis_count: -1,
+					type: 'text'
 				}),
 			}
 		},

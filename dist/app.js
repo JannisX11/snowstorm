@@ -3693,7 +3693,7 @@ var ExpandedInput = {
       if (!ExpandedInput.input || !edit) return;
       var input = ExpandedInput.input;
 
-      if (input.axis_count > 1 || input.type == 'list') {
+      if (input.axis_count != 1) {
         var arr = [];
 
         for (var i = 0; i < input.axis_count; i++) {
@@ -4713,6 +4713,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -5123,7 +5131,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.input_wrapper[data-v-64472bb8] {\n\t\tmargin: 2px 0;\n}\n.input_wrapper > label[data-v-64472bb8] {\n\t\twidth: 100px;\n\t\ttext-align: right;\n\t\tmargin: 3px 0;\n}\n.input_right[data-v-64472bb8] {\n\t\tdisplay: inline-flex;\n\t\tvertical-align: top;\n\t\twidth: calc(100% - 110px);\n\t\tmargin-left: 4px;\n}\n.input_right.full_width[data-v-64472bb8] {\n\t\twidth: calc(100% - 8px);\n}\n.input_right.expandable[data-v-64472bb8] {\n\t\twidth: calc(100% - 134px);\n}\n.input_right[axes=\"1\"] input[data-v-64472bb8]:not([type=\"checkbox\"]), .input_right[axes=\"1\"] select[data-v-64472bb8]:not([type=\"checkbox\"]) {\n\t\twidth: 100%;\n}\n.input_right.expanded[data-v-64472bb8] {\n\t\tdisplay: block;\n\t\twidth: calc(100% - 7px);\n}\n.input_right.expanded input[data-v-64472bb8], .input_right.expanded .input_vector[data-v-64472bb8]  {\n\t\twidth: 100% !important;\n\t\tdisplay: block;\n        margin-left: 0;\n}\n.tool.input_expand_button[data-v-64472bb8] {\n\t\tfloat: right;\n\t\twidth: 22px;\n\t\tpadding-left: 3px;\n}\n.input_list li[data-v-64472bb8] {\n        margin: 2px 0;\n}\nul.input_list input[data-v-64472bb8] {\n\t\twidth: calc(100% - 100px);\n\t\tmargin-left: 62px;\n}\ninput#image[data-v-64472bb8] {\n\t\twidth: calc(100% - 40px);\n}\n.input_texture_wrapper[data-v-64472bb8] {\n\t\tdisplay: block;\n\t\theight: 128px;\n\t\twidth: 128px;\n\t\tmargin-right: 8px;\n        margin-left: 8px;\n        flex-shrink: 0;\n        border: 1px solid var(--color-border);\n        box-sizing: content-box;\n}\n.input_vector[data-v-64472bb8] {\n\t\twidth: 40px;\n\t\tflex-grow: 1;\n        margin-left: 2px;\n}\n.input_vector[data-v-64472bb8]:first-child {\n        margin-left: 0;\n}\n.list_add_tool[data-v-64472bb8] {\n        vertical-align: sub;\n}\n", ""]);
+exports.push([module.i, "\n.input_wrapper[data-v-64472bb8] {\n\tmargin: 2px 0;\n}\n.input_wrapper > label[data-v-64472bb8] {\n\twidth: 100px;\n\ttext-align: right;\n\tmargin: 3px 0;\n}\n.input_right[data-v-64472bb8] {\n\tdisplay: inline-flex;\n\tvertical-align: top;\n\twidth: calc(100% - 110px);\n\tmargin-left: 4px;\n}\n.input_right.full_width[data-v-64472bb8] {\n\twidth: calc(100% - 8px);\n}\n.input_right.expandable[data-v-64472bb8] {\n\twidth: calc(100% - 134px);\n}\n.input_right[axes=\"1\"] input[data-v-64472bb8]:not([type=\"checkbox\"]), .input_right[axes=\"1\"] select[data-v-64472bb8]:not([type=\"checkbox\"]) {\n\twidth: 100%;\n}\n.input_right.expanded[data-v-64472bb8] {\n\tdisplay: block;\n\twidth: calc(100% - 7px);\n}\n.input_right.expanded input[data-v-64472bb8], .input_right.expanded .input_vector[data-v-64472bb8]  {\n\twidth: 100% !important;\n\tdisplay: block;\n\tmargin-left: 0;\n}\n.tool.input_expand_button[data-v-64472bb8] {\n\tfloat: right;\n\twidth: 22px;\n\tpadding-left: 3px;\n}\n.input_list li[data-v-64472bb8] {\n\tmargin: 2px 0;\n}\nul.input_list input[data-v-64472bb8], ul.input_list .prism_editor_outer_wrapper[data-v-64472bb8] {\n\twidth: calc(100% - 80px);\n\tmargin-left: 52px;\n\tfloat: left;\n}\n.input_list li .tool[data-v-64472bb8] {\n\tpadding: 2px 0px;\n\twidth: 24px;\n\theight: 30px;\n}\ninput#image[data-v-64472bb8] {\n\twidth: calc(100% - 40px);\n}\n.input_texture_wrapper[data-v-64472bb8] {\n\tdisplay: block;\n\theight: 128px;\n\twidth: 128px;\n\tmargin-right: 8px;\n\tmargin-left: 8px;\n\tflex-shrink: 0;\n\tborder: 1px solid var(--color-border);\n\tbox-sizing: content-box;\n}\n.input_vector[data-v-64472bb8] {\n\twidth: 40px;\n\tflex-grow: 1;\n\tmargin-left: 2px;\n}\n.input_vector[data-v-64472bb8]:first-child {\n\tmargin-left: 0;\n}\n.list_add_tool[data-v-64472bb8] {\n\tvertical-align: bottom;\n}\n", ""]);
 
 // exports
 
@@ -5142,7 +5150,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.input_texture_wrapper img {\n        width: 100%;\n        height: 100%;\n\t\tbackground-size: contain;\n\t\tbackground-repeat: no-repeat;\n}\n", ""]);
+exports.push([module.i, "\n.input_texture_wrapper img {\n\twidth: 100%;\n\theight: 100%;\n\tbackground-size: contain;\n\tbackground-repeat: no-repeat;\n}\n", ""]);
 
 // exports
 
@@ -5180,7 +5188,7 @@ exports = module.exports = __webpack_require__(/*! ../../node_modules/css-loader
 
 
 // module
-exports.push([module.i, "\r\n\t/*Setup*/\n::-webkit-scrollbar {\r\n\t\twidth: 8px;\r\n\t\theight: 8px;\n}\n::-webkit-scrollbar-track {\r\n\t\tbackground: var(--color-interface);\n}\n::-webkit-scrollbar-corner {\r\n\t\tbackground: var(--color-interface);\n}\n::-webkit-scrollbar-thumb {\r\n\t\tbackground: var(--color-bar);\n}\n::-webkit-scrollbar-thumb:hover {\r\n\t\tbackground: var(--color-title);\n}\n::selection {\r\n\t\tbackground: var(--color-selection);\n}\n::placeholder {\r\n\t\topacity: 0.6;\n}\n* {\r\n\t\tscrollbar-width: thin;\r\n\t\tscrollbar-color: white var(--color-bar);\n}\nbody {\r\n\t\t--color-background: #29323a;\r\n\t\t--color-interface: #e5ebfa;\r\n\t\t--color-bar: #cfd7ea;\r\n\t\t--color-title: #9aa3b8;\r\n\t\t--color-selection: rgba(110, 142, 191, 0.3);\r\n\t\t--color-highlight: #f7f9ff;\r\n\t\t--color-text: #434b53;\n}\nbody {\r\n\t\t--color-background: #29323a;\r\n\t\t--color-dark: #20272d;\r\n\t\t--color-border: #1a1c1f;\r\n\t\t--color-interface: #29323a;\r\n\t\t--color-bar: #34404a;\r\n\t\t--color-title: #4b5b69;\r\n\t\t--color-selection: rgba(110, 142, 191, 0.3);\r\n\t\t--color-highlight: #f7f9ff;\r\n\t\t--color-text: #bcc3ca;\n}\nh1, h2, h3, h4, h5, h6 {\r\n\t\tmargin: 0;\r\n\t\tfont-weight: inherit;\n}\nul {\r\n\t\tlist-style: none;\r\n\t\tpadding-left: 0;\r\n\t\tmargin: 0;\n}\n* {\r\n\t\tmargin: 0;\r\n        padding: 0;\r\n        box-sizing: border-box;\n}\ninput, select {\r\n\t\tfont-weight: inherit;\r\n\t\tbackground-color: var(--color-dark);\r\n\t\tborder: 1px solid var(--color-border);\r\n\t\tcolor: var(--color-text);\r\n\t\theight: 30px;\r\n\t\tpadding: 4px;\n}\ninput[type=text], input[type=number], input:not([type]) {\r\n\t\tfont-family: Consolas, \"Courier New\", monospace;\n}\ninput[type=checkbox] {\r\n\t\theight: 15px;\r\n\t\twidth: 15px;\r\n\t\tvertical-align: middle;\r\n\t\tmargin: 0 0 2px 4px;\r\n\t\tmargin-top: 5px;\n}\ninput[type=file] {\r\n        padding: 1px;\r\n        border: none;\r\n        background-color: initial;\n}\n.unicode_icon {\r\n\t\tfont-style: unset;\r\n\t\tdisplay: block;\r\n\t\twidth: 24px;\r\n\t\theight: 24px;\r\n\t\ttext-align: center;\r\n\t\tfont-size: 14pt;\r\n\t\tfont-family: sans-serif;\n}\n.unicode_icon.caret {\r\n\t\tfont-size: 25pt;\r\n\t\toverflow: hidden;\r\n\t\tdisplay: block;\r\n\t\tmargin-top: -4px;\r\n\t\twidth: 12px;\n}\n.unicode_icon.plus {\r\n\t\tfont-size: 18pt;\r\n\t\tmargin-top: -4px;\n}\n.unicode_icon.split {\r\n\t\tfont-size: 22pt;\r\n\t\tmargin-top: -12px;\n}\n.checkerboard {\r\n\t\t--color-checker_offset: var(--color-bar);\r\n\t\t--color-checkerboard: var(--color-interface);\r\n\t\tbackground-color: var(--color-checkerboard) !important;\r\n\t\tbackground-image: linear-gradient(45deg, var(--color-checkerboard) 25%, transparent 25%), linear-gradient(-45deg, var(--color-checkerboard) 25%, transparent 25%), linear-gradient(45deg, transparent 75%, var(--color-checkerboard) 75%), linear-gradient(-45deg, var(--color-checker_offset) 75%, var(--color-checkerboard) 75%);\r\n\t\tbackground-size: 16px 16px;\r\n\t\tbackground-position: 0 0, 0 8px, 8px -8px, -8px 0px;\n}\nselect {\r\n\t\theight: 30px;\n}\nbody {\r\n\t\timage-rendering: pixelated;\r\n\t\tbackground-color: var(--color-background);\r\n\t\tuser-select: none;\r\n\t\t-moz-user-select: none;\r\n\t\tfont-family: 'Lato', -apple-system, \"Segoe UI\", sans-serif;\r\n\t\theight: 100%;\r\n        width: 100%;\r\n        margin: 0;\r\n        font-size: 11pt;\r\n        font-weight: 400;\r\n        line-height: 1.5;\r\n        color: var(--color-text);\r\n        text-align: left;\n}\r\n\r\n/*Color Picker*/\ndiv.vc-chrome {\r\n\t\twidth: 310px;\r\n\t\tmargin: 2px 0;\r\n\t\tfont-family: inherit;\n}\ndiv.vc-chrome .vc-chrome-body {\r\n\t\tbackground-color: var(--color-interface);\n}\ndiv.vc-chrome .vc-chrome-fields .vc-input__input {\r\n\t\tcolor: var(--color-text);\r\n\t\tbox-shadow: none;\r\n\t\tfont-size: inherit;\r\n\t\tborder: 1px solid var(--color-border);\r\n\t\theight: 24px;\n}\ndiv.vc-chrome .vc-chrome-toggle-icon svg path {\r\n\t\tfill: var(--color-text);\n}\n.vc-chrome-saturation-wrap .vc-saturation-circle {\r\n\t\tmargin-top: -5px;\r\n\t\tmargin-left: -4px;\n}\r\n\r\n\r\n/* Prism Editor */\n.prism-editor-wrapper {\r\n\tbackground-color: var(--color-dark);\r\n\theight: auto;\r\n\tz-index: 3;\r\n\tfont-family: Consolas, \"Courier New\", monospace;;\r\n\toutline: none;\r\n\tpadding: 4px;\r\n\tpadding-bottom: 2px;\r\n\tfont-size: 15px;\r\n\twidth: fit-content;\r\n\tmin-width: 100%;\n}\n.prism-editor-wrapper .prism-editor__editor, .prism-editor-wrapper .prism-editor__textarea {\r\n\twhite-space: nowrap;\n}\n.prism_editor_outer_wrapper {\r\n\tborder: 1px solid var(--color-border);\r\n\twidth: 100%;\r\n\toverflow-x: auto;\n}\n.prism-editor-wrapper textarea {\r\n\toutline: none;\n}\n.prism-editor-wrapper pre {\r\n\tcolor: var(--color-text);\n}\n.prism-editor-wrapper .prism-editor-wrapper {\r\n\toverflow-y: hidden;\n}\n.prism-editor-wrapper pre .token.punctuation {\r\n\tcolor: #5ba8c5\n}\n.prism-editor-wrapper pre .token.operator, .prism-editor-wrapper pre .token.keyword {\r\n\tcolor: #fc2f40\n}\n.prism-editor-wrapper pre .token.number, .prism-editor-wrapper pre .token.boolean, input[type=\"number\"] {\r\n\tcolor: #b99cff\n}\n.prism-editor-wrapper pre .token.function-name {\r\n\tcolor: #94e400\n}\n.prism-editor-wrapper pre .token.selector {\r\n\tcolor: #92dcff;\n}", ""]);
+exports.push([module.i, "\r\n\t/*Setup*/\n::-webkit-scrollbar {\r\n\t\twidth: 8px;\r\n\t\theight: 8px;\n}\n::-webkit-scrollbar-track {\r\n\t\tbackground: var(--color-interface);\n}\n::-webkit-scrollbar-corner {\r\n\t\tbackground: var(--color-interface);\n}\n::-webkit-scrollbar-thumb {\r\n\t\tbackground: var(--color-bar);\n}\n::-webkit-scrollbar-thumb:hover {\r\n\t\tbackground: var(--color-title);\n}\n::selection {\r\n\t\tbackground: var(--color-selection);\n}\n::placeholder {\r\n\t\topacity: 0.6;\n}\n* {\r\n\t\tscrollbar-width: thin;\r\n\t\tscrollbar-color: white var(--color-bar);\n}\nbody {\r\n\t\t--color-background: #29323a;\r\n\t\t--color-interface: #e5ebfa;\r\n\t\t--color-bar: #cfd7ea;\r\n\t\t--color-title: #9aa3b8;\r\n\t\t--color-selection: rgba(110, 142, 191, 0.3);\r\n\t\t--color-highlight: #f7f9ff;\r\n\t\t--color-text: #434b53;\n}\nbody {\r\n\t\t--color-background: #29323a;\r\n\t\t--color-dark: #20272d;\r\n\t\t--color-border: #1a1c1f;\r\n\t\t--color-interface: #29323a;\r\n\t\t--color-bar: #34404a;\r\n\t\t--color-title: #4b5b69;\r\n\t\t--color-selection: rgba(110, 142, 191, 0.3);\r\n\t\t--color-highlight: #f7f9ff;\r\n\t\t--color-text: #bcc3ca;\n}\nh1, h2, h3, h4, h5, h6 {\r\n\t\tmargin: 0;\r\n\t\tfont-weight: inherit;\n}\nul {\r\n\t\tlist-style: none;\r\n\t\tpadding-left: 0;\r\n\t\tmargin: 0;\n}\n* {\r\n\t\tmargin: 0;\r\n        padding: 0;\r\n        box-sizing: border-box;\n}\ninput, select {\r\n\t\tfont-weight: inherit;\r\n\t\tbackground-color: var(--color-dark);\r\n\t\tborder: 1px solid var(--color-border);\r\n\t\tcolor: var(--color-text);\r\n\t\theight: 30px;\r\n\t\tpadding: 4px;\r\n\t\toutline: none;\n}\ninput[type=text], input[type=number], input:not([type]) {\r\n\t\tfont-family: Consolas, \"Courier New\", monospace;\n}\ninput[type=checkbox] {\r\n\t\theight: 15px;\r\n\t\twidth: 15px;\r\n\t\tvertical-align: middle;\r\n\t\tmargin: 0 0 2px 4px;\r\n\t\tmargin-top: 5px;\n}\ninput[type=file] {\r\n        padding: 1px;\r\n        border: none;\r\n        background-color: initial;\n}\n.unicode_icon {\r\n\t\tfont-style: unset;\r\n\t\tdisplay: block;\r\n\t\twidth: 24px;\r\n\t\theight: 24px;\r\n\t\ttext-align: center;\r\n\t\tfont-size: 14pt;\r\n\t\tfont-family: sans-serif;\n}\n.unicode_icon.caret {\r\n\t\tfont-size: 25pt;\r\n\t\toverflow: hidden;\r\n\t\tdisplay: block;\r\n\t\tmargin-top: -4px;\r\n\t\twidth: 12px;\n}\n.unicode_icon.plus {\r\n\t\tfont-size: 18pt;\r\n\t\tmargin-top: -4px;\n}\n.unicode_icon.split {\r\n\t\tfont-size: 22pt;\r\n\t\tmargin-top: -12px;\n}\n.checkerboard {\r\n\t\t--color-checker_offset: var(--color-bar);\r\n\t\t--color-checkerboard: var(--color-interface);\r\n\t\tbackground-color: var(--color-checkerboard) !important;\r\n\t\tbackground-image: linear-gradient(45deg, var(--color-checkerboard) 25%, transparent 25%), linear-gradient(-45deg, var(--color-checkerboard) 25%, transparent 25%), linear-gradient(45deg, transparent 75%, var(--color-checkerboard) 75%), linear-gradient(-45deg, var(--color-checker_offset) 75%, var(--color-checkerboard) 75%);\r\n\t\tbackground-size: 16px 16px;\r\n\t\tbackground-position: 0 0, 0 8px, 8px -8px, -8px 0px;\n}\nselect {\r\n\t\theight: 30px;\n}\nbody {\r\n\t\timage-rendering: pixelated;\r\n\t\tbackground-color: var(--color-background);\r\n\t\tuser-select: none;\r\n\t\t-moz-user-select: none;\r\n\t\tfont-family: 'Lato', -apple-system, \"Segoe UI\", sans-serif;\r\n\t\theight: 100%;\r\n        width: 100%;\r\n        margin: 0;\r\n        font-size: 11pt;\r\n        font-weight: 400;\r\n        line-height: 1.5;\r\n        color: var(--color-text);\r\n        text-align: left;\n}\r\n\r\n/*Color Picker*/\ndiv.vc-chrome {\r\n\t\twidth: 310px;\r\n\t\tmargin: 2px 0;\r\n\t\tfont-family: inherit;\n}\ndiv.vc-chrome .vc-chrome-body {\r\n\t\tbackground-color: var(--color-interface);\n}\ndiv.vc-chrome .vc-chrome-fields .vc-input__input {\r\n\t\tcolor: var(--color-text);\r\n\t\tbox-shadow: none;\r\n\t\tfont-size: inherit;\r\n\t\tborder: 1px solid var(--color-border);\r\n\t\theight: 24px;\n}\ndiv.vc-chrome .vc-chrome-toggle-icon svg path {\r\n\t\tfill: var(--color-text);\n}\n.vc-chrome-saturation-wrap .vc-saturation-circle {\r\n\t\tmargin-top: -5px;\r\n\t\tmargin-left: -4px;\n}\r\n\r\n\r\n/* Prism Editor */\n.prism-editor-wrapper {\r\n\tbackground-color: var(--color-dark);\r\n\theight: auto;\r\n\tz-index: 3;\r\n\tfont-family: Consolas, \"Courier New\", monospace;;\r\n\toutline: none;\r\n\tpadding: 4px;\r\n\tpadding-bottom: 2px;\r\n\tfont-size: 15px;\r\n\twidth: fit-content;\r\n\tmin-width: 100%;\n}\n.prism-editor-wrapper .prism-editor__editor, .prism-editor-wrapper .prism-editor__textarea {\r\n\twhite-space: nowrap;\n}\n.prism_editor_outer_wrapper {\r\n\tborder: 1px solid var(--color-border);\r\n\twidth: 100%;\r\n\toverflow-x: auto;\n}\n.prism-editor-wrapper textarea {\r\n\toutline: none;\n}\n.prism-editor-wrapper pre {\r\n\tcolor: var(--color-text);\n}\n.prism-editor-wrapper .prism-editor-wrapper {\r\n\toverflow-y: hidden;\n}\n.prism-editor-wrapper pre .token.punctuation {\r\n\tcolor: #5ba8c5\n}\n.prism-editor-wrapper pre .token.operator, .prism-editor-wrapper pre .token.keyword {\r\n\tcolor: #fc2f40\n}\n.prism-editor-wrapper pre .token.number, .prism-editor-wrapper pre .token.boolean, input[type=\"number\"] {\r\n\tcolor: #b99cff\n}\n.prism-editor-wrapper pre .token.function-name {\r\n\tcolor: #94e400\n}\n.prism-editor-wrapper pre .token.selector {\r\n\tcolor: #92dcff;\n}", ""]);
 
 // exports
 
@@ -65643,7 +65651,7 @@ var render = function() {
               )
             : _vm._e(),
           _vm._v(" "),
-          input.type == "list"
+          input.axis_count == -1
             ? [
                 _c(
                   "div",
@@ -65667,34 +65675,70 @@ var render = function() {
                   { staticClass: "input_list" },
                   _vm._l(input.value, function(item, index) {
                     return _c("li", { key: index }, [
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: input.value[index],
-                            expression: "input.value[index]"
-                          }
-                        ],
-                        attrs: { index: index, placeholder: input.placeholder },
-                        domProps: { value: input.value[index] },
-                        on: {
-                          input: [
-                            function($event) {
-                              if ($event.target.composing) {
-                                return
+                      input.type == "text" || input.type == "molang"
+                        ? _c(
+                            "div",
+                            { staticClass: "prism_editor_outer_wrapper" },
+                            [
+                              _c("prism-editor", {
+                                attrs: {
+                                  highlight:
+                                    input.type == "molang"
+                                      ? _vm.highlightMolang
+                                      : _vm.highlightGeneric,
+                                  language: "",
+                                  "line-numbers": false,
+                                  placeholder: input.placeholder,
+                                  index: index
+                                },
+                                on: {
+                                  input: function($event) {
+                                    return input.emitInput($event)
+                                  },
+                                  focus: function($event) {
+                                    return input.focus(index, $event)
+                                  }
+                                },
+                                model: {
+                                  value: input.value[index],
+                                  callback: function($$v) {
+                                    _vm.$set(input.value, index, $$v)
+                                  },
+                                  expression: "input.value[index]"
+                                }
+                              })
+                            ],
+                            1
+                          )
+                        : _vm._e(),
+                      _vm._v(" "),
+                      input.type == "number"
+                        ? _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: input.value,
+                                expression: "input.value"
                               }
-                              _vm.$set(input.value, index, $event.target.value)
-                            },
-                            function($event) {
-                              return input.change($event)
+                            ],
+                            attrs: { type: "number" },
+                            domProps: { value: input.value },
+                            on: {
+                              input: [
+                                function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.$set(input, "value", $event.target.value)
+                                },
+                                function($event) {
+                                  return input.change($event)
+                                }
+                              ]
                             }
-                          ],
-                          focus: function($event) {
-                            return input.focus(index, $event)
-                          }
-                        }
-                      }),
+                          })
+                        : _vm._e(),
                       _vm._v(" "),
                       _c(
                         "div",
@@ -80651,23 +80695,23 @@ function generateFile() {
   var comps = file.particle_effect.components = {}; //Emitter Components
 
   if (getValue('variables_creation_vars')) {
-    var s = getValue('variables_creation_vars').join(';');
-    s = s.replace(/;;/g, ';');
+    var s = getValue('variables_creation_vars').join(';') + ';';
+    s = s.replace(/;;+/g, ';');
 
     if (s) {
       comps['minecraft:emitter_initialization'] = {
-        creation_expression: s + ';'
+        creation_expression: s
       };
     }
   }
 
   if (getValue('variables_tick_vars')) {
-    var s = getValue('variables_tick_vars').join(';');
-    s = s.replace(/;;/g, ';');
+    var s = getValue('variables_tick_vars').join(';') + ';';
+    s = s.replace(/;;+/g, ';');
 
     if (s) {
       if (!comps['minecraft:emitter_initialization']) comps['minecraft:emitter_initialization'] = {};
-      comps['minecraft:emitter_initialization'].per_update_expression = s + ';';
+      comps['minecraft:emitter_initialization'].per_update_expression = s;
     }
   }
 
@@ -81453,9 +81497,10 @@ var Input = /*#__PURE__*/function () {
     this.label = data.label;
     this.info = data.info;
     this.placeholder = data.placeholder;
+    this.axis_count = data.axis_count || 1;
     this.required = data.required == true;
     this.expanded = data.expanded == true;
-    this.expandable = ['molang', 'text', 'number'].includes(this.type);
+    this.expandable = ['molang', 'text', 'number'].includes(this.type) && this.axis_count != -1;
     if (this.type === 'gradient') this.value = data.value || [];
     this.options = data.options;
     this.mode_groups = data.mode_groups;
@@ -81465,7 +81510,6 @@ var Input = /*#__PURE__*/function () {
     }
 
     this.enabled_modes = data.enabled_modes;
-    this.axis_count = data.axis_count || 1;
     this.updatePreview = data.updatePreview;
     this.onchange = data.onchange;
 
@@ -81565,7 +81609,7 @@ var Input = /*#__PURE__*/function () {
 
       if (e instanceof Event || this.type == 'color' && node) {
         // User Input
-        if (_components_ExpressionBar__WEBPACK_IMPORTED_MODULE_1__["ExpandedInput"].setup && ['molang', 'text', 'list'].includes(this.type)) {
+        if (_components_ExpressionBar__WEBPACK_IMPORTED_MODULE_1__["ExpandedInput"].setup && ['molang', 'text'].includes(this.type)) {
           this.updateExpressionBar(false);
         }
 
@@ -81616,7 +81660,7 @@ var Input = /*#__PURE__*/function () {
   }, {
     key: "updateExpressionBar",
     value: function updateExpressionBar(focusing) {
-      var val = this.axis_count > 1 || this.type == 'list' ? this.value[_components_ExpressionBar__WEBPACK_IMPORTED_MODULE_1__["ExpandedInput"].axis] : this.value;
+      var val = this.axis_count == 1 ? this.value : this.value[_components_ExpressionBar__WEBPACK_IMPORTED_MODULE_1__["ExpandedInput"].axis];
       _components_ExpressionBar__WEBPACK_IMPORTED_MODULE_1__["ExpandedInput"].updateText(val, this.type == 'molang' ? 'molang' : 'generic', focusing);
       return this;
     }
@@ -81725,7 +81769,8 @@ var Data = {
           label: 'Start Variables',
           info: 'Set up MoLang Variables when the emitter starts',
           placeholder: 'variable.name = value',
-          type: 'list',
+          type: 'molang',
+          axis_count: -1,
           onchange: function onchange() {
             _emitter__WEBPACK_IMPORTED_MODULE_2__["Emitter"].creation_variables = {};
             this.value.forEach(function (s, i) {
@@ -81743,7 +81788,8 @@ var Data = {
           label: 'Tick Variables',
           info: 'MoLang Variables that get processed for every Emitter update',
           placeholder: 'variable.name = value',
-          type: 'list',
+          type: 'molang',
+          axis_count: -1,
           onchange: function onchange() {
             _emitter__WEBPACK_IMPORTED_MODULE_2__["Emitter"].tick_variables = {};
             this.value.forEach(function (s, i) {
@@ -82114,14 +82160,16 @@ var Data = {
           label: 'Kill in Blocks',
           info: 'List of blocks to that let the particle expire on contact. Block IDs have a namespace and are separated by a space character.',
           placeholder: 'minecraft:stone',
-          type: 'list'
+          axis_count: -1,
+          type: 'text'
         }),
         expire_outside: new _input__WEBPACK_IMPORTED_MODULE_0__["default"]({
           id: 'particle_lifetime_expire_outside',
           label: 'Only in Blocks',
           info: 'List of blocks outside of which the particle expires. Block IDs have a namespace and are separated by a space character.',
           placeholder: 'minecraft:air',
-          type: 'list'
+          axis_count: -1,
+          type: 'text'
         })
       }
     },

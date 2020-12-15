@@ -11,9 +11,10 @@ export default class Input {
 		this.label = data.label;
 		this.info = data.info;
 		this.placeholder = data.placeholder;
+		this.axis_count = data.axis_count||1;
 		this.required = data.required == true;
 		this.expanded = data.expanded == true;
-		this.expandable = ['molang', 'text', 'number'].includes(this.type);
+		this.expandable = ['molang', 'text', 'number'].includes(this.type) && this.axis_count != -1;
 		if (this.type === 'gradient') this.value = data.value || [];
 
 		this.options = data.options;
@@ -22,7 +23,6 @@ export default class Input {
 			this.mode_groups = [this.mode_groups];
 		}
 		this.enabled_modes = data.enabled_modes;
-		this.axis_count = data.axis_count||1;
 
 		this.updatePreview = data.updatePreview;
 		this.onchange = data.onchange;
@@ -118,7 +118,7 @@ export default class Input {
 		let color_input_sliding = this.type == 'color' && node && node.querySelector('.input_wrapper[input_type="color"]:active');
 		if (e instanceof Event || (this.type == 'color' && node))	{
 			// User Input
-			if (ExpandedInput.setup && ['molang', 'text', 'list'].includes(this.type)) {
+			if (ExpandedInput.setup && ['molang', 'text'].includes(this.type)) {
 				this.updateExpressionBar(false);
 			}
 			registerEdit('change input', e, this.type == 'color' && node)
@@ -155,7 +155,7 @@ export default class Input {
 		return this;
 	}
 	updateExpressionBar(focusing) {
-		var val = (this.axis_count > 1 || this.type == 'list') ? this.value[ExpandedInput.axis] : this.value
+		var val = this.axis_count == 1 ? this.value : this.value[ExpandedInput.axis];
 		ExpandedInput.updateText(val, this.type == 'molang' ? 'molang' : 'generic', focusing);
 		return this;
 	}
