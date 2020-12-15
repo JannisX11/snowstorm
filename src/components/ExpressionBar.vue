@@ -87,7 +87,7 @@ export {ExpandedInput}
 		position: absolute;
 		height: auto;
 		z-index: 3;
-		font-family: 'Inconsolata', monospace;
+		font-family: Consolas, "Courier New", monospace;;
 		outline: none;
 		padding: 5px 8px;
 		overflow-x: auto;

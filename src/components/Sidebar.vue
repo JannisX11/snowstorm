@@ -1,7 +1,7 @@
 <template>
     <content id="sidebar">
         <div id="sidebar_content">
-            <h1>SNOWSTORM</h1>
+			<logo />
             <div class="input_subject" v-for="(subject, subject_key) in data" :key="subject_key">
                 <h3>{{ subject.label }}</h3>
                 <div class="input_group" v-for="(group, group_key) in subject" :key="group_key" v-if="typeof group == 'object'">
@@ -26,6 +26,7 @@
 </template>
 
 <script>
+import Logo from './Sidebar/Logo'
 import InputGroup from './Sidebar/InputGroup';
 import curve from './Sidebar/Curve';
 import {Curve, updateCurvesPanel} from './../curves'
@@ -38,7 +39,7 @@ export default {
 	data() {return {
 		data: Data
 	}},
-	components: {InputGroup, curve},
+	components: {Logo, InputGroup, curve},
 	methods: {
 		fold: function(group) {
 			group._folded = !group._folded
@@ -59,15 +60,6 @@ export default {
 <style scoped>
 	content {
 		border-right: 1px solid var(--color-border);
-	}
-    content h1 {
-		padding: 12px;
-		padding-bottom: 0;
-		margin: 0;
-		font-family: 'Josefin Sans', sans-serif;
-		font-weight: 800;
-		font-size: 2.6em;
-		overflow: hidden;
 	}
 	content > div {
 		overflow-y: scroll;

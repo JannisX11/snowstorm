@@ -75,7 +75,7 @@
 		padding: 4px;
 	}
 	input[type=text], input[type=number], input:not([type]) {
-		font-family: 'Inconsolata', monospace;
+		font-family: Consolas, "Courier New", monospace;;
 	}
 	input[type=checkbox] {
 		height: 15px;
@@ -172,7 +172,7 @@
 	background-color: var(--color-dark);
 	height: auto;
 	z-index: 3;
-	font-family: 'Inconsolata', monospace;
+	font-family: Consolas, "Courier New", monospace;;
 	outline: none;
 	padding: 4px;
 	padding-bottom: 2px;
@@ -204,7 +204,7 @@
 .prism-editor-wrapper pre .token.operator, .prism-editor-wrapper pre .token.keyword {
 	color: #fc2f40
 }
-.prism-editor-wrapper pre .token.number, .prism-editor-wrapper pre .token.boolean {
+.prism-editor-wrapper pre .token.number, .prism-editor-wrapper pre .token.boolean, input[type="number"] {
 	color: #b99cff
 }
 .prism-editor-wrapper pre .token.function-name {
