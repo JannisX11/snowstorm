@@ -38,7 +38,7 @@ export default class Input {
 		}
 		if (this.id) {
 			this.value = Config[this.id];
-		} else if (data.value) {
+		} else if (data.value != undefined) {
 			this.value = data.value;
 		}
 

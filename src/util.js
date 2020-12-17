@@ -1,5 +1,3 @@
-import tinycolor from 'tinycolor2'
-
 function bbuid(l) {
 	l = l || 1
 	let chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
@@ -159,17 +157,9 @@ function pathToExtension(path) {
 	return matches[0].replace('.', '').toLowerCase()
 }
 
-//Color
-tinycolor.prototype.toInt = function() {
-	var rgba = this.toRgb()
-	return Jimp.rgbaToInt(rgba.r, rgba.g, rgba.b, rgba.a)
-}
-/*
-
 
 
 //JSON
-*/
 function compileJSON(object, options) {
 	var output = ''
 	if (typeof options !== 'object') options = {}

@@ -8,6 +8,8 @@ function processValue(v, type) {
 	if (type.type === 'molang') {
 		if (!isNaN(v)) {
 			v = parseFloat(v)
+		} else if (typeof v == 'string' && v.includes('\n')) {
+			v = v.replace(/[\r\n]+/g, '');
 		}
 		if (!v) v = 0;
 	} else if (type.type === 'number' && typeof v !== type.type) {
@@ -88,6 +90,7 @@ function generateFile() {
 		comps['minecraft:emitter_local_space'] = {
 			position: getValue('space_local_position', 'boolean'),
 			rotation: getValue('space_local_rotation', 'boolean'),
+			velocity: getValue('space_local_rotation', 'boolean') || undefined,
 		}
 	}
 	//Rate

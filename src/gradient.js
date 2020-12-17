@@ -1,43 +1,19 @@
 import Input from './input'
 import {bbuid} from './util'
-import tinycolor from 'tinycolor2'
-import * as THREE from 'three'
 import registerEdit from './edits'
 
 export default class Gradient extends Input {
     constructor(...args) {
         super(...args)
         this.default_value = [
-            {percent: 0, color: '#ffffff', id: bbuid(8)},
-            {percent: 100, color: '#000000', id: bbuid(8)}
+            {percent: 0, color: '#ffffffff', id: bbuid(8)},
+            {percent: 100, color: '#000000ff', id: bbuid(8)}
         ]
         if (!this.value.length) this.value.splice(0, 0, ...this.default_value)
         this.selected = this.value[0];
     }
-    calculate(percent) {
-
-        let index = 0;
-        this.value.forEach((point, i) => {
-            if (point.percent <= percent) index = i;
-        });
-        if (this.value[index] && !this.value[index+1]) {
-            var color = this.value[index].color;
-
-        } else if (!this.value[index] && this.value[index+1]) {
-            var color = this.value[index+1].color;
-
-        } else if (this.value[index] && this.value[index+1]) {
-            // Interpolate
-            var mix = (percent - this.value[index].percent) / (this.value[index+1].percent - this.value[index].percent)
-            var color = tinycolor.mix(this.value[index].color, this.value[index+1].color, mix*100).toHexString()
-
-        } else {
-            var color = '#ffffff'
-        }
-        return new THREE.Color(color);
-    }
     change(e, node) {
-		this.selected.color = e.hex;
+		this.selected.color = e.hex8;
         let is_sliding = node && node.parentNode.querySelector(':active')
         if (!is_sliding) registerEdit('change gradient')
         return this;
@@ -68,7 +44,7 @@ export default class Gradient extends Input {
     addPoint() {
         this.value.push({
             percent: 50,
-            color: '#ffffff'
+            color: '#ffffffff'
         })
         this.selected = this.value[this.value.length-1];
         this.sortValues()

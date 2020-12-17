@@ -35,6 +35,12 @@ const Data = {
 					label: 'Local Rotation',
 					info: 'When enabled and the effect is attached to an entity, the particle rotation will simulate in entity space. Only works if local position is enabled too.',
 					type: 'checkbox'
+				}),
+				local_velocity: new Input({
+					id: 'space_local_velocity',
+					label: 'Local Velocity',
+					info: 'When enabled and the effect is attached to an entity, the particle velocity will simulate in entity space.',
+					type: 'checkbox'
 				})
 			}
 		},

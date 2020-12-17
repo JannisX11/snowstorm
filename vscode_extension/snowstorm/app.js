@@ -100,7 +100,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var molangjs__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(molangjs__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var tinycolor2__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! tinycolor2 */ "../wintersky/node_modules/tinycolor2/tinycolor.js");
 /* harmony import */ var tinycolor2__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(tinycolor2__WEBPACK_IMPORTED_MODULE_2__);
-var _MathUtil;
+var _MathUtil, _defaultColor;
 
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
@@ -176,7 +176,7 @@ var img$3 = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAACwBAMAAAD0wfO8A
 var img$4 = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAADACAYAAAANzeNOAAAClklEQVRo3u2Z624UMQyF91URgoqi3ujSG70tqgCB4JWDXOlUpx47dmbUVav1j6NMMj6fnZ0ks9uuWmurJVoVIAZcnx23WQAxRmYXALPWYsDnj+9aCiCBIpjQpgEMYaWnoE2eOayglnIBFgHuLr801hBAmyPQs87hp/etB7AgLsCDyXh3ChLAYhjGwg8xazYBvI11NXUe7B5g823doGEAmyOQaZR3YRYyMR/tf3AhGDMBYoS87IC4UxCzBKC1siOJC+hVgjEXwBAvM5vdx8iBuqqhlRiZaze++Ha+PmuiWQCYtRYDLNCwuQvImDVk8jVfbp4c7LlGxJgAMUIIRMtgaUMAmwEUsdkEMAgGQKDuU+BAS6l1wMGesbbztgDyPni4u3hSGsAmiGFdgGXWkNkAazpDZmsaT+b10X7KjDgTwBmsa5ilNQEcoCG4D5kAngoqEmmzCeAqPHEi9zHqYC9zuJS9jHUebBPwc3PVtIZ/cLAZ/RBgZe5VMmxOA/QUMHZ+cvAMMjGzUYJ1H+0EgGAE4dqTOQXc0MEa1n0KvYza3F0HvbJrN74pwO/vNw1KA2DAWymCuBk9uYDIyNXMAoguTg8fZQLkBmdCX1oZg9kF4CDVZgh/+ugCEKCNXnZ3HSBQt7WZCjAL8OfhtkFDADHgQIkg3awA4frq63FLAXTmXhUTgGTh7LqfAmgBlJoCIBo2ex1EZ0LthQK8PODvj/sGDQHEIBuIATfnp7mlzCYNSm1nyaSzowKrCnMKCGal/kkDM1fC/VqJBdhFwO3luv37tXnU8DcUNuN6GCCSzICkv+JoCDRUQXQG1EIqwK4AsAewiYbPAz4TeuYUoHcWhJ9BZK51UIACbAuAA2X47WxBFlVQj/G1A/4D2cRpqoNd7bwAAAAASUVORK5CYII=";
 
 function parseColor(input) {
-  return new tinycolor2__WEBPACK_IMPORTED_MODULE_2___default.a(input).toHexString();
+  return new tinycolor2__WEBPACK_IMPORTED_MODULE_2___default.a(input).toHex8String();
 }
 
 var Config = /*#__PURE__*/function () {
@@ -365,6 +365,7 @@ var Config = /*#__PURE__*/function () {
         if (comp('emitter_local_space')) {
           this.space_local_position = comp('emitter_local_space').position;
           this.space_local_rotation = comp('emitter_local_space').rotation;
+          this.space_local_velocity = comp('emitter_local_space').velocity;
         }
 
         if (comp('emitter_rate_steady')) {
@@ -581,7 +582,7 @@ var Config = /*#__PURE__*/function () {
           var c = comp('particle_appearance_tinting').color;
 
           if (c instanceof Array && c.length >= 3) {
-            if ((_typeof(c[0]) + _typeof(c[1]) + _typeof(c[1])).includes('string')) {
+            if ((_typeof(c[0]) + _typeof(c[1]) + _typeof(c[2]) + _typeof(c[3])).includes('string')) {
               this.set('particle_color_mode', 'expression');
               this.set('particle_color_expression', c);
             } else {
@@ -589,8 +590,9 @@ var Config = /*#__PURE__*/function () {
               var color = new tinycolor2__WEBPACK_IMPORTED_MODULE_2___default.a({
                 r: c[0] * 255,
                 g: c[1] * 255,
-                b: c[2] * 255
-              }).toHexString();
+                b: c[2] * 255,
+                a: c[3]
+              }).toHex8String();
               this.set('particle_color_static', color);
             }
           } else if (_typeof(c) == 'object') {
@@ -705,6 +707,9 @@ Config.types = {
     type: 'boolean'
   },
   space_local_rotation: {
+    type: 'boolean'
+  },
+  space_local_velocity: {
     type: 'boolean'
   },
   variables_creation_vars: {
@@ -834,7 +839,7 @@ Config.types = {
     type: 'molang'
   },
   particle_lifetime_kill_plane: {
-    type: 'molang',
+    type: 'number',
     array: true,
     dimensions: 4
   },
@@ -969,6 +974,10 @@ function removeFromArray(array, item) {
   }
 }
 
+var defaultColor = (_defaultColor = {
+  r: 255
+}, _defineProperty(_defaultColor, "r", 255), _defineProperty(_defaultColor, "b", 255), _defineProperty(_defaultColor, "a", 1), _defaultColor);
+
 function calculateGradient(gradient, percent) {
   var index = 0;
   gradient.forEach(function (point, i) {
@@ -976,18 +985,16 @@ function calculateGradient(gradient, percent) {
   });
 
   if (gradient[index] && !gradient[index + 1]) {
-    var color = gradient[index].color;
+    return tinycolor2__WEBPACK_IMPORTED_MODULE_2___default()(gradient[index].color).toRgb();
   } else if (!gradient[index] && gradient[index + 1]) {
-    var color = gradient[index + 1].color;
+    return tinycolor2__WEBPACK_IMPORTED_MODULE_2___default()(gradient[index + 1].color).toRgb();
   } else if (gradient[index] && gradient[index + 1]) {
     // Interpolate
     var mix = (percent - gradient[index].percent) / (gradient[index + 1].percent - gradient[index].percent);
-    var color = tinycolor2__WEBPACK_IMPORTED_MODULE_2___default.a.mix(gradient[index].color, gradient[index + 1].color, mix * 100).toHexString();
+    return tinycolor2__WEBPACK_IMPORTED_MODULE_2___default.a.mix(gradient[index].color, gradient[index + 1].color, mix * 100).toRgb();
   } else {
-    var color = '#ffffff';
+    return defaultColor;
   }
-
-  return new three__WEBPACK_IMPORTED_MODULE_0__["Color"](color);
 }
 
 var Particle = /*#__PURE__*/function () {
@@ -996,10 +1003,12 @@ var Particle = /*#__PURE__*/function () {
 
     this.emitter = emitter;
     if (!data) data = 0;
-    this.geometry = new three__WEBPACK_IMPORTED_MODULE_0__["PlaneGeometry"](1, 1);
+    this.geometry = new three__WEBPACK_IMPORTED_MODULE_0__["PlaneBufferGeometry"](2, 2);
     this.material = this.emitter.material;
     this.mesh = new three__WEBPACK_IMPORTED_MODULE_0__["Mesh"](this.geometry, this.material);
     this.position = this.mesh.position;
+    var colors = new Float32Array(16).fill(1);
+    this.geometry.setAttribute('clr', new three__WEBPACK_IMPORTED_MODULE_0__["BufferAttribute"](colors, 4));
     this.speed = data.speed || new three__WEBPACK_IMPORTED_MODULE_0__["Vector3"]();
     this.acceleration = data.acceleration || new three__WEBPACK_IMPORTED_MODULE_0__["Vector3"]();
     this.add();
@@ -1218,8 +1227,8 @@ var Particle = /*#__PURE__*/function () {
       if (!jump) {
         //Size
         var size = this.emitter.calculate(this.emitter.config.particle_appearance_size, params);
-        this.mesh.scale.x = size.x * 2.25 || 0.0001;
-        this.mesh.scale.y = size.y * 2.25 || 0.0001; //UV
+        this.mesh.scale.x = size.x || 0.0001;
+        this.mesh.scale.y = size.y || 0.0001; //UV
 
         if (this.emitter.config.particle_texture_mode === 'animated') {
           var max_frame = this.emitter.calculate(this.emitter.config.particle_texture_max_frame, params);
@@ -1255,10 +1264,10 @@ var Particle = /*#__PURE__*/function () {
           var i = this.emitter.calculate(this.emitter.config.particle_color_interpolant, params);
           var r = this.emitter.calculate(this.emitter.config.particle_color_range, params);
           var c = calculateGradient(this.emitter.config.particle_color_gradient, i / r * 100);
-          this.setColor(c.r, c.g, c.b);
+          this.setColor(c.r / 255, c.g / 255, c.b / 255, c.a);
         } else {
           var c = tinycolor2__WEBPACK_IMPORTED_MODULE_2___default()(this.emitter.config.particle_color_static).toRgb();
-          this.setColor(c.r / 255, c.g / 255, c.b / 255);
+          this.setColor(c.r / 255, c.g / 255, c.b / 255, c.a);
         }
       }
 
@@ -1275,10 +1284,10 @@ var Particle = /*#__PURE__*/function () {
   }, {
     key: "setColor",
     value: function setColor(r, g, b) {
-      this.mesh.geometry.faces.forEach(function (face) {
-        face.color.setRGB(r, g, b);
-      });
-      this.mesh.geometry.colorsNeedUpdate = true;
+      var a = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 1;
+      var attribute = this.geometry.getAttribute('clr');
+      attribute.array.set([r, g, b, a, r, g, b, a, r, g, b, a, r, g, b, a]);
+      attribute.needsUpdate = true;
     }
   }, {
     key: "setFrame",
@@ -1298,18 +1307,13 @@ var Particle = /*#__PURE__*/function () {
     key: "setUV",
     value: function setUV(x, y, w, h) {
       var epsilon = 0.05;
-      var vertex_uvs = this.geometry.faceVertexUvs[0];
+      var attribute = this.geometry.getAttribute('uv');
       w = (x + w - 2 * epsilon) / this.emitter.config.particle_texture_width;
       h = (y + h - 2 * epsilon) / this.emitter.config.particle_texture_height;
       x = (x + (w > 0 ? epsilon : -epsilon)) / this.emitter.config.particle_texture_width;
       y = (y + (h > 0 ? epsilon : -epsilon)) / this.emitter.config.particle_texture_height;
-      vertex_uvs[0][0].set(x, 1 - y);
-      vertex_uvs[0][1].set(x, 1 - h);
-      vertex_uvs[0][2].set(w, 1 - y);
-      vertex_uvs[1][1].set(w, 1 - h);
-      vertex_uvs[1][0] = vertex_uvs[0][1];
-      vertex_uvs[1][2] = vertex_uvs[0][2];
-      this.geometry.uvsNeedUpdate = true;
+      attribute.array.set([x, 1 - y, w, 1 - y, x, 1 - h, w, 1 - h]);
+      attribute.needsUpdate = true;
     }
   }]);
 
@@ -1317,7 +1321,12 @@ var Particle = /*#__PURE__*/function () {
 }();
 
 Wintersky.Particle = Particle;
+var vertexShader = "#define GLSLIFY 1\nattribute vec4 clr;varying vec2 vUv;varying vec4 vColor;void main(){vColor=clr;vUv=uv;vec4 mvPosition=modelViewMatrix*vec4(position,1.0);gl_Position=projectionMatrix*mvPosition;}"; // eslint-disable-line
+
+var fragmentShader = "#define GLSLIFY 1\nvarying vec2 vUv;varying vec4 vColor;uniform sampler2D map;uniform int materialType;void main(void){vec4 tColor=texture2D(map,vUv);if(materialType==0){if(tColor.a<0.05)discard;}else if(materialType==1){tColor.a=tColor.a*vColor.a;}else{tColor.a=1.0;}gl_FragColor=vec4(tColor.rgb*vColor.rgb,tColor.a);}"; // eslint-disable-line
+
 var dummy_vec = new three__WEBPACK_IMPORTED_MODULE_0__["Vector3"]();
+var materialTypes = ['particles_alpha', 'particles_blend', 'particles_opaque'];
 
 function calculateCurve(emitter, curve, params) {
   var position = emitter.Molang.parse(curve.input, params);
@@ -1367,12 +1376,22 @@ var Emitter = /*#__PURE__*/function () {
     this.local_space.scale.set(global_scale, global_scale, global_scale);
     this.global_space = new three__WEBPACK_IMPORTED_MODULE_0__["Object3D"]();
     this.global_space.scale.set(global_scale, global_scale, global_scale);
-    this.material = new three__WEBPACK_IMPORTED_MODULE_0__["MeshBasicMaterial"]({
-      color: 0xffffff,
-      transparent: true,
+    this.material = new three__WEBPACK_IMPORTED_MODULE_0__["ShaderMaterial"]({
+      uniforms: {
+        map: {
+          type: 't',
+          value: this.config.texture
+        },
+        materialType: {
+          type: 'int',
+          value: 1
+        }
+      },
+      vertexShader: vertexShader,
+      fragmentShader: fragmentShader,
       vertexColors: three__WEBPACK_IMPORTED_MODULE_0__["FaceColors"],
-      alphaTest: 0.2,
-      map: this.config.texture
+      transparent: true,
+      alphaTest: 0.2
     });
     this.particles = [];
     this.dead_particles = [];
@@ -1573,6 +1592,11 @@ var Emitter = /*#__PURE__*/function () {
         }
 
         this.spawnParticles(p_this_tick);
+      } // Material
+
+
+      if (!jump) {
+        this.material.uniforms.materialType.value = materialTypes.indexOf(this.config.particle_appearance_material);
       } // Tick particles
 
 
@@ -3693,7 +3717,7 @@ var ExpandedInput = {
       if (!ExpandedInput.input || !edit) return;
       var input = ExpandedInput.input;
 
-      if (input.axis_count > 1 || input.type == 'list') {
+      if (input.axis_count != 1) {
         var arr = [];
 
         for (var i = 0; i < input.axis_count; i++) {
@@ -4713,6 +4737,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -5123,7 +5155,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.input_wrapper[data-v-64472bb8] {\n\t\tmargin: 2px 0;\n}\n.input_wrapper > label[data-v-64472bb8] {\n\t\twidth: 100px;\n\t\ttext-align: right;\n\t\tmargin: 3px 0;\n}\n.input_right[data-v-64472bb8] {\n\t\tdisplay: inline-flex;\n\t\tvertical-align: top;\n\t\twidth: calc(100% - 110px);\n\t\tmargin-left: 4px;\n}\n.input_right.full_width[data-v-64472bb8] {\n\t\twidth: calc(100% - 8px);\n}\n.input_right.expandable[data-v-64472bb8] {\n\t\twidth: calc(100% - 134px);\n}\n.input_right[axes=\"1\"] input[data-v-64472bb8]:not([type=\"checkbox\"]), .input_right[axes=\"1\"] select[data-v-64472bb8]:not([type=\"checkbox\"]) {\n\t\twidth: 100%;\n}\n.input_right.expanded[data-v-64472bb8] {\n\t\tdisplay: block;\n\t\twidth: calc(100% - 7px);\n}\n.input_right.expanded input[data-v-64472bb8], .input_right.expanded .input_vector[data-v-64472bb8]  {\n\t\twidth: 100% !important;\n\t\tdisplay: block;\n        margin-left: 0;\n}\n.tool.input_expand_button[data-v-64472bb8] {\n\t\tfloat: right;\n\t\twidth: 22px;\n\t\tpadding-left: 3px;\n}\n.input_list li[data-v-64472bb8] {\n        margin: 2px 0;\n}\nul.input_list input[data-v-64472bb8] {\n\t\twidth: calc(100% - 100px);\n\t\tmargin-left: 62px;\n}\ninput#image[data-v-64472bb8] {\n\t\twidth: calc(100% - 40px);\n}\n.input_texture_wrapper[data-v-64472bb8] {\n\t\tdisplay: block;\n\t\theight: 128px;\n\t\twidth: 128px;\n\t\tmargin-right: 8px;\n        margin-left: 8px;\n        flex-shrink: 0;\n        border: 1px solid var(--color-border);\n        box-sizing: content-box;\n}\n.input_vector[data-v-64472bb8] {\n\t\twidth: 40px;\n\t\tflex-grow: 1;\n        margin-left: 2px;\n}\n.input_vector[data-v-64472bb8]:first-child {\n        margin-left: 0;\n}\n.list_add_tool[data-v-64472bb8] {\n        vertical-align: sub;\n}\n", ""]);
+exports.push([module.i, "\n.input_wrapper[data-v-64472bb8] {\n\tmargin: 2px 0;\n}\n.input_wrapper > label[data-v-64472bb8] {\n\twidth: 100px;\n\ttext-align: right;\n\tmargin: 3px 0;\n}\n.input_right[data-v-64472bb8] {\n\tdisplay: inline-flex;\n\tvertical-align: top;\n\twidth: calc(100% - 110px);\n\tmargin-left: 4px;\n}\n.input_right.full_width[data-v-64472bb8] {\n\twidth: calc(100% - 8px);\n}\n.input_right.expandable[data-v-64472bb8] {\n\twidth: calc(100% - 134px);\n}\n.input_right[axes=\"1\"] input[data-v-64472bb8]:not([type=\"checkbox\"]), .input_right[axes=\"1\"] select[data-v-64472bb8]:not([type=\"checkbox\"]) {\n\twidth: 100%;\n}\n.input_right.expanded[data-v-64472bb8] {\n\tdisplay: block;\n\twidth: calc(100% - 7px);\n}\n.input_right.expanded input[data-v-64472bb8], .input_right.expanded .input_vector[data-v-64472bb8]  {\n\twidth: 100% !important;\n\tdisplay: block;\n\tmargin-left: 0;\n}\n.tool.input_expand_button[data-v-64472bb8] {\n\tfloat: right;\n\twidth: 22px;\n\tpadding-left: 3px;\n}\n.input_list li[data-v-64472bb8] {\n\tmargin: 2px 0;\n}\nul.input_list input[data-v-64472bb8], ul.input_list .prism_editor_outer_wrapper[data-v-64472bb8] {\n\twidth: calc(100% - 80px);\n\tmargin-left: 52px;\n\tfloat: left;\n}\n.input_list li .tool[data-v-64472bb8] {\n\tpadding: 2px 0px;\n\twidth: 24px;\n\theight: 30px;\n}\ninput#image[data-v-64472bb8] {\n\twidth: calc(100% - 40px);\n}\n.input_texture_wrapper[data-v-64472bb8] {\n\tdisplay: block;\n\theight: 128px;\n\twidth: 128px;\n\tmargin-right: 8px;\n\tmargin-left: 8px;\n\tflex-shrink: 0;\n\tborder: 1px solid var(--color-border);\n\tbox-sizing: content-box;\n}\n.input_vector[data-v-64472bb8] {\n\twidth: 40px;\n\tflex-grow: 1;\n\tmargin-left: 2px;\n}\n.input_vector[data-v-64472bb8]:first-child {\n\tmargin-left: 0;\n}\n.list_add_tool[data-v-64472bb8] {\n\tvertical-align: bottom;\n}\n", ""]);
 
 // exports
 
@@ -5142,7 +5174,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.input_texture_wrapper img {\n        width: 100%;\n        height: 100%;\n\t\tbackground-size: contain;\n\t\tbackground-repeat: no-repeat;\n}\n", ""]);
+exports.push([module.i, "\n.input_texture_wrapper img {\n\twidth: 100%;\n\theight: 100%;\n\tbackground-size: contain;\n\tbackground-repeat: no-repeat;\n}\n", ""]);
 
 // exports
 
@@ -5180,7 +5212,7 @@ exports = module.exports = __webpack_require__(/*! ../../node_modules/css-loader
 
 
 // module
-exports.push([module.i, "\r\n\t/*Setup*/\n::-webkit-scrollbar {\r\n\t\twidth: 8px;\r\n\t\theight: 8px;\n}\n::-webkit-scrollbar-track {\r\n\t\tbackground: var(--color-interface);\n}\n::-webkit-scrollbar-corner {\r\n\t\tbackground: var(--color-interface);\n}\n::-webkit-scrollbar-thumb {\r\n\t\tbackground: var(--color-bar);\n}\n::-webkit-scrollbar-thumb:hover {\r\n\t\tbackground: var(--color-title);\n}\n::selection {\r\n\t\tbackground: var(--color-selection);\n}\n::placeholder {\r\n\t\topacity: 0.6;\n}\n* {\r\n\t\tscrollbar-width: thin;\r\n\t\tscrollbar-color: white var(--color-bar);\n}\nbody {\r\n\t\t--color-background: #29323a;\r\n\t\t--color-interface: #e5ebfa;\r\n\t\t--color-bar: #cfd7ea;\r\n\t\t--color-title: #9aa3b8;\r\n\t\t--color-selection: rgba(110, 142, 191, 0.3);\r\n\t\t--color-highlight: #f7f9ff;\r\n\t\t--color-text: #434b53;\n}\nbody {\r\n\t\t--color-background: #29323a;\r\n\t\t--color-dark: #20272d;\r\n\t\t--color-border: #1a1c1f;\r\n\t\t--color-interface: #29323a;\r\n\t\t--color-bar: #34404a;\r\n\t\t--color-title: #4b5b69;\r\n\t\t--color-selection: rgba(110, 142, 191, 0.3);\r\n\t\t--color-highlight: #f7f9ff;\r\n\t\t--color-text: #bcc3ca;\n}\nh1, h2, h3, h4, h5, h6 {\r\n\t\tmargin: 0;\r\n\t\tfont-weight: inherit;\n}\nul {\r\n\t\tlist-style: none;\r\n\t\tpadding-left: 0;\r\n\t\tmargin: 0;\n}\n* {\r\n\t\tmargin: 0;\r\n        padding: 0;\r\n        box-sizing: border-box;\n}\ninput, select {\r\n\t\tfont-weight: inherit;\r\n\t\tbackground-color: var(--color-dark);\r\n\t\tborder: 1px solid var(--color-border);\r\n\t\tcolor: var(--color-text);\r\n\t\theight: 30px;\r\n\t\tpadding: 4px;\n}\ninput[type=text], input[type=number], input:not([type]) {\r\n\t\tfont-family: Consolas, \"Courier New\", monospace;\n}\ninput[type=checkbox] {\r\n\t\theight: 15px;\r\n\t\twidth: 15px;\r\n\t\tvertical-align: middle;\r\n\t\tmargin: 0 0 2px 4px;\r\n\t\tmargin-top: 5px;\n}\ninput[type=file] {\r\n        padding: 1px;\r\n        border: none;\r\n        background-color: initial;\n}\n.unicode_icon {\r\n\t\tfont-style: unset;\r\n\t\tdisplay: block;\r\n\t\twidth: 24px;\r\n\t\theight: 24px;\r\n\t\ttext-align: center;\r\n\t\tfont-size: 14pt;\r\n\t\tfont-family: sans-serif;\n}\n.unicode_icon.caret {\r\n\t\tfont-size: 25pt;\r\n\t\toverflow: hidden;\r\n\t\tdisplay: block;\r\n\t\tmargin-top: -4px;\r\n\t\twidth: 12px;\n}\n.unicode_icon.plus {\r\n\t\tfont-size: 18pt;\r\n\t\tmargin-top: -4px;\n}\n.unicode_icon.split {\r\n\t\tfont-size: 22pt;\r\n\t\tmargin-top: -12px;\n}\n.checkerboard {\r\n\t\t--color-checker_offset: var(--color-bar);\r\n\t\t--color-checkerboard: var(--color-interface);\r\n\t\tbackground-color: var(--color-checkerboard) !important;\r\n\t\tbackground-image: linear-gradient(45deg, var(--color-checkerboard) 25%, transparent 25%), linear-gradient(-45deg, var(--color-checkerboard) 25%, transparent 25%), linear-gradient(45deg, transparent 75%, var(--color-checkerboard) 75%), linear-gradient(-45deg, var(--color-checker_offset) 75%, var(--color-checkerboard) 75%);\r\n\t\tbackground-size: 16px 16px;\r\n\t\tbackground-position: 0 0, 0 8px, 8px -8px, -8px 0px;\n}\nselect {\r\n\t\theight: 30px;\n}\nbody {\r\n\t\timage-rendering: pixelated;\r\n\t\tbackground-color: var(--color-background);\r\n\t\tuser-select: none;\r\n\t\t-moz-user-select: none;\r\n\t\tfont-family: 'Lato', -apple-system, \"Segoe UI\", sans-serif;\r\n\t\theight: 100%;\r\n        width: 100%;\r\n        margin: 0;\r\n        font-size: 11pt;\r\n        font-weight: 400;\r\n        line-height: 1.5;\r\n        color: var(--color-text);\r\n        text-align: left;\n}\r\n\r\n/*Color Picker*/\ndiv.vc-chrome {\r\n\t\twidth: 310px;\r\n\t\tmargin: 2px 0;\r\n\t\tfont-family: inherit;\n}\ndiv.vc-chrome .vc-chrome-body {\r\n\t\tbackground-color: var(--color-interface);\n}\ndiv.vc-chrome .vc-chrome-fields .vc-input__input {\r\n\t\tcolor: var(--color-text);\r\n\t\tbox-shadow: none;\r\n\t\tfont-size: inherit;\r\n\t\tborder: 1px solid var(--color-border);\r\n\t\theight: 24px;\n}\ndiv.vc-chrome .vc-chrome-toggle-icon svg path {\r\n\t\tfill: var(--color-text);\n}\n.vc-chrome-saturation-wrap .vc-saturation-circle {\r\n\t\tmargin-top: -5px;\r\n\t\tmargin-left: -4px;\n}\r\n\r\n\r\n/* Prism Editor */\n.prism-editor-wrapper {\r\n\tbackground-color: var(--color-dark);\r\n\theight: auto;\r\n\tz-index: 3;\r\n\tfont-family: Consolas, \"Courier New\", monospace;;\r\n\toutline: none;\r\n\tpadding: 4px;\r\n\tpadding-bottom: 2px;\r\n\tfont-size: 15px;\r\n\twidth: fit-content;\r\n\tmin-width: 100%;\n}\n.prism-editor-wrapper .prism-editor__editor, .prism-editor-wrapper .prism-editor__textarea {\r\n\twhite-space: nowrap;\n}\n.prism_editor_outer_wrapper {\r\n\tborder: 1px solid var(--color-border);\r\n\twidth: 100%;\r\n\toverflow-x: auto;\n}\n.prism-editor-wrapper textarea {\r\n\toutline: none;\n}\n.prism-editor-wrapper pre {\r\n\tcolor: var(--color-text);\n}\n.prism-editor-wrapper .prism-editor-wrapper {\r\n\toverflow-y: hidden;\n}\n.prism-editor-wrapper pre .token.punctuation {\r\n\tcolor: #5ba8c5\n}\n.prism-editor-wrapper pre .token.operator, .prism-editor-wrapper pre .token.keyword {\r\n\tcolor: #fc2f40\n}\n.prism-editor-wrapper pre .token.number, .prism-editor-wrapper pre .token.boolean {\r\n\tcolor: #b99cff\n}\n.prism-editor-wrapper pre .token.function-name {\r\n\tcolor: #94e400\n}\n.prism-editor-wrapper pre .token.selector {\r\n\tcolor: #92dcff;\n}", ""]);
+exports.push([module.i, "\r\n\t/*Setup*/\n::-webkit-scrollbar {\r\n\t\twidth: 8px;\r\n\t\theight: 8px;\n}\n::-webkit-scrollbar-track {\r\n\t\tbackground: var(--color-interface);\n}\n::-webkit-scrollbar-corner {\r\n\t\tbackground: var(--color-interface);\n}\n::-webkit-scrollbar-thumb {\r\n\t\tbackground: var(--color-bar);\n}\n::-webkit-scrollbar-thumb:hover {\r\n\t\tbackground: var(--color-title);\n}\n::selection {\r\n\t\tbackground: var(--color-selection);\n}\n::placeholder {\r\n\t\topacity: 0.6;\n}\n* {\r\n\t\tscrollbar-width: thin;\r\n\t\tscrollbar-color: white var(--color-bar);\n}\nbody {\r\n\t\t--color-background: #29323a;\r\n\t\t--color-interface: #e5ebfa;\r\n\t\t--color-bar: #cfd7ea;\r\n\t\t--color-title: #9aa3b8;\r\n\t\t--color-selection: rgba(110, 142, 191, 0.3);\r\n\t\t--color-highlight: #f7f9ff;\r\n\t\t--color-text: #434b53;\n}\nbody {\r\n\t\t--color-background: #29323a;\r\n\t\t--color-dark: #20272d;\r\n\t\t--color-border: #1a1c1f;\r\n\t\t--color-interface: #29323a;\r\n\t\t--color-bar: #34404a;\r\n\t\t--color-title: #4b5b69;\r\n\t\t--color-selection: rgba(110, 142, 191, 0.3);\r\n\t\t--color-highlight: #f7f9ff;\r\n\t\t--color-text: #bcc3ca;\n}\nh1, h2, h3, h4, h5, h6 {\r\n\t\tmargin: 0;\r\n\t\tfont-weight: inherit;\n}\nul {\r\n\t\tlist-style: none;\r\n\t\tpadding-left: 0;\r\n\t\tmargin: 0;\n}\n* {\r\n\t\tmargin: 0;\r\n        padding: 0;\r\n        box-sizing: border-box;\n}\ninput, select {\r\n\t\tfont-weight: inherit;\r\n\t\tbackground-color: var(--color-dark);\r\n\t\tborder: 1px solid var(--color-border);\r\n\t\tcolor: var(--color-text);\r\n\t\theight: 30px;\r\n\t\tpadding: 4px;\r\n\t\toutline: none;\n}\ninput[type=text], input[type=number], input:not([type]) {\r\n\t\tfont-family: Consolas, \"Courier New\", monospace;\n}\ninput[type=checkbox] {\r\n\t\theight: 15px;\r\n\t\twidth: 15px;\r\n\t\tvertical-align: middle;\r\n\t\tmargin: 0 0 2px 4px;\r\n\t\tmargin-top: 5px;\n}\ninput[type=file] {\r\n        padding: 1px;\r\n        border: none;\r\n        background-color: initial;\n}\n.unicode_icon {\r\n\t\tfont-style: unset;\r\n\t\tdisplay: block;\r\n\t\twidth: 24px;\r\n\t\theight: 24px;\r\n\t\ttext-align: center;\r\n\t\tfont-size: 14pt;\r\n\t\tfont-family: sans-serif;\n}\n.unicode_icon.caret {\r\n\t\tfont-size: 25pt;\r\n\t\toverflow: hidden;\r\n\t\tdisplay: block;\r\n\t\tmargin-top: -4px;\r\n\t\twidth: 12px;\n}\n.unicode_icon.plus {\r\n\t\tfont-size: 18pt;\r\n\t\tmargin-top: -4px;\n}\n.unicode_icon.split {\r\n\t\tfont-size: 22pt;\r\n\t\tmargin-top: -12px;\n}\n.checkerboard {\r\n\t\t--color-checker_offset: var(--color-bar);\r\n\t\t--color-checkerboard: var(--color-interface);\r\n\t\tbackground-color: var(--color-checkerboard) !important;\r\n\t\tbackground-image: linear-gradient(45deg, var(--color-checkerboard) 25%, transparent 25%), linear-gradient(-45deg, var(--color-checkerboard) 25%, transparent 25%), linear-gradient(45deg, transparent 75%, var(--color-checkerboard) 75%), linear-gradient(-45deg, var(--color-checker_offset) 75%, var(--color-checkerboard) 75%);\r\n\t\tbackground-size: 16px 16px;\r\n\t\tbackground-position: 0 0, 0 8px, 8px -8px, -8px 0px;\n}\nselect {\r\n\t\theight: 30px;\n}\nbody {\r\n\t\timage-rendering: pixelated;\r\n\t\tbackground-color: var(--color-background);\r\n\t\tuser-select: none;\r\n\t\t-moz-user-select: none;\r\n\t\tfont-family: 'Lato', -apple-system, \"Segoe UI\", sans-serif;\r\n\t\theight: 100%;\r\n        width: 100%;\r\n        margin: 0;\r\n        font-size: 11pt;\r\n        font-weight: 400;\r\n        line-height: 1.5;\r\n        color: var(--color-text);\r\n        text-align: left;\n}\r\n\r\n/*Color Picker*/\ndiv.vc-chrome {\r\n\t\twidth: 310px;\r\n\t\tmargin: 2px 0;\r\n\t\tfont-family: inherit;\n}\ndiv.vc-chrome .vc-chrome-body {\r\n\t\tbackground-color: var(--color-interface);\n}\ndiv.vc-chrome .vc-chrome-fields .vc-input__input {\r\n\t\tcolor: var(--color-text);\r\n\t\tbox-shadow: none;\r\n\t\tfont-size: inherit;\r\n\t\tborder: 1px solid var(--color-border);\r\n\t\theight: 24px;\n}\ndiv.vc-chrome .vc-chrome-toggle-icon svg path {\r\n\t\tfill: var(--color-text);\n}\n.vc-chrome-saturation-wrap .vc-saturation-circle {\r\n\t\tmargin-top: -5px;\r\n\t\tmargin-left: -4px;\n}\r\n\r\n\r\n/* Prism Editor */\n.prism-editor-wrapper {\r\n\tbackground-color: var(--color-dark);\r\n\theight: auto;\r\n\tz-index: 3;\r\n\tfont-family: Consolas, \"Courier New\", monospace;;\r\n\toutline: none;\r\n\tpadding: 4px;\r\n\tpadding-bottom: 2px;\r\n\tfont-size: 15px;\r\n\twidth: fit-content;\r\n\tmin-width: 100%;\n}\n.prism-editor-wrapper .prism-editor__editor, .prism-editor-wrapper .prism-editor__textarea {\r\n\twhite-space: nowrap;\n}\n.prism_editor_outer_wrapper {\r\n\tborder: 1px solid var(--color-border);\r\n\twidth: 100%;\r\n\toverflow-x: auto;\n}\n.prism-editor-wrapper textarea {\r\n\toutline: none;\n}\n.prism-editor-wrapper pre {\r\n\tcolor: var(--color-text);\n}\n.prism-editor-wrapper .prism-editor-wrapper {\r\n\toverflow-y: hidden;\n}\n.prism-editor-wrapper pre .token.punctuation {\r\n\tcolor: #5ba8c5\n}\n.prism-editor-wrapper pre .token.operator, .prism-editor-wrapper pre .token.keyword {\r\n\tcolor: #fc2f40\n}\n.prism-editor-wrapper pre .token.number, .prism-editor-wrapper pre .token.boolean, input[type=\"number\"] {\r\n\tcolor: #b99cff\n}\n.prism-editor-wrapper pre .token.function-name {\r\n\tcolor: #94e400\n}\n.prism-editor-wrapper pre .token.selector {\r\n\tcolor: #92dcff;\n}", ""]);
 
 // exports
 
@@ -63186,1211 +63218,6 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
 
 /***/ }),
 
-/***/ "./node_modules/tinycolor2/tinycolor.js":
-/*!**********************************************!*\
-  !*** ./node_modules/tinycolor2/tinycolor.js ***!
-  \**********************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-var __WEBPACK_AMD_DEFINE_RESULT__;// TinyColor v1.4.2
-// https://github.com/bgrins/TinyColor
-// Brian Grinstead, MIT License
-
-(function(Math) {
-
-var trimLeft = /^\s+/,
-    trimRight = /\s+$/,
-    tinyCounter = 0,
-    mathRound = Math.round,
-    mathMin = Math.min,
-    mathMax = Math.max,
-    mathRandom = Math.random;
-
-function tinycolor (color, opts) {
-
-    color = (color) ? color : '';
-    opts = opts || { };
-
-    // If input is already a tinycolor, return itself
-    if (color instanceof tinycolor) {
-       return color;
-    }
-    // If we are called as a function, call using new instead
-    if (!(this instanceof tinycolor)) {
-        return new tinycolor(color, opts);
-    }
-
-    var rgb = inputToRGB(color);
-    this._originalInput = color,
-    this._r = rgb.r,
-    this._g = rgb.g,
-    this._b = rgb.b,
-    this._a = rgb.a,
-    this._roundA = mathRound(100*this._a) / 100,
-    this._format = opts.format || rgb.format;
-    this._gradientType = opts.gradientType;
-
-    // Don't let the range of [0,255] come back in [0,1].
-    // Potentially lose a little bit of precision here, but will fix issues where
-    // .5 gets interpreted as half of the total, instead of half of 1
-    // If it was supposed to be 128, this was already taken care of by `inputToRgb`
-    if (this._r < 1) { this._r = mathRound(this._r); }
-    if (this._g < 1) { this._g = mathRound(this._g); }
-    if (this._b < 1) { this._b = mathRound(this._b); }
-
-    this._ok = rgb.ok;
-    this._tc_id = tinyCounter++;
-}
-
-tinycolor.prototype = {
-    isDark: function() {
-        return this.getBrightness() < 128;
-    },
-    isLight: function() {
-        return !this.isDark();
-    },
-    isValid: function() {
-        return this._ok;
-    },
-    getOriginalInput: function() {
-      return this._originalInput;
-    },
-    getFormat: function() {
-        return this._format;
-    },
-    getAlpha: function() {
-        return this._a;
-    },
-    getBrightness: function() {
-        //http://www.w3.org/TR/AERT#color-contrast
-        var rgb = this.toRgb();
-        return (rgb.r * 299 + rgb.g * 587 + rgb.b * 114) / 1000;
-    },
-    getLuminance: function() {
-        //http://www.w3.org/TR/2008/REC-WCAG20-20081211/#relativeluminancedef
-        var rgb = this.toRgb();
-        var RsRGB, GsRGB, BsRGB, R, G, B;
-        RsRGB = rgb.r/255;
-        GsRGB = rgb.g/255;
-        BsRGB = rgb.b/255;
-
-        if (RsRGB <= 0.03928) {R = RsRGB / 12.92;} else {R = Math.pow(((RsRGB + 0.055) / 1.055), 2.4);}
-        if (GsRGB <= 0.03928) {G = GsRGB / 12.92;} else {G = Math.pow(((GsRGB + 0.055) / 1.055), 2.4);}
-        if (BsRGB <= 0.03928) {B = BsRGB / 12.92;} else {B = Math.pow(((BsRGB + 0.055) / 1.055), 2.4);}
-        return (0.2126 * R) + (0.7152 * G) + (0.0722 * B);
-    },
-    setAlpha: function(value) {
-        this._a = boundAlpha(value);
-        this._roundA = mathRound(100*this._a) / 100;
-        return this;
-    },
-    toHsv: function() {
-        var hsv = rgbToHsv(this._r, this._g, this._b);
-        return { h: hsv.h * 360, s: hsv.s, v: hsv.v, a: this._a };
-    },
-    toHsvString: function() {
-        var hsv = rgbToHsv(this._r, this._g, this._b);
-        var h = mathRound(hsv.h * 360), s = mathRound(hsv.s * 100), v = mathRound(hsv.v * 100);
-        return (this._a == 1) ?
-          "hsv("  + h + ", " + s + "%, " + v + "%)" :
-          "hsva(" + h + ", " + s + "%, " + v + "%, "+ this._roundA + ")";
-    },
-    toHsl: function() {
-        var hsl = rgbToHsl(this._r, this._g, this._b);
-        return { h: hsl.h * 360, s: hsl.s, l: hsl.l, a: this._a };
-    },
-    toHslString: function() {
-        var hsl = rgbToHsl(this._r, this._g, this._b);
-        var h = mathRound(hsl.h * 360), s = mathRound(hsl.s * 100), l = mathRound(hsl.l * 100);
-        return (this._a == 1) ?
-          "hsl("  + h + ", " + s + "%, " + l + "%)" :
-          "hsla(" + h + ", " + s + "%, " + l + "%, "+ this._roundA + ")";
-    },
-    toHex: function(allow3Char) {
-        return rgbToHex(this._r, this._g, this._b, allow3Char);
-    },
-    toHexString: function(allow3Char) {
-        return '#' + this.toHex(allow3Char);
-    },
-    toHex8: function(allow4Char) {
-        return rgbaToHex(this._r, this._g, this._b, this._a, allow4Char);
-    },
-    toHex8String: function(allow4Char) {
-        return '#' + this.toHex8(allow4Char);
-    },
-    toRgb: function() {
-        return { r: mathRound(this._r), g: mathRound(this._g), b: mathRound(this._b), a: this._a };
-    },
-    toRgbString: function() {
-        return (this._a == 1) ?
-          "rgb("  + mathRound(this._r) + ", " + mathRound(this._g) + ", " + mathRound(this._b) + ")" :
-          "rgba(" + mathRound(this._r) + ", " + mathRound(this._g) + ", " + mathRound(this._b) + ", " + this._roundA + ")";
-    },
-    toPercentageRgb: function() {
-        return { r: mathRound(bound01(this._r, 255) * 100) + "%", g: mathRound(bound01(this._g, 255) * 100) + "%", b: mathRound(bound01(this._b, 255) * 100) + "%", a: this._a };
-    },
-    toPercentageRgbString: function() {
-        return (this._a == 1) ?
-          "rgb("  + mathRound(bound01(this._r, 255) * 100) + "%, " + mathRound(bound01(this._g, 255) * 100) + "%, " + mathRound(bound01(this._b, 255) * 100) + "%)" :
-          "rgba(" + mathRound(bound01(this._r, 255) * 100) + "%, " + mathRound(bound01(this._g, 255) * 100) + "%, " + mathRound(bound01(this._b, 255) * 100) + "%, " + this._roundA + ")";
-    },
-    toName: function() {
-        if (this._a === 0) {
-            return "transparent";
-        }
-
-        if (this._a < 1) {
-            return false;
-        }
-
-        return hexNames[rgbToHex(this._r, this._g, this._b, true)] || false;
-    },
-    toFilter: function(secondColor) {
-        var hex8String = '#' + rgbaToArgbHex(this._r, this._g, this._b, this._a);
-        var secondHex8String = hex8String;
-        var gradientType = this._gradientType ? "GradientType = 1, " : "";
-
-        if (secondColor) {
-            var s = tinycolor(secondColor);
-            secondHex8String = '#' + rgbaToArgbHex(s._r, s._g, s._b, s._a);
-        }
-
-        return "progid:DXImageTransform.Microsoft.gradient("+gradientType+"startColorstr="+hex8String+",endColorstr="+secondHex8String+")";
-    },
-    toString: function(format) {
-        var formatSet = !!format;
-        format = format || this._format;
-
-        var formattedString = false;
-        var hasAlpha = this._a < 1 && this._a >= 0;
-        var needsAlphaFormat = !formatSet && hasAlpha && (format === "hex" || format === "hex6" || format === "hex3" || format === "hex4" || format === "hex8" || format === "name");
-
-        if (needsAlphaFormat) {
-            // Special case for "transparent", all other non-alpha formats
-            // will return rgba when there is transparency.
-            if (format === "name" && this._a === 0) {
-                return this.toName();
-            }
-            return this.toRgbString();
-        }
-        if (format === "rgb") {
-            formattedString = this.toRgbString();
-        }
-        if (format === "prgb") {
-            formattedString = this.toPercentageRgbString();
-        }
-        if (format === "hex" || format === "hex6") {
-            formattedString = this.toHexString();
-        }
-        if (format === "hex3") {
-            formattedString = this.toHexString(true);
-        }
-        if (format === "hex4") {
-            formattedString = this.toHex8String(true);
-        }
-        if (format === "hex8") {
-            formattedString = this.toHex8String();
-        }
-        if (format === "name") {
-            formattedString = this.toName();
-        }
-        if (format === "hsl") {
-            formattedString = this.toHslString();
-        }
-        if (format === "hsv") {
-            formattedString = this.toHsvString();
-        }
-
-        return formattedString || this.toHexString();
-    },
-    clone: function() {
-        return tinycolor(this.toString());
-    },
-
-    _applyModification: function(fn, args) {
-        var color = fn.apply(null, [this].concat([].slice.call(args)));
-        this._r = color._r;
-        this._g = color._g;
-        this._b = color._b;
-        this.setAlpha(color._a);
-        return this;
-    },
-    lighten: function() {
-        return this._applyModification(lighten, arguments);
-    },
-    brighten: function() {
-        return this._applyModification(brighten, arguments);
-    },
-    darken: function() {
-        return this._applyModification(darken, arguments);
-    },
-    desaturate: function() {
-        return this._applyModification(desaturate, arguments);
-    },
-    saturate: function() {
-        return this._applyModification(saturate, arguments);
-    },
-    greyscale: function() {
-        return this._applyModification(greyscale, arguments);
-    },
-    spin: function() {
-        return this._applyModification(spin, arguments);
-    },
-
-    _applyCombination: function(fn, args) {
-        return fn.apply(null, [this].concat([].slice.call(args)));
-    },
-    analogous: function() {
-        return this._applyCombination(analogous, arguments);
-    },
-    complement: function() {
-        return this._applyCombination(complement, arguments);
-    },
-    monochromatic: function() {
-        return this._applyCombination(monochromatic, arguments);
-    },
-    splitcomplement: function() {
-        return this._applyCombination(splitcomplement, arguments);
-    },
-    triad: function() {
-        return this._applyCombination(triad, arguments);
-    },
-    tetrad: function() {
-        return this._applyCombination(tetrad, arguments);
-    }
-};
-
-// If input is an object, force 1 into "1.0" to handle ratios properly
-// String input requires "1.0" as input, so 1 will be treated as 1
-tinycolor.fromRatio = function(color, opts) {
-    if (typeof color == "object") {
-        var newColor = {};
-        for (var i in color) {
-            if (color.hasOwnProperty(i)) {
-                if (i === "a") {
-                    newColor[i] = color[i];
-                }
-                else {
-                    newColor[i] = convertToPercentage(color[i]);
-                }
-            }
-        }
-        color = newColor;
-    }
-
-    return tinycolor(color, opts);
-};
-
-// Given a string or object, convert that input to RGB
-// Possible string inputs:
-//
-//     "red"
-//     "#f00" or "f00"
-//     "#ff0000" or "ff0000"
-//     "#ff000000" or "ff000000"
-//     "rgb 255 0 0" or "rgb (255, 0, 0)"
-//     "rgb 1.0 0 0" or "rgb (1, 0, 0)"
-//     "rgba (255, 0, 0, 1)" or "rgba 255, 0, 0, 1"
-//     "rgba (1.0, 0, 0, 1)" or "rgba 1.0, 0, 0, 1"
-//     "hsl(0, 100%, 50%)" or "hsl 0 100% 50%"
-//     "hsla(0, 100%, 50%, 1)" or "hsla 0 100% 50%, 1"
-//     "hsv(0, 100%, 100%)" or "hsv 0 100% 100%"
-//
-function inputToRGB(color) {
-
-    var rgb = { r: 0, g: 0, b: 0 };
-    var a = 1;
-    var s = null;
-    var v = null;
-    var l = null;
-    var ok = false;
-    var format = false;
-
-    if (typeof color == "string") {
-        color = stringInputToObject(color);
-    }
-
-    if (typeof color == "object") {
-        if (isValidCSSUnit(color.r) && isValidCSSUnit(color.g) && isValidCSSUnit(color.b)) {
-            rgb = rgbToRgb(color.r, color.g, color.b);
-            ok = true;
-            format = String(color.r).substr(-1) === "%" ? "prgb" : "rgb";
-        }
-        else if (isValidCSSUnit(color.h) && isValidCSSUnit(color.s) && isValidCSSUnit(color.v)) {
-            s = convertToPercentage(color.s);
-            v = convertToPercentage(color.v);
-            rgb = hsvToRgb(color.h, s, v);
-            ok = true;
-            format = "hsv";
-        }
-        else if (isValidCSSUnit(color.h) && isValidCSSUnit(color.s) && isValidCSSUnit(color.l)) {
-            s = convertToPercentage(color.s);
-            l = convertToPercentage(color.l);
-            rgb = hslToRgb(color.h, s, l);
-            ok = true;
-            format = "hsl";
-        }
-
-        if (color.hasOwnProperty("a")) {
-            a = color.a;
-        }
-    }
-
-    a = boundAlpha(a);
-
-    return {
-        ok: ok,
-        format: color.format || format,
-        r: mathMin(255, mathMax(rgb.r, 0)),
-        g: mathMin(255, mathMax(rgb.g, 0)),
-        b: mathMin(255, mathMax(rgb.b, 0)),
-        a: a
-    };
-}
-
-
-// Conversion Functions
-// --------------------
-
-// `rgbToHsl`, `rgbToHsv`, `hslToRgb`, `hsvToRgb` modified from:
-// <http://mjijackson.com/2008/02/rgb-to-hsl-and-rgb-to-hsv-color-model-conversion-algorithms-in-javascript>
-
-// `rgbToRgb`
-// Handle bounds / percentage checking to conform to CSS color spec
-// <http://www.w3.org/TR/css3-color/>
-// *Assumes:* r, g, b in [0, 255] or [0, 1]
-// *Returns:* { r, g, b } in [0, 255]
-function rgbToRgb(r, g, b){
-    return {
-        r: bound01(r, 255) * 255,
-        g: bound01(g, 255) * 255,
-        b: bound01(b, 255) * 255
-    };
-}
-
-// `rgbToHsl`
-// Converts an RGB color value to HSL.
-// *Assumes:* r, g, and b are contained in [0, 255] or [0, 1]
-// *Returns:* { h, s, l } in [0,1]
-function rgbToHsl(r, g, b) {
-
-    r = bound01(r, 255);
-    g = bound01(g, 255);
-    b = bound01(b, 255);
-
-    var max = mathMax(r, g, b), min = mathMin(r, g, b);
-    var h, s, l = (max + min) / 2;
-
-    if(max == min) {
-        h = s = 0; // achromatic
-    }
-    else {
-        var d = max - min;
-        s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
-        switch(max) {
-            case r: h = (g - b) / d + (g < b ? 6 : 0); break;
-            case g: h = (b - r) / d + 2; break;
-            case b: h = (r - g) / d + 4; break;
-        }
-
-        h /= 6;
-    }
-
-    return { h: h, s: s, l: l };
-}
-
-// `hslToRgb`
-// Converts an HSL color value to RGB.
-// *Assumes:* h is contained in [0, 1] or [0, 360] and s and l are contained [0, 1] or [0, 100]
-// *Returns:* { r, g, b } in the set [0, 255]
-function hslToRgb(h, s, l) {
-    var r, g, b;
-
-    h = bound01(h, 360);
-    s = bound01(s, 100);
-    l = bound01(l, 100);
-
-    function hue2rgb(p, q, t) {
-        if(t < 0) t += 1;
-        if(t > 1) t -= 1;
-        if(t < 1/6) return p + (q - p) * 6 * t;
-        if(t < 1/2) return q;
-        if(t < 2/3) return p + (q - p) * (2/3 - t) * 6;
-        return p;
-    }
-
-    if(s === 0) {
-        r = g = b = l; // achromatic
-    }
-    else {
-        var q = l < 0.5 ? l * (1 + s) : l + s - l * s;
-        var p = 2 * l - q;
-        r = hue2rgb(p, q, h + 1/3);
-        g = hue2rgb(p, q, h);
-        b = hue2rgb(p, q, h - 1/3);
-    }
-
-    return { r: r * 255, g: g * 255, b: b * 255 };
-}
-
-// `rgbToHsv`
-// Converts an RGB color value to HSV
-// *Assumes:* r, g, and b are contained in the set [0, 255] or [0, 1]
-// *Returns:* { h, s, v } in [0,1]
-function rgbToHsv(r, g, b) {
-
-    r = bound01(r, 255);
-    g = bound01(g, 255);
-    b = bound01(b, 255);
-
-    var max = mathMax(r, g, b), min = mathMin(r, g, b);
-    var h, s, v = max;
-
-    var d = max - min;
-    s = max === 0 ? 0 : d / max;
-
-    if(max == min) {
-        h = 0; // achromatic
-    }
-    else {
-        switch(max) {
-            case r: h = (g - b) / d + (g < b ? 6 : 0); break;
-            case g: h = (b - r) / d + 2; break;
-            case b: h = (r - g) / d + 4; break;
-        }
-        h /= 6;
-    }
-    return { h: h, s: s, v: v };
-}
-
-// `hsvToRgb`
-// Converts an HSV color value to RGB.
-// *Assumes:* h is contained in [0, 1] or [0, 360] and s and v are contained in [0, 1] or [0, 100]
-// *Returns:* { r, g, b } in the set [0, 255]
- function hsvToRgb(h, s, v) {
-
-    h = bound01(h, 360) * 6;
-    s = bound01(s, 100);
-    v = bound01(v, 100);
-
-    var i = Math.floor(h),
-        f = h - i,
-        p = v * (1 - s),
-        q = v * (1 - f * s),
-        t = v * (1 - (1 - f) * s),
-        mod = i % 6,
-        r = [v, q, p, p, t, v][mod],
-        g = [t, v, v, q, p, p][mod],
-        b = [p, p, t, v, v, q][mod];
-
-    return { r: r * 255, g: g * 255, b: b * 255 };
-}
-
-// `rgbToHex`
-// Converts an RGB color to hex
-// Assumes r, g, and b are contained in the set [0, 255]
-// Returns a 3 or 6 character hex
-function rgbToHex(r, g, b, allow3Char) {
-
-    var hex = [
-        pad2(mathRound(r).toString(16)),
-        pad2(mathRound(g).toString(16)),
-        pad2(mathRound(b).toString(16))
-    ];
-
-    // Return a 3 character hex if possible
-    if (allow3Char && hex[0].charAt(0) == hex[0].charAt(1) && hex[1].charAt(0) == hex[1].charAt(1) && hex[2].charAt(0) == hex[2].charAt(1)) {
-        return hex[0].charAt(0) + hex[1].charAt(0) + hex[2].charAt(0);
-    }
-
-    return hex.join("");
-}
-
-// `rgbaToHex`
-// Converts an RGBA color plus alpha transparency to hex
-// Assumes r, g, b are contained in the set [0, 255] and
-// a in [0, 1]. Returns a 4 or 8 character rgba hex
-function rgbaToHex(r, g, b, a, allow4Char) {
-
-    var hex = [
-        pad2(mathRound(r).toString(16)),
-        pad2(mathRound(g).toString(16)),
-        pad2(mathRound(b).toString(16)),
-        pad2(convertDecimalToHex(a))
-    ];
-
-    // Return a 4 character hex if possible
-    if (allow4Char && hex[0].charAt(0) == hex[0].charAt(1) && hex[1].charAt(0) == hex[1].charAt(1) && hex[2].charAt(0) == hex[2].charAt(1) && hex[3].charAt(0) == hex[3].charAt(1)) {
-        return hex[0].charAt(0) + hex[1].charAt(0) + hex[2].charAt(0) + hex[3].charAt(0);
-    }
-
-    return hex.join("");
-}
-
-// `rgbaToArgbHex`
-// Converts an RGBA color to an ARGB Hex8 string
-// Rarely used, but required for "toFilter()"
-function rgbaToArgbHex(r, g, b, a) {
-
-    var hex = [
-        pad2(convertDecimalToHex(a)),
-        pad2(mathRound(r).toString(16)),
-        pad2(mathRound(g).toString(16)),
-        pad2(mathRound(b).toString(16))
-    ];
-
-    return hex.join("");
-}
-
-// `equals`
-// Can be called with any tinycolor input
-tinycolor.equals = function (color1, color2) {
-    if (!color1 || !color2) { return false; }
-    return tinycolor(color1).toRgbString() == tinycolor(color2).toRgbString();
-};
-
-tinycolor.random = function() {
-    return tinycolor.fromRatio({
-        r: mathRandom(),
-        g: mathRandom(),
-        b: mathRandom()
-    });
-};
-
-
-// Modification Functions
-// ----------------------
-// Thanks to less.js for some of the basics here
-// <https://github.com/cloudhead/less.js/blob/master/lib/less/functions.js>
-
-function desaturate(color, amount) {
-    amount = (amount === 0) ? 0 : (amount || 10);
-    var hsl = tinycolor(color).toHsl();
-    hsl.s -= amount / 100;
-    hsl.s = clamp01(hsl.s);
-    return tinycolor(hsl);
-}
-
-function saturate(color, amount) {
-    amount = (amount === 0) ? 0 : (amount || 10);
-    var hsl = tinycolor(color).toHsl();
-    hsl.s += amount / 100;
-    hsl.s = clamp01(hsl.s);
-    return tinycolor(hsl);
-}
-
-function greyscale(color) {
-    return tinycolor(color).desaturate(100);
-}
-
-function lighten (color, amount) {
-    amount = (amount === 0) ? 0 : (amount || 10);
-    var hsl = tinycolor(color).toHsl();
-    hsl.l += amount / 100;
-    hsl.l = clamp01(hsl.l);
-    return tinycolor(hsl);
-}
-
-function brighten(color, amount) {
-    amount = (amount === 0) ? 0 : (amount || 10);
-    var rgb = tinycolor(color).toRgb();
-    rgb.r = mathMax(0, mathMin(255, rgb.r - mathRound(255 * - (amount / 100))));
-    rgb.g = mathMax(0, mathMin(255, rgb.g - mathRound(255 * - (amount / 100))));
-    rgb.b = mathMax(0, mathMin(255, rgb.b - mathRound(255 * - (amount / 100))));
-    return tinycolor(rgb);
-}
-
-function darken (color, amount) {
-    amount = (amount === 0) ? 0 : (amount || 10);
-    var hsl = tinycolor(color).toHsl();
-    hsl.l -= amount / 100;
-    hsl.l = clamp01(hsl.l);
-    return tinycolor(hsl);
-}
-
-// Spin takes a positive or negative amount within [-360, 360] indicating the change of hue.
-// Values outside of this range will be wrapped into this range.
-function spin(color, amount) {
-    var hsl = tinycolor(color).toHsl();
-    var hue = (hsl.h + amount) % 360;
-    hsl.h = hue < 0 ? 360 + hue : hue;
-    return tinycolor(hsl);
-}
-
-// Combination Functions
-// ---------------------
-// Thanks to jQuery xColor for some of the ideas behind these
-// <https://github.com/infusion/jQuery-xcolor/blob/master/jquery.xcolor.js>
-
-function complement(color) {
-    var hsl = tinycolor(color).toHsl();
-    hsl.h = (hsl.h + 180) % 360;
-    return tinycolor(hsl);
-}
-
-function triad(color) {
-    var hsl = tinycolor(color).toHsl();
-    var h = hsl.h;
-    return [
-        tinycolor(color),
-        tinycolor({ h: (h + 120) % 360, s: hsl.s, l: hsl.l }),
-        tinycolor({ h: (h + 240) % 360, s: hsl.s, l: hsl.l })
-    ];
-}
-
-function tetrad(color) {
-    var hsl = tinycolor(color).toHsl();
-    var h = hsl.h;
-    return [
-        tinycolor(color),
-        tinycolor({ h: (h + 90) % 360, s: hsl.s, l: hsl.l }),
-        tinycolor({ h: (h + 180) % 360, s: hsl.s, l: hsl.l }),
-        tinycolor({ h: (h + 270) % 360, s: hsl.s, l: hsl.l })
-    ];
-}
-
-function splitcomplement(color) {
-    var hsl = tinycolor(color).toHsl();
-    var h = hsl.h;
-    return [
-        tinycolor(color),
-        tinycolor({ h: (h + 72) % 360, s: hsl.s, l: hsl.l}),
-        tinycolor({ h: (h + 216) % 360, s: hsl.s, l: hsl.l})
-    ];
-}
-
-function analogous(color, results, slices) {
-    results = results || 6;
-    slices = slices || 30;
-
-    var hsl = tinycolor(color).toHsl();
-    var part = 360 / slices;
-    var ret = [tinycolor(color)];
-
-    for (hsl.h = ((hsl.h - (part * results >> 1)) + 720) % 360; --results; ) {
-        hsl.h = (hsl.h + part) % 360;
-        ret.push(tinycolor(hsl));
-    }
-    return ret;
-}
-
-function monochromatic(color, results) {
-    results = results || 6;
-    var hsv = tinycolor(color).toHsv();
-    var h = hsv.h, s = hsv.s, v = hsv.v;
-    var ret = [];
-    var modification = 1 / results;
-
-    while (results--) {
-        ret.push(tinycolor({ h: h, s: s, v: v}));
-        v = (v + modification) % 1;
-    }
-
-    return ret;
-}
-
-// Utility Functions
-// ---------------------
-
-tinycolor.mix = function(color1, color2, amount) {
-    amount = (amount === 0) ? 0 : (amount || 50);
-
-    var rgb1 = tinycolor(color1).toRgb();
-    var rgb2 = tinycolor(color2).toRgb();
-
-    var p = amount / 100;
-
-    var rgba = {
-        r: ((rgb2.r - rgb1.r) * p) + rgb1.r,
-        g: ((rgb2.g - rgb1.g) * p) + rgb1.g,
-        b: ((rgb2.b - rgb1.b) * p) + rgb1.b,
-        a: ((rgb2.a - rgb1.a) * p) + rgb1.a
-    };
-
-    return tinycolor(rgba);
-};
-
-
-// Readability Functions
-// ---------------------
-// <http://www.w3.org/TR/2008/REC-WCAG20-20081211/#contrast-ratiodef (WCAG Version 2)
-
-// `contrast`
-// Analyze the 2 colors and returns the color contrast defined by (WCAG Version 2)
-tinycolor.readability = function(color1, color2) {
-    var c1 = tinycolor(color1);
-    var c2 = tinycolor(color2);
-    return (Math.max(c1.getLuminance(),c2.getLuminance())+0.05) / (Math.min(c1.getLuminance(),c2.getLuminance())+0.05);
-};
-
-// `isReadable`
-// Ensure that foreground and background color combinations meet WCAG2 guidelines.
-// The third argument is an optional Object.
-//      the 'level' property states 'AA' or 'AAA' - if missing or invalid, it defaults to 'AA';
-//      the 'size' property states 'large' or 'small' - if missing or invalid, it defaults to 'small'.
-// If the entire object is absent, isReadable defaults to {level:"AA",size:"small"}.
-
-// *Example*
-//    tinycolor.isReadable("#000", "#111") => false
-//    tinycolor.isReadable("#000", "#111",{level:"AA",size:"large"}) => false
-tinycolor.isReadable = function(color1, color2, wcag2) {
-    var readability = tinycolor.readability(color1, color2);
-    var wcag2Parms, out;
-
-    out = false;
-
-    wcag2Parms = validateWCAG2Parms(wcag2);
-    switch (wcag2Parms.level + wcag2Parms.size) {
-        case "AAsmall":
-        case "AAAlarge":
-            out = readability >= 4.5;
-            break;
-        case "AAlarge":
-            out = readability >= 3;
-            break;
-        case "AAAsmall":
-            out = readability >= 7;
-            break;
-    }
-    return out;
-
-};
-
-// `mostReadable`
-// Given a base color and a list of possible foreground or background
-// colors for that base, returns the most readable color.
-// Optionally returns Black or White if the most readable color is unreadable.
-// *Example*
-//    tinycolor.mostReadable(tinycolor.mostReadable("#123", ["#124", "#125"],{includeFallbackColors:false}).toHexString(); // "#112255"
-//    tinycolor.mostReadable(tinycolor.mostReadable("#123", ["#124", "#125"],{includeFallbackColors:true}).toHexString();  // "#ffffff"
-//    tinycolor.mostReadable("#a8015a", ["#faf3f3"],{includeFallbackColors:true,level:"AAA",size:"large"}).toHexString(); // "#faf3f3"
-//    tinycolor.mostReadable("#a8015a", ["#faf3f3"],{includeFallbackColors:true,level:"AAA",size:"small"}).toHexString(); // "#ffffff"
-tinycolor.mostReadable = function(baseColor, colorList, args) {
-    var bestColor = null;
-    var bestScore = 0;
-    var readability;
-    var includeFallbackColors, level, size ;
-    args = args || {};
-    includeFallbackColors = args.includeFallbackColors ;
-    level = args.level;
-    size = args.size;
-
-    for (var i= 0; i < colorList.length ; i++) {
-        readability = tinycolor.readability(baseColor, colorList[i]);
-        if (readability > bestScore) {
-            bestScore = readability;
-            bestColor = tinycolor(colorList[i]);
-        }
-    }
-
-    if (tinycolor.isReadable(baseColor, bestColor, {"level":level,"size":size}) || !includeFallbackColors) {
-        return bestColor;
-    }
-    else {
-        args.includeFallbackColors=false;
-        return tinycolor.mostReadable(baseColor,["#fff", "#000"],args);
-    }
-};
-
-
-// Big List of Colors
-// ------------------
-// <http://www.w3.org/TR/css3-color/#svg-color>
-var names = tinycolor.names = {
-    aliceblue: "f0f8ff",
-    antiquewhite: "faebd7",
-    aqua: "0ff",
-    aquamarine: "7fffd4",
-    azure: "f0ffff",
-    beige: "f5f5dc",
-    bisque: "ffe4c4",
-    black: "000",
-    blanchedalmond: "ffebcd",
-    blue: "00f",
-    blueviolet: "8a2be2",
-    brown: "a52a2a",
-    burlywood: "deb887",
-    burntsienna: "ea7e5d",
-    cadetblue: "5f9ea0",
-    chartreuse: "7fff00",
-    chocolate: "d2691e",
-    coral: "ff7f50",
-    cornflowerblue: "6495ed",
-    cornsilk: "fff8dc",
-    crimson: "dc143c",
-    cyan: "0ff",
-    darkblue: "00008b",
-    darkcyan: "008b8b",
-    darkgoldenrod: "b8860b",
-    darkgray: "a9a9a9",
-    darkgreen: "006400",
-    darkgrey: "a9a9a9",
-    darkkhaki: "bdb76b",
-    darkmagenta: "8b008b",
-    darkolivegreen: "556b2f",
-    darkorange: "ff8c00",
-    darkorchid: "9932cc",
-    darkred: "8b0000",
-    darksalmon: "e9967a",
-    darkseagreen: "8fbc8f",
-    darkslateblue: "483d8b",
-    darkslategray: "2f4f4f",
-    darkslategrey: "2f4f4f",
-    darkturquoise: "00ced1",
-    darkviolet: "9400d3",
-    deeppink: "ff1493",
-    deepskyblue: "00bfff",
-    dimgray: "696969",
-    dimgrey: "696969",
-    dodgerblue: "1e90ff",
-    firebrick: "b22222",
-    floralwhite: "fffaf0",
-    forestgreen: "228b22",
-    fuchsia: "f0f",
-    gainsboro: "dcdcdc",
-    ghostwhite: "f8f8ff",
-    gold: "ffd700",
-    goldenrod: "daa520",
-    gray: "808080",
-    green: "008000",
-    greenyellow: "adff2f",
-    grey: "808080",
-    honeydew: "f0fff0",
-    hotpink: "ff69b4",
-    indianred: "cd5c5c",
-    indigo: "4b0082",
-    ivory: "fffff0",
-    khaki: "f0e68c",
-    lavender: "e6e6fa",
-    lavenderblush: "fff0f5",
-    lawngreen: "7cfc00",
-    lemonchiffon: "fffacd",
-    lightblue: "add8e6",
-    lightcoral: "f08080",
-    lightcyan: "e0ffff",
-    lightgoldenrodyellow: "fafad2",
-    lightgray: "d3d3d3",
-    lightgreen: "90ee90",
-    lightgrey: "d3d3d3",
-    lightpink: "ffb6c1",
-    lightsalmon: "ffa07a",
-    lightseagreen: "20b2aa",
-    lightskyblue: "87cefa",
-    lightslategray: "789",
-    lightslategrey: "789",
-    lightsteelblue: "b0c4de",
-    lightyellow: "ffffe0",
-    lime: "0f0",
-    limegreen: "32cd32",
-    linen: "faf0e6",
-    magenta: "f0f",
-    maroon: "800000",
-    mediumaquamarine: "66cdaa",
-    mediumblue: "0000cd",
-    mediumorchid: "ba55d3",
-    mediumpurple: "9370db",
-    mediumseagreen: "3cb371",
-    mediumslateblue: "7b68ee",
-    mediumspringgreen: "00fa9a",
-    mediumturquoise: "48d1cc",
-    mediumvioletred: "c71585",
-    midnightblue: "191970",
-    mintcream: "f5fffa",
-    mistyrose: "ffe4e1",
-    moccasin: "ffe4b5",
-    navajowhite: "ffdead",
-    navy: "000080",
-    oldlace: "fdf5e6",
-    olive: "808000",
-    olivedrab: "6b8e23",
-    orange: "ffa500",
-    orangered: "ff4500",
-    orchid: "da70d6",
-    palegoldenrod: "eee8aa",
-    palegreen: "98fb98",
-    paleturquoise: "afeeee",
-    palevioletred: "db7093",
-    papayawhip: "ffefd5",
-    peachpuff: "ffdab9",
-    peru: "cd853f",
-    pink: "ffc0cb",
-    plum: "dda0dd",
-    powderblue: "b0e0e6",
-    purple: "800080",
-    rebeccapurple: "663399",
-    red: "f00",
-    rosybrown: "bc8f8f",
-    royalblue: "4169e1",
-    saddlebrown: "8b4513",
-    salmon: "fa8072",
-    sandybrown: "f4a460",
-    seagreen: "2e8b57",
-    seashell: "fff5ee",
-    sienna: "a0522d",
-    silver: "c0c0c0",
-    skyblue: "87ceeb",
-    slateblue: "6a5acd",
-    slategray: "708090",
-    slategrey: "708090",
-    snow: "fffafa",
-    springgreen: "00ff7f",
-    steelblue: "4682b4",
-    tan: "d2b48c",
-    teal: "008080",
-    thistle: "d8bfd8",
-    tomato: "ff6347",
-    turquoise: "40e0d0",
-    violet: "ee82ee",
-    wheat: "f5deb3",
-    white: "fff",
-    whitesmoke: "f5f5f5",
-    yellow: "ff0",
-    yellowgreen: "9acd32"
-};
-
-// Make it easy to access colors via `hexNames[hex]`
-var hexNames = tinycolor.hexNames = flip(names);
-
-
-// Utilities
-// ---------
-
-// `{ 'name1': 'val1' }` becomes `{ 'val1': 'name1' }`
-function flip(o) {
-    var flipped = { };
-    for (var i in o) {
-        if (o.hasOwnProperty(i)) {
-            flipped[o[i]] = i;
-        }
-    }
-    return flipped;
-}
-
-// Return a valid alpha value [0,1] with all invalid values being set to 1
-function boundAlpha(a) {
-    a = parseFloat(a);
-
-    if (isNaN(a) || a < 0 || a > 1) {
-        a = 1;
-    }
-
-    return a;
-}
-
-// Take input from [0, n] and return it as [0, 1]
-function bound01(n, max) {
-    if (isOnePointZero(n)) { n = "100%"; }
-
-    var processPercent = isPercentage(n);
-    n = mathMin(max, mathMax(0, parseFloat(n)));
-
-    // Automatically convert percentage into number
-    if (processPercent) {
-        n = parseInt(n * max, 10) / 100;
-    }
-
-    // Handle floating point rounding errors
-    if ((Math.abs(n - max) < 0.000001)) {
-        return 1;
-    }
-
-    // Convert into [0, 1] range if it isn't already
-    return (n % max) / parseFloat(max);
-}
-
-// Force a number between 0 and 1
-function clamp01(val) {
-    return mathMin(1, mathMax(0, val));
-}
-
-// Parse a base-16 hex value into a base-10 integer
-function parseIntFromHex(val) {
-    return parseInt(val, 16);
-}
-
-// Need to handle 1.0 as 100%, since once it is a number, there is no difference between it and 1
-// <http://stackoverflow.com/questions/7422072/javascript-how-to-detect-number-as-a-decimal-including-1-0>
-function isOnePointZero(n) {
-    return typeof n == "string" && n.indexOf('.') != -1 && parseFloat(n) === 1;
-}
-
-// Check to see if string passed in is a percentage
-function isPercentage(n) {
-    return typeof n === "string" && n.indexOf('%') != -1;
-}
-
-// Force a hex value to have 2 characters
-function pad2(c) {
-    return c.length == 1 ? '0' + c : '' + c;
-}
-
-// Replace a decimal with it's percentage value
-function convertToPercentage(n) {
-    if (n <= 1) {
-        n = (n * 100) + "%";
-    }
-
-    return n;
-}
-
-// Converts a decimal to a hex value
-function convertDecimalToHex(d) {
-    return Math.round(parseFloat(d) * 255).toString(16);
-}
-// Converts a hex value to a decimal
-function convertHexToDecimal(h) {
-    return (parseIntFromHex(h) / 255);
-}
-
-var matchers = (function() {
-
-    // <http://www.w3.org/TR/css3-values/#integers>
-    var CSS_INTEGER = "[-\\+]?\\d+%?";
-
-    // <http://www.w3.org/TR/css3-values/#number-value>
-    var CSS_NUMBER = "[-\\+]?\\d*\\.\\d+%?";
-
-    // Allow positive/negative integer/number.  Don't capture the either/or, just the entire outcome.
-    var CSS_UNIT = "(?:" + CSS_NUMBER + ")|(?:" + CSS_INTEGER + ")";
-
-    // Actual matching.
-    // Parentheses and commas are optional, but not required.
-    // Whitespace can take the place of commas or opening paren
-    var PERMISSIVE_MATCH3 = "[\\s|\\(]+(" + CSS_UNIT + ")[,|\\s]+(" + CSS_UNIT + ")[,|\\s]+(" + CSS_UNIT + ")\\s*\\)?";
-    var PERMISSIVE_MATCH4 = "[\\s|\\(]+(" + CSS_UNIT + ")[,|\\s]+(" + CSS_UNIT + ")[,|\\s]+(" + CSS_UNIT + ")[,|\\s]+(" + CSS_UNIT + ")\\s*\\)?";
-
-    return {
-        CSS_UNIT: new RegExp(CSS_UNIT),
-        rgb: new RegExp("rgb" + PERMISSIVE_MATCH3),
-        rgba: new RegExp("rgba" + PERMISSIVE_MATCH4),
-        hsl: new RegExp("hsl" + PERMISSIVE_MATCH3),
-        hsla: new RegExp("hsla" + PERMISSIVE_MATCH4),
-        hsv: new RegExp("hsv" + PERMISSIVE_MATCH3),
-        hsva: new RegExp("hsva" + PERMISSIVE_MATCH4),
-        hex3: /^#?([0-9a-fA-F]{1})([0-9a-fA-F]{1})([0-9a-fA-F]{1})$/,
-        hex6: /^#?([0-9a-fA-F]{2})([0-9a-fA-F]{2})([0-9a-fA-F]{2})$/,
-        hex4: /^#?([0-9a-fA-F]{1})([0-9a-fA-F]{1})([0-9a-fA-F]{1})([0-9a-fA-F]{1})$/,
-        hex8: /^#?([0-9a-fA-F]{2})([0-9a-fA-F]{2})([0-9a-fA-F]{2})([0-9a-fA-F]{2})$/
-    };
-})();
-
-// `isValidCSSUnit`
-// Take in a single string / number and check to see if it looks like a CSS unit
-// (see `matchers` above for definition).
-function isValidCSSUnit(color) {
-    return !!matchers.CSS_UNIT.exec(color);
-}
-
-// `stringInputToObject`
-// Permissive string parsing.  Take in a number of formats, and output an object
-// based on detected format.  Returns `{ r, g, b }` or `{ h, s, l }` or `{ h, s, v}`
-function stringInputToObject(color) {
-
-    color = color.replace(trimLeft,'').replace(trimRight, '').toLowerCase();
-    var named = false;
-    if (names[color]) {
-        color = names[color];
-        named = true;
-    }
-    else if (color == 'transparent') {
-        return { r: 0, g: 0, b: 0, a: 0, format: "name" };
-    }
-
-    // Try to match string input using regular expressions.
-    // Keep most of the number bounding out of this function - don't worry about [0,1] or [0,100] or [0,360]
-    // Just return an object and let the conversion functions handle that.
-    // This way the result will be the same whether the tinycolor is initialized with string or object.
-    var match;
-    if ((match = matchers.rgb.exec(color))) {
-        return { r: match[1], g: match[2], b: match[3] };
-    }
-    if ((match = matchers.rgba.exec(color))) {
-        return { r: match[1], g: match[2], b: match[3], a: match[4] };
-    }
-    if ((match = matchers.hsl.exec(color))) {
-        return { h: match[1], s: match[2], l: match[3] };
-    }
-    if ((match = matchers.hsla.exec(color))) {
-        return { h: match[1], s: match[2], l: match[3], a: match[4] };
-    }
-    if ((match = matchers.hsv.exec(color))) {
-        return { h: match[1], s: match[2], v: match[3] };
-    }
-    if ((match = matchers.hsva.exec(color))) {
-        return { h: match[1], s: match[2], v: match[3], a: match[4] };
-    }
-    if ((match = matchers.hex8.exec(color))) {
-        return {
-            r: parseIntFromHex(match[1]),
-            g: parseIntFromHex(match[2]),
-            b: parseIntFromHex(match[3]),
-            a: convertHexToDecimal(match[4]),
-            format: named ? "name" : "hex8"
-        };
-    }
-    if ((match = matchers.hex6.exec(color))) {
-        return {
-            r: parseIntFromHex(match[1]),
-            g: parseIntFromHex(match[2]),
-            b: parseIntFromHex(match[3]),
-            format: named ? "name" : "hex"
-        };
-    }
-    if ((match = matchers.hex4.exec(color))) {
-        return {
-            r: parseIntFromHex(match[1] + '' + match[1]),
-            g: parseIntFromHex(match[2] + '' + match[2]),
-            b: parseIntFromHex(match[3] + '' + match[3]),
-            a: convertHexToDecimal(match[4] + '' + match[4]),
-            format: named ? "name" : "hex8"
-        };
-    }
-    if ((match = matchers.hex3.exec(color))) {
-        return {
-            r: parseIntFromHex(match[1] + '' + match[1]),
-            g: parseIntFromHex(match[2] + '' + match[2]),
-            b: parseIntFromHex(match[3] + '' + match[3]),
-            format: named ? "name" : "hex"
-        };
-    }
-
-    return false;
-}
-
-function validateWCAG2Parms(parms) {
-    // return valid WCAG2 parms for isReadable.
-    // If input parms are invalid, return {"level":"AA", "size":"small"}
-    var level, size;
-    parms = parms || {"level":"AA", "size":"small"};
-    level = (parms.level || "AA").toUpperCase();
-    size = (parms.size || "small").toLowerCase();
-    if (level !== "AA" && level !== "AAA") {
-        level = "AA";
-    }
-    if (size !== "small" && size !== "large") {
-        size = "small";
-    }
-    return {"level":level, "size":size};
-}
-
-// Node: Export function
-if ( true && module.exports) {
-    module.exports = tinycolor;
-}
-// AMD/requirejs: Define the module
-else if (true) {
-    !(__WEBPACK_AMD_DEFINE_RESULT__ = (function () {return tinycolor;}).call(exports, __webpack_require__, exports, module),
-				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
-}
-// Browser: Expose to window
-else {}
-
-})(Math);
-
-
-/***/ }),
-
 /***/ "./node_modules/vue-color/dist/vue-color.min.js":
 /*!******************************************************!*\
   !*** ./node_modules/vue-color/dist/vue-color.min.js ***!
@@ -65643,7 +64470,7 @@ var render = function() {
               )
             : _vm._e(),
           _vm._v(" "),
-          input.type == "list"
+          input.axis_count == -1
             ? [
                 _c(
                   "div",
@@ -65667,34 +64494,70 @@ var render = function() {
                   { staticClass: "input_list" },
                   _vm._l(input.value, function(item, index) {
                     return _c("li", { key: index }, [
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: input.value[index],
-                            expression: "input.value[index]"
-                          }
-                        ],
-                        attrs: { index: index, placeholder: input.placeholder },
-                        domProps: { value: input.value[index] },
-                        on: {
-                          input: [
-                            function($event) {
-                              if ($event.target.composing) {
-                                return
+                      input.type == "text" || input.type == "molang"
+                        ? _c(
+                            "div",
+                            { staticClass: "prism_editor_outer_wrapper" },
+                            [
+                              _c("prism-editor", {
+                                attrs: {
+                                  highlight:
+                                    input.type == "molang"
+                                      ? _vm.highlightMolang
+                                      : _vm.highlightGeneric,
+                                  language: "",
+                                  "line-numbers": false,
+                                  placeholder: input.placeholder,
+                                  index: index
+                                },
+                                on: {
+                                  input: function($event) {
+                                    return input.emitInput($event)
+                                  },
+                                  focus: function($event) {
+                                    return input.focus(index, $event)
+                                  }
+                                },
+                                model: {
+                                  value: input.value[index],
+                                  callback: function($$v) {
+                                    _vm.$set(input.value, index, $$v)
+                                  },
+                                  expression: "input.value[index]"
+                                }
+                              })
+                            ],
+                            1
+                          )
+                        : _vm._e(),
+                      _vm._v(" "),
+                      input.type == "number"
+                        ? _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: input.value,
+                                expression: "input.value"
                               }
-                              _vm.$set(input.value, index, $event.target.value)
-                            },
-                            function($event) {
-                              return input.change($event)
+                            ],
+                            attrs: { type: "number" },
+                            domProps: { value: input.value },
+                            on: {
+                              input: [
+                                function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.$set(input, "value", $event.target.value)
+                                },
+                                function($event) {
+                                  return input.change($event)
+                                }
+                              ]
                             }
-                          ],
-                          focus: function($event) {
-                            return input.focus(index, $event)
-                          }
-                        }
-                      }),
+                          })
+                        : _vm._e(),
                       _vm._v(" "),
                       _c(
                         "div",
@@ -80651,30 +79514,31 @@ function generateFile() {
   var comps = file.particle_effect.components = {}; //Emitter Components
 
   if (getValue('variables_creation_vars')) {
-    var s = getValue('variables_creation_vars').join(';');
-    s = s.replace(/;;/g, ';');
+    var s = getValue('variables_creation_vars').join(';') + ';';
+    s = s.replace(/;;+/g, ';');
 
     if (s) {
       comps['minecraft:emitter_initialization'] = {
-        creation_expression: s + ';'
+        creation_expression: s
       };
     }
   }
 
   if (getValue('variables_tick_vars')) {
-    var s = getValue('variables_tick_vars').join(';');
-    s = s.replace(/;;/g, ';');
+    var s = getValue('variables_tick_vars').join(';') + ';';
+    s = s.replace(/;;+/g, ';');
 
     if (s) {
       if (!comps['minecraft:emitter_initialization']) comps['minecraft:emitter_initialization'] = {};
-      comps['minecraft:emitter_initialization'].per_update_expression = s + ';';
+      comps['minecraft:emitter_initialization'].per_update_expression = s;
     }
   }
 
   if (getValue('space_local_position', 'boolean')) {
     comps['minecraft:emitter_local_space'] = {
       position: getValue('space_local_position', 'boolean'),
-      rotation: getValue('space_local_rotation', 'boolean')
+      rotation: getValue('space_local_rotation', 'boolean'),
+      velocity: getValue('space_local_rotation', 'boolean')
     };
   } //Rate
 
@@ -81001,10 +79865,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Gradient; });
 /* harmony import */ var _input__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./input */ "./src/input.js");
 /* harmony import */ var _util__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./util */ "./src/util.js");
-/* harmony import */ var tinycolor2__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! tinycolor2 */ "./node_modules/tinycolor2/tinycolor.js");
-/* harmony import */ var tinycolor2__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(tinycolor2__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var three__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! three */ "./node_modules/three/build/three.module.js");
-/* harmony import */ var _edits__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./edits */ "./src/edits.js");
+/* harmony import */ var _edits__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./edits */ "./src/edits.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
@@ -81043,8 +79904,6 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 
 
 
-
-
 var Gradient = /*#__PURE__*/function (_Input) {
   _inherits(Gradient, _Input);
 
@@ -81064,11 +79923,11 @@ var Gradient = /*#__PURE__*/function (_Input) {
     _this = _super.call.apply(_super, [this].concat(args));
     _this.default_value = [{
       percent: 0,
-      color: '#ffffff',
+      color: '#ffffffff',
       id: Object(_util__WEBPACK_IMPORTED_MODULE_1__["bbuid"])(8)
     }, {
       percent: 100,
-      color: '#000000',
+      color: '#000000ff',
       id: Object(_util__WEBPACK_IMPORTED_MODULE_1__["bbuid"])(8)
     }];
     if (!_this.value.length) (_this$value = _this.value).splice.apply(_this$value, [0, 0].concat(_toConsumableArray(_this.default_value)));
@@ -81077,33 +79936,11 @@ var Gradient = /*#__PURE__*/function (_Input) {
   }
 
   _createClass(Gradient, [{
-    key: "calculate",
-    value: function calculate(percent) {
-      var index = 0;
-      this.value.forEach(function (point, i) {
-        if (point.percent <= percent) index = i;
-      });
-
-      if (this.value[index] && !this.value[index + 1]) {
-        var color = this.value[index].color;
-      } else if (!this.value[index] && this.value[index + 1]) {
-        var color = this.value[index + 1].color;
-      } else if (this.value[index] && this.value[index + 1]) {
-        // Interpolate
-        var mix = (percent - this.value[index].percent) / (this.value[index + 1].percent - this.value[index].percent);
-        var color = tinycolor2__WEBPACK_IMPORTED_MODULE_2___default.a.mix(this.value[index].color, this.value[index + 1].color, mix * 100).toHexString();
-      } else {
-        var color = '#ffffff';
-      }
-
-      return new three__WEBPACK_IMPORTED_MODULE_3__["Color"](color);
-    }
-  }, {
     key: "change",
     value: function change(e, node) {
-      this.selected.color = e.hex;
+      this.selected.color = e.hex8;
       var is_sliding = node && node.parentNode.querySelector(':active');
-      if (!is_sliding) Object(_edits__WEBPACK_IMPORTED_MODULE_4__["default"])('change gradient');
+      if (!is_sliding) Object(_edits__WEBPACK_IMPORTED_MODULE_2__["default"])('change gradient');
       return this;
     }
   }, {
@@ -81139,7 +79976,7 @@ var Gradient = /*#__PURE__*/function (_Input) {
   }, {
     key: "registerEdit",
     value: function registerEdit() {
-      Object(_edits__WEBPACK_IMPORTED_MODULE_4__["default"])('update gradient');
+      Object(_edits__WEBPACK_IMPORTED_MODULE_2__["default"])('update gradient');
 
       return this;
     }
@@ -81148,12 +79985,12 @@ var Gradient = /*#__PURE__*/function (_Input) {
     value: function addPoint() {
       this.value.push({
         percent: 50,
-        color: '#ffffff'
+        color: '#ffffffff'
       });
       this.selected = this.value[this.value.length - 1];
       this.sortValues();
 
-      Object(_edits__WEBPACK_IMPORTED_MODULE_4__["default"])('add gradient point');
+      Object(_edits__WEBPACK_IMPORTED_MODULE_2__["default"])('add gradient point');
 
       return this;
     }
@@ -81164,7 +80001,7 @@ var Gradient = /*#__PURE__*/function (_Input) {
         var i = this.value.remove(this.selected);
         this.selected = this.value[Math.clamp(i - 1, 0, this.value.length - 1)];
 
-        Object(_edits__WEBPACK_IMPORTED_MODULE_4__["default"])('remove gradient point');
+        Object(_edits__WEBPACK_IMPORTED_MODULE_2__["default"])('remove gradient point');
       }
 
       return this;
@@ -81453,9 +80290,10 @@ var Input = /*#__PURE__*/function () {
     this.label = data.label;
     this.info = data.info;
     this.placeholder = data.placeholder;
+    this.axis_count = data.axis_count || 1;
     this.required = data.required == true;
     this.expanded = data.expanded == true;
-    this.expandable = ['molang', 'text', 'number'].includes(this.type);
+    this.expandable = ['molang', 'text', 'number'].includes(this.type) && this.axis_count != -1;
     if (this.type === 'gradient') this.value = data.value || [];
     this.options = data.options;
     this.mode_groups = data.mode_groups;
@@ -81465,7 +80303,6 @@ var Input = /*#__PURE__*/function () {
     }
 
     this.enabled_modes = data.enabled_modes;
-    this.axis_count = data.axis_count || 1;
     this.updatePreview = data.updatePreview;
     this.onchange = data.onchange;
 
@@ -81565,7 +80402,7 @@ var Input = /*#__PURE__*/function () {
 
       if (e instanceof Event || this.type == 'color' && node) {
         // User Input
-        if (_components_ExpressionBar__WEBPACK_IMPORTED_MODULE_1__["ExpandedInput"].setup && ['molang', 'text', 'list'].includes(this.type)) {
+        if (_components_ExpressionBar__WEBPACK_IMPORTED_MODULE_1__["ExpandedInput"].setup && ['molang', 'text'].includes(this.type)) {
           this.updateExpressionBar(false);
         }
 
@@ -81616,7 +80453,7 @@ var Input = /*#__PURE__*/function () {
   }, {
     key: "updateExpressionBar",
     value: function updateExpressionBar(focusing) {
-      var val = this.axis_count > 1 || this.type == 'list' ? this.value[_components_ExpressionBar__WEBPACK_IMPORTED_MODULE_1__["ExpandedInput"].axis] : this.value;
+      var val = this.axis_count == 1 ? this.value : this.value[_components_ExpressionBar__WEBPACK_IMPORTED_MODULE_1__["ExpandedInput"].axis];
       _components_ExpressionBar__WEBPACK_IMPORTED_MODULE_1__["ExpandedInput"].updateText(val, this.type == 'molang' ? 'molang' : 'generic', focusing);
       return this;
     }
@@ -81713,6 +80550,12 @@ var Data = {
           label: 'Local Rotation',
           info: 'When enabled and the effect is attached to an entity, the particle rotation will simulate in entity space. Only works if local position is enabled too.',
           type: 'checkbox'
+        }),
+        local_velocity: new _input__WEBPACK_IMPORTED_MODULE_0__["default"]({
+          id: 'space_local_velocity',
+          label: 'Local Velocity',
+          info: 'When enabled and the effect is attached to an entity, the particle velocity will simulate in entity space.',
+          type: 'checkbox'
         })
       }
     },
@@ -81725,7 +80568,8 @@ var Data = {
           label: 'Start Variables',
           info: 'Set up MoLang Variables when the emitter starts',
           placeholder: 'variable.name = value',
-          type: 'list',
+          type: 'molang',
+          axis_count: -1,
           onchange: function onchange() {
             _emitter__WEBPACK_IMPORTED_MODULE_2__["Emitter"].creation_variables = {};
             this.value.forEach(function (s, i) {
@@ -81743,7 +80587,8 @@ var Data = {
           label: 'Tick Variables',
           info: 'MoLang Variables that get processed for every Emitter update',
           placeholder: 'variable.name = value',
-          type: 'list',
+          type: 'molang',
+          axis_count: -1,
           onchange: function onchange() {
             _emitter__WEBPACK_IMPORTED_MODULE_2__["Emitter"].tick_variables = {};
             this.value.forEach(function (s, i) {
@@ -82114,14 +80959,16 @@ var Data = {
           label: 'Kill in Blocks',
           info: 'List of blocks to that let the particle expire on contact. Block IDs have a namespace and are separated by a space character.',
           placeholder: 'minecraft:stone',
-          type: 'list'
+          axis_count: -1,
+          type: 'text'
         }),
         expire_outside: new _input__WEBPACK_IMPORTED_MODULE_0__["default"]({
           id: 'particle_lifetime_expire_outside',
           label: 'Only in Blocks',
           info: 'List of blocks outside of which the particle expires. Block IDs have a namespace and are separated by a space character.',
           placeholder: 'minecraft:air',
-          type: 'list'
+          axis_count: -1,
+          type: 'text'
         })
       }
     },
@@ -82374,11 +81221,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "IO", function() { return IO; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "pathToExtension", function() { return pathToExtension; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "pathToName", function() { return pathToName; });
-/* harmony import */ var tinycolor2__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tinycolor2 */ "./node_modules/tinycolor2/tinycolor.js");
-/* harmony import */ var tinycolor2__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(tinycolor2__WEBPACK_IMPORTED_MODULE_0__);
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-
 
 function bbuid(l) {
   l = l || 1;
@@ -82570,19 +81413,7 @@ function pathToExtension(path) {
   var matches = path.match(/\.\w{2,24}$/);
   if (!matches || !matches.length) return '';
   return matches[0].replace('.', '').toLowerCase();
-} //Color
-
-
-tinycolor2__WEBPACK_IMPORTED_MODULE_0___default.a.prototype.toInt = function () {
-  var rgba = this.toRgb();
-  return Jimp.rgbaToInt(rgba.r, rgba.g, rgba.b, rgba.a);
-};
-/*
-
-
-
-//JSON
-*/
+} //JSON
 
 
 function compileJSON(object, options) {

@@ -17,6 +17,7 @@ class Curve {
 				info: 'The MoLang variable to be used later in MoLang expressions. Must begin with "variable."',
 				placeholder: 'variable.curve1',
 				type: 'text',
+				value: '',
 				onchange() {
 					scope.updateName(this.value);
 				}
