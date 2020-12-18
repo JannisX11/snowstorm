@@ -90,7 +90,7 @@ function generateFile() {
 		comps['minecraft:emitter_local_space'] = {
 			position: getValue('space_local_position', 'boolean'),
 			rotation: getValue('space_local_rotation', 'boolean'),
-			velocity: getValue('space_local_rotation', 'boolean') || undefined,
+			velocity: getValue('space_local_velocity', 'boolean') || undefined,
 		}
 	}
 	//Rate
@@ -273,8 +273,8 @@ function generateFile() {
 		size: getValue('particle_appearance_size'),
 		facing_camera_mode: getValue('particle_appearance_facing_camera_mode'),
 		uv: {
-			texture_width: Config.particle_texture_width,
-			texture_height: Config.particle_texture_height,
+			texture_width: Config.particle_texture_size[0],
+			texture_height: Config.particle_texture_size[1],
 		}
 	}
 	if (getValue('particle_texture_mode') === 'static') {

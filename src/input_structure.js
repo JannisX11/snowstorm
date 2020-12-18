@@ -487,6 +487,15 @@ const Data = {
 						animated: 'Animated',
 					},
 				}),
+				size: new Input({
+					id: 'particle_texture_size',
+					label: 'Texture Size',
+					info: 'Resolution of the texture, used for UV mapping',
+					type: 'number',
+					axis_count: 2,
+					required: true,
+					value: [16, 16]
+				}),
 				uv: new Input({
 					id: 'particle_texture_uv',
 					label: 'UV Start',
@@ -600,7 +609,7 @@ const Data = {
 				enabled: new Input({
 					id: 'particle_collision_enabled',
 					label: 'Enabled',
-					info: 'Enables collision when true / non-zero',
+					info: 'Enables collision when true / non-zero or unset',
 				}),
 				collision_drag: new Input({
 					id: 'particle_collision_collision_drag',
