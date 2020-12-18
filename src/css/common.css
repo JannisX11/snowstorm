@@ -114,6 +114,9 @@
 		font-size: 22pt;
 		margin-top: -12px;
 	}
+	.unicode_icon.warning {
+		margin-top: -1px;
+	}
 	.checkerboard {
 		--color-checker_offset: var(--color-bar);
 		--color-checkerboard: var(--color-interface);

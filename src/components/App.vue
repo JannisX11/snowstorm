@@ -1,7 +1,9 @@
 <template>
     <div id="app" :style="{'--sidebar': sidebar_width+'px'}">
 
+		<div id="dialog_blackout" v-if="dialog" @click="closeDialog"></div>
 		<molang-dialog v-if="dialog == 'molang_sheet'" @close="closeDialog"></molang-dialog>
+		<warning-dialog v-if="dialog == 'warnings'" @close="closeDialog"></warning-dialog>
 
 		<info-box v-if="showVSCodeInfoBox" @close="closeInfoBox">Snowstorm is now available as an extension for VSCode!</info-box>
 
@@ -10,7 +12,7 @@
 			<expression-bar></expression-bar>
         </header>
 
-		<preview v-show="tab == 'preview'" ref="preview"></preview>
+		<preview v-show="tab == 'preview'" ref="preview" @opendialog="openDialog"></preview>
 		<code-viewer v-if="tab == 'code'"></code-viewer>
 
 		<div class="resizer" :style="{left: sidebar_width+'px'}" ref="sidebar_resizer" @mousedown="resizeSidebarStart($event)"></div>
@@ -27,6 +29,7 @@ import Sidebar from './Sidebar';
 import Preview from './Preview';
 import CodeViewer from './CodeViewer';
 import MolangDialog from './MolangDialog'
+import WarningDialog from './WarningDialog'
 import ExpressionBar from './ExpressionBar'
 import InfoBox from './InfoBox'
 import vscode from '../vscode_extension';
@@ -40,7 +43,7 @@ if (!vscode) {
 
 export default {
 	name: 'app',
-	components: {Preview, CodeViewer, MenuBar, Sidebar, MolangDialog, ExpressionBar, InfoBox},
+	components: {Preview, CodeViewer, MenuBar, Sidebar, MolangDialog, WarningDialog, ExpressionBar, InfoBox},
 	data() {return {
 		code: '',
 		tab: 'preview',
@@ -55,8 +58,8 @@ export default {
 				this.$refs.preview.updateSize();
 			})
 		},
-		openDialog(dialog) {
-			this.dialog = dialog;
+		openDialog(dialog_id) {
+			this.dialog = dialog_id;
 		},
 		closeDialog() {
 			this.dialog = null;
@@ -103,7 +106,7 @@ export default {
 		padding: 2px 8px; 
 		padding-top: 1px;
 		width: 35px;
-		height: 30px;
+		height: 100%;
 		cursor: pointer;
 	}
 	.tool:hover {
@@ -150,11 +153,39 @@ export default {
 		font-size: 1.1em;
 		position: relative;
 	}
-
 	content {
 		grid-area: sidebar;
 		background-color: var(--color-interface);
 	}
+	#dialog_blackout {
+		position: absolute;
+		z-index: 49;
+		top: 0;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		backdrop-filter: blur(5px);
+		background-color: #00000050;
+	}
+	dialog {
+		position: absolute;
+		margin-left: calc(50% - 400px);
+        width: 800px;
+		max-width: 100%;
+		max-height: calc(100% - 40px);
+		top: 20px;
+		background-color: var(--color-background);
+		box-shadow: 1px 1px 12px #00000070;
+        z-index: 50;
+        overflow: hidden;
+		padding: 20px 40px;
+		bottom: 20px;
+        display: flex;
+		flex-direction: column;
+		color: inherit;
+		border: none;
+	}
+
 /*Resize*/
 	.resizer {
 		top: 0;
@@ -164,6 +195,16 @@ export default {
 		margin-left: -3px;
 		cursor: ew-resize;
 	}
+</style>
 
-
+<style>
+	dialog h3 {
+		padding: 20px 0 5px 0;
+	}
+    dialog .close_button {
+		position: absolute;
+		height: 30px;
+		top: 6px;
+		right: 6px;
+    }
 </style>

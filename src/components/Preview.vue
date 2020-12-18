@@ -1,5 +1,5 @@
 <template>
-    <main id="preview" class="preview selected">
+    <main id="preview" class="preview">
         <div id="canvas_wrapper">
             <canvas id="canvas" ref="canvas"></canvas>
         </div>
@@ -16,8 +16,10 @@
             </select>
             <div class="tool" @click="startAnimation()" title="Play"><i class="unicode_icon" style="font-size: 13pt;">{{'\u25B6'}}</i></div>
             <div class="tool" @click="togglePause()" title="Pause"><i class="unicode_icon pause">{{'\u2016'}}</i></div>
+
             <div class="stat" style="width: 66px;">{{fps}} FPS</div>
             <div class="stat">{{particles}} P</div>
+            <div class="tool warning" @click="$emit('opendialog', 'warnings')" v-if="warning_count" :title="getWarningTitle()"><i class="unicode_icon warn">⚠</i>{{ warning_count }}</div>
         </footer>
     </main>
 </template>
@@ -29,6 +31,7 @@
     import Wintersky from 'wintersky';
 
     import {Emitter, initParticles} from './../emitter';
+    import {validate} from './WarningDialog'
 
     const View = {}
     
@@ -115,11 +118,12 @@
     }
     function animate() {
         requestAnimationFrame(animate)
-        View.controls.update()
-        View.renderer.render(View.scene, View.camera);
-        View.frames_this_second++;
-
-        Wintersky.updateFacingRotation(View.camera);
+        if (View.canvas.offsetParent) {
+            View.controls.update()
+            View.renderer.render(View.scene, View.camera);
+            View.frames_this_second++;
+            Wintersky.updateFacingRotation(View.camera);
+        }
     }
     function resizeCanvas() {
         var wrapper = View.canvas.parentNode;
@@ -155,6 +159,7 @@
             particles: 0,
             loop_mode: 'Looping',
             parent_mode: 'World',
+            warning_count: 0,
         }},
         methods: {
             updateSize() {
@@ -165,6 +170,11 @@
             },
             changeParentMode() {
                 Emitter.parent_mode = this.parent_mode.toLowerCase();
+            },
+            getWarningTitle() {
+                return this.warning_count == 1
+                    ? '1 Warning'
+                    : (this.warning_count + ' Warnings');
             },
             startAnimation,
             togglePause
@@ -178,6 +188,11 @@
             setInterval(() => {
                 this.particles = Emitter.particles.length;
             }, 200)
+            setInterval(() => {
+                if (window.document.hasFocus() && View.canvas.offsetParent) {
+                    this.warning_count = validate().length;
+                }
+            }, 500)
         }
     }
     export {View}
@@ -221,6 +236,20 @@
 		float: right;
 		background: transparent;
 	}
+    div.warning {
+        color: var(--yellow);
+        float: right;
+        width: auto;
+        padding-top: 0px;
+    }
+    div.warning:hover {
+        color: #ffe060;
+        float: right;
+    }
+    div.warning > i {
+        display: inline;
+        margin-right: 4px;
+    }
 	.unicode_icon.pause {
         margin-top: -4px;
         float: right;
