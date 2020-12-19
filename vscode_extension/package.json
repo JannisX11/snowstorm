@@ -2,7 +2,7 @@
 	"name": "snowstorm",
 	"displayName": "Snowstorm",
 	"description": "Minecraft Bedrock Edition particle editor",
-	"version": "2.1.2",
+	"version": "2.2.0",
 	"enableProposedApi": false,
 	"publisher": "JannisX11",
 	"engines": {
@@ -37,9 +37,9 @@
 	"dependencies": {},
 	"devDependencies": {},
 	"keywords": [
-	  "snowstorm",
-	  "minecraft",
-	  "bedrock",
-	  "blockbench"
+		"snowstorm",
+		"minecraft",
+		"bedrock",
+		"blockbench"
 	]
 }

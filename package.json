@@ -1,6 +1,6 @@
 {
 	"name": "snowstorm",
-	"version": "2.1.2",
+	"version": "2.2.0",
 	"description": "Minecraft Bedrock Edition particle editor",
 	"author": {
 		"name": "JannisX11",
@@ -42,6 +42,6 @@
 		"vue-color": "^2.7.1",
 		"vue-prism-component": "^1.2.0",
 		"vue-prism-editor": "^1.2.2",
-		"wintersky": "^0.1.3"
+		"wintersky": "^0.2.0"
 	}
 }

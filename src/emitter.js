@@ -5,8 +5,13 @@ import Wintersky from 'wintersky'
 
 
 const Config = new Wintersky.Config();
-const Emitter = new Wintersky.Emitter(Config);
+const Emitter = new Wintersky.Emitter(Config, {
+	loop_mode: 'looping',
+	parent_mode: 'world'
+});
 window.Emitter = Emitter;
+
+Config.reset()
 
 function initParticles(View) {	
 	View.scene.add(Wintersky.space);
