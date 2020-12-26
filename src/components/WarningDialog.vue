@@ -25,13 +25,21 @@ function validate() {
 
     if (
         (Config.particle_appearance_material != 'particles_blend') && (
-            (Config.particle_color_mode == 'static' && Config.particle_color_static.length == 9 && Config.particle_color_static.substr(-2) != 'FF') ||
+            (Config.particle_color_mode == 'static' && Config.particle_color_static.length == 9 && Config.particle_color_static.substr(-2).toUpperCase() != 'FF') ||
             (Config.particle_color_mode == 'expression' && ['', '1', '1.0'].includes(Config.particle_color_expression[3]))
         )
     ) {
         errors.push({text: `The effect attempts to use opacity but the material is not set to 'Blend'`})
     }
 
+    if (Config.particle_appearance_facing_camera_mode.substr(0, 9) == 'direction') {
+        if (Config.particle_motion_mode == 'dynamic' && !(Config.particle_motion_linear_speed && parseFloat(Config.particle_motion_linear_speed) != 0)) {
+            errors.push({text: `The particles are set to face a direction, but no speed is set. Only particles with an initial speed support directions`})
+
+        } else if (Config.particle_motion_mode == 'parametric' && Config.particle_motion_direction.find(v => v && parseFloat(v) != 0)) {
+            errors.push({text: `The particles are set to face a direction, but no parametric direction is set`})
+        }
+    }
 
     return errors;
 }

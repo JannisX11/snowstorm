@@ -235,6 +235,8 @@ const IO = {
 		input.accept = options.extensions ? '.' + options.extensions.join(',.') : '';
 		input.multiple = options.multiple === true;
 		input.onchange = function(e) {
+
+			window.input = input;
 			var results = [];
 			var result_count = 0;
 			var i = 0;
@@ -285,6 +287,8 @@ const IO = {
 
 		var file_name = options.name + (options.extensions ? '.'+options.extensions[0] : '')
 		var callback_used;
+
+		if (window.chooseFile) {}
 		if (options.custom_writer) {
 			options.custom_writer(options.content, file_name)
 			

@@ -42,6 +42,7 @@ function updateInputsFromConfig() {
 		Config.curves[id] = curve.config;
 		curve.updateMinMax();
 	}
+	Data.effect.meta.inputs.identifier.onchange();
 }
 //function importFile() {}
 function updateConfig(data) {

@@ -1,0 +1,23 @@
+{
+	"$schema": "https://raw.githubusercontent.com/SchemaStore/schemastore/master/src/schemas/json/web-manifest.json",
+	"short_name": "Snowstorm",
+	"name": "Snowstorm",
+	"icons": [
+		{
+			"src": "favicon.ico",
+			"type": "image/ico",
+			"sizes": "128x128"
+		},
+		{
+			"src": "icon.png",
+			"type": "image/png",
+			"sizes": "256x256"
+		}
+	],
+	"start_url": "./index.html",
+	"background_color": "#29323a",
+	"theme_color": "#e5ebfa",
+	"display": "standalone",
+	"display_override": ["tabbed", "minimal-ui"],
+	"orientation": "portrait"
+}

@@ -120,9 +120,9 @@
         requestAnimationFrame(animate)
         if (View.canvas.offsetParent) {
             View.controls.update()
+            Wintersky.updateFacingRotation(View.camera);
             View.renderer.render(View.scene, View.camera);
             View.frames_this_second++;
-            Wintersky.updateFacingRotation(View.camera);
         }
     }
     function resizeCanvas() {

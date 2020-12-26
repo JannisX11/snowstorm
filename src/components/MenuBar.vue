@@ -58,6 +58,14 @@ const Menu = [
 		]
 	},
 	{
+		label: 'View',
+		children: [
+			{label: 'Grid Visibility', click: () => { View.grid.visible = !View.grid.visible }},
+			{label: 'Axis Helper Visibility', click: () => { View.helper.visible = !View.helper.visible }},
+			{label: 'Take Screenshot', click: () => { View.screenshot() }},
+		]
+	},
+	{
 		label: 'Help',
 		children: [
 			{label: 'Format Documentation', click: () => { openLink('https://bedrock.dev/r/Particles') }},
@@ -65,14 +73,6 @@ const Menu = [
 			{label: 'MoLang Grapher', click: () => { openLink('https://jannisx11.github.io/molang-grapher/') }},
 			{label: 'Report a Bug', click: () => { openLink('https://github.com/JannisX11/snowstorm/issues') }},
 			{label: 'Discord Channel', click: () => { openLink('https://discord.gg/eGqsNha') }},
-		]
-	},
-	{
-		label: 'View',
-		children: [
-			{label: 'Grid Visibility', click: () => { View.grid.visible = !View.grid.visible }},
-			{label: 'Axis Helper Visibility', click: () => { View.helper.visible = !View.helper.visible }},
-			{label: 'Take Screenshot', click: () => { View.screenshot() }},
 		]
 	}
 ]

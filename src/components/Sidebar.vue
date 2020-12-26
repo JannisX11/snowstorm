@@ -13,8 +13,9 @@
                             v-bind:title="group.info" :id="subject_key +'-curves-'+ curve.uuid" :uuid="curve.uuid" :key="curve.uuid"
                             :curve.sync="curve" :group_key.sync="group_key" :subject_key.sync="subject_key"
                         ></curve>
-                        <label>Add Curve</label>
-                        <div class="tool" v-on:click="addCurve()"><i class="unicode_icon plus">{{'\uFF0B'}}</i></div>
+						<div id="add_curve_button" @click="addCurve()">
+							<i class="unicode_icon plus">{{'\uFF0B'}}</i>
+						</div>
                     </ul>
                     <ul v-show="!group._folded" v-else>
                         <input-group :group.sync="group" :group_key.sync="group_key" :subject_key.sync="subject_key"></input-group>
@@ -88,7 +89,20 @@ export default {
 		padding: 8px;
 		padding-right: 2px;
 	}
-
+	#add_curve_button {
+		width: 100%;
+		border: 1px dashed var(--color-bar);
+		cursor: pointer;
+	}
+	#add_curve_button:hover {
+		background-color: var(--color-dark);
+	}
+	#add_curve_button > i {
+		margin-right: auto;
+		margin-left: auto;
+		opacity: 0.8;
+		font-size: 1.4em;
+	}
 
 
 </style>

@@ -107,6 +107,7 @@ export default {
 		padding-top: 1px;
 		width: 35px;
 		height: 100%;
+		max-height: 32px;
 		cursor: pointer;
 	}
 	.tool:hover {

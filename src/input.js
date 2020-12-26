@@ -40,6 +40,8 @@ export default class Input {
 			this.value = Config[this.id];
 		} else if (data.value != undefined) {
 			this.value = data.value;
+		} else if (['molang', 'text'].includes(this.type)) {
+			this.value = '';
 		}
 
 	}

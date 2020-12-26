@@ -233,7 +233,7 @@ export default {
 		margin-left: 0;
 	}
 	.list_add_tool {
-		vertical-align: bottom;
+		vertical-align: sub;
 	}
 </style>
 

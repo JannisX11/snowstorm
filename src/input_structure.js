@@ -16,7 +16,10 @@ const Data = {
 					info: 'This is the name the particle emitter is referred to as. Should have a namespace.',
 					placeholder: 'space:name',
 					required: true,
-					type: 'text'
+					type: 'text',
+					onchange() {
+						document.title = (this.value ? this.value + ' - ' : '') + 'Snowstorm';
+					}
 				})
 			}
 		},

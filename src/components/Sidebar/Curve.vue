@@ -107,11 +107,13 @@
 				var scope = this.curve;
 				var start = event.clientY;
 				var start_value = scope.nodes[index];
+				var range = (scope.max - scope.min)
+				var threshold = 0.03 * range;
 				function slide(event) {
-					var value = start_value + (start - event.clientY) / 140 * (scope.max - scope.min);
+					var value = start_value + (start - event.clientY) / 140 * range;
 					//snap
-					if (value > 0.94 && value < 1.1) value = 1;
-					if (value > -0.1 && value < 0.06) value = 0;
+					if (value > (1-threshold) && value < (1+threshold)) value = 1;
+					if (value > -threshold && value < threshold) value = 0;
 
 					scope.setNode(index, value);
 				}
@@ -262,7 +264,7 @@
 		width: 100%;
 		height: 25px;
 		text-align: center;
-		cursor: default;
+		cursor: pointer;
 	}
 	.curve_node:hover .curve_node_remover {
 		display: block;
