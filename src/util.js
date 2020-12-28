@@ -227,6 +227,31 @@ function compileJSON(object, options) {
 	return handleVar(object, 1)
 }
 
+function convertTouchEvent(event) {
+	if (event && event.changedTouches && event.changedTouches.length && event.offsetX == undefined) {
+		event.preventDefault();
+		event.clientX = event.changedTouches[0].clientX;
+		event.clientY = event.changedTouches[0].clientY;
+		event.offsetX = event.changedTouches[0].clientX;
+		event.offsetY = event.changedTouches[0].clientY;
+
+		let offset = calculateOffset(event.target);
+		if (offset) {
+			event.offsetX -= offset[0];
+			event.offsetY -= offset[1];
+		}
+	}
+	return event;
+}
+
+function calculateOffset(element) {
+	var rect = element.getBoundingClientRect();
+	return [
+		rect.left + window.scrollX,
+		rect.top + window.scrollY,
+	]
+}
+
 const IO = {
 	import: function (options, cb) {
 		if (typeof options !== 'object') {options = {}}
@@ -335,5 +360,7 @@ export {
 	compileJSON,
 	IO,
 	pathToExtension,
-	pathToName
+	pathToName,
+	convertTouchEvent,
+	calculateOffset,
 }

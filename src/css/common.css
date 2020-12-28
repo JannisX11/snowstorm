@@ -32,15 +32,6 @@
 
 	body {
 		--color-background: #29323a;
-		--color-interface: #e5ebfa;
-		--color-bar: #cfd7ea;
-		--color-title: #9aa3b8;
-		--color-selection: rgba(110, 142, 191, 0.3);
-		--color-highlight: #f7f9ff;
-		--color-text: #434b53;
-	}
-	body {
-		--color-background: #29323a;
 		--color-dark: #20272d;
 		--color-border: #1a1c1f;
 		--color-interface: #29323a;
@@ -49,6 +40,8 @@
 		--color-selection: rgba(110, 142, 191, 0.3);
 		--color-highlight: #f7f9ff;
 		--color-text: #bcc3ca;
+
+		--font-code: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
 	}
 
 
@@ -76,7 +69,7 @@
 		outline: none;
 	}
 	input[type=text], input[type=number], input:not([type]) {
-		font-family: Consolas, "Courier New", monospace;;
+		font-family: var(--font-code);
 	}
 	input[type=checkbox] {
 		height: 15px;
@@ -176,7 +169,7 @@
 	background-color: var(--color-dark);
 	height: auto;
 	z-index: 3;
-	font-family: Consolas, "Courier New", monospace;;
+	font-family: var(--font-code);
 	outline: none;
 	padding: 4px;
 	padding-bottom: 2px;

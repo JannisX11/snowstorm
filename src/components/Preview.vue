@@ -17,9 +17,11 @@
             <div class="tool" @click="startAnimation()" title="Play"><i class="unicode_icon" style="font-size: 13pt;">{{'\u25B6'}}</i></div>
             <div class="tool" @click="togglePause()" title="Pause"><i class="unicode_icon pause">{{'\u2016'}}</i></div>
 
-            <div class="stat" style="width: 66px;">{{fps}} FPS</div>
-            <div class="stat">{{particles}} P</div>
+            <div id="footer_spacing"></div>
+
             <div class="tool warning" @click="$emit('opendialog', 'warnings')" v-if="warning_count" :title="getWarningTitle()"><i class="unicode_icon warn">⚠</i>{{ warning_count }}</div>
+            <div class="stat">{{particles}} P</div>
+            <div class="stat" style="width: 66px;">{{fps}} FPS</div>
         </footer>
     </main>
 </template>
@@ -217,13 +219,25 @@
         height: 28px;
         background-color: var(--color-bar);
         border-top: 1px solid var(--color-border);
+        display: flex;
+        overflow-x: auto;
+		overflow-y: hidden;
+		scrollbar-width: none;
 	}	
+    footer ::-webkit-scrollbar {
+		height: 0px;
+	}
 	footer > * {
 		padding: 2px 8px; 
 		padding-top: 2px;
         background-color: var(--color-bar);
         float: left;
-	}
+    }
+    #footer_spacing {
+        flex: 1 1 auto;
+        padding: 0;
+        margin: 0;
+    }
     select {
         appearance: none;
         background-color: var(--color-dark);

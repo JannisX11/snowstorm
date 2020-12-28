@@ -26,7 +26,7 @@ function validate() {
     if (
         (Config.particle_appearance_material != 'particles_blend') && (
             (Config.particle_color_mode == 'static' && Config.particle_color_static.length == 9 && Config.particle_color_static.substr(-2).toUpperCase() != 'FF') ||
-            (Config.particle_color_mode == 'expression' && ['', '1', '1.0'].includes(Config.particle_color_expression[3]))
+            (Config.particle_color_mode == 'expression' && ['', '1', '1.0'].includes(Config.particle_color_expression[3]) == false)
         )
     ) {
         errors.push({text: `The effect attempts to use opacity but the material is not set to 'Blend'`})

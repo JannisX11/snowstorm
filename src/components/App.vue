@@ -1,5 +1,5 @@
 <template>
-    <div id="app" :style="{'--sidebar': sidebar_width+'px'}">
+    <div id="app" :class="{portrait_view}" :style="{'--sidebar': sidebar_width+'px'}">
 
 		<div id="dialog_blackout" v-if="dialog" @click="closeDialog"></div>
 		<molang-dialog v-if="dialog == 'molang_sheet'" @close="closeDialog"></molang-dialog>
@@ -8,7 +8,7 @@
 		<info-box v-if="showVSCodeInfoBox" @close="closeInfoBox">Snowstorm is now available as an extension for VSCode!</info-box>
 
         <header>
-			<menu-bar @changetab="setTab" :selected_tab="tab" @opendialog="openDialog"></menu-bar>
+			<menu-bar @changetab="setTab" :selected_tab="tab" :portrait_view="portrait_view" @opendialog="openDialog"></menu-bar>
 			<expression-bar></expression-bar>
         </header>
 
@@ -17,7 +17,13 @@
 
 		<div class="resizer" :style="{left: sidebar_width+'px'}" ref="sidebar_resizer" @mousedown="resizeSidebarStart($event)"></div>
 
-		<sidebar ref="sidebar"></sidebar>
+		<sidebar ref="sidebar" v-if="!portrait_view || tab == 'config'"></sidebar>
+
+		<ul v-if="portrait_view" id="portrait_mode_selector">
+        	<li class="mode_selector config" :class="{selected: tab == 'config'}" @click="setTab('config')">Config</li>
+        	<li class="mode_selector code" :class="{selected: tab == 'code'}" @click="setTab('code')">Code</li>
+        	<li class="mode_selector preview" :class="{selected: tab == 'preview'}" @click="setTab('preview')">Preview</li>
+		</ul>
 
     </div>
 </template>
@@ -40,6 +46,14 @@ if (!vscode) {
 	localStorage.setItem('snowstorm_startup_count', startup_count)
 }
 
+function getInitialSidebarWidth() {
+	let {type, angle} = window.screen.orientation;
+	if (type.includes('landscape')) {
+		return Math.min(440, window.innerWidth/2);
+	} else {
+		return window.innerWidth;
+	}
+}
 
 export default {
 	name: 'app',
@@ -49,7 +63,8 @@ export default {
 		tab: 'preview',
 		dialog: null,
 		showVSCodeInfoBox: (!vscode && [1, 3, 7, 11, 24].includes(startup_count)),
-		sidebar_width: 440
+		sidebar_width: getInitialSidebarWidth(),
+		portrait_view: window.screen.orientation.type.includes('portrait'),
 	}},
 	methods: {
 		setTab(tab) {
@@ -68,7 +83,7 @@ export default {
 			this.showVSCodeInfoBox = false;
 		},
 		setSidebarSize(size) {
-			this.sidebar_width = Math.clamp(size, 240, document.body.clientWidth-240)
+			this.sidebar_width = Math.clamp(size, 240, document.body.clientWidth - 200)
 			this.$refs.preview.updateSize()
 			this.$refs.sidebar.updateSize()
 		},
@@ -158,6 +173,36 @@ export default {
 		grid-area: sidebar;
 		background-color: var(--color-interface);
 	}
+
+	/* Portrait View */
+	div#app.portrait_view {
+		grid-template-rows:  66px calc(100% - 98px) 32px;
+		grid-template-columns: 100%;
+		grid-template-areas: "header" "main" "mode_selector";
+	}
+	div#app.portrait_view main {
+		grid-area: main;
+	}
+	div#app.portrait_view content {
+		grid-area: main;
+	}
+	div#app.portrait_view #portrait_mode_selector {
+		grid-area: mode_selector;
+		display: flex;
+	}
+	li.mode_selector {
+		flex: 1 0 0;
+		text-align: center;
+		padding: 5px;
+	}
+	li.mode_selector.selected {
+		background-color: var(--color-dark);
+	}
+	div#app.portrait_view dialog {
+		margin: auto;
+		padding: 12px 12px;
+	}
+
 	#dialog_blackout {
 		position: absolute;
 		z-index: 49;

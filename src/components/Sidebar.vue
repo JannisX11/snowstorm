@@ -6,20 +6,22 @@
                 <h3>{{ subject.label }}</h3>
                 <div class="input_group" v-for="(group, group_key) in subject" :key="group_key" v-if="typeof group == 'object'">
                     <h4 v-on:click="fold(group)">{{ group.label }}</h4>
-                    <ul v-show="!group._folded" v-if="group.type == 'curves'">
-                        <curve
-                            class="curve"
-                            v-for="curve in group.curves"
-                            v-bind:title="group.info" :id="subject_key +'-curves-'+ curve.uuid" :uuid="curve.uuid" :key="curve.uuid"
-                            :curve.sync="curve" :group_key.sync="group_key" :subject_key.sync="subject_key"
-                        ></curve>
-						<div id="add_curve_button" @click="addCurve()">
-							<i class="unicode_icon plus">{{'\uFF0B'}}</i>
-						</div>
-                    </ul>
-                    <ul v-show="!group._folded" v-else>
-                        <input-group :group.sync="group" :group_key.sync="group_key" :subject_key.sync="subject_key"></input-group>
-                    </ul>
+					<template v-if="!group._folded">
+						<ul v-if="group.type == 'curves'">
+							<curve
+								class="curve"
+								v-for="curve in group.curves"
+								v-bind:title="group.info" :id="subject_key +'-curves-'+ curve.uuid" :uuid="curve.uuid" :key="curve.uuid"
+								:curve.sync="curve" :group_key.sync="group_key" :subject_key.sync="subject_key"
+							></curve>
+							<div id="add_curve_button" @click="addCurve()">
+								<i class="unicode_icon plus">{{'\uFF0B'}}</i>
+							</div>
+						</ul>
+						<ul v-else>
+							<input-group :group.sync="group" :group_key.sync="group_key" :subject_key.sync="subject_key"></input-group>
+						</ul>
+					</template>
                 </div>
             </div>
         </div>

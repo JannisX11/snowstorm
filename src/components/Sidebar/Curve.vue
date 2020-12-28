@@ -11,7 +11,7 @@
             <ul class="curve_controls">
                 <li class="curve_add" :key="'add_0'" @click="curve.addNode(0, $event)"></li>
                 <template v-for="(value, index) in curve.nodes">
-                    <li class="curve_node" :key="'node_'+index" @mousedown="slideValue(index, $event)">
+                    <li class="curve_node" :key="'node_'+index" @mousedown="slideValue(index, $event)" @touchstart="slideValue(index, $event);simulateHover($event)">
                         <div class="curve_point" :style="{bottom: ((value-curve.min)/(curve.max-curve.min))*140 + 'px'}"><label>{{value}}</label></div>
                         <div class="curve_node_remover tool" @click="curve.removeNode(index, $event)">
 							<i class="unicode_icon">{{'\u2A09'}}</i>
@@ -34,14 +34,7 @@
 <script>
 	import InputGroup from './InputGroup'
 	import registerEdit from '../../edits'
-
-	function calculateOffset(element) {
-		var rect = element.getBoundingClientRect();
-		return [
-			rect.left + window.scrollX,
-			rect.top + window.scrollY,
-		]
-	}
+	import {calculateOffset, convertTouchEvent} from './../../util'
 
 	function toCatmullRomBezier( points, tension = 0.5, closing = false) {
 		// sets tension [0.0, 1.0] +/-
@@ -101,16 +94,31 @@
 			subject_key: String,
 		},
 		methods: {
+			simulateHover(event) {
+				let {target} = event;
+				setTimeout(() => {
+					function remove(e) {
+						if (e.target == target || e.target.parentElement == target) return;
+						setTimeout(() => {
+							target.classList.remove('touch_active');
+							document.removeEventListener('touchstart', remove)
+						}, 1)
+					}
+					document.addEventListener('touchstart', remove)
+					target.classList.add('touch_active');
+				}, 10)
+			},
 			slideValue(index, event) {
 				if (event.target.classList.contains('curve_node_remover')) return;
+				convertTouchEvent(event);
 
 				var scope = this.curve;
 				var start = event.clientY;
 				var start_value = scope.nodes[index];
-				var range = (scope.max - scope.min)
-				var threshold = 0.03 * range;
+				var threshold = 0.03 * (scope.max - scope.min);
 				function slide(event) {
-					var value = start_value + (start - event.clientY) / 140 * range;
+					convertTouchEvent(event);
+					var value = start_value + (start - event.clientY) / 140 * (scope.max - scope.min);
 					//snap
 					if (value > (1-threshold) && value < (1+threshold)) value = 1;
 					if (value > -threshold && value < threshold) value = 0;
@@ -118,12 +126,16 @@
 					scope.setNode(index, value);
 				}
 				function stopSlide() {
-					document.removeEventListener('mousemove', slide, false);
-					document.removeEventListener('mouseup', stopSlide, false);
+					document.removeEventListener('mousemove', slide);
+					document.removeEventListener('mouseup', stopSlide);
+					document.removeEventListener('touchmove', slide);
+					document.removeEventListener('touchend', stopSlide);
 					registerEdit('edit curve node')
 				}
-				document.addEventListener('mousemove', slide, false);
-				document.addEventListener('mouseup', stopSlide, false);
+				document.addEventListener('mousemove', slide, {passive: false});
+				document.addEventListener('mouseup', stopSlide, {passive: false});
+				document.addEventListener('touchmove', slide, {passive: false});
+				document.addEventListener('touchend', stopSlide, {passive: false});
 			},
 			updateSVG() {
 				var curve = this.curve;
@@ -251,7 +263,7 @@
 		cursor: ns-resize;
 		position: relative;
 	}
-	.curve_node:hover {
+	.curve_node:hover, .curve_node.touch_active {
 		background-color: rgba(174, 217, 255, 0.1);
 	}
 	.curve_controls .curve_add:hover {
@@ -266,7 +278,7 @@
 		text-align: center;
 		cursor: pointer;
 	}
-	.curve_node:hover .curve_node_remover {
+	.curve_node:hover .curve_node_remover, .curve_node.touch_active .curve_node_remover {
 		display: block;
 	}
 	.curve_node .curve_node_remover i {

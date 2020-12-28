@@ -52,7 +52,7 @@ export default {
 
 <style scoped>
 	main#code {
-		background-color: #21282f;
+		background-color: var(--color-dark);
 	}
 	main#code pre {
 		background-color: var(--color-background);

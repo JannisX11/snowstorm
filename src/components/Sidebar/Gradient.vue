@@ -6,6 +6,7 @@
 				v-for="point in input.value" :key="point.id"
 				:class="{selected: point == input.selected}"
 				@mousedown="dragPoint(input, point, $event)"
+				@touchstart="dragPoint(input, point, $event)"
 				:style="{left: point.percent+'%', background: point.color}"
 				:title="point.percent + '%'"
 			></div>
@@ -21,6 +22,7 @@
 <script>
 import VueColor from 'vue-color'
 import Gradient from './../../gradient'
+import {convertTouchEvent} from './../../util'
 
 export default {
 	name: 'gradient',
@@ -39,10 +41,12 @@ export default {
 			return `linear-gradient(${stations.join(', ')})`;
 		},
 		dragPoint(input, point, event1) {
+			convertTouchEvent(event1);
 			input.selected = point;
 			let unlocked = false;
 			let original_value = point.percent;
 			function onDrag(event2) {
+				convertTouchEvent(event2);
 				let distance = event2.clientX - event1.clientX
 				if (Math.abs(distance) > 4) unlocked = true;
 				if (unlocked && event1.target.parentElement) {
@@ -55,10 +59,14 @@ export default {
 			function onDragEnd(event2) {
 				document.removeEventListener('mousemove', onDrag)
 				document.removeEventListener('mouseup', onDragEnd)
+				document.removeEventListener('touchmove', onDrag)
+				document.removeEventListener('touchend', onDragEnd)
 				input.registerEdit()
 			}
 			document.addEventListener('mousemove', onDrag)
 			document.addEventListener('mouseup', onDragEnd)
+			document.addEventListener('touchmove', onDrag)
+			document.addEventListener('touchend', onDragEnd)
 		}
 	}
 }
