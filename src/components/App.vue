@@ -17,7 +17,7 @@
 
 		<div class="resizer" :style="{left: sidebar_width+'px'}" ref="sidebar_resizer" @mousedown="resizeSidebarStart($event)"></div>
 
-		<sidebar ref="sidebar" v-if="!portrait_view || tab == 'config'"></sidebar>
+		<sidebar ref="sidebar" v-show="!portrait_view || tab == 'config'"></sidebar>
 
 		<ul v-if="portrait_view" id="portrait_mode_selector">
         	<li class="mode_selector config" :class="{selected: tab == 'config'}" @click="setTab('config')">Config</li>
@@ -47,8 +47,8 @@ if (!vscode) {
 }
 
 function getInitialSidebarWidth() {
-	let {type, angle} = window.screen.orientation;
-	if (type.includes('landscape')) {
+	let {type, angle} = window.screen.orientation || {};
+	if (!type || type.includes('landscape')) {
 		return Math.min(440, window.innerWidth/2);
 	} else {
 		return window.innerWidth;
@@ -64,7 +64,7 @@ export default {
 		dialog: null,
 		showVSCodeInfoBox: (!vscode && [1, 3, 7, 11, 24].includes(startup_count)),
 		sidebar_width: getInitialSidebarWidth(),
-		portrait_view: window.screen.orientation.type.includes('portrait'),
+		portrait_view: window.screen.orientation && window.screen.orientation.type.includes('portrait'),
 	}},
 	methods: {
 		setTab(tab) {
@@ -193,7 +193,8 @@ export default {
 	li.mode_selector {
 		flex: 1 0 0;
 		text-align: center;
-		padding: 5px;
+		padding: 4px;
+		border-top: 1px solid var(--color-border);
 	}
 	li.mode_selector.selected {
 		background-color: var(--color-dark);

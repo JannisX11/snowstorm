@@ -120,6 +120,9 @@
 	}
 	select {
 		height: 30px;
+		-webkit-appearance: none;
+		appearance: auto;
+		border-radius: 0;
 	}
 	body {
 		image-rendering: pixelated;

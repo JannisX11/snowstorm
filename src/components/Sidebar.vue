@@ -71,6 +71,7 @@ export default {
 	}
 	.input_subject {
 		border-right: 1px solid var(--color-border);
+		overflow-x: hidden;
 	}
 	.input_subject h3 {
 		background-color: var(--color-title);

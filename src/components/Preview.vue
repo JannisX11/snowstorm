@@ -138,7 +138,10 @@
         View.renderer.setSize(width, height);
         View.renderer.setPixelRatio(window.devicePixelRatio);
     }
-    window.addEventListener('resize', resizeCanvas, false);
+    window.addEventListener('resize', resizeCanvas);
+    window.addEventListener('orientationchange', () => {
+        setTimeout(resizeCanvas, 150)
+    });
 
     window.addEventListener('keypress', (e) => {
         var input_focus = document.querySelector('input:focus, div[contenteditable="true"]:focus, textarea:focus')
@@ -244,6 +247,9 @@
         border-top: none;
         height: 27px;
         margin-left: 4px;
+    }
+    #app.portrait_view footer select {
+        border-bottom: none;
     }
 	div.stat {
         text-align: right;
