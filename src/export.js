@@ -273,8 +273,8 @@ function generateFile() {
 		size: getValue('particle_appearance_size'),
 		facing_camera_mode: getValue('particle_appearance_facing_camera_mode'),
 		uv: {
-			texture_width: Config.particle_texture_size[0],
-			texture_height: Config.particle_texture_size[1],
+			texture_width: parseInt(Config.particle_texture_size[0]) || 0,
+			texture_height: parseInt(Config.particle_texture_size[1]) || 0,
 		}
 	}
 	if (getValue('particle_texture_mode') === 'static') {

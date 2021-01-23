@@ -163,6 +163,6 @@ export default {
 	}
 	.mode_selector.selected {
 		background-color: var(--color-dark);
-		color: var(--color-title);
+		color: var(--color-text_grayed);
 	}
 </style>

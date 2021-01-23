@@ -26,7 +26,7 @@ class Curve {
 				type: 'select',
 				label: 'Mode',
 				info: 'Curve interpolation type',
-				value: data.mode,
+				value: ['catmull_rom', 'linear'].includes(data.mode) ? data.mode : 'linear',
 				options: {
 					catmull_rom: 'Catmull Rom',
 					linear: 'Linear',
@@ -49,7 +49,6 @@ class Curve {
 				value: data.range
 			})
 		}
-		this.inputs.mode.value = 'catmull_rom';
 		this.nodes = data.nodes instanceof Array ? data.nodes : [0, 1, 0];
 		this.svg_data = '';
 		this.vertical_line_data = '';

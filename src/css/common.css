@@ -40,6 +40,7 @@
 		--color-selection: rgba(110, 142, 191, 0.3);
 		--color-highlight: #f7f9ff;
 		--color-text: #bcc3ca;
+		--color-text_grayed: #939aa3;
 
 		--font-code: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
 	}

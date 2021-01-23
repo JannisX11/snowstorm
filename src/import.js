@@ -78,25 +78,6 @@ document.addEventListener('readystatechange', () => {
 	Emitter.start().playLoop();
 });
 
-document.ondragover = function(event) {
-	event.preventDefault()
-}
-document.body.ondrop = function(event) {
-	var file = event.dataTransfer && event.dataTransfer.files && event.dataTransfer.files[0];
-	if (file) {
-		if (pathToExtension(file.name) === 'json') {
-			var reader = new FileReader()
-			reader.onloadend = function() {
-
-				loadFile(JSON.parse(reader.result))
-				Emitter.playLoop();
-			}
-			reader.readAsText(file)
-			event.preventDefault()
-		}
-	}
-}
-
 function loadPreset(id) {
 	loadFile(Samples[id])
 }
@@ -137,6 +118,25 @@ if (vscode) {
     const state = vscode.getState();
 	if (state) {
 		updateContent(state.text);
+	}
+} else {
+	document.ondragover = function(event) {
+		event.preventDefault()
+	}
+	document.body.ondrop = function(event) {
+		var file = event.dataTransfer && event.dataTransfer.files && event.dataTransfer.files[0];
+		if (file) {
+			if (pathToExtension(file.name) === 'json') {
+				var reader = new FileReader()
+				reader.onloadend = function() {
+	
+					loadFile(JSON.parse(reader.result))
+					Emitter.playLoop();
+				}
+				reader.readAsText(file)
+				event.preventDefault()
+			}
+		}
 	}
 }
 	
