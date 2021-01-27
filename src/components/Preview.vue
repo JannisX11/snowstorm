@@ -120,7 +120,7 @@
     }
     function animate() {
         requestAnimationFrame(animate)
-        if (View.canvas.offsetParent) {
+        if (View.canvas.offsetParent && (!Emitter.paused || !document.hasFocus || document.hasFocus())) {
             View.controls.update()
             Wintersky.updateFacingRotation(View.camera);
             View.renderer.render(View.scene, View.camera);

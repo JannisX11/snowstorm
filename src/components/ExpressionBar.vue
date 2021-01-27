@@ -37,7 +37,6 @@ export default {
 			if (!text && typeof text !== 'string' && typeof text !== 'number') text = '';
 
 			if (typeof text !== 'string') text = text.toString();
-			//if (text.length > 3) text = text.replace(/\n/g, '');
 
 			this.code = text;
 
@@ -45,7 +44,8 @@ export default {
 			var input = ExpandedInput.input;
 			if (input.axis_count != 1) {
 				var arr = [];
-				for (var i = 0; i < input.axis_count; i++) {
+				let len = input.axis_count > 0 ? input.axis_count : (input.value && input.value.length);
+				for (var i = 0; i < len; i++) {
 					arr[i] = (i == ExpandedInput.axis) ? text : input.value[i];
 				}
 				input.set(arr)

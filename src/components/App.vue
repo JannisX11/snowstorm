@@ -48,10 +48,13 @@ if (!vscode) {
 
 function getInitialSidebarWidth() {
 	let {type, angle} = window.screen.orientation || {};
+	let body_width = document.body.clientWidth;
+	// Fix for VSCode
+	if (body_width < 100) body_width = 1280;
 	if (!type || type.includes('landscape')) {
-		return Math.min(440, window.innerWidth/2);
+		return Math.clamp(body_width/2, 160, 440);
 	} else {
-		return window.innerWidth;
+		return body_width;
 	}
 }
 
@@ -176,7 +179,7 @@ export default {
 
 	/* Portrait View */
 	div#app.portrait_view {
-		grid-template-rows:  66px calc(100% - 98px) 32px;
+		grid-template-rows:  66px calc(100% - 102px) 36px;
 		grid-template-columns: 100%;
 		grid-template-areas: "header" "main" "mode_selector";
 	}
@@ -193,7 +196,7 @@ export default {
 	li.mode_selector {
 		flex: 1 0 0;
 		text-align: center;
-		padding: 4px;
+		padding: 6px;
 		border-top: 1px solid var(--color-border);
 	}
 	li.mode_selector.selected {
