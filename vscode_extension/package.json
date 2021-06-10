@@ -34,6 +34,11 @@
 			}
 		]
 	},
+	"capabilities": {
+		"untrustedWorkspaces": {
+			"supported": true
+		}
+	},
 	"dependencies": {},
 	"devDependencies": {},
 	"keywords": [
