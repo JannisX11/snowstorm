@@ -32,11 +32,11 @@ function validate() {
         errors.push({text: `The effect attempts to use opacity but the material is not set to 'Blend'`})
     }
 
-    if (Config.particle_appearance_facing_camera_mode.substr(0, 9) == 'direction') {
+    if (Config.particle_appearance_facing_camera_mode.substr(0, 9) == 'direction' && Config.particle_appearance_direction_mode == 'derive_from_velocity') {
         if (Config.particle_motion_mode == 'dynamic' && !(Config.particle_motion_linear_speed && parseFloat(Config.particle_motion_linear_speed) != 0)) {
             errors.push({text: `The particles are set to face a direction, but no speed is set. Only particles with an initial speed support directions`})
 
-        } else if (Config.particle_motion_mode == 'parametric' && Config.particle_motion_direction.find(v => v && parseFloat(v) != 0)) {
+        } else if (Config.particle_motion_mode == 'parametric' && !Config.particle_motion_direction.find(v => v && parseFloat(v) != 0)) {
             errors.push({text: `The particles are set to face a direction, but no parametric direction is set`})
         }
     }

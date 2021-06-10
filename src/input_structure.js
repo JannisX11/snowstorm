@@ -474,6 +474,7 @@ const Data = {
 					id: 'particle_lifetime_kill_plane',
 					label: 'Kill Plane',
 					type: 'number',
+					step: 0.1,
 					info: 'Particles that cross this plane expire. The plane is relative to the emitter, but oriented in world space. The four parameters are the usual 4 elements of a plane equation.',
 					axis_count: 4
 				}),
@@ -563,6 +564,7 @@ const Data = {
 					label: 'FPS',
 					info: 'Animation frames per second',
 					type: 'number',
+					min: 0,
 					enabled_modes: ['animated']
 				}),
 				max_frame: new Input({
@@ -646,40 +648,39 @@ const Data = {
 			label: 'Collision',
 			_folded: true,
 			inputs: {
-				enabled: new Input({
-					id: 'particle_collision_enabled',
-					label: 'Enabled',
-					info: 'Enables collision when true / non-zero or unset',
+				collision_radius: new Input({
+					id: 'particle_collision_collision_radius',
+					label: 'Radius',
+					info: 'Used to minimize interpenetration of particles with the environment',
+					min: 0.0,
+					max: 0.5,
+					step: 0.05,
+					required: true,
+					type: 'number',
 				}),
 				collision_drag: new Input({
 					id: 'particle_collision_collision_drag',
 					label: 'Collision Drag',
 					info: 'Alters the speed of the particle when it has collided',
 					type: 'number',
+					step: 0.1,
 				}),
 				coefficient_of_restitution: new Input({
 					id: 'particle_collision_coefficient_of_restitution',
 					label: 'Bounciness',
 					info: 'Set to 0.0 to not bounce, 1.0 to bounce back up to original hight',
 					type: 'number',
+					step: 0.1,
 				}),
-				collision_radius: new Input({
-					id: 'particle_collision_collision_radius',
-					label: 'Collision Radius',
-					info: 'Used to minimize interpenetration of particles with the environment',
-					max: 0.5,
-					required: true,
-					type: 'number',
+				enabled: new Input({
+					id: 'particle_collision_enabled',
+					label: 'Condition',
+					info: 'Enables collision when true / non-zero or unset',
 				}),
 				expire_on_contact: new Input({
 					id: 'particle_collision_expire_on_contact',
 					label: 'Expire On Contact',
 					info: 'Removes the particle when it hits a block',
-					type: 'checkbox',
-				}),
-				preview: new Input({
-					id: 'particle_collision_preview',
-					label: 'Preview Collision',
 					type: 'checkbox',
 				}),
 			}

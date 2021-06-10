@@ -14,10 +14,14 @@
                 <option id="entity">Entity</option>
                 <option id="locator">Locator</option>
             </select>
+            <div class="tool ground_collision" :class="{disabled: !collision}" @click="toggleCollision()" title="Ground Collision"><i class="unicode_icon">{{'\u2305'}}</i></div>
+
+            <div class="spacing" />
+
             <div class="tool" @click="startAnimation()" title="Play"><i class="unicode_icon" style="font-size: 13pt;">{{'\u25B6'}}</i></div>
             <div class="tool" @click="togglePause()" title="Pause"><i class="unicode_icon pause">{{'\u2016'}}</i></div>
 
-            <div id="footer_spacing"></div>
+            <div class="spacing" />
 
             <div class="tool warning" @click="$emit('opendialog', 'warnings')" v-if="warning_count" :title="getWarningTitle()"><i class="unicode_icon warn">⚠</i>{{ warning_count }}</div>
             <div class="stat">{{particle_counter}} P</div>
@@ -164,6 +168,7 @@
             loop_mode: 'Looping',
             parent_mode: 'World',
             warning_count: 0,
+            collision: true
         }},
         methods: {
             updateSize() {
@@ -174,6 +179,10 @@
             },
             changeParentMode() {
                 Emitter.parent_mode = this.parent_mode.toLowerCase();
+            },
+            toggleCollision() {
+                Emitter.ground_collision = !Emitter.ground_collision;
+                this.collision = Emitter.ground_collision;
             },
             getWarningTitle() {
                 return this.warning_count == 1
@@ -239,9 +248,8 @@
 		padding: 2px 8px; 
 		padding-top: 2px;
         background-color: var(--color-bar);
-        float: left;
     }
-    #footer_spacing {
+    footer .spacing {
         flex: 1 1 auto;
         padding: 0;
         margin: 0;
@@ -252,6 +260,7 @@
         border-top: none;
         height: 27px;
         margin-left: 4px;
+        padding: 2px 4px;
     }
     #app.portrait_view footer select {
         border-bottom: none;
@@ -283,4 +292,14 @@
         height: 23px;
         overflow: hidden;
 	}
+    .ground_collision.disabled {
+        opacity: 0.5;
+    }
+    .ground_collision i {
+        font-size: 22pt;
+        transform: rotate(180deg);
+        margin-top: 13px;
+        margin-left: -2px;
+        font-weight: bold;
+    }
 </style>

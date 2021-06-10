@@ -24,7 +24,7 @@
 				"max_lifetime": 1.5
 			},
 			"minecraft:particle_motion_parametric": {
-				"direction": [0, 0, -1]
+				"direction": [0, 0, 1]
 			},
 			"minecraft:particle_appearance_billboard": {
 				"size": [1, 0.25],
