@@ -327,9 +327,6 @@ const IO = {
 			element.click();
 			if (Blockbench.browser === 'firefox') document.body.removeChild(element);
 
-		} else if (options.savetype === 'zip') {
-			saveAs(options.content, file_name)
-
 		} else {
 			//var blob = new Blob([options.content], {type: "text/plain;charset=utf-8"});
 

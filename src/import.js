@@ -12,6 +12,7 @@ import MagicSample from '../examples/magic.particle.json'
 import RainSample from '../examples/rain.particle.json'
 import SnowSample from '../examples/snow.particle.json'
 import TrailSample from '../examples/trail.particle.json'
+import BillboardSample from '../examples/billboard.particle.json'
 import Curve from './curves'
 import registerEdit from './edits'
 
@@ -24,6 +25,7 @@ const Samples = {
 	rain: RainSample,
 	snow: SnowSample,
 	trail: TrailSample,
+	billboard: BillboardSample,
 }
 
 function updateInputsFromConfig() {

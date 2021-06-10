@@ -55,6 +55,7 @@ const Menu = [
 			{label: 'Fire', 	click: () => {loadPreset('fire')}},
 			{label: 'Magic', 	click: () => {loadPreset('magic')}},
 			{label: 'Trail', 	click: () => {loadPreset('trail')}},
+			{label: 'Billboard',click: () => {loadPreset('billboard')}},
 		]
 	},
 	{

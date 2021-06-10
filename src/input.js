@@ -23,6 +23,7 @@ export default class Input {
 			this.mode_groups = [this.mode_groups];
 		}
 		this.enabled_modes = data.enabled_modes;
+		this.condition = data.condition;
 
 		this.updatePreview = data.updatePreview;
 		this.onchange = data.onchange;
@@ -35,6 +36,11 @@ export default class Input {
 			this.image_element = Emitter.config.texture.image;
 			this.allow_upload = data.allow_upload;
 
+		}
+		if (this.type == 'number') {
+			this.step = data.step;
+			this.min = data.min;
+			this.max = data.max;
 		}
 		if (this.id) {
 			this.value = Config[this.id];

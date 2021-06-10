@@ -1,6 +1,6 @@
 import Input from './input'
 import Gradient from './gradient'
-import {Emitter, updateMaterial, System} from './emitter'
+import {Emitter, updateMaterial} from './emitter'
 import vscode from './vscode_extension';
 
 const Data = {
@@ -59,6 +59,7 @@ const Data = {
 					type: 'molang',
 					axis_count: -1,
 					onchange: function() {
+						/*
 						Emitter.creation_variables = {};
 						this.value.forEach((s, i) => {
 							var p = s.toLowerCase().replace(/\s/g, '').split('=')
@@ -66,7 +67,7 @@ const Data = {
 								let key = p.shift();
 								Emitter.creation_variables[key] = p.join('=');
 							}
-						})
+						})*/
 					}
 				}),
 				tick_vars: new Input({
@@ -77,6 +78,7 @@ const Data = {
 					type: 'molang',
 					axis_count: -1,
 					onchange: function() {
+						/*
 						Emitter.tick_variables = {};
 						this.value.forEach((s, i) => {
 							var p = s.toLowerCase().replace(/\s/g, '').split('=')
@@ -84,7 +86,7 @@ const Data = {
 								let key = p.shift();
 								Emitter.tick_variables[key] = p.join('=');
 							}
-						})
+						})*/
 					}
 				})
 			}
@@ -256,6 +258,17 @@ const Data = {
 					axis_count: 2,
 					value: [0.2, 0.2]
 				}),
+				material: new Input({
+					id: 'particle_appearance_material',
+					type: 'select',
+					info: 'Material to use for the particles',
+					label: 'Material',
+					options: {
+						particles_alpha: 'Alpha',
+						particles_blend: 'Blend',
+						particles_opaque: 'Opaque',
+					},
+				}),
 				facing_camera_mode: new Input({
 					id: 'particle_appearance_facing_camera_mode',
 					type: 'select',
@@ -269,43 +282,44 @@ const Data = {
 						direction_x: 'Direction X',
 						direction_y: 'Direction Y',
 						direction_z: 'Direction Z',
+						emitter_transform_xy: 'Emitter XY-Plane',
+						emitter_transform_xz: 'Emitter XZ-Plane',
+						emitter_transform_yz: 'Emitter YZ-Plane',
 					},
 				}),
-				material: new Input({
-					id: 'particle_appearance_material',
+				direction_mode: new Input({
+					id: 'particle_appearance_direction_mode',
 					type: 'select',
-					info: 'Material to use for the particles',
-					label: 'Material',
+					info: 'Specifies how to calculate the billboard direction of a particle',
+					label: 'Direction',
 					options: {
-						particles_alpha: 'Alpha',
-						particles_blend: 'Blend',
-						particles_opaque: 'Opaque',
+						derive_from_velocity: 'From Motion',
+						custom: 'Custom',
 					},
+					condition(group) {
+						return group.inputs.facing_camera_mode.value.substr(0, 9) == 'direction'
+					}
 				}),
-			}
-		},
-		direction: {
-			label: 'Direction',
-			_folded: true,
-			inputs: {
-				mode: new Input({
-					id: 'particle_direction_mode',
-					type: 'select',
-					info: 'The direction of emitted particles in regards to the emitter shape',
-					label: 'Mode',
-					mode_groups: ['particle', 'direction'],
-					options: {
-						outwards: 'Outwards',
-						inwards: 'Inwards',
-						direction: 'Direction',
-					},
+				speed_threshold: new Input({
+					id: 'particle_appearance_speed_threshold',
+					label: 'Min Speed',
+					info: 'The direction is set if the speed of the particle is above the threshold. The default is 0.01',
+					type: 'number',
+					step: 0.01,
+					condition(group) {
+						return group.inputs.facing_camera_mode.value.substr(0, 9) == 'direction'
+							&& group.inputs.direction_mode.value == 'derive_from_velocity';
+					}
 				}),
 				direction: new Input({
-					id: 'particle_direction_direction',
+					id: 'particle_appearance_direction',
 					label: 'Direction',
-					info: 'The direction of emitted particles',
+					info: 'The facing direction of emitted particles',
 					axis_count: 3,
-					enabled_modes: ['direction']
+					condition(group) {
+						return group.inputs.facing_camera_mode.value.substr(0, 9) == 'direction'
+							&& group.inputs.direction_mode.value == 'custom';
+					}
 				})
 			}
 		},
@@ -323,6 +337,29 @@ const Data = {
 						parametric: 'Parametric',
 						static: 'Static',
 					},
+				}),
+				direction_mode: new Input({
+					id: 'particle_direction_mode',
+					type: 'select',
+					label: 'Direction',
+					info: 'The direction of emitted particles in regards to the emitter shape',
+					enabled_modes: ['dynamic'],
+					options: {
+						outwards: 'Outwards',
+						inwards: 'Inwards',
+						direction: 'Custom',
+					},
+				}),
+				direction: new Input({
+					id: 'particle_direction_direction',
+					label: 'Direction',
+					info: 'The direction of emitted particles',
+					axis_count: 3,
+					enabled_modes: ['dynamic'],
+					condition(group) {
+						return group.inputs.mode.value == 'dynamic'
+							&& group.inputs.direction_mode.value == 'direction'
+					}
 				}),
 				linear_speed: new Input({
 					id: 'particle_motion_linear_speed',
@@ -351,7 +388,7 @@ const Data = {
 					axis_count: 3,
 					enabled_modes: ['parametric']
 				}),
-				direction: new Input({
+				relative_direction: new Input({
 					id: 'particle_motion_direction',
 					label: 'Direction',
 					info: 'Directly set the 3d direction of the particle',
@@ -427,18 +464,18 @@ const Data = {
 					value: 1,
 					enabled_modes: ['time']
 				}),
+				expiration_expression: new Input({
+					id: 'particle_lifetime_expiration_expression',
+					label: 'Kill Expression',
+					info: 'This expression makes the particle expire when true (non-zero)',
+					enabled_modes: ['expression']
+				}),
 				kill_plane: new Input({
 					id: 'particle_lifetime_kill_plane',
 					label: 'Kill Plane',
 					type: 'number',
 					info: 'Particles that cross this plane expire. The plane is relative to the emitter, but oriented in world space. The four parameters are the usual 4 elements of a plane equation.',
 					axis_count: 4
-				}),
-				expiration_expression: new Input({
-					id: 'particle_lifetime_expiration_expression',
-					label: 'Kill Expression',
-					info: 'This expression makes the particle expire when true (non-zero)',
-					enabled_modes: ['expression']
 				}),
 				expire_in: new Input({
 					id: 'particle_lifetime_expire_in',
@@ -638,6 +675,11 @@ const Data = {
 					id: 'particle_collision_expire_on_contact',
 					label: 'Expire On Contact',
 					info: 'Removes the particle when it hits a block',
+					type: 'checkbox',
+				}),
+				preview: new Input({
+					id: 'particle_collision_preview',
+					label: 'Preview Collision',
 					type: 'checkbox',
 				}),
 			}

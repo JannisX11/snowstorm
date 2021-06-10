@@ -20,7 +20,7 @@
             <div id="footer_spacing"></div>
 
             <div class="tool warning" @click="$emit('opendialog', 'warnings')" v-if="warning_count" :title="getWarningTitle()"><i class="unicode_icon warn">⚠</i>{{ warning_count }}</div>
-            <div class="stat">{{particles}} P</div>
+            <div class="stat">{{particle_counter}} P</div>
             <div class="stat" style="width: 66px;">{{fps}} FPS</div>
         </footer>
     </main>
@@ -30,9 +30,8 @@
 
     import * as THREE from 'three';
     import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
-    import Wintersky from 'wintersky';
 
-    import {Emitter, initParticles} from './../emitter';
+    import {Emitter, Scene, initParticles} from './../emitter';
     import {validate} from './WarningDialog'
 
     const View = {}
@@ -61,7 +60,7 @@
         geometry.setAttribute( 'position', new THREE.Float32BufferAttribute( vertices, 3 ) );
         geometry.setAttribute( 'color', new THREE.Float32BufferAttribute( colors, 3 ) );
         var material = new THREE.LineBasicMaterial( { vertexColors: 2 } );
-        THREE.LineSegments.call( this, geometry, material );
+        return new THREE.LineSegments(geometry, material );
     }
     CustomAxesHelper.prototype = Object.create( THREE.LineSegments.prototype );
 
@@ -122,7 +121,7 @@
         requestAnimationFrame(animate)
         if (View.canvas.offsetParent && (!Emitter.paused || !document.hasFocus || document.hasFocus())) {
             View.controls.update()
-            Wintersky.updateFacingRotation(View.camera);
+            Scene.updateFacingRotation(View.camera);
             View.renderer.render(View.scene, View.camera);
             View.frames_this_second++;
         }
@@ -183,6 +182,12 @@
             },
             startAnimation,
             togglePause
+        },
+        computed: {
+            particle_counter() {
+                let string = this.particles.toString();
+                return string.replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
+            }
         },
         mounted() {
             initPreview(this.$refs.canvas);

@@ -272,10 +272,23 @@ function generateFile() {
 	var tex_comp = comps['minecraft:particle_appearance_billboard'] = {
 		size: getValue('particle_appearance_size'),
 		facing_camera_mode: getValue('particle_appearance_facing_camera_mode'),
-		uv: {
-			texture_width: parseInt(Config.particle_texture_size[0]) || 0,
-			texture_height: parseInt(Config.particle_texture_size[1]) || 0,
+		
+	}
+	if (getValue('particle_appearance_facing_camera_mode').substr(0, 9) == 'direction' &&
+		(getValue('particle_appearance_speed_threshold') != 0.01 || getValue('particle_appearance_direction_mode') != 'derive_from_velocity')
+	) {
+		tex_comp.direction = {
+			mode: getValue('particle_appearance_direction_mode')
 		}
+		if (tex_comp.direction.mode == 'derive_from_velocity') {
+			tex_comp.direction.min_speed_threshold = getValue('particle_appearance_speed_threshold');
+		} else {
+			tex_comp.direction.custom_direction = getValue('particle_appearance_direction');
+		}
+	}
+	tex_comp.uv = {
+		texture_width: parseInt(Config.particle_texture_size[0]) || 0,
+		texture_height: parseInt(Config.particle_texture_size[1]) || 0,
 	}
 	if (getValue('particle_texture_mode') === 'static') {
 		tex_comp.uv.uv = getValue('particle_texture_uv')||[0, 0];

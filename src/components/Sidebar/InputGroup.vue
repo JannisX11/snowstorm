@@ -5,7 +5,7 @@
 			v-for="(input, key) in group.inputs"
 			:key="key"
 			:input_type="input.type"
-			v-show="!input.enabled_modes || group._selected_mode === null || input.enabled_modes.includes(group._selected_mode)"
+			v-show="isInputVisible(input, group)"
 			v-bind:title="input.info"
 			v-bind:id="subject_key +'-'+ group_key +'-'+ key"
 		>
@@ -31,6 +31,7 @@
 						<!--Number-->
 						<input
 							v-if="input.type == 'number'" type="number"
+							:step="input.step" :min="input.min" :max="input.max"
 							v-model="input.value"
 							v-on:input="input.change($event)">
 						<div class="tool" v-on:click="input.value.remove(item);input.change($event);"><i class="unicode_icon">{{'\u2A09'}}</i></div>
@@ -52,6 +53,7 @@
 					<!--Number-->
 					<input
 						v-if="input.type == 'number'" type="number"
+						:step="input.step" :min="input.min" :max="input.max"
 						v-model="input.value"
 						v-on:input="input.change($event)">
 				</template>
@@ -75,6 +77,7 @@
 							v-for="i in input.axis_count"
 							:key="i"
 							v-model="input.value[i-1]"
+							:step="input.step" :min="input.min" :max="input.max"
 							v-bind:index="i-1"
 							v-on:input="input.change($event)">
 					</template>
@@ -105,6 +108,9 @@
 							<input  v-bind:id="key" type="file" accept=".png" v-on:change="input.change($event)">
 						</template>
 						<div id="image_resolution_label">{{input.image_element.naturalWidth}} x {{input.image_element.naturalHeight}} px</div>
+						<template v-if="input.allow_upload">
+							<div class="tool" v-on:click="input.updatePreview()" title="Reload"><i class="unicode_icon">⟳</i> Reload</div>
+						</template>
 					</div>
 				</template>
 			</div>
@@ -142,6 +148,15 @@ export default {
 		Gradient
 	},
 	methods: {
+		isInputVisible(input, group) {
+			if (typeof input.condition == 'function') {
+				return input.condition(group)
+			} else {
+				return !input.enabled_modes
+					|| group._selected_mode === null
+					|| input.enabled_modes.includes(group._selected_mode);
+			}
+		},
 		highlightMolang(code) {
 			return Prism.highlight(code, Languages.molang)
 		},
