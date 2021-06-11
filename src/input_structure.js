@@ -31,13 +31,23 @@ const Data = {
 					id: 'space_local_position',
 					label: 'Local Position',
 					info: 'When enabled and the effect is attached to an entity, the particles will simulate in entity space',
-					type: 'checkbox'
+					type: 'checkbox',
+					onchange(e) {
+						if (!Data.effect.space.inputs.local_position.value) {
+							Data.effect.space.inputs.local_rotation.set(false);
+						}
+					}
 				}),
 				local_rotation: new Input({
 					id: 'space_local_rotation',
 					label: 'Local Rotation',
 					info: 'When enabled and the effect is attached to an entity, the particle rotation will simulate in entity space. Only works if local position is enabled too.',
-					type: 'checkbox'
+					type: 'checkbox',
+					onchange(e) {
+						if (Data.effect.space.inputs.local_rotation.value) {
+							Data.effect.space.inputs.local_position.set(true);
+						}
+					}
 				}),
 				local_velocity: new Input({
 					id: 'space_local_velocity',

@@ -88,7 +88,7 @@ export default class Input {
 		}
 		return this;
 	}
-	emitInput(value) {
+	emitInput(event) {
 		this.change(event)
 	}
 	change(e, node) {

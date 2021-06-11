@@ -99,7 +99,7 @@
 
 				<!--Image-->
 				<template v-if="input.type == 'image' && !input.image.hidden">
-					<div class="input_texture_wrapper checkerboard" v-html="input.image_element.outerHTML">
+					<div class="input_texture_wrapper checkerboard" :class="{vertical: input.image_element.naturalWidth < input.image_element.naturalHeight}" v-html="input.image_element.outerHTML">
 						
 					</div>
 					<div class="meta">
@@ -108,8 +108,8 @@
 							<input  v-bind:id="key" type="file" accept=".png" v-on:change="input.change($event)">
 						</template>
 						<div id="image_resolution_label">{{input.image_element.naturalWidth}} x {{input.image_element.naturalHeight}} px</div>
-						<template v-if="input.allow_upload">
-							<div class="tool" v-on:click="input.updatePreview()" title="Reload"><i class="unicode_icon">⟳</i> Reload</div>
+						<template v-if="!input.allow_upload">
+							<div class="tool" style="width: auto;" v-on:click="input.updatePreview()" title="Reload"><i class="unicode_icon" style="display: inline;">⟳</i> Reload</div>
 						</template>
 					</div>
 				</template>
@@ -239,6 +239,10 @@ export default {
 		border: 1px solid var(--color-border);
 		box-sizing: content-box;
 	}
+	.input_texture_wrapper.vertical {
+		width: 136px;
+		overflow-y: auto;
+	}
 	.input_vector {
 		width: 40px;
 		flex-grow: 1;
@@ -255,7 +259,6 @@ export default {
 <style>
 	.input_texture_wrapper img {
 		width: 100%;
-		height: 100%;
 		background-size: contain;
 		background-repeat: no-repeat;
 	}

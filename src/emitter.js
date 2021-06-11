@@ -1,10 +1,9 @@
 import vscode from './vscode_extension'
 import Wintersky from 'wintersky'
-let Data = window.Data;
 
 const Scene = new Wintersky.Scene({
 	fetchTexture(config) {
-		if (!Data) return;
+		if (!window.Data) return;
 		var path = config.particle_texture_path;
 	
 		if (vscode && path) {
@@ -24,9 +23,9 @@ const Scene = new Wintersky.Scene({
 				window.addEventListener('message', update, false);
 			})
 	
-		} else if (Data.particle.texture.inputs.image.image && Data.particle.texture.inputs.image.image.loaded) {
+		} else if (window.Data.particle.texture.inputs.image.image && window.Data.particle.texture.inputs.image.image.loaded) {
 	
-			return Data.particle.texture.inputs.image.image.data;
+			return window.Data.particle.texture.inputs.image.image.data;
 	
 		}
 	}
@@ -44,9 +43,9 @@ function initParticles(View) {
 	View.scene.add(Scene.space);
 }
 Config.onTextureUpdate = function() {
-	if (!Data) return;
-	Data.particle.texture.inputs.image.image.hidden = true;
-	Data.particle.texture.inputs.image.image.hidden = false;
+	if (!window.Data) return;
+	window.Data.particle.texture.inputs.image.image.hidden = true;
+	window.Data.particle.texture.inputs.image.image.hidden = false;
 };
 
 function updateMaterial() {
