@@ -1,5 +1,5 @@
 vue-color: 99.19 KB (4.90%)
-vue: 91.47 KB (4.52%)
+vue: 91.47 KB (4.51%)
 prismjs: 87.82 KB (4.34%)
 tinycolor2: 35.84 KB (1.77%)
 regenerator-runtime: 24.01 KB (1.19%)
