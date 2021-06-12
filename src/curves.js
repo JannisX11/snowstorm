@@ -78,8 +78,8 @@ class Curve {
 			this.min = Math.min(this.min, v);
 			this.max = Math.max(this.max, v);
 		})
-		this.min = Math.clamp(Math.round(this.min*100)/100, -100, 0);
-		this.max = Math.clamp(Math.round(this.max*100)/100, 0, 100);
+		this.min = Math.clamp(Math.round(this.min*100)/100, -256, 0);
+		this.max = Math.clamp(Math.round(this.max*100)/100, 0, 256);
 		this.updateSVG();
 	}
 	updateName(new_name) {

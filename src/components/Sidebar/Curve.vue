@@ -12,7 +12,7 @@
                 <li class="curve_add" :key="'add_0'" @click="curve.addNode(0, $event)"></li>
                 <template v-for="(value, index) in curve.nodes">
                     <li class="curve_node" :key="'node_'+index" @mousedown="slideValue(index, $event)" @touchstart="slideValue(index, $event);simulateHover($event)">
-                        <div class="curve_point" :style="{bottom: ((value-curve.min)/(curve.max-curve.min))*140 + 'px'}"><label>{{value}}</label></div>
+                        <div class="curve_point" v-show="value <= 256 && value >= -256" :style="{bottom: ((value-curve.min)/(curve.max-curve.min))*140 + 'px'}"><label>{{value}}</label></div>
                         <div class="curve_node_remover tool" @click="curve.removeNode(index, $event)">
 							<i class="unicode_icon">{{'\u2A09'}}</i>
                         </div>
@@ -35,6 +35,7 @@
 	import InputGroup from './InputGroup'
 	import registerEdit from '../../edits'
 	import {calculateOffset, convertTouchEvent} from './../../util'
+	import Vue from 'vue'
 
 	function toCatmullRomBezier( points, tension = 0.5, closing = false) {
 		// sets tension [0.0, 1.0] +/-
@@ -190,8 +191,10 @@
 		},
 		watch: {
 			'curve.svg_needs_update'(v) {
-				if (v) this.updateSVG()
-				this.curve.svg_needs_update = false;
+				Vue.nextTick(() => {
+					if (v) this.updateSVG()
+					this.curve.svg_needs_update = false;
+				})
 			}
 		},
 		mounted() {
@@ -273,16 +276,19 @@
 		display: none;
 		position: absolute;
 		bottom: -25px;
-		width: 100%;
 		height: 25px;
+		width: 100%;
+		min-width: 14px;
 		text-align: center;
 		cursor: pointer;
+		padding: 0;
 	}
 	.curve_node:hover .curve_node_remover, .curve_node.touch_active .curve_node_remover {
 		display: block;
 	}
 	.curve_node .curve_node_remover i {
 		background-color: var(--color-background);
+		display: inline;
 	}
 	.curve_node .curve_point {
 		position: absolute;
