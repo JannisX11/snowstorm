@@ -60,6 +60,23 @@ function generateFile() {
 			horizontal_range: processValue(curve.range, {type: 'molang'}),
 			nodes: curve.nodes.slice()
 		}
+		if (json_curve.type == 'bezier_chain') {
+			let nodes = {};
+			json_curve.nodes.forEach(node => {
+				let time = Math.roundTo(node.time, 2).toString();
+				if (time.search(/\./) < 0) time += '.0'
+				nodes[time] = {
+					value: node.right_value == node.left_value ? node.left_value : undefined,
+					left_value: node.right_value == node.left_value ? undefined : node.left_value,
+					right_value: node.right_value == node.left_value ? undefined : node.right_value,
+
+					slope: node.right_slope == node.left_slope ? node.left_slope : undefined,
+					left_slope: node.right_slope == node.left_slope ? undefined : node.left_slope,
+					right_slope: node.right_slope == node.left_slope ? undefined : node.right_slope,
+				}
+			})
+			json_curve.nodes = nodes;
+		}
 		json_curves[key] = json_curve
 	}
 	if (Object.keys(json_curves).length) {

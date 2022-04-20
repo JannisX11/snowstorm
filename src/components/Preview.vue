@@ -1,7 +1,7 @@
 <template>
     <main id="preview" class="preview">
         <div id="canvas_wrapper">
-            <canvas id="canvas" ref="canvas"></canvas>
+            <canvas id="canvas" @click="blur()" ref="canvas"></canvas>
         </div>
         <footer>
             <select id="loop_mode" v-model="loop_mode" @change="changeLoopMode()">
@@ -188,6 +188,9 @@
                 return this.warning_count == 1
                     ? '1 Warning'
                     : (this.warning_count + ' Warnings');
+            },
+            blur() {
+                document.activeElement.blur()
             },
             startAnimation,
             togglePause

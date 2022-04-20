@@ -10,7 +10,7 @@
         </li>
 		<template v-if="isVSCExtension">
         	<li class="mode_selector" @click="openCodeViewer(true)" title="Open Code View to Side"><i class="unicode_icon split">{{'\u2385'}}</i></li>
-        	<li class="mode_selector" @click="openCodeViewer(false)" title="Open as Code View">Open Code</li>
+        	<li class="mode_selector" @click="openCodeViewer(false)" title="Open as Code View">Switch to Code</li>
 		</template>
 		<template v-else-if="!portrait_view">
         	<li class="mode_selector code" :class="{selected: selected_tab == 'code'}" @click="$emit('changetab', 'code')">Code</li>

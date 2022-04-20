@@ -41,6 +41,10 @@ function validate() {
         }
     }
 
+    if (Config.emitter_rate_mode == 'steady' && Config.emitter_lifetime_mode !== 'expression' && !isNaN(Config.emitter_rate_rate) && 1/parseFloat(Config.emitter_rate_rate) >= parseFloat(Config.emitter_lifetime_active_time)) {
+        errors.push({text: `The emitter rate is lower than the emitter lifetime, so particles may not spawn`})
+    }
+
     return errors;
 }
 

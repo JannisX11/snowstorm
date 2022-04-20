@@ -7,9 +7,9 @@
 <script>
 import App from "./App";
 
-import 'vue-prism-editor/dist/prismeditor.min.css';
+import 'root/packages/vue-prism-editor/dist/prismeditor.min.css';
 import Prism from 'prismjs/components/prism-core';
-import {PrismEditor} from "vue-prism-editor";
+import {PrismEditor} from "root/packages/vue-prism-editor";
 import "prismjs/themes/prism-okaidia.css";
 import Languages from './../languages';
 

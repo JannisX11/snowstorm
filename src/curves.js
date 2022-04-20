@@ -26,14 +26,29 @@ class Curve {
 				type: 'select',
 				label: 'Mode',
 				info: 'Curve interpolation type',
-				value: ['catmull_rom', 'linear'].includes(data.mode) ? data.mode : 'linear',
+				value: ['catmull_rom', 'linear', 'bezier', 'bezier_chain'].includes(data.mode) ? data.mode : 'linear',
 				options: {
 					catmull_rom: 'Catmull Rom',
 					linear: 'Linear',
-					//bezier: 'Bezier',
+					bezier: 'Bézier',
+					bezier_chain: 'Bézier Chain',
 				},
 				onchange() {
 					scope.updateSVG();
+					if (scope.inputs.mode.value == 'bezier') {
+						scope.nodes.splice(4, Infinity, 0, 0, 0, 0);
+						scope.nodes.splice(4);
+					}
+					if (scope.inputs.mode.value == 'bezier_chain') {
+						scope.nodes.splice(0, Infinity,
+							{time: 0, left_value: 0, right_value: 0, left_slope: 0, right_slope: 0},
+							{time: 1, left_value: 1, right_value: 1, left_slope: 0, right_slope: 0},
+						);
+					} else if (scope.nodes.find(n => typeof n == 'object')) {
+						scope.nodes.forEach((n, i) => {
+							if (typeof n == 'object') scope.nodes[i] = n.left_value || 0;
+						})
+					}
 				}
 			}),
 			input: new Input({
@@ -50,7 +65,9 @@ class Curve {
 			})
 		}
 		this.nodes = data.nodes instanceof Array ? data.nodes : [0, 1, 0];
+		this.selected_point = -1;
 		this.svg_data = '';
+		this.bezier_handles = '';
 		this.vertical_line_data = '';
 		this.horizontal_line_data = '';
 
@@ -75,8 +92,8 @@ class Curve {
 		this.min = 0;
 		this.max = 1;
 		this.nodes.forEach(v => {
-			this.min = Math.min(this.min, v);
-			this.max = Math.max(this.max, v);
+			this.min = Math.min(this.min, typeof v == 'object' ? Math.min(v.right_value, v.left_value) : v);
+			this.max = Math.max(this.max, typeof v == 'object' ? Math.max(v.right_value, v.left_value) : v);
 		})
 		this.min = Math.clamp(Math.round(this.min*100)/100, -256, 0);
 		this.max = Math.clamp(Math.round(this.max*100)/100, 0, 256);
@@ -91,25 +108,27 @@ class Curve {
 		}
 		return this;
 	}
-	addNode(index, event) {
-		var value = 0;
-		if (this.nodes[index-1] != undefined && this.nodes[index] != undefined) {
-			value = (this.nodes[index-1] + this.nodes[index])/2
-		}
-		this.nodes.splice(index, 0, Math.round(value*100)/100);
-		this.updateSVG();
-		registerEdit('add curve node')
-	}
 	removeNode(index, event) {
 		if (this.nodes.length <= 2) return;
+		let node = this.nodes[index];
 		this.nodes.splice(index, 1);
+		if (this.inputs.mode.value == 'bezier_chain') {
+			let nearest = this.nodes.slice().sort((a, b) => Math.abs(a.time - node.time) - Math.abs(b.time - node.time))[0];
+			this.selected_point = this.nodes.indexOf(nearest);
+		} else {
+			this.selected_point--;
+		}
 		this.updateSVG();
 		registerEdit('remove curve node')
 	}
 
 	setNode(index, value) {
-		value = Math.round(value*100)/100;
-		this.nodes.splice(index, 1, value);
+		value = Math.round(parseFloat(value)*100)/100;
+		if (this.inputs.mode.value == 'bezier_chain') {
+			this.nodes[index].left_value = this.nodes[index].right_value = value;
+		} else {
+			this.nodes.splice(index, 1, value);
+		}
 		this.updateMinMax();
 	}
 	remove() {

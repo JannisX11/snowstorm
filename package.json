@@ -36,13 +36,13 @@
 	},
 	"dependencies": {
 		"bootstrap": "^4.5.3",
-		"molangjs": "^1.4.0",
+		"molangjs": "^1.5.0",
 		"prismjs": "^1.23.0",
+		"root": "github:JannisX11/vue-prism-editor",
 		"three": "^0.129.0",
 		"vue": "^2.6.12",
 		"vue-color": "^2.8.0",
 		"vue-prism-component": "^1.2.0",
-		"vue-prism-editor": "^1.2.2",
 		"wintersky": "^1.0.2"
 	}
 }

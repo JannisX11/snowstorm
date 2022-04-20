@@ -131,7 +131,7 @@ const Data = {
 					info: 'How often a particle is emitted, in particles/sec. Evaluated once per particle emitted.',
 					enabled_modes: ['steady'],
 					required: true,
-					value: 1,
+					value: 4,
 				}),
 				amount: new Input({
 					id: 'emitter_rate_amount',
@@ -345,6 +345,7 @@ const Data = {
 					options: {
 						dynamic: 'Dynamic',
 						parametric: 'Parametric',
+						// Todo: Reimplement static here and in Wintersky
 						static: 'Static',
 					},
 				}),
