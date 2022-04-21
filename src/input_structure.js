@@ -345,7 +345,6 @@ const Data = {
 					options: {
 						dynamic: 'Dynamic',
 						parametric: 'Parametric',
-						// Todo: Reimplement static here and in Wintersky
 						static: 'Static',
 					},
 				}),

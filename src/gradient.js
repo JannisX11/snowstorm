@@ -31,7 +31,7 @@ export default class Gradient extends Input {
         let obj = {};
         this.value.forEach(point => {
             let time = (point.percent / 100) * range
-            time = time.toString()
+            time = Math.roundTo(time, 2).toString()
             if (time.search(/\./) < 0) time += '.0'
             let color = '#' + point.color.substr(7, 2) + point.color.substr(1, 6);
             obj[time] = color;

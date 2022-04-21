@@ -367,7 +367,7 @@ function generateFile() {
 		var color = getValue('particle_color_expression')
 		if (color instanceof Array) {
 			color.forEach((s, i) => {
-				if (typeof s === 'string' && !s.toLowerCase().match(/^math\.clamp/)) {
+				if (typeof s === 'string' && !s.toLowerCase().match(/^math\.clamp/) && !s.match(/return /)) {
 					color[i] = `Math.clamp(${s}, 0, 1)`
 				} else if (typeof s == 'number') {
 					color[i] = MathUtils.clamp(s, 0, 1);
