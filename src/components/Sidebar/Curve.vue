@@ -386,7 +386,7 @@
 						i++;
 					}
 
-					curve.vertical_line_data = `M${start} {this.height+10} L${start} 0 M${end} {this.height+10} L${end} 0`;
+					curve.vertical_line_data = `M${start} ${this.height+10} L${start} 0 M${end} ${this.height+10} L${end} 0`;
 
 				} else if (curve.inputs.mode.value == 'catmull_rom') {
 
@@ -396,7 +396,7 @@
 					})
 					curve.svg_data = toCatmullRomBezier(points);
 
-					curve.vertical_line_data = `M${start+gap} {this.height+10} L${start+gap} 0 M${end-gap} {this.height+10} L${end-gap} 0`;
+					curve.vertical_line_data = `M${start+gap} ${this.height+10} L${start+gap} 0 M${end-gap} ${this.height+10} L${end-gap} 0`;
 
 				}
 			}

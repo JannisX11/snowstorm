@@ -17,7 +17,7 @@ class Curve {
 				info: 'The MoLang variable to be used later in MoLang expressions. Must begin with "variable."',
 				placeholder: 'variable.curve1',
 				type: 'text',
-				value: '',
+				value: data ? '' : 'variable.',
 				onchange() {
 					scope.updateName(this.value);
 				}
@@ -55,13 +55,13 @@ class Curve {
 				label: 'Input',
 				info: 'Horizontal input',
 				type: 'molang',
-				value: data.input
+				value: data ? data.input : 'v.particle_age'
 			}),
 			range: new Input({
 				label: 'Range',
 				info: 'Horizontal range that the input is mapped to',
 				type: 'molang',
-				value: data.range
+				value: data ? data.range : 'v.particle_lifetime'
 			})
 		}
 		this.nodes = data.nodes instanceof Array ? data.nodes : [0, 1, 0];

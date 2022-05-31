@@ -49,7 +49,7 @@
                 <li><code>math.lerprotate(start, end, 0_to_1)</code> Lerp the shortest direction around a circle from start degrees to end degrees via 0_to_1</li>
                 <li><code>math.ln(value)</code> Natural logarithm of value</li>
             </ul>
-            <a href="https://bedrock.dev/docs/stable/MoLang" target="_blank" style="margin-top: 12px; display: block;">Full MoLang Documentation</a>
+            <a href="https://docs.microsoft.com/en-us/minecraft/creator/reference/content/molangreference/examples/molangconcepts/molangintroduction" target="_blank" style="margin-top: 12px; display: block;">Full MoLang Documentation</a>
         </div>
     </dialog>
 </template>

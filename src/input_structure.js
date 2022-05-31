@@ -611,6 +611,16 @@ const Data = {
 						gradient: 'Gradient',
 						expression: 'Expression',
 					},
+					onchange() {
+						if (Data.particle.color.inputs.mode.value == 'gradient') {
+							if (Data.particle.color.inputs.range.value == 0) {
+								Data.particle.color.inputs.range.value = 1;
+							}
+							if (!Data.particle.color.inputs.interpolant.value) {
+								Data.particle.color.inputs.interpolant.value = 'v.particle_age / v.particle_lifetime';
+							}
+						}
+					}
 				}),
 				picker: new Input({
 					id: 'particle_color_static',

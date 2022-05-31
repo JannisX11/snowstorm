@@ -69,7 +69,9 @@ const Menu = [
 	{
 		label: 'Help',
 		children: [
-			{label: 'Format Documentation', click: () => { openLink('https://bedrock.dev/r/Particles') }},
+			{label: 'Snowstorm Tutorial', click: () => { openLink('https://docs.microsoft.com/en-us/minecraft/creator/documents/particleeffects') }},
+			{label: 'Tutorial Video', click: () => { openLink('https://youtu.be/J1Ub1tbO9gg') }},
+			{label: 'Format Documentation', click: () => { openLink('https://docs.microsoft.com/en-us/minecraft/creator/reference/content/particlesreference/') }},
 			{label: 'MoLang Sheet', click: (vm) => { vm.openDialog('molang_sheet') }},
 			{label: 'MoLang Grapher', click: () => { openLink('https://jannisx11.github.io/molang-grapher/') }},
 			{label: 'Report a Bug', click: () => { openLink('https://github.com/JannisX11/snowstorm/issues') }},
