@@ -94,7 +94,8 @@ export default class Input {
 	change(e, node) {
 		var scope = this;
 		if (this.type === 'image' && e) {
-			var file = e.target.files[0];
+			var file = e instanceof Uint8Array ? new File([e], 'unknown.png') : e.target.files[0];
+
 			if (file) {
 				var reader = new FileReader()
 				reader.onloadend = function() {
@@ -124,7 +125,7 @@ export default class Input {
 			this.updatePreview(this.value)
 		}
 		let color_input_sliding = this.type == 'color' && node && node.querySelector('.input_wrapper[input_type="color"]:active');
-		if (e instanceof Event || (this.type == 'color' && node))	{
+		if (e instanceof Event || e instanceof Uint8Array || (this.type == 'color' && node))	{
 			// User Input
 			if (ExpandedInput.setup && ['molang', 'text'].includes(this.type)) {
 				this.updateExpressionBar(false);

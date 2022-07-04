@@ -15,4 +15,6 @@ if (!vscode) {
     if ('serviceWorker' in navigator) {
         registerSW();
     }
+
+    loadFromUrl()
 }
