@@ -457,28 +457,16 @@ const Data = {
 			label: 'Lifetime',
 			_folded: true,
 			inputs: {
-				mode: new Input({
-					id: 'particle_lifetime_mode',
-					type: 'select',
-					label: 'Mode',
-					mode_groups: ['particle', 'lifetime'],
-					options: {
-						time: 'Time',
-						expression: 'Kill Expression',
-					}
-				}),
 				max_lifetime: new Input({
 					id: 'particle_lifetime_max_lifetime',
 					label: 'Max Age',
 					info: 'Maximum age of the particle in seconds',
-					value: 1,
-					enabled_modes: ['time']
+					value: 1
 				}),
 				expiration_expression: new Input({
 					id: 'particle_lifetime_expiration_expression',
 					label: 'Kill Expression',
-					info: 'This expression makes the particle expire when true (non-zero)',
-					enabled_modes: ['expression']
+					info: 'This expression makes the particle expire when true (non-zero)'
 				}),
 				kill_plane: new Input({
 					id: 'particle_lifetime_kill_plane',

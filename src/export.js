@@ -220,11 +220,9 @@ function generateFile() {
 	//Particle Components
 
 	//Lifetime
-	var lifetime_comp = comps['minecraft:particle_lifetime_expression'] = {}
-	if (getValue('particle_lifetime_mode') === 'time') {
-		lifetime_comp.max_lifetime = getValue('particle_lifetime_max_lifetime')
-	} else {
-		lifetime_comp.expiration_expression = getValue('particle_lifetime_expiration_expression')
+	comps['minecraft:particle_lifetime_expression'] = {
+		max_lifetime: getValue('particle_lifetime_max_lifetime'),
+		expiration_expression: getValue('particle_lifetime_expiration_expression')
 	}
 	if (getValue('particle_lifetime_expire_in')) {
 		comps['minecraft:particle_expire_if_in_blocks'] = getValue('particle_lifetime_expire_in')
@@ -309,7 +307,7 @@ function generateFile() {
 	}
 	if (getValue('particle_texture_mode') === 'static') {
 		tex_comp.uv.uv = getValue('particle_texture_uv')||[0, 0];
-		tex_comp.uv.uv_size = getValue('particle_texture_uv_size')||[1, 1];
+		tex_comp.uv.uv_size = getValue('particle_texture_uv_size')||[tex_comp.uv.texture_width, tex_comp.uv.texture_height];
 	} else {
 		tex_comp.uv.flipbook = {
 			base_UV: getValue('particle_texture_uv', true),
