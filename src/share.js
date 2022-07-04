@@ -44,6 +44,9 @@ export async function shareParticle(particle, texture) {
         .catch(() => {})
 }
 
+/**
+ * Upon starting Snowstorm, try to load particle data from the url
+ */
 export async function loadFromUrl() {
     const url = new URLSearchParams(window.location.search)
 
