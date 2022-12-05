@@ -61,7 +61,10 @@ class Curve {
 				label: 'Range',
 				info: 'Horizontal range that the input is mapped to',
 				type: 'molang',
-				value: data ? data.range : 'v.particle_lifetime'
+				value: data ? data.range : 'v.particle_lifetime',
+				condition(curve) {
+					return curve.inputs.mode.value !== 'bezier_chain'
+				}
 			})
 		}
 		this.nodes = data.nodes instanceof Array ? data.nodes : [0, 1, 0];
@@ -100,9 +103,15 @@ class Curve {
 		this.updateSVG();
 	}
 	updateName(new_name) {
-		Config.curves[new_name] = this.config;
+		let valid_name = new_name;
+		let i = 2;
+		while (Config.curves[valid_name] && Config.curves[valid_name] !== this.config) {
+			valid_name = new_name + i;
+			i++;
+		}
+		Config.curves[valid_name] = this.config;
 		for (var key in Config.curves) {
-			if (Config.curves[key] != this && !Data.effect.curves.curves.find(curve => curve.inputs.id.value == key)) {
+			if (key !== valid_name && !Data.effect.curves.curves.find(curve => curve.inputs.id.value == key)) {
 				delete Config.curves[key];
 			}
 		}

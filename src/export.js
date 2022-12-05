@@ -57,7 +57,7 @@ function generateFile() {
 		var json_curve = {
 			type: processValue(curve.mode, {type: 'string'}),
 			input: processValue(curve.input, {type: 'molang'}),
-			horizontal_range: processValue(curve.range, {type: 'molang'}),
+			horizontal_range: curve.mode == 'bezier_chain' ? undefined : processValue(curve.range, {type: 'molang'}),
 			nodes: curve.nodes.slice()
 		}
 		if (json_curve.type == 'bezier_chain') {
@@ -219,12 +219,29 @@ function generateFile() {
 
 	//Particle Components
 
+	// Variables
+	if (getValue('particle_update_expression')) {
+		var s = getValue('particle_update_expression').join(';')+';';
+		s = s.replace(/;;+/g, ';')
+		if (s) {
+			comps['minecraft:particle_initialization'] = {
+				per_update_expression: s,
+			}
+		}
+	}
+	if (getValue('particle_render_expression')) {
+		var s = getValue('particle_render_expression').join(';')+';';
+		s = s.replace(/;;+/g, ';')
+		if (s) {
+			if (!comps['minecraft:particle_initialization']) comps['minecraft:particle_initialization'] = {};
+			comps['minecraft:particle_initialization'].per_render_expression = s;
+		}
+	}
+
 	//Lifetime
-	var lifetime_comp = comps['minecraft:particle_lifetime_expression'] = {}
-	if (getValue('particle_lifetime_mode') === 'time') {
-		lifetime_comp.max_lifetime = getValue('particle_lifetime_max_lifetime')
-	} else {
-		lifetime_comp.expiration_expression = getValue('particle_lifetime_expiration_expression')
+	comps['minecraft:particle_lifetime_expression'] = {
+		max_lifetime: getValue('particle_lifetime_max_lifetime'),
+		expiration_expression: getValue('particle_lifetime_expiration_expression')
 	}
 	if (getValue('particle_lifetime_expire_in')) {
 		comps['minecraft:particle_expire_if_in_blocks'] = getValue('particle_lifetime_expire_in')
@@ -309,7 +326,7 @@ function generateFile() {
 	}
 	if (getValue('particle_texture_mode') === 'static') {
 		tex_comp.uv.uv = getValue('particle_texture_uv')||[0, 0];
-		tex_comp.uv.uv_size = getValue('particle_texture_uv_size')||[1, 1];
+		tex_comp.uv.uv_size = getValue('particle_texture_uv_size')||[tex_comp.uv.texture_width, tex_comp.uv.texture_height];
 	} else {
 		tex_comp.uv.flipbook = {
 			base_UV: getValue('particle_texture_uv', true),
@@ -367,9 +384,7 @@ function generateFile() {
 		var color = getValue('particle_color_expression')
 		if (color instanceof Array) {
 			color.forEach((s, i) => {
-				if (typeof s === 'string' && !s.toLowerCase().match(/^math\.clamp/) && !s.match(/return /)) {
-					color[i] = `Math.clamp(${s}, 0, 1)`
-				} else if (typeof s == 'number') {
+				if (typeof s == 'number') {
 					color[i] = MathUtils.clamp(s, 0, 1);
 				}
 			})
