@@ -57,7 +57,7 @@ function generateFile() {
 		var json_curve = {
 			type: processValue(curve.mode, {type: 'string'}),
 			input: processValue(curve.input, {type: 'molang'}),
-			horizontal_range: processValue(curve.range, {type: 'molang'}),
+			horizontal_range: curve.mode == 'bezier_chain' ? undefined : processValue(curve.range, {type: 'molang'}),
 			nodes: curve.nodes.slice()
 		}
 		if (json_curve.type == 'bezier_chain') {
@@ -218,6 +218,25 @@ function generateFile() {
 
 
 	//Particle Components
+
+	// Variables
+	if (getValue('particle_update_expression')) {
+		var s = getValue('particle_update_expression').join(';')+';';
+		s = s.replace(/;;+/g, ';')
+		if (s) {
+			comps['minecraft:particle_initialization'] = {
+				per_update_expression: s,
+			}
+		}
+	}
+	if (getValue('particle_render_expression')) {
+		var s = getValue('particle_render_expression').join(';')+';';
+		s = s.replace(/;;+/g, ';')
+		if (s) {
+			if (!comps['minecraft:particle_initialization']) comps['minecraft:particle_initialization'] = {};
+			comps['minecraft:particle_initialization'].per_render_expression = s;
+		}
+	}
 
 	//Lifetime
 	comps['minecraft:particle_lifetime_expression'] = {

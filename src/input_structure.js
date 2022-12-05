@@ -65,7 +65,7 @@ const Data = {
 					id: 'variables_creation_vars',
 					label: 'Start Variables',
 					info: 'Set up MoLang Variables when the emitter starts',
-					placeholder: 'variable.name = value',
+					placeholder: 'variable.name = value;',
 					type: 'molang',
 					axis_count: -1,
 					onchange: function() {
@@ -84,7 +84,7 @@ const Data = {
 					id: 'variables_tick_vars',
 					label: 'Tick Variables',
 					info: 'MoLang Variables that get processed for every Emitter update',
-					placeholder: 'variable.name = value',
+					placeholder: 'variable.name = value;',
 					type: 'molang',
 					axis_count: -1,
 					onchange: function() {
@@ -98,6 +98,22 @@ const Data = {
 							}
 						})*/
 					}
+				}),
+				particle_update: new Input({
+					id: 'particle_update_expression',
+					label: 'Particle Update',
+					info: 'Run an expression on the emitter for every particle when the emitter updates',
+					placeholder: 'variable.name = value;',
+					type: 'molang',
+					axis_count: -1
+				}),
+				particle_render: new Input({
+					id: 'particle_render_expression',
+					label: 'Particle Render',
+					info: 'Run an expression on the emitter each time a particle is rendered',
+					placeholder: 'variable.name = value;',
+					type: 'molang',
+					axis_count: -1
 				})
 			}
 		},
@@ -289,6 +305,7 @@ const Data = {
 						rotate_y: 'Rotate Y',
 						lookat_xyz: 'Look at XYZ',
 						lookat_y: 'Look at Y',
+						lookat_direction: 'Look at Direction',
 						direction_x: 'Direction X',
 						direction_y: 'Direction Y',
 						direction_z: 'Direction Z',
@@ -307,7 +324,7 @@ const Data = {
 						custom: 'Custom',
 					},
 					condition(group) {
-						return group.inputs.facing_camera_mode.value.substr(0, 9) == 'direction'
+						return group.inputs.facing_camera_mode.value.substr(0, 9) == 'direction' || group.inputs.facing_camera_mode.value == 'lookat_direction'
 					}
 				}),
 				speed_threshold: new Input({
@@ -317,7 +334,7 @@ const Data = {
 					type: 'number',
 					step: 0.01,
 					condition(group) {
-						return group.inputs.facing_camera_mode.value.substr(0, 9) == 'direction'
+						return group.inputs.facing_camera_mode.value.substr(0, 9) == 'direction' || group.inputs.facing_camera_mode.value == 'lookat_direction'
 							&& group.inputs.direction_mode.value == 'derive_from_velocity';
 					}
 				}),
@@ -327,7 +344,7 @@ const Data = {
 					info: 'The facing direction of emitted particles',
 					axis_count: 3,
 					condition(group) {
-						return group.inputs.facing_camera_mode.value.substr(0, 9) == 'direction'
+						return group.inputs.facing_camera_mode.value.substr(0, 9) == 'direction' || group.inputs.facing_camera_mode.value == 'lookat_direction'
 							&& group.inputs.direction_mode.value == 'custom';
 					}
 				})
