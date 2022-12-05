@@ -8,6 +8,7 @@
                 </li>
             </ul>
         </li>
+		
 		<template v-if="isVSCExtension">
         	<li class="mode_selector" @click="openCodeViewer(true)" title="Open Code View to Side"><i class="unicode_icon split">{{'\u2385'}}</i></li>
         	<li class="mode_selector" @click="openCodeViewer(false)" title="Open as Code View">Switch to Code</li>
@@ -16,6 +17,10 @@
         	<li class="mode_selector code" :class="{selected: selected_tab == 'code'}" @click="$emit('changetab', 'code')">Code</li>
         	<li class="mode_selector preview" :class="{selected: selected_tab == 'preview'}" @click="$emit('changetab', 'preview')">Preview</li>
 		</template>
+
+		<div v-if="canShare" @click="onShareParticle" class="mode_selector">
+			<Share style="font-size: 24px;" />
+		</div>
     </ul>
 </template>
 
@@ -25,6 +30,10 @@ import {importFile,	loadPreset,	startNewProject} from '../import'
 import {View} from './Preview'
 
 import vscode from '../vscode_extension'
+import Share from './Icons/Share.vue'
+import { shareParticle } from '../share'
+import { generateFile } from '../export'
+import Data from '../input_structure'
 const isVSCExtension = !!vscode;
 
 function openLink(link) {
@@ -91,6 +100,7 @@ if (!isVSCExtension) {
 
 export default {
     name: 'menu-bar',
+	components: { Share },
     props: {
         selected_tab: String,
         portrait_view: Boolean
@@ -109,11 +119,25 @@ export default {
 		},
 		getVM() {
 			return this;
+		},
+		onShareParticle() {
+			let rawImg = null
+
+			const imageInput = Data.particle.texture.inputs.image
+			const dataUrl = imageInput.image.data
+			if(dataUrl) {
+				const base64 = dataUrl.split(',')[1]
+				rawImg = Uint8Array.from(atob(base64), c => c.charCodeAt(0))
+			}
+			
+
+			shareParticle(generateFile(), rawImg)
 		}
 	},
 	data() {return {
 		Menu,
-		isVSCExtension
+		isVSCExtension,
+		canShare: 'share' in navigator,
 	}}
 }
 </script>

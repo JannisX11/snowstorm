@@ -1,4 +1,5 @@
 import vscode from './vscode_extension'
+import {loadFromUrl} from './share'
 
 if (!vscode) {
     window.onbeforeunload = function() {
@@ -15,4 +16,6 @@ if (!vscode) {
     if ('serviceWorker' in navigator) {
         registerSW();
     }
+
+    loadFromUrl()
 }

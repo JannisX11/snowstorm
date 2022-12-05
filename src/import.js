@@ -51,8 +51,8 @@ function updateConfig(data) {
 	Config.setFromJSON(data);
 	updateInputsFromConfig();
 }
-function loadFile(data) {
-	if (data && data.particle_effect && startNewProject()) {
+function loadFile(data, confirmNewProject=true) {
+	if (data && data.particle_effect && (!confirmNewProject || startNewProject())) {
 		updateConfig(data);
 		Emitter.stop(true).playLoop();
 		registerEdit('load file')
