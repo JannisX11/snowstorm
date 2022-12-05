@@ -39,6 +39,10 @@
 					"uv_size": [8, 8]
 				}
 			},
+			"minecraft:particle_motion_collision": {
+				"collision_radius": 0.1,
+				"expire_on_contact": true
+			},
 			"minecraft:particle_appearance_tinting": {
 				"color": [0.29412, 0.63922, 1, 1]
 			}

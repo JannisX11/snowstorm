@@ -18,7 +18,7 @@
         	<li class="mode_selector preview" :class="{selected: selected_tab == 'preview'}" @click="$emit('changetab', 'preview')">Preview</li>
 		</template>
 
-		<div v-if="canShare" @click="onShareParticle" class="mode_selector">
+		<div v-if="canShare" @click="onShareParticle" class="mode_selector" title="Share">
 			<Share style="font-size: 24px;" />
 		</div>
     </ul>
