@@ -308,7 +308,7 @@ function generateFile() {
 		facing_camera_mode: getValue('particle_appearance_facing_camera_mode'),
 		
 	}
-	if (getValue('particle_appearance_facing_camera_mode').substr(0, 9) == 'direction' &&
+	if ((getValue('particle_appearance_facing_camera_mode').startsWith('direction') || getValue('particle_appearance_facing_camera_mode').endsWith('direction')) &&
 		(getValue('particle_appearance_speed_threshold') != 0.01 || getValue('particle_appearance_direction_mode') != 'derive_from_velocity')
 	) {
 		tex_comp.direction = {
