@@ -303,12 +303,13 @@ function generateFile() {
 	comps['minecraft:particle_kill_plane'] = getValue('particle_lifetime_kill_plane');
 	
 	//Texture
+	let facing_camera_mode = getValue('particle_appearance_facing_camera_mode');
 	var tex_comp = comps['minecraft:particle_appearance_billboard'] = {
 		size: getValue('particle_appearance_size'),
-		facing_camera_mode: getValue('particle_appearance_facing_camera_mode'),
+		facing_camera_mode: facing_camera_mode,
 		
 	}
-	if (getValue('particle_appearance_facing_camera_mode').substr(0, 9) == 'direction' &&
+	if ((facing_camera_mode.substring(0, 9) == 'direction' || facing_camera_mode == 'lookat_direction') &&
 		(getValue('particle_appearance_speed_threshold') != 0.01 || getValue('particle_appearance_direction_mode') != 'derive_from_velocity')
 	) {
 		tex_comp.direction = {
