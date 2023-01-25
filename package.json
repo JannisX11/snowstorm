@@ -37,7 +37,7 @@
 	"dependencies": {
 		"bootstrap": "^4.5.3",
 		"fflate": "^0.7.3",
-		"molangjs": "^1.5.2",
+		"molangjs": "^1.6.0",
 		"prismjs": "^1.28.0",
 		"root": "github:JannisX11/vue-prism-editor",
 		"three": "^0.129.0",

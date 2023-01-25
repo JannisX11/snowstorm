@@ -4,9 +4,9 @@ export default {
 		'function-name': /\b(?!\d)math\.\w+(?=[\t ]*\()/i,
 		'selector': /\b(?!\d)(query|variable|temp|context|math|q|v|t|c)\.\w+/i,
 		'boolean': /\b(?:true|false)\b/i,
-		'number': /(?:\b\d+(?:\.\d+)?(?:[ed][+-]\d+)?|&h[a-f\d]+)\b[%&!#]?/i,
+		'number': /(?:\b\d+(?:\.\d+f?)?(?:[ed][+-]\d+)?|&h[a-f\d]+)\b/i,
 		'operator': /&&|\|\||[-+*/!<>]=?|[:?=]/i,
-		'keyword': /\b(Return)\b/i,
+		'keyword': /\b(return|loop|for_each|break|continue)\b/i,
 		'punctuation': /[.,;()[\]{}]/,
 	},
 	generic: {
