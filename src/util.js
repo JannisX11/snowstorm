@@ -54,12 +54,15 @@ Math.isPowerOfTwo = function(x) {
 	return (x > 1) && ((x & (x - 1)) == 0);
 }
 
-Array.prototype.safePush = function(item) {
-	if (!this.includes(item)) {
-		this.push(item);
-		return true;
+Array.prototype.safePush = function(...items) {
+	let included = false;
+	for (var item of items) {
+		if (!this.includes(item)) {
+			this.push(item);
+			included = true;
+		}
 	}
-	return false;
+	return included;
 }
 Array.prototype.equals = function (array) {
 	if (!array)

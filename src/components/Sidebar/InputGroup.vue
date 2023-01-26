@@ -20,14 +20,15 @@
 				<ul class="input_list">
 					<li v-for="(item, index) in input.value" :key="index">
 						<!--Text-->
-						<div class="prism_editor_outer_wrapper" v-if="input.type == 'text' || input.type == 'molang'">
-							<prism-editor :highlight="input.type == 'molang' ? highlightMolang : highlightGeneric" language="" :line-numbers="false"
-								v-model="input.value[index]"
-								v-bind:placeholder="input.placeholder"
-								v-bind:index="index"
-								v-on:input="input.emitInput($event)"
-								v-on:focus="input.focus(index, $event)" />
-						</div>
+						<prism-editor :highlight="input.type == 'molang' ? highlightMolang : highlightGeneric" language="" :line-numbers="false"
+							v-if="input.type == 'text' || input.type == 'molang'"
+							v-model="input.value[index]"
+							v-bind:placeholder="input.placeholder"
+							v-bind:index="index"
+							:autocomplete="input.type == 'molang' ? autocomplete : null"
+							v-on:input="input.emitInput($event)"
+							v-on:focus="input.focus(index, $event)"
+						/>
 						<!--Number-->
 						<input
 							v-if="input.type == 'number'" type="number"
@@ -42,14 +43,15 @@
 
 				<template v-if="input.axis_count == 1">
 					<!--Text-->
-					<div class="prism_editor_outer_wrapper" v-if="input.type == 'text' || input.type == 'molang'">
-						<prism-editor :highlight="input.type == 'molang' ? highlightMolang : highlightGeneric" language="" :line-numbers="false"
-							v-model="input.value"
-							:value="input.value.toString()"
-							v-bind:placeholder="input.placeholder"
-							v-on:input="input.emitInput($event)"
-							v-on:focus="input.focus(-1, $event)" />
-					</div>
+					<prism-editor :highlight="input.type == 'molang' ? highlightMolang : highlightGeneric" language="" :line-numbers="false"
+						v-if="input.type == 'text' || input.type == 'molang'"
+						v-model="input.value"
+						:value="input.value.toString()"
+						v-bind:placeholder="input.placeholder"
+						:autocomplete="input.type == 'molang' ? autocomplete : null"
+						v-on:input="input.emitInput($event)"
+						v-on:focus="input.focus(-1, $event)"
+					/>
 					<!--Number-->
 					<input
 						v-if="input.type == 'number'" type="number"
@@ -65,8 +67,9 @@
 							<prism-editor :highlight="input.type == 'molang' ? highlightMolang : highlightGeneric"  :line-numbers="false"
 								v-model="input.value[i-1]"
 								:value="input.value[i-1].toString()"
-								v-bind:index="i-1"
-								v-bind:placeholder="input.placeholder"
+								:index="i-1"
+								:placeholder="input.placeholder"
+								:autocomplete="input.type == 'molang' ? autocomplete : null"
 								v-on:input="input.emitInput($event)"
 								v-on:focus="input.focus(i-1, $event)" />
 						</div>
@@ -78,7 +81,7 @@
 							:key="i"
 							v-model="input.value[i-1]"
 							:step="input.step" :min="input.min" :max="input.max"
-							v-bind:index="i-1"
+							:index="i-1"
 							v-on:input="input.change($event)">
 					</template>
 				</template>
@@ -124,7 +127,7 @@ import VueColor from 'vue-color'
 import Gradient from './Gradient';
 
 
-
+import getAutocompleteData from './../../molang_autocomplete'
 import 'root/packages/vue-prism-editor/dist/prismeditor.min.css';
 import Prism from 'prismjs/components/prism-core';
 import {PrismEditor} from "root/packages/vue-prism-editor";
@@ -162,6 +165,9 @@ export default {
 		},
 		highlightGeneric(code) {
 			return Prism.highlight(code, Languages.generic)
+		},
+		autocomplete(text, position) {
+			return getAutocompleteData(text, position, 'input')
 		},
 		toggleExpand(input) {
 			if (input.expandable) {
@@ -215,7 +221,7 @@ export default {
 	.input_list li {
 		margin: 2px 0;
 	}
-	ul.input_list input, ul.input_list .prism_editor_outer_wrapper {
+	ul.input_list input, ul.input_list .prism-editor-component {
 		width: calc(100% - 80px);
 		margin-left: 52px;
 		float: left;

@@ -46,15 +46,17 @@ if (!vscode) {
 	localStorage.setItem('snowstorm_startup_count', startup_count)
 }
 
+let portrait_view = document.body.clientWidth > 100 && document.body.clientWidth < 720
+
 function getInitialSidebarWidth() {
-	let {type, angle} = window.screen.orientation || {};
 	let body_width = document.body.clientWidth;
 	// Fix for VSCode
 	if (body_width < 100) body_width = 1280;
-	if (!type || type.includes('landscape')) {
-		return Math.clamp(body_width/2, 160, 440);
-	} else {
+
+	if (portrait_view) {
 		return body_width;
+	} else {
+		return Math.clamp(body_width/2, 160, 440);
 	}
 }
 
@@ -67,7 +69,7 @@ export default {
 		dialog: null,
 		showVSCodeInfoBox: (!vscode && [1, 3, 7, 11, 24].includes(startup_count)),
 		sidebar_width: getInitialSidebarWidth(),
-		portrait_view: window.screen.orientation && window.screen.orientation.type.includes('portrait'),
+		portrait_view,
 	}},
 	methods: {
 		setTab(tab) {

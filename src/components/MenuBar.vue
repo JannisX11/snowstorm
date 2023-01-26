@@ -1,6 +1,6 @@
 <template>
     <ul id="menu_bar">
-        <li v-for="menu in Menu" :key="menu.id">
+        <li v-for="menu in Menu" :key="menu.id" onclick="">
             <a>{{ menu.label }}</a>
             <ul class="menu_dropdown">
                 <li v-for="entry in menu.children" :key="entry.id" v-on:click="entry.click(getVM(), $event)">

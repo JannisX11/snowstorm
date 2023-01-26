@@ -1,4 +1,4 @@
-const cacheName = 'snowstorm_2.2.3';
+const cacheName = 'snowstorm_2.6.0';
 const staticAssets = [
 	'./index.html',
 	'./dist/app.js',

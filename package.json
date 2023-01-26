@@ -1,6 +1,6 @@
 {
 	"name": "snowstorm",
-	"version": "2.5.0",
+	"version": "2.6.0",
 	"description": "Minecraft Bedrock Edition particle editor",
 	"author": {
 		"name": "JannisX11",
@@ -37,13 +37,13 @@
 	"dependencies": {
 		"bootstrap": "^4.5.3",
 		"fflate": "^0.7.3",
-		"molangjs": "^1.6.0",
+		"molangjs": "^1.6.1",
 		"prismjs": "^1.28.0",
 		"root": "github:JannisX11/vue-prism-editor",
 		"three": "^0.129.0",
 		"vue": "^2.6.12",
 		"vue-color": "^2.8.0",
 		"vue-prism-component": "^1.2.0",
-		"wintersky": "^1.2.0"
+		"wintersky": "^1.2.1"
 	}
 }

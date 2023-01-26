@@ -127,7 +127,7 @@ const Data = {
 	emitter: {
 		label: 'Emitter',
 		rate: {
-			label: 'Rate',
+			label: 'Spawn Amount',
 			_folded: false,
 			inputs: {
 				mode: new Input({
@@ -215,7 +215,7 @@ const Data = {
 			}
 		},
 		shape: {
-			label: 'Shape',
+			label: 'Spawn Shape',
 			_folded: true,
 			inputs: {
 				mode: new Input({
@@ -290,8 +290,9 @@ const Data = {
 					info: 'Material to use for the particles',
 					label: 'Material',
 					options: {
-						particles_alpha: 'Alpha',
+						particles_alpha: 'Alpha Test',
 						particles_blend: 'Blend',
+						particles_add: 'Additive (1.19.60+)',
 						particles_opaque: 'Opaque',
 					},
 				}),

@@ -60,6 +60,7 @@
 		margin: 0;
         padding: 0;
         box-sizing: border-box;
+		user-select: none;
 	}
 	input, select {
 		font-weight: inherit;
@@ -185,10 +186,9 @@
 .prism-editor-wrapper .prism-editor__editor, .prism-editor-wrapper .prism-editor__textarea {
 	white-space: pre;
 }
-.prism_editor_outer_wrapper {
+.prism-editor-component {
 	border: 1px solid var(--color-border);
 	width: 100%;
-	overflow-x: auto;
 }
 .prism-editor-wrapper textarea {
 	outline: none;
@@ -198,6 +198,24 @@
 }
 .prism-editor-wrapper .prism-editor-wrapper {
 	overflow-y: hidden;
+}
+.prism-editor__autocomplete {
+	background-color: var(--color-interface);
+	border: 1px solid var(--color-border);
+	max-height: 220px;
+	padding-bottom: 10px;
+}
+.prism-editor__autocomplete > li {
+	padding: 3px 8px;
+	font-family: var(--font-code);
+}
+.prism-editor__autocomplete > li:hover {
+	color: var(--color-highlight);
+	background-color: var(--color-bar);
+}
+.prism-editor__autocomplete > li.selected {
+	color: var(--color-highlight);
+	background-color: var(--color-bar);
 }
 
 .prism-editor-wrapper pre .token.punctuation {

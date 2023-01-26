@@ -1,12 +1,20 @@
 <template>
 	<div id="expression_bar">
-		<prism-editor v-model="code" :value="code" @input="updateInput($event, true)" :highlight="highlighter" :line-numbers="false" ref="input" />
+		<prism-editor v-model="code"
+			:value="code"
+			@input="updateInput($event, true)"
+			:autocomplete="autocomplete"
+			:highlight="highlighter"
+			:line-numbers="false"
+			ref="input"
+		/>
 	</div>
 </template>
 
 <script>
 import App from "./App";
 
+import getAutocompleteData from './../molang_autocomplete'
 import 'root/packages/vue-prism-editor/dist/prismeditor.min.css';
 import Prism from 'prismjs/components/prism-core';
 import {PrismEditor} from "root/packages/vue-prism-editor";
@@ -30,6 +38,9 @@ export default {
 		language: 'generic'
 	}},
 	methods: {
+		autocomplete(text, position) {
+			return getAutocompleteData(text, position, 'input')
+		},
 		highlighter() {
 			return Prism.highlight(this.code, Languages[this.language])
 		},
@@ -90,6 +101,5 @@ export {ExpandedInput}
 		font-family: var(--font-code);
 		outline: none;
 		padding: 5px 8px;
-		overflow-x: auto;
 	}
 </style>>
