@@ -65,6 +65,7 @@ export default {
 		max-height: calc(100% - 60px);
 		border: none;
 		border-radius: 0;
+		cursor: text;
 	}
 	main#code .menu {
 		color: #ccc;
@@ -87,10 +88,14 @@ export default {
 	}
 	#code pre code {
 		text-shadow: none;
+		user-select: text;
 	}
 </style>
 
 <style>
+	.token {
+		user-select: text;
+	}
 	.token.operator, .token.entity, .token.url {
 		background: transparent;
 	}
