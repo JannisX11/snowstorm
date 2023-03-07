@@ -1,11 +1,13 @@
 const vscode = require("vscode");
 
+// extension.js
 function activate(context) {
   context.subscriptions.push(new SnowstormEditorProvider(context).getRegistration());
 }
 
 exports.activate = activate;
 
+// snowstormEditor.js (edited to not use path or fs modules)
 class SnowstormEditorProvider {
   constructor(context) {
     this.context = context;
@@ -102,7 +104,7 @@ class SnowstormEditorProvider {
 
   getHtmlForWebview(webview) {
     const scriptUri = webview.asWebviewUri(
-      vscode.Uri.file(vscode.Uri.joinPath(this.context.extensionPath, "snowstorm", "app.js"))
+      vscode.Uri.file(vscode.Uri.joinPath(this.context.extensionUri, "snowstorm", "app.js"))
     );
 
     return `<!DOCTYPE html>
