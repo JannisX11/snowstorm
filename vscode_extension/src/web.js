@@ -104,7 +104,7 @@ class SnowstormEditorProvider {
 
   getHtmlForWebview(webview) {
     const scriptUri = webview.asWebviewUri(
-      vscode.Uri.file(vscode.Uri.joinPath(this.context.extensionUri, "snowstorm", "app.js"))
+      vscode.Uri.joinPath(this.context.extensionUri, "snowstorm", "app.js")
     );
 
     return `<!DOCTYPE html>
