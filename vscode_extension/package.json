@@ -3,7 +3,7 @@
 	"displayName": "Snowstorm",
 	"description": "Minecraft Bedrock Edition particle editor",
 	"version": "2.6.1",
-	"enableProposedApi": false,
+	"enabledApiProposals": [],
 	"publisher": "JannisX11",
 	"engines": {
 		"vscode": "^1.44.0"
@@ -21,6 +21,7 @@
 	},
 	"license": "GPL-3.0-or-later",
 	"main": "./src/extension.js",
+	"browser": "./src/web.js",
 	"contributes": {
 		"customEditors": [
 			{
