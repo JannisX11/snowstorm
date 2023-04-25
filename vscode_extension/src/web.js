@@ -77,7 +77,7 @@ class SnowstormEditorProvider {
           let particle_index = path_arr.indexOf("particles");
           path_arr.splice(particle_index);
           let filePath = vscode.Uri.joinPath(
-            path_arr.join("/"),
+            vscode.Uri.parse(path_arr.join("/")),
             e.path.replace(/\.png$/, "") + ".png"
           );
 
