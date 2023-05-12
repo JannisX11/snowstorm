@@ -21,7 +21,7 @@
 	},
 	"license": "GPL-3.0-or-later",
 	"main": "./src/extension.js",
-	"browser": "./src/web.js",
+	"browser": "./src/extension.js",
 	"contributes": {
 		"customEditors": [
 			{
