@@ -292,7 +292,7 @@ const Data = {
 					options: {
 						particles_alpha: 'Alpha Test',
 						particles_blend: 'Blend',
-						particles_add: 'Additive (1.19.60+)',
+						particles_add: 'Additive',
 						particles_opaque: 'Opaque',
 					},
 				}),
