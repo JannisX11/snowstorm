@@ -48,7 +48,7 @@
 						v-model="input.value"
 						:value="input.value.toString()"
 						v-bind:placeholder="input.placeholder"
-						:autocomplete="input.type == 'molang' ? autocomplete : null"
+						:autocomplete="input.type == 'molang' ? autocomplete : (input.id == 'particle_texture_path' ? autocompletePath : null)"
 						v-on:input="input.emitInput($event)"
 						v-on:focus="input.focus(-1, $event)"
 					/>
@@ -128,6 +128,7 @@ import Gradient from './Gradient';
 
 
 import getAutocompleteData from './../../molang_autocomplete'
+import getPathAutocompleteData from './../../path_autocomplete'
 import 'root/packages/vue-prism-editor/dist/prismeditor.min.css';
 import Prism from 'prismjs/components/prism-core';
 import {PrismEditor} from "root/packages/vue-prism-editor";
@@ -168,6 +169,9 @@ export default {
 		},
 		autocomplete(text, position) {
 			return getAutocompleteData(text, position, 'input')
+		},
+		autocompletePath(text, position) {
+			return getPathAutocompleteData(text, position, 'input')
 		},
 		toggleExpand(input) {
 			if (input.expandable) {

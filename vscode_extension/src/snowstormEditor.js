@@ -91,6 +91,23 @@ module.exports.SnowstormEditorProvider = class SnowstormEditorProvider {
 						});
 					}
 					break;
+				case 'texture_autocomplete':
+					let json_path_arr = document.fileName.split(path.sep);
+					let json_particle_index = json_path_arr.indexOf('particles');
+					json_path_arr.splice(json_particle_index);
+					let directory_path = path.join(json_path_arr.join(path.sep), e.path);
+					console.log(directory_path)
+
+					let list = [];
+					try {
+						list = fs.readdirSync(directory_path);
+					} catch (err) {}
+					webviewPanel.webview.postMessage({
+						type: 'texture_autocomplete',
+						list,
+						fromExtension: true
+					});
+					break;
 			}
 		});
 		
