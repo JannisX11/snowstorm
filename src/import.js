@@ -35,12 +35,12 @@ function updateInputsFromConfig() {
 			input.update(Data)
 		}
 	})
-	Data.effect.curves.curves.splice(0, Infinity);
+	Data.variables.curves.curves.splice(0, Infinity);
 	for (var id in Config.curves) {
 		let data = Config.curves[id];
 		let curve = new Curve(data);
 		curve.inputs.id.value = id;
-		Data.effect.curves.curves.push(curve);
+		Data.variables.curves.curves.push(curve);
 		Config.curves[id] = curve.config;
 		curve.updateMinMax();
 	}

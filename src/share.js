@@ -63,7 +63,7 @@ export async function loadFromUrl() {
         const decompressed = unzlibSync(compressed)
         const texture = decompressed
 
-        const imageInput = Data.particle.texture.inputs.image
+        const imageInput = Data.texture.texture.inputs.image
         imageInput.change(texture)
     }
 }

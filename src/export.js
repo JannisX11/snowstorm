@@ -377,7 +377,7 @@ function generateFile() {
 		comps['minecraft:particle_appearance_tinting'] = {
 			color: {
 				interpolant: getValue('particle_color_interpolant'),
-				gradient: Data.particle.color.inputs.gradient.export(range||1)
+				gradient: Data.appearance.color.inputs.gradient.export(range||1)
 			}
 		}
 

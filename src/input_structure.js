@@ -4,8 +4,14 @@ import {Emitter, updateMaterial} from './emitter'
 import vscode from './vscode_extension';
 
 const Data = {
+	setup: {
+		label: 'Quick Setup',
+		icon: 'wand',
+	},
+
 	effect: {
 		label: 'Effect',
+		icon: 'file',
 		meta: {
 			label: 'Meta',
 			_folded: false,
@@ -25,7 +31,7 @@ const Data = {
 		},
 		space: {
 			label: 'Space',
-			_folded: true,
+			_folded: false,
 			inputs: {
 				local_position: new Input({
 					id: 'space_local_position',
@@ -57,75 +63,10 @@ const Data = {
 				})
 			}
 		},
-		variables: {
-			label: 'Variables',
-			_folded: true,
-			inputs: {
-				creation_vars: new Input({
-					id: 'variables_creation_vars',
-					label: 'Start Variables',
-					info: 'Set up MoLang Variables when the emitter starts',
-					placeholder: 'variable.name = value;',
-					type: 'molang',
-					axis_count: -1,
-					onchange: function() {
-						/*
-						Emitter.creation_variables = {};
-						this.value.forEach((s, i) => {
-							var p = s.toLowerCase().replace(/\s/g, '').split('=')
-							if (p.length > 1) {
-								let key = p.shift();
-								Emitter.creation_variables[key] = p.join('=');
-							}
-						})*/
-					}
-				}),
-				tick_vars: new Input({
-					id: 'variables_tick_vars',
-					label: 'Tick Variables',
-					info: 'MoLang Variables that get processed for every Emitter update',
-					placeholder: 'variable.name = value;',
-					type: 'molang',
-					axis_count: -1,
-					onchange: function() {
-						/*
-						Emitter.tick_variables = {};
-						this.value.forEach((s, i) => {
-							var p = s.toLowerCase().replace(/\s/g, '').split('=')
-							if (p.length > 1) {
-								let key = p.shift();
-								Emitter.tick_variables[key] = p.join('=');
-							}
-						})*/
-					}
-				}),
-				particle_update: new Input({
-					id: 'particle_update_expression',
-					label: 'Particle Update',
-					info: 'Run an expression on the emitter for every particle when the emitter updates',
-					placeholder: 'variable.name = value;',
-					type: 'molang',
-					axis_count: -1
-				}),
-				particle_render: new Input({
-					id: 'particle_render_expression',
-					label: 'Particle Render',
-					info: 'Run an expression on the emitter each time a particle is rendered',
-					placeholder: 'variable.name = value;',
-					type: 'molang',
-					axis_count: -1
-				})
-			}
-		},
-		curves: {
-			label: 'Curves',
-			_folded: true,
-			type: 'curves',
-			curves: []
-		}
 	},
 	emitter: {
 		label: 'Emitter',
+		icon: 'symbol-misc',
 		rate: {
 			label: 'Spawn Amount',
 			_folded: false,
@@ -168,7 +109,7 @@ const Data = {
 		},
 		lifetime: {
 			label: 'Emitter Lifetime',
-			_folded: true,
+			_folded: false,
 			inputs: {
 				mode: new Input({
 					id: 'emitter_lifetime_mode',
@@ -216,7 +157,7 @@ const Data = {
 		},
 		shape: {
 			label: 'Spawn Shape',
-			_folded: true,
+			_folded: false,
 			inputs: {
 				mode: new Input({
 					id: 'emitter_shape_mode',
@@ -271,8 +212,9 @@ const Data = {
 			}
 		},
 	},
-	particle: {
-		label: 'Particle',
+	appearance: {
+		label: 'Appearance',
+		icon: 'sparkle',
 		appearance: {
 			label: 'Appearance',
 			_folded: false,
@@ -348,18 +290,184 @@ const Data = {
 						return group.inputs.facing_camera_mode.value.substr(0, 9) == 'direction' || group.inputs.facing_camera_mode.value == 'lookat_direction'
 							&& group.inputs.direction_mode.value == 'custom';
 					}
-				})
+				}),
+				light: new Input({
+					id: 'particle_color_light',
+					label: 'Environment Lighting',
+					type: 'checkbox',
+				}),
 			}
 		},
+		color: {
+			label: 'Color',
+			_folded: false,
+			inputs: {
+				mode: new Input({
+					id: 'particle_color_mode',
+					type: 'select',
+					label: 'Color Mode',
+					mode_groups: ['appearance', 'color'],
+					options: {
+						static: 'Static',
+						gradient: 'Gradient',
+						expression: 'Expression',
+					},
+					onchange() {
+						if (Data.appearance.color.inputs.mode.value == 'gradient') {
+							if (Data.appearance.color.inputs.range.value == 0) {
+								Data.appearance.color.inputs.range.value = 1;
+							}
+							if (!Data.appearance.color.inputs.interpolant.value) {
+								Data.appearance.color.inputs.interpolant.value = 'v.particle_age / v.particle_lifetime';
+							}
+						}
+					}
+				}),
+				picker: new Input({
+					id: 'particle_color_static',
+					label: 'Color',
+					type: 'color',
+					enabled_modes: ['static'],
+					info: 'Set a static color for all emitted particles. Transparency is supported when the material is "Blend".'
+				}),
+				interpolant: new Input({
+					id: 'particle_color_interpolant',
+					label: 'Interpolant',
+					info: 'Color Gradient Interpolant. Hint: use a curve here!',
+					enabled_modes: ['gradient']
+				}),
+				range: new Input({
+					id: 'particle_color_range',
+					label: 'Range',
+					info: 'Color Gradient Range',
+					type: 'number',
+					value: 1,
+					enabled_modes: ['gradient']
+				}),
+				gradient: new Gradient({
+					id: 'particle_color_gradient',
+					label: 'Gradient',
+					info: 'Gradient',
+					type: 'gradient',
+					enabled_modes: ['gradient']
+				}),
+				expression: new Input({
+					id: 'particle_color_expression',
+					label: 'Color',
+					info: 'Set the color per particle using MoLang expressions in RGBA channels between 0 and 1. Alpha channel display is only supported with "Blend" material.',
+					axis_count: 4,
+					enabled_modes: ['expression']
+				}),
+			}
+		},
+	},
+	texture: {
+		label: 'Texture & UV',
+		icon: 'paintcan',
+		texture: {
+			label: 'Texture',
+			_folded: false,
+			inputs: {
+				path: new Input({
+					id: 'particle_texture_path',
+					type: 'text',
+					info: 'Path to the texture, starting from the texture pack. Example: textures/particle/snowflake',
+					placeholder: 'textures/particle/particles',
+					label: 'Texture',
+					updatePreview: function() {
+						updateMaterial()
+					}
+				}),
+				image: new Input({
+					id: 'particle_texture_image',
+					type: 'image',
+					allow_upload: !vscode,
+					updatePreview: function(src) {
+						updateMaterial()
+					}
+				}),
+				mode: new Input({
+					id: 'particle_texture_mode',
+					type: 'select',
+					label: 'UV Mode',
+					mode_groups: ['texture', 'texture'],
+					options: {
+						static: 'Static',
+						animated: 'Animated',
+					},
+				}),
+				size: new Input({
+					id: 'particle_texture_size',
+					label: 'Texture Size',
+					info: 'Resolution of the texture, used for UV mapping',
+					type: 'number',
+					axis_count: 2,
+					required: true,
+					value: [16, 16]
+				}),
+				uv: new Input({
+					id: 'particle_texture_uv',
+					label: 'UV Start',
+					info: 'UV start coordinates',
+					axis_count: 2,
+					required: true,
+					value: [0, 0]
+				}),
+				uv_size: new Input({
+					id: 'particle_texture_uv_size',
+					label: 'UV Size',
+					info: 'UV size coordinates',
+					axis_count: 2,
+					value: [16, 16]
+				}),
+				uv_step: new Input({
+					id: 'particle_texture_uv_step',
+					label: 'UV Step',
+					info: 'UV Offset per frame',
+					axis_count: 2,
+					enabled_modes: ['animated']
+				}),
+				frames_per_second: new Input({
+					id: 'particle_texture_frames_per_second',
+					label: 'FPS',
+					info: 'Animation frames per second',
+					type: 'number',
+					min: 0,
+					enabled_modes: ['animated']
+				}),
+				max_frame: new Input({
+					id: 'particle_texture_max_frame',
+					label: 'Max Frame',
+					info: 'Maximum amount of frames to draw from the flipbook',
+					enabled_modes: ['animated']
+				}),
+				stretch_to_lifetime: new Input({
+					id: 'particle_texture_stretch_to_lifetime',
+					label: 'Stretch To Lifetime',
+					type: 'checkbox',
+					enabled_modes: ['animated']
+				}),
+				loop: new Input({
+					id: 'particle_texture_loop',
+					label: 'Loop',
+					type: 'checkbox',
+					enabled_modes: ['animated']
+				}),
+			}
+		},
+	},
+	motion: {
+		label: 'Motion',
+		icon: 'move',
 		motion: {
 			label: 'Motion',
-			_folded: true,
+			_folded: false,
 			inputs: {
 				mode: new Input({
 					id: 'particle_motion_mode',
 					type: 'select',
 					label: 'Mode',
-					mode_groups: ['particle', 'motion'],
+					mode_groups: ['motion', 'motion'],
 					options: {
 						dynamic: 'Dynamic',
 						parametric: 'Parametric',
@@ -427,13 +535,13 @@ const Data = {
 		},
 		rotation: {
 			label: 'Rotation',
-			_folded: true,
+			_folded: false,
 			inputs: {
 				mode: new Input({
 					id: 'particle_rotation_mode',
 					type: 'select',
 					label: 'Mode',
-					mode_groups: ['particle', 'rotation'],
+					mode_groups: ['motion', 'rotation'],
 					options: {
 						dynamic: 'Dynamic',
 						parametric: 'Parametric',
@@ -471,208 +579,9 @@ const Data = {
 				})
 			}
 		},
-		lifetime: {
-			label: 'Lifetime',
-			_folded: true,
-			inputs: {
-				max_lifetime: new Input({
-					id: 'particle_lifetime_max_lifetime',
-					label: 'Max Age',
-					info: 'Maximum age of the particle in seconds',
-					value: 1
-				}),
-				expiration_expression: new Input({
-					id: 'particle_lifetime_expiration_expression',
-					label: 'Kill Expression',
-					info: 'This expression makes the particle expire when true (non-zero)'
-				}),
-				kill_plane: new Input({
-					id: 'particle_lifetime_kill_plane',
-					label: 'Kill Plane',
-					type: 'number',
-					step: 0.1,
-					info: 'Particles that cross this plane expire. The plane is relative to the emitter, but oriented in world space. The four parameters are the usual 4 elements of a plane equation.',
-					axis_count: 4
-				}),
-				expire_in: new Input({
-					id: 'particle_lifetime_expire_in',
-					label: 'Kill in Blocks',
-					info: 'List of blocks to that let the particle expire on contact. Block IDs have a namespace and are separated by a space character.',
-					placeholder: 'minecraft:stone',
-					axis_count: -1,
-					type: 'text'
-				}),
-				expire_outside: new Input({
-					id: 'particle_lifetime_expire_outside',
-					label: 'Only in Blocks',
-					info: 'List of blocks outside of which the particle expires. Block IDs have a namespace and are separated by a space character.',
-					placeholder: 'minecraft:air',
-					axis_count: -1,
-					type: 'text'
-				}),
-			}
-		},
-		texture: {
-			label: 'Texture',
-			_folded: true,
-			inputs: {
-				path: new Input({
-					id: 'particle_texture_path',
-					type: 'text',
-					info: 'Path to the texture, starting from the texture pack. Example: textures/particle/snowflake',
-					placeholder: 'textures/particle/particles',
-					label: 'Texture',
-					updatePreview: function() {
-						updateMaterial()
-					}
-				}),
-				image: new Input({
-					id: 'particle_texture_image',
-					type: 'image',
-					allow_upload: !vscode,
-					updatePreview: function(src) {
-						updateMaterial()
-					}
-				}),
-				mode: new Input({
-					id: 'particle_texture_mode',
-					type: 'select',
-					label: 'UV Mode',
-					mode_groups: ['particle', 'texture'],
-					options: {
-						static: 'Static',
-						animated: 'Animated',
-					},
-				}),
-				size: new Input({
-					id: 'particle_texture_size',
-					label: 'Texture Size',
-					info: 'Resolution of the texture, used for UV mapping',
-					type: 'number',
-					axis_count: 2,
-					required: true,
-					value: [16, 16]
-				}),
-				uv: new Input({
-					id: 'particle_texture_uv',
-					label: 'UV Start',
-					info: 'UV start coordinates',
-					axis_count: 2,
-					required: true,
-					value: [0, 0]
-				}),
-				uv_size: new Input({
-					id: 'particle_texture_uv_size',
-					label: 'UV Size',
-					info: 'UV size coordinates',
-					axis_count: 2,
-					value: [16, 16]
-				}),
-				uv_step: new Input({
-					id: 'particle_texture_uv_step',
-					label: 'UV Step',
-					info: 'UV Offset per frame',
-					axis_count: 2,
-					enabled_modes: ['animated']
-				}),
-				frames_per_second: new Input({
-					id: 'particle_texture_frames_per_second',
-					label: 'FPS',
-					info: 'Animation frames per second',
-					type: 'number',
-					min: 0,
-					enabled_modes: ['animated']
-				}),
-				max_frame: new Input({
-					id: 'particle_texture_max_frame',
-					label: 'Max Frame',
-					info: 'Maximum amount of frames to draw from the flipbook',
-					enabled_modes: ['animated']
-				}),
-				stretch_to_lifetime: new Input({
-					id: 'particle_texture_stretch_to_lifetime',
-					label: 'Stretch To Lifetime',
-					type: 'checkbox',
-					enabled_modes: ['animated']
-				}),
-				loop: new Input({
-					id: 'particle_texture_loop',
-					label: 'Loop',
-					type: 'checkbox',
-					enabled_modes: ['animated']
-				}),
-			}
-		},
-		color: {
-			label: 'Color & Light',
-			_folded: true,
-			inputs: {
-				mode: new Input({
-					id: 'particle_color_mode',
-					type: 'select',
-					label: 'Color Mode',
-					mode_groups: ['particle', 'color'],
-					options: {
-						static: 'Static',
-						gradient: 'Gradient',
-						expression: 'Expression',
-					},
-					onchange() {
-						if (Data.particle.color.inputs.mode.value == 'gradient') {
-							if (Data.particle.color.inputs.range.value == 0) {
-								Data.particle.color.inputs.range.value = 1;
-							}
-							if (!Data.particle.color.inputs.interpolant.value) {
-								Data.particle.color.inputs.interpolant.value = 'v.particle_age / v.particle_lifetime';
-							}
-						}
-					}
-				}),
-				picker: new Input({
-					id: 'particle_color_static',
-					label: 'Color',
-					type: 'color',
-					enabled_modes: ['static'],
-					info: 'Set a static color for all emitted particles. Transparency is supported when the material is "Blend".'
-				}),
-				interpolant: new Input({
-					id: 'particle_color_interpolant',
-					label: 'Interpolant',
-					info: 'Color Gradient Interpolant. Hint: use a curve here!',
-					enabled_modes: ['gradient']
-				}),
-				range: new Input({
-					id: 'particle_color_range',
-					label: 'Range',
-					info: 'Color Gradient Range',
-					type: 'number',
-					value: 1,
-					enabled_modes: ['gradient']
-				}),
-				gradient: new Gradient({
-					id: 'particle_color_gradient',
-					label: 'Gradient',
-					info: 'Gradient',
-					type: 'gradient',
-					enabled_modes: ['gradient']
-				}),
-				expression: new Input({
-					id: 'particle_color_expression',
-					label: 'Color',
-					info: 'Set the color per particle using MoLang expressions in RGBA channels between 0 and 1. Alpha channel display is only supported with "Blend" material.',
-					axis_count: 4,
-					enabled_modes: ['expression']
-				}),
-				light: new Input({
-					id: 'particle_color_light',
-					label: 'Environment Lighting',
-					type: 'checkbox',
-				}),
-			}
-		},
 		collision: {
 			label: 'Collision',
-			_folded: true,
+			_folded: false,
 			inputs: {
 				collision_radius: new Input({
 					id: 'particle_collision_collision_radius',
@@ -711,7 +620,122 @@ const Data = {
 				}),
 			}
 		}
-	}
+	},
+	lifetime: {
+		label: 'Time',
+		icon: 'dashboard',
+		lifetime: {
+			label: 'Lifetime',
+			_folded: false,
+			inputs: {
+				max_lifetime: new Input({
+					id: 'particle_lifetime_max_lifetime',
+					label: 'Max Age',
+					info: 'Maximum age of the particle in seconds',
+					value: 1
+				}),
+				expiration_expression: new Input({
+					id: 'particle_lifetime_expiration_expression',
+					label: 'Kill Expression',
+					info: 'This expression makes the particle expire when true (non-zero)'
+				}),
+				kill_plane: new Input({
+					id: 'particle_lifetime_kill_plane',
+					label: 'Kill Plane',
+					type: 'number',
+					step: 0.1,
+					info: 'Particles that cross this plane expire. The plane is relative to the emitter, but oriented in world space. The four parameters are the usual 4 elements of a plane equation.',
+					axis_count: 4
+				}),
+				expire_in: new Input({
+					id: 'particle_lifetime_expire_in',
+					label: 'Kill in Blocks',
+					info: 'List of blocks to that let the particle expire on contact. Block IDs have a namespace and are separated by a space character.',
+					placeholder: 'minecraft:stone',
+					axis_count: -1,
+					type: 'text'
+				}),
+				expire_outside: new Input({
+					id: 'particle_lifetime_expire_outside',
+					label: 'Only in Blocks',
+					info: 'List of blocks outside of which the particle expires. Block IDs have a namespace and are separated by a space character.',
+					placeholder: 'minecraft:air',
+					axis_count: -1,
+					type: 'text'
+				}),
+			}
+		},
+	},
+	variables: {
+		label: 'Variables & Curves',
+		icon: 'graph-line',
+		variables: {
+			label: 'Variables',
+			_folded: false,
+			inputs: {
+				creation_vars: new Input({
+					id: 'variables_creation_vars',
+					label: 'Start Variables',
+					info: 'Set up MoLang Variables when the emitter starts',
+					placeholder: 'variable.name = value;',
+					type: 'molang',
+					axis_count: -1,
+					onchange: function() {
+						/*
+						Emitter.creation_variables = {};
+						this.value.forEach((s, i) => {
+							var p = s.toLowerCase().replace(/\s/g, '').split('=')
+							if (p.length > 1) {
+								let key = p.shift();
+								Emitter.creation_variables[key] = p.join('=');
+							}
+						})*/
+					}
+				}),
+				tick_vars: new Input({
+					id: 'variables_tick_vars',
+					label: 'Tick Variables',
+					info: 'MoLang Variables that get processed for every Emitter update',
+					placeholder: 'variable.name = value;',
+					type: 'molang',
+					axis_count: -1,
+					onchange: function() {
+						/*
+						Emitter.tick_variables = {};
+						this.value.forEach((s, i) => {
+							var p = s.toLowerCase().replace(/\s/g, '').split('=')
+							if (p.length > 1) {
+								let key = p.shift();
+								Emitter.tick_variables[key] = p.join('=');
+							}
+						})*/
+					}
+				}),
+				particle_update: new Input({
+					id: 'particle_update_expression',
+					label: 'Particle Update',
+					info: 'Run an expression on the emitter for every particle when the emitter updates',
+					placeholder: 'variable.name = value;',
+					type: 'molang',
+					axis_count: -1
+				}),
+				particle_render: new Input({
+					id: 'particle_render_expression',
+					label: 'Particle Render',
+					info: 'Run an expression on the emitter each time a particle is rendered',
+					placeholder: 'variable.name = value;',
+					type: 'molang',
+					axis_count: -1
+				})
+			}
+		},
+		curves: {
+			label: 'Curves',
+			_folded: false,
+			type: 'curves',
+			curves: []
+		}
+	},
 };
 
 

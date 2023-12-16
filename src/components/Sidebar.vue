@@ -2,28 +2,35 @@
     <content id="sidebar">
         <div id="sidebar_content">
 			<logo />
-            <div class="input_subject" v-for="(subject, subject_key) in data" :key="subject_key">
-                <h3>{{ subject.label }}</h3>
-                <div class="input_group" v-for="(group, group_key) in subject" :key="group_key" v-if="typeof group == 'object'">
-                    <h4 v-on:click="fold(group)">{{ group.label }}</h4>
-					<template v-if="!group._folded">
-						<ul v-if="group.type == 'curves'">
-							<curve
-								class="curve"
-								v-for="curve in group.curves"
-								v-bind:title="group.info" :id="subject_key +'-curves-'+ curve.uuid" :uuid="curve.uuid" :key="curve.uuid"
-								:curve.sync="curve" :group_key.sync="group_key" :subject_key.sync="subject_key"
-							></curve>
-							<div id="add_curve_button" @click="addCurve()">
-								<i class="unicode_icon plus">{{'\uFF0B'}}</i>
-							</div>
-						</ul>
-						<ul v-else>
-							<input-group :group.sync="group" :group_key.sync="group_key" :subject_key.sync="subject_key"></input-group>
-						</ul>
-					</template>
-                </div>
-            </div>
+			<div id="sidebar_tab_bar">
+				<div class="sidebar_tab"
+					v-for="(tab, tab_key) in data" :key="tab_key"
+					:class="{selected: tab_key == selected_subject_key}"
+					:title="tab.label"
+					@click="selectSubject(tab_key)"
+				>
+					X
+				</div>
+			</div>
+			<div class="input_group" v-for="(group, group_key) in input_groups" :key="group_key">
+				<h4 v-on:click="fold(group)">{{ group.label }}</h4>
+				<template v-if="!group._folded">
+					<ul v-if="group.type == 'curves'">
+						<curve
+							class="curve"
+							v-for="curve in group.curves"
+							v-bind:title="group.info" :id="selected_subject_key +'-curves-'+ curve.uuid" :uuid="curve.uuid" :key="curve.uuid"
+							:curve.sync="curve" :group_key.sync="group_key" :subject_key.sync="selected_subject_key"
+						></curve>
+						<div id="add_curve_button" @click="addCurve()">
+							<i class="unicode_icon plus">{{'\uFF0B'}}</i>
+						</div>
+					</ul>
+					<ul v-else>
+						<input-group :group.sync="group" :group_key.sync="group_key" :subject_key.sync="selected_subject_key"></input-group>
+					</ul>
+				</template>
+			</div>
         </div>
     </content>
 </template>
@@ -40,10 +47,27 @@ import Data from './../input_structure'
 export default {
 	name: 'sidebar',
 	data() {return {
-		data: Data
+		data: Data,
+		selected_subject: Data.effect,
+		selected_subject_key: 'effect'
 	}},
 	components: {Logo, InputGroup, curve},
+	computed: {
+		input_groups() {
+			let input_groups = {};
+			for (let key in this.selected_subject) {
+				if (typeof this.selected_subject[key] == 'object') {
+					input_groups[key] = this.selected_subject[key];
+				}
+			}
+			return input_groups;
+		}
+	},
 	methods: {
+		selectSubject(key) {
+			this.selected_subject = this.data[key];
+			this.selected_subject_key = key;
+		},
 		fold: function(group) {
 			group._folded = !group._folded
 			if (group.curves && !group._folded) {
@@ -54,7 +78,7 @@ export default {
 			updateCurvesPanel()
 		},
 		addCurve() {
-			Data.effect.curves.curves.push(new Curve())
+			Data.variables.curves.curves.push(new Curve())
 		}
 	}
 }
@@ -67,7 +91,23 @@ export default {
 	content > div {
 		overflow-y: scroll;
 		height: 100%;
-		padding-bottom: 240px;
+		padding-bottom: 140px;
+	}
+	#sidebar_tab_bar {
+		height: 45px;
+		display: flex;
+		background-color: var(--color-bar);
+	}
+	#sidebar_tab_bar .sidebar_tab {
+		flex: 1 0.5 45px;
+		text-align: center;
+		cursor: pointer;
+	}
+	#sidebar_tab_bar .sidebar_tab.selected {
+		background-color: var(--color-title);
+	}
+	#sidebar_tab_bar .sidebar_tab:hover {
+		color: white;
 	}
 	.input_subject {
 		border-right: 1px solid var(--color-border);
@@ -79,11 +119,14 @@ export default {
 		font-size: 1.4em;
 		padding-left: 12px;
 	}
+	.input_group:not(:last-of-type) {
+		border-bottom: 1px solid var(--color-border);
+	}
 	.input_group h4 {
-		background-color: var(--color-bar);
-		padding: 4px;
+		padding: 10px;
 		font-size: 1.2em;
 		padding-left: 12px;
+		text-align: center;
 	}
 	.input_group h4:hover {
 		filter: brightness(1.1);;

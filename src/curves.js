@@ -111,7 +111,7 @@ class Curve {
 		}
 		Config.curves[valid_name] = this.config;
 		for (var key in Config.curves) {
-			if (key !== valid_name && !Data.effect.curves.curves.find(curve => curve.inputs.id.value == key)) {
+			if (key !== valid_name && !Data.variables.curves.curves.find(curve => curve.inputs.id.value == key)) {
 				delete Config.curves[key];
 			}
 		}
@@ -142,7 +142,7 @@ class Curve {
 	}
 	remove() {
 		delete Config.curves[this.inputs.id.value];
-		Data.effect.curves.curves.remove(this);
+		Data.variables.curves.curves.remove(this);
 		registerEdit('remove curve')
 	}
 }
@@ -150,9 +150,9 @@ class Curve {
 
 
 function updateCurvesPanel() {
-	if (Data.effect.curves._folded) return;
+	if (Data.variables.curves._folded) return;
 	Vue.nextTick(() => {
-		Data.effect.curves.curves.forEach(curve => {
+		Data.variables.curves.curves.forEach(curve => {
 			curve.svg_needs_update = true;
 		})
 	})

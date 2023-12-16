@@ -77,6 +77,7 @@ export default class Input {
 		var scope = this;
 		if (this.type === 'select') {
 			if (this.mode_groups instanceof Array) {
+				console.log(this.mode_groups)
 
 				this.mode_groups.forEach((group, i) => {
 					if (group instanceof Array) {

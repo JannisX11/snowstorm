@@ -355,7 +355,7 @@ function getAllMolangExpressions() {
         }
     }
     forEachInput(scanInput)
-    Data.effect.curves.curves.forEach(curve => {
+    Data.variables.curves.curves.forEach(curve => {
         for (let key in curve.inputs) {
             scanInput(curve.inputs[key]);
         }

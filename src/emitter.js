@@ -23,9 +23,9 @@ const Scene = new Wintersky.Scene({
 				window.addEventListener('message', update, false);
 			})
 	
-		} else if (window.Data.particle.texture.inputs.image.image && window.Data.particle.texture.inputs.image.image.loaded) {
+		} else if (window.Data.texture.texture.inputs.image.image && window.Data.texture.texture.inputs.image.image.loaded) {
 	
-			return window.Data.particle.texture.inputs.image.image.data;
+			return window.Data.texture.texture.inputs.image.image.data;
 	
 		}
 	}
@@ -44,8 +44,8 @@ function initParticles(View) {
 }
 Config.onTextureUpdate = function() {
 	if (!window.Data) return;
-	window.Data.particle.texture.inputs.image.image.hidden = true;
-	window.Data.particle.texture.inputs.image.image.hidden = false;
+	window.Data.texture.texture.inputs.image.image.hidden = true;
+	window.Data.texture.texture.inputs.image.image.hidden = false;
 };
 
 function updateMaterial() {

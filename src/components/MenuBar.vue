@@ -123,7 +123,7 @@ export default {
 		onShareParticle() {
 			let rawImg = null
 
-			const imageInput = Data.particle.texture.inputs.image
+			const imageInput = Data.texture.texture.inputs.image
 			const dataUrl = imageInput.image.data
 			if(dataUrl) {
 				const base64 = dataUrl.split(',')[1]
