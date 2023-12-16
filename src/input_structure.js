@@ -6,14 +6,12 @@ import vscode from './vscode_extension';
 const Data = {
 	setup: {
 		label: 'Quick Setup',
-		icon: 'wand',
 	},
 
 	effect: {
-		label: 'Effect',
-		icon: 'file',
+		label: 'File',
 		meta: {
-			label: 'Meta',
+			label: 'File',
 			_folded: false,
 			inputs: {
 				identifier: new Input({
@@ -66,7 +64,6 @@ const Data = {
 	},
 	emitter: {
 		label: 'Emitter',
-		icon: 'symbol-misc',
 		rate: {
 			label: 'Spawn Amount',
 			_folded: false,
@@ -214,7 +211,6 @@ const Data = {
 	},
 	appearance: {
 		label: 'Appearance',
-		icon: 'sparkle',
 		appearance: {
 			label: 'Appearance',
 			_folded: false,
@@ -363,7 +359,6 @@ const Data = {
 	},
 	texture: {
 		label: 'Texture & UV',
-		icon: 'paintcan',
 		texture: {
 			label: 'Texture',
 			_folded: false,
@@ -458,7 +453,6 @@ const Data = {
 	},
 	motion: {
 		label: 'Motion',
-		icon: 'move',
 		motion: {
 			label: 'Motion',
 			_folded: false,
@@ -623,7 +617,6 @@ const Data = {
 	},
 	lifetime: {
 		label: 'Time',
-		icon: 'dashboard',
 		lifetime: {
 			label: 'Lifetime',
 			_folded: false,
@@ -668,7 +661,6 @@ const Data = {
 	},
 	variables: {
 		label: 'Variables & Curves',
-		icon: 'graph-line',
 		variables: {
 			label: 'Variables',
 			_folded: false,

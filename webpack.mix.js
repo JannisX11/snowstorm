@@ -30,9 +30,10 @@ mix.webpackConfig({
 		alias
 	},
 	plugins: [
-	  new WebpackBundleSizeAnalyzerPlugin('./plain-report.txt')
+		new WebpackBundleSizeAnalyzerPlugin('./plain-report.txt')
 	]
 });
 
 mix.js('src/app.js', 'dist/')
+	.vue()
 	.setPublicPath('dist');
