@@ -19,7 +19,7 @@
 		</template>
 
 		<div v-if="canShare" @click="onShareParticle" class="mode_selector" title="Share">
-			<Share style="font-size: 24px;" />
+			<Share2 :size="20" />
 		</div>
     </ul>
 </template>
@@ -30,7 +30,7 @@ import {importFile,	loadPreset,	startNewProject} from '../import'
 import {View} from './Preview'
 
 import vscode from '../vscode_extension'
-import Share from './Icons/Share.vue'
+import { Share2 } from 'lucide-vue'
 import { shareParticle } from '../share'
 import { generateFile } from '../export'
 import Data from '../input_structure'
@@ -100,7 +100,7 @@ if (!isVSCExtension) {
 
 export default {
     name: 'menu-bar',
-	components: { Share },
+	components: { Share2 },
     props: {
         selected_tab: String,
         portrait_view: Boolean
@@ -148,7 +148,7 @@ export default {
 		height: 32px;
 		font-weight: normal;
 		padding: 0 8px;
-		background-color: var(--color-bar);
+		background-color: var(--color-interface);
 		white-space: nowrap;
 	}
 	a {
@@ -176,7 +176,7 @@ export default {
 		display: block;
 	}
 	ul#menu_bar > li:hover > a {
-		background-color: var(--color-interface);
+		background-color: var(--color-bar);
 	}
 	.mode_selector {
 		float: right;

@@ -93,6 +93,7 @@ export default class Input {
 		this.change(event)
 	}
 	change(e, node) {
+		console.trace(e, node)
 		var scope = this;
 		if (this.type === 'image' && e) {
 			var file = e instanceof Uint8Array ? new File([e], 'unknown.png') : e.target.files[0];

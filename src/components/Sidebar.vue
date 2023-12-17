@@ -16,6 +16,7 @@
 					<Feather v-if="tab_key == 'motion'" />
 					<Clock8 v-if="tab_key == 'lifetime'" />
 					<Tangent v-if="tab_key == 'variables'" />
+					<Zap v-if="tab_key == 'events'" />
 					<div class="sidebar_tab_tooltip">{{ tab.label }}</div>
 				</div>
 			</div>
@@ -60,6 +61,7 @@ import {
 	Feather,
 	Clock8,
 	Tangent,
+	Zap,
 } from 'lucide-vue'
 
 
@@ -83,6 +85,7 @@ export default {
 		Feather,
 		Clock8,
 		Tangent,
+		Zap,
 	},
 	computed: {
 		input_groups() {
@@ -121,9 +124,9 @@ export default {
 		border-right: 1px solid var(--color-border);
 	}
 	content > div {
-		overflow-y: scroll;
+		overflow-y: auto;
 		height: 100%;
-		padding-bottom: 140px;
+		padding-bottom: 60px;
 	}
 	#sidebar_tab_bar {
 		height: 45px;

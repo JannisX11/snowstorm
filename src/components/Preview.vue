@@ -14,12 +14,19 @@
                 <option id="entity">Entity</option>
                 <option id="locator">Locator</option>
             </select>
-            <div class="tool ground_collision" :class="{disabled: !collision}" @click="toggleCollision()" title="Ground Collision"><i class="unicode_icon">{{'\u2305'}}</i></div>
+            <div class="tool ground_collision" :class="{disabled: !collision}" @click="toggleCollision()" title="Ground Collision">
+                <Egg :size="20" v-if="collision" />
+                <EggOff :size="20" v-else />
+            </div>
 
             <div class="spacing" />
 
-            <div class="tool" @click="startAnimation()" title="Play"><i class="unicode_icon" style="font-size: 13pt;">{{'\u25B6'}}</i></div>
-            <div class="tool" @click="togglePause()" title="Pause"><i class="unicode_icon pause">{{'\u2016'}}</i></div>
+            <div class="tool" @click="startAnimation()" title="Play">
+                <Play :size="22" />
+            </div>
+            <div class="tool" @click="togglePause()" title="Pause">
+                <Pause :size="22" />
+            </div>
 
             <div class="spacing" />
 
@@ -37,6 +44,13 @@
 
     import {Emitter, Scene, initParticles} from './../emitter';
     import {validate} from './WarningDialog'
+
+    import {
+        Egg,
+        EggOff,
+        Play,
+        Pause,
+    } from 'lucide-vue'
 
     const View = {}
     
@@ -170,6 +184,12 @@
             warning_count: 0,
             collision: true
         }},
+        components: {
+            Egg,
+            EggOff,
+            Play,
+            Pause,
+        },
         methods: {
             updateSize() {
                 resizeCanvas()
@@ -223,9 +243,10 @@
 <style scoped>
 	main#preview {
 		position: relative;
+        --footer-height: 32px;
 	}
 	#canvas_wrapper {
-		height: calc(100% - 28px);
+		height: calc(100% - var(--footer-height));
 		width: 100%;
 	}
 	canvas {
@@ -236,7 +257,7 @@
 	footer {
 		width: 100%;
 		font-size: 1.1em;
-        height: 28px;
+        height: var(--footer-height);
         background-color: var(--color-bar);
         border-top: 1px solid var(--color-border);
         display: flex;
@@ -261,9 +282,9 @@
         appearance: none;
         background-color: var(--color-dark);
         border-top: none;
-        height: 27px;
+        height: 100%;
         margin-left: 4px;
-        padding: 2px 4px;
+        padding: 2px 6px;
     }
     #app.portrait_view footer select {
         border-bottom: none;

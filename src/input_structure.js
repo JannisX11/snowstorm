@@ -381,13 +381,20 @@ const Data = {
 						updateMaterial()
 					}
 				}),
+			}
+		},
+		uv: {
+			label: 'UV',
+			_folded: false,
+			inputs: {
 				mode: new Input({
 					id: 'particle_texture_mode',
 					type: 'select',
 					label: 'UV Mode',
-					mode_groups: ['texture', 'texture'],
+					mode_groups: ['texture', 'uv'],
 					options: {
 						static: 'Static',
+						full: 'Full Size',
 						animated: 'Animated',
 					},
 				}),
@@ -398,7 +405,8 @@ const Data = {
 					type: 'number',
 					axis_count: 2,
 					required: true,
-					value: [16, 16]
+					value: [16, 16],
+					enabled_modes: ['static', 'animated']
 				}),
 				uv: new Input({
 					id: 'particle_texture_uv',
@@ -406,14 +414,16 @@ const Data = {
 					info: 'UV start coordinates',
 					axis_count: 2,
 					required: true,
-					value: [0, 0]
+					value: [0, 0],
+					enabled_modes: ['static', 'animated']
 				}),
 				uv_size: new Input({
 					id: 'particle_texture_uv_size',
 					label: 'UV Size',
 					info: 'UV size coordinates',
 					axis_count: 2,
-					value: [16, 16]
+					value: [16, 16],
+					enabled_modes: ['static', 'animated']
 				}),
 				uv_step: new Input({
 					id: 'particle_texture_uv_step',
@@ -656,6 +666,15 @@ const Data = {
 					axis_count: -1,
 					type: 'text'
 				}),
+			}
+		},
+	},
+	events: {
+		label: 'Events',
+		lifetime: {
+			label: 'Events',
+			_folded: false,
+			inputs: {
 			}
 		},
 	},

@@ -11,8 +11,8 @@
 		>
 			<label v-bind:for="key" v-if="input.label">{{ input.label }}</label>
 			<div class="tool input_expand_button" v-if="input.expandable" @click="toggleExpand(input)" title="Expand">
-				<i v-if="!input.expanded" class="unicode_icon caret">{{'\u02C7'}}</i>
-				<i v-else class="unicode_icon caret">{{'\u02C6'}}</i>
+				<ChevronsUpDown :size="20" v-if="!input.expanded" />
+				<ChevronsDownUp :size="20" v-else />
 			</div>
 			<template v-if="input.axis_count == -1">
 				<!--List-->
@@ -39,7 +39,7 @@
 					</li>
 				</ul>
 			</template>
-			<div v-else class="input_right" :axes="input.axis_count" :class="{expandable: input.expandable, expanded: input.expanded, full_width: !input.label}">
+			<div v-else class="input_right" :axes="input.axis_count" :class="{expandable: input.expandable, expanded: input.expanded, full_width: !input.label, image: input.type == 'image'}">
 
 				<template v-if="input.axis_count == 1">
 					<!--Text-->
@@ -87,7 +87,7 @@
 				</template>
 
 				<!--Check-->
-				<input v-if="input.type == 'checkbox'" v-bind:id="key" type="checkbox" v-model="input.value" @change="input.change($event)">
+				<checkbox v-if="input.type == 'checkbox'" v-bind:id="key" v-model="input.value" @change="input.change($event)" />
 
 				<!--Select-->
 				<select v-if="input.type == 'select'" v-bind:id="key" v-model="input.meta_value" v-on:change="input.change($event)">
@@ -102,9 +102,6 @@
 
 				<!--Image-->
 				<template v-if="input.type == 'image' && !input.image.hidden">
-					<div class="input_texture_wrapper checkerboard" :class="{vertical: input.image_element.naturalWidth < input.image_element.naturalHeight}" v-html="input.image_element.outerHTML">
-						
-					</div>
 					<div class="meta">
 						<template v-if="input.allow_upload">
 							<div class="tool" v-on:click="input.reset()"><i class="unicode_icon">{{'\u2A09'}}</i></div>
@@ -114,6 +111,9 @@
 						<template v-if="!input.allow_upload">
 							<div class="tool" style="width: auto;" v-on:click="input.updatePreview()" title="Reload"><i class="unicode_icon" style="display: inline;">⟳</i> Reload</div>
 						</template>
+					</div>
+					<div class="input_texture_wrapper checkerboard" :class="{vertical: input.image_element.naturalWidth < input.image_element.naturalHeight}" v-html="input.image_element.outerHTML">
+						
 					</div>
 				</template>
 			</div>
@@ -125,6 +125,11 @@
 <script>
 import VueColor from 'vue-color'
 import Gradient from './Gradient';
+import Checkbox from '../Form/Checkbox.vue'
+import {
+	ChevronsUpDown,
+	ChevronsDownUp,
+} from 'lucide-vue'
 
 
 import getAutocompleteData from './../../molang_autocomplete'
@@ -149,7 +154,10 @@ export default {
 	components: {
 		PrismEditor,
 		'color-picker': VueColor.Chrome,
-		Gradient
+		Gradient,
+		Checkbox,
+		ChevronsUpDown,
+		ChevronsDownUp,
 	},
 	methods: {
 		isInputVisible(input, group) {
@@ -190,11 +198,12 @@ export default {
 	.input_wrapper > label {
 		width: 100px;
 		text-align: right;
+		vertical-align: middle;
 		margin: 3px 0;
 	}
 	.input_right {
 		display: inline-flex;
-		vertical-align: top;
+		vertical-align: middle;
 		width: calc(100% - 110px);
 		margin-left: 4px;
 	}
@@ -219,7 +228,8 @@ export default {
 	.tool.input_expand_button {
 		float: right;
 		width: 22px;
-		padding-left: 3px;
+		padding-left: 0;
+		padding-top: 2px;
 	}
 	
 	.input_list li {
@@ -239,12 +249,16 @@ export default {
 	input#image {
 		width: calc(100% - 40px);
 	}
+	.input_right.image {
+		flex-direction: column;
+	}
 	.input_texture_wrapper {
+		--size: 256px;
 		display: block;
-		height: 128px;
-		width: 128px;
-		margin-right: 8px;
-		margin-left: 8px;
+		height: var(--size);
+		width: var(--size);
+		margin: auto;
+		margin-top: 8px;
 		flex-shrink: 0;
 		border: 1px solid var(--color-border);
 		box-sizing: content-box;
