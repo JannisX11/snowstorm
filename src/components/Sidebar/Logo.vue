@@ -7,7 +7,7 @@
 		xmlns="http://www.w3.org/2000/svg"
 		xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
 		xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-		width="75.722267mm"
+		width="54.0mm"
 		height="8.9683867mm"
 		viewBox="-0.1 0 90.866723 10.762064"
 		version="1.1"

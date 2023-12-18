@@ -669,7 +669,7 @@ const Data = {
 			}
 		},
 	},
-	events: {
+	/*events: {
 		label: 'Events',
 		lifetime: {
 			label: 'Events',
@@ -677,7 +677,7 @@ const Data = {
 			inputs: {
 			}
 		},
-	},
+	},*/
 	variables: {
 		label: 'Variables & Curves',
 		variables: {

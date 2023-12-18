@@ -102,19 +102,7 @@
 
 				<!--Image-->
 				<template v-if="input.type == 'image' && !input.image.hidden">
-					<div class="meta">
-						<template v-if="input.allow_upload">
-							<div class="tool" v-on:click="input.reset()"><i class="unicode_icon">{{'\u2A09'}}</i></div>
-							<input  v-bind:id="key" type="file" accept=".png" v-on:change="input.change($event)">
-						</template>
-						<div id="image_resolution_label">{{input.image_element.naturalWidth}} x {{input.image_element.naturalHeight}} px</div>
-						<template v-if="!input.allow_upload">
-							<div class="tool" style="width: auto;" v-on:click="input.updatePreview()" title="Reload"><i class="unicode_icon" style="display: inline;">⟳</i> Reload</div>
-						</template>
-					</div>
-					<div class="input_texture_wrapper checkerboard" :class="{vertical: input.image_element.naturalWidth < input.image_element.naturalHeight}" v-html="input.image_element.outerHTML">
-						
-					</div>
+					<texture-input :input.sync="input" :data="data" />
 				</template>
 			</div>
 		</li>
@@ -125,6 +113,7 @@
 <script>
 import VueColor from 'vue-color'
 import Gradient from './Gradient';
+import TextureInput from './TextureInput';
 import Checkbox from '../Form/Checkbox.vue'
 import {
 	ChevronsUpDown,
@@ -149,12 +138,14 @@ export default {
 	props: {
 		group: Object,
 		group_key: String,
-		subject_key: String
+		subject_key: String,
+		data: Object
 	},
 	components: {
 		PrismEditor,
 		'color-picker': VueColor.Chrome,
 		Gradient,
+		TextureInput,
 		Checkbox,
 		ChevronsUpDown,
 		ChevronsDownUp,
@@ -246,27 +237,6 @@ export default {
 		height: 30px;
 	}
 
-	input#image {
-		width: calc(100% - 40px);
-	}
-	.input_right.image {
-		flex-direction: column;
-	}
-	.input_texture_wrapper {
-		--size: 256px;
-		display: block;
-		height: var(--size);
-		width: var(--size);
-		margin: auto;
-		margin-top: 8px;
-		flex-shrink: 0;
-		border: 1px solid var(--color-border);
-		box-sizing: content-box;
-	}
-	.input_texture_wrapper.vertical {
-		width: 136px;
-		overflow-y: auto;
-	}
 	.input_vector {
 		width: 40px;
 		flex-grow: 1;
@@ -280,10 +250,3 @@ export default {
 	}
 </style>
 
-<style>
-	.input_texture_wrapper img {
-		width: 100%;
-		background-size: contain;
-		background-repeat: no-repeat;
-	}
-</style>

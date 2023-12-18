@@ -243,7 +243,7 @@
 <style scoped>
 	main#preview {
 		position: relative;
-        --footer-height: 32px;
+        --footer-height: 34px;
 	}
 	#canvas_wrapper {
 		height: calc(100% - var(--footer-height));
@@ -269,9 +269,12 @@
 		height: 0px;
 	}
 	footer > * {
-		padding: 2px 8px; 
-		padding-top: 2px;
+		padding: 4px 8px;
+		padding-top: 4px;
         background-color: var(--color-bar);
+    }
+	footer > .tool {
+		padding-top: 2px;
     }
     footer .spacing {
         flex: 1 1 auto;
@@ -293,6 +296,7 @@
         text-align: right;
 		float: right;
 		background: transparent;
+        min-width: 72px;
 	}
     div.warning {
         color: var(--yellow);

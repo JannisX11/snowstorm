@@ -35,7 +35,7 @@
 						</div>
 					</ul>
 					<ul v-else>
-						<input-group :group.sync="group" :group_key.sync="group_key" :subject_key.sync="selected_subject_key"></input-group>
+						<input-group :group.sync="group" :group_key.sync="group_key" :subject_key.sync="selected_subject_key" :data="data"></input-group>
 					</ul>
 				</template>
 				<div v-else class="input_group_folded_indicator" @click="fold(group)">...</div>
@@ -132,6 +132,10 @@ export default {
 		height: 45px;
 		display: flex;
 		background-color: var(--color-bar);
+		position: sticky;
+		top: 0;
+		z-index: 20;
+		box-shadow: 0 1px 12px rgba(0, 0, 0, 0.34);
 	}
 	.sidebar_tab {
 		flex: 1 0.5 45px;
