@@ -20,6 +20,7 @@
 					<div class="sidebar_tab_tooltip">{{ tab.label }}</div>
 				</div>
 			</div>
+
 			<div class="input_group" v-for="(group, group_key) in input_groups" :key="group_key">
 				<h4 @click="fold(group)">{{ group.label }}</h4>
 				<template v-if="!group._folded">
@@ -40,6 +41,11 @@
 				</template>
 				<div v-else class="input_group_folded_indicator" @click="fold(group)">...</div>
 			</div>
+
+			<!--Quick Setup-->
+			<template v-if="selected_subject_key == 'setup'">
+				<quick-setup :data="data" />
+			</template>
         </div>
     </content>
 </template>
@@ -48,6 +54,7 @@
 import Logo from './Sidebar/Logo'
 import InputGroup from './Sidebar/InputGroup';
 import curve from './Sidebar/Curve';
+import QuickSetup from './Sidebar/QuickSetup.vue';
 import {Curve, updateCurvesPanel} from './../curves'
 
 import Data from './../input_structure'
@@ -75,6 +82,7 @@ export default {
 	components: {
 		Logo,
 		InputGroup,
+		QuickSetup,
 		curve,
 
 		Wand,
@@ -90,6 +98,7 @@ export default {
 	computed: {
 		input_groups() {
 			let input_groups = {};
+			if (this.tab_key == 'setup') return input_groups;
 			for (let key in this.selected_subject) {
 				if (typeof this.selected_subject[key] == 'object') {
 					input_groups[key] = this.selected_subject[key];
@@ -180,6 +189,25 @@ export default {
 		font-size: 1.4em;
 		padding-left: 12px;
 	}
+	#add_curve_button {
+		width: 100%;
+		border: 1px dashed var(--color-bar);
+		cursor: pointer;
+	}
+	#add_curve_button:hover {
+		background-color: var(--color-dark);
+	}
+	#add_curve_button > i {
+		margin-right: auto;
+		margin-left: auto;
+		opacity: 0.8;
+		font-size: 1.4em;
+	}
+
+
+</style>
+
+<style>
 	.input_group:not(:last-of-type) {
 		border-bottom: 1px solid var(--color-border);
 	}
@@ -197,20 +225,6 @@ export default {
 		padding: 8px;
 		padding-right: 2px;
 	}
-	#add_curve_button {
-		width: 100%;
-		border: 1px dashed var(--color-bar);
-		cursor: pointer;
-	}
-	#add_curve_button:hover {
-		background-color: var(--color-dark);
-	}
-	#add_curve_button > i {
-		margin-right: auto;
-		margin-left: auto;
-		opacity: 0.8;
-		font-size: 1.4em;
-	}
 	.input_group_folded_indicator {
 		height: 32px;
 		text-align: center;
@@ -222,6 +236,4 @@ export default {
 	.input_group_folded_indicator:hover {
 		color: var(--color-text);
 	}
-
-
 </style>

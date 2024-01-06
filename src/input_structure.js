@@ -6,6 +6,26 @@ import vscode from './vscode_extension';
 const Data = {
 	setup: {
 		label: 'Quick Setup',
+		setup: {
+			label: 'Quick Setup',
+			_folded: false,
+			inputs: {
+				identifier: new Input({
+					id: 'identifier',
+					label: 'Identifier',
+					info: 'This is the name the particle emitter is referred to as. Should have a namespace.',
+					placeholder: 'space:name',
+					required: true,
+					type: 'text',
+					onchange() {
+						document.title = (this.value ? this.value + ' - ' : '') + 'Snowstorm';
+					}
+				}),
+				setup: {
+					type: 'quick_setup'
+				}
+			}
+		},
 	},
 
 	effect: {
