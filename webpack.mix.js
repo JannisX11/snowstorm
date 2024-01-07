@@ -15,14 +15,17 @@ mix.webpackConfig({
     module: {
         rules: [
 			{
-				test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/],
-				loader: require.resolve('url-loader'),
-				options: {
-				  limit: 100000,
-				  name: 'static/media/[name].[hash:8].[ext]',
-				},
-			  },
-        ],
+				test: /\.png/,
+				type: 'asset/inline',
+				generator: {
+					dataUrl: content => {
+						let path = './dist' + content.toString().split('"')[1].replace(/\?.*/, '');
+						let base64 = require('fs').readFileSync(path, {encoding: 'base64'});
+						return 'data:image/png;base64,' + base64;
+					}
+				}
+			}
+		],
 	},
 	resolve: {
 		extensions: ['.js'],

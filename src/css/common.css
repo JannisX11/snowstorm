@@ -50,6 +50,7 @@
 	h1, h2, h3, h4, h5, h6 {
 		margin: 0;
 		font-weight: inherit;
+		line-height: 1.2;
     }
 	ul {
 		list-style: none;
@@ -61,6 +62,18 @@
         padding: 0;
         box-sizing: border-box;
 		user-select: none;
+	}
+	*, :after, :before {
+		box-sizing: border-box;
+	}
+	img, svg {
+		vertical-align: middle;
+	}
+	button, input, optgroup, select, textarea {
+		font-family: inherit;
+		font-size: inherit;
+		line-height: inherit;
+		margin: 0;
 	}
 	input, select {
 		font-weight: inherit;
@@ -149,6 +162,22 @@
 		cursor: pointer;
 		background: var(--color-track);
 		border-radius: 3px;
+	}
+	::file-selector-button {
+		border: none;
+		background-color: var(--color-bar);
+		color: inherit;
+		font-size: inherit;
+		padding: 5px 12px;
+		border-radius: 1px;
+		cursor: pointer;
+	}
+	::file-selector-button:hover {
+		background-color: var(--color-title);
+	}
+	label {
+		display: inline-block;
+		margin-bottom: .5rem;
 	}
 	.unicode_icon {
 		font-style: unset;

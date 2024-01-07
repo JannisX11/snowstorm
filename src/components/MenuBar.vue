@@ -33,7 +33,7 @@ import vscode from '../vscode_extension'
 import { Share2 } from 'lucide-vue'
 import { shareParticle } from '../share'
 import { generateFile } from '../export'
-import Data from '../input_structure'
+import { Texture } from '../texture_edit'
 const isVSCExtension = !!vscode;
 
 function openLink(link) {
@@ -123,8 +123,7 @@ export default {
 		onShareParticle() {
 			let rawImg = null
 
-			const imageInput = Data.texture.texture.inputs.image
-			const dataUrl = imageInput.image.data
+			const dataUrl = Texture.source
 			if(dataUrl) {
 				const base64 = dataUrl.split(',')[1]
 				rawImg = Uint8Array.from(atob(base64), c => c.charCodeAt(0))
@@ -158,7 +157,6 @@ export default {
 	}
 	a:hover {
 		background-color: var(--color-interface);
-		color: black;
 	}
 	ul#menu_bar > li {
 		display: inline-block;

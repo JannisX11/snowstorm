@@ -112,12 +112,6 @@ export default {
 </script>
 
 
-<style lang="scss">
-
-	@import "~bootstrap/scss/bootstrap";
-	
-</style>
-
 <style>
 
 	@import url('./../css/common.css');

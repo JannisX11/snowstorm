@@ -106,7 +106,6 @@ export default {
 			if (this.isVertical()) {
 				frame_height /= this.input.image_element.naturalWidth / this.input.image_element.naturalHeight
 			}
-			console.log(bounding_box)
 
 			return {
 				left: (bounding_box[0] / uv_width * frame_width)+'px',

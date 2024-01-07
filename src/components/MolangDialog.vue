@@ -66,7 +66,7 @@ export default {
 	}
 	#molang_sheet code {
 		padding: 2px 8px;
-		color: var(--teal);
+		color: #50cca7;
 		font-size: 0.9em;
 		background-color: var(--color-dark);
 		user-select: text;

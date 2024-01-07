@@ -15,6 +15,7 @@ import TrailSample from '../examples/trail.particle.json'
 import BillboardSample from '../examples/billboard.particle.json'
 import Curve from './curves'
 import registerEdit from './edits'
+import { Texture } from './texture_edit'
 
 
 const Samples = {
@@ -53,6 +54,7 @@ function updateConfig(data) {
 }
 function loadFile(data, confirmNewProject=true) {
 	if (data && data.particle_effect && (!confirmNewProject || startNewProject())) {
+		Texture.reset();
 		updateConfig(data);
 		Emitter.stop(true).playLoop();
 		registerEdit('load file')

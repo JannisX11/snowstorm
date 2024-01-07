@@ -1,8 +1,13 @@
+import { Texture } from './texture_edit';
 import vscode from './vscode_extension'
 import Wintersky from 'wintersky'
 
 const Scene = new Wintersky.Scene({
 	fetchTexture(config) {
+		console.log(Texture.internal_changes, Texture)
+		if (Texture.internal_changes) {
+			return Texture.source;
+		}
 		if (!window.Data) return;
 		var path = config.particle_texture_path;
 	
@@ -36,6 +41,7 @@ const Emitter = new Wintersky.Emitter(Scene, Config, {
 	parent_mode: 'world'
 });
 window.Emitter = Emitter;
+Texture.linkEmitter(Emitter, Config);
 
 Config.reset()
 

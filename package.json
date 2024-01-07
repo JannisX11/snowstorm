@@ -25,7 +25,6 @@
 	"devDependencies": {
 		"cross-env": "^7.0.3",
 		"laravel-mix": "^6.0.49",
-		"postcss": "^8.4.12",
 		"sass": "^1.30.0",
 		"sass-loader": "^8.0.2",
 		"url-loader": "^4.1.1",
@@ -36,7 +35,7 @@
 		"webpack-cli": "^3.3.12"
 	},
 	"dependencies": {
-		"bootstrap": "^4.5.3",
+		"bootstrap": "^4.6.2",
 		"fflate": "^0.7.3",
 		"lucide-vue": "^0.298.0",
 		"molangjs": "^1.6.2",

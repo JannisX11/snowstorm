@@ -1,7 +1,7 @@
 <template>
 	<div class="quick_setup">
 		<div class="input_group">
-			<h4>Shape</h4>
+			<h4>Shape & Motion</h4>
 			<ul class="preset_option_list">
 				<li @click="set('shape', 'sphere')" :class="{selected: shape == 'sphere'}">
 					<Loader :size="38" :stroke-width="1" />
@@ -20,6 +20,11 @@
 					Gravitate to Center
 				</li>
 			</ul>
+			<div class="input_bar">
+				<label for="quick_lighting_checkbox">Speed</label>
+				<input type="range" v-model="speed" min="0" max="20" step="0.5" >
+				<label class="range_number_label">{{ speed }}</label>
+			</div>
 		</div>
 
 		<div class="input_group">
@@ -44,6 +49,32 @@
 				<input type="range" v-model="particle_lifetime" min="0.1" max="10" step="0.1" >
 				<label class="range_number_label">{{ particle_lifetime }}</label>
 			</div>
+		</div>
+
+		<div class="input_group">
+			<h4>Physics</h4>
+			<ul class="preset_option_list">
+				<li @click="set('collision', 'none')" :class="{selected: collision == 'none'}">
+					<CircleSlash :size="38" :stroke-width="1" />
+					None
+				</li>
+				<li @click="set('collision', 'solid')" :class="{selected: collision == 'solid'}">
+					<Cuboid :size="38" :stroke-width="1" />
+					Solid
+				</li>
+				<li @click="set('collision', 'smoke')" :class="{selected: collision == 'smoke'}">
+					<Cloud :size="38" :stroke-width="1" />
+					Smoke
+				</li>
+				<li @click="set('collision', 'ball')" :class="{selected: collision == 'ball'}">
+					<Aperture :size="38" :stroke-width="1" />
+					Ball
+				</li>
+				<li @click="set('collision', 'paper')" :class="{selected: collision == 'paper'}">
+					<Scroll :size="38" :stroke-width="1" />
+					Paper
+				</li>
+			</ul>
 		</div>
 
 		<div class="input_group">
@@ -83,28 +114,6 @@
 				<checkbox id="quick_lighting_checkbox" v-model="lightning" />
 			</div>
 		</div>
-
-		<div class="input_group">
-			<h4>Physics</h4>
-			<ul class="preset_option_list">
-				<li @click="set('collision', 'none')" :class="{selected: collision == 'none'}">
-					<CircleSlash :size="38" :stroke-width="1" />
-					None
-				</li>
-				<li @click="set('collision', 'solid')" :class="{selected: collision == 'solid'}">
-					<Cuboid :size="38" :stroke-width="1" />
-					Solid
-				</li>
-				<li @click="set('collision', 'smoke')" :class="{selected: collision == 'smoke'}">
-					<Cloud :size="38" :stroke-width="1" />
-					Smoke
-				</li>
-				<li @click="set('collision', 'ball')" :class="{selected: collision == 'ball'}">
-					<Aperture :size="38" :stroke-width="1" />
-					Ball
-				</li>
-			</ul>
-		</div>
 	</div>
 </template>
 
@@ -113,6 +122,7 @@
 import {
 	CircleSlash,
 	Aperture,
+	Scroll,
 	Cloud,
 	Cuboid,
 	Loader,
@@ -124,8 +134,18 @@ import {
 } from 'lucide-vue'
 import Checkbox from '../Form/Checkbox.vue'
 import Sprite from './../../../assets/sample_sprites.png'
+import { Texture } from '../../texture_edit';
 
+import SpriteBall from '../../../assets/ball.png'
+import SpriteDirt from '../../../assets/dirt.png'
+import SpriteLeaves from '../../../assets/leaves.png'
+import SpriteSmoke from '../../../assets/smoke.png'
+import SpriteDust from '../../../assets/dust.png'
+import SpriteSparkle from '../../../assets/sparkle.png'
+import SpriteMagic from '../../../assets/magic.png'
+//SpriteBall = `data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAw0lEQVQ4ja2RsQ3CMBREzxaioU+DaBkDRmAQKiTGoGUQJBaAKSKKuEBIVio3NDRQnfX9bSdIcJVj/3d3doAfZWoHu3P/5rprA077ZXE22yQ4X0wBAI/7K5oAyIyMhglSNKiZ2CG4ps3hFq9nhwZlek2W6WMw6wfnEZyPLaw8rCVKWGvybTL17Pv8CqXBrg3JXnA+gwHxG+XLarE6DWZNg8txZZIGclB+a7jagC3GAJmeGWgTXRtAAhcNqPX2mryJBv+mD2GrgcizxUizAAAAAElFTkSuQmCC`
 
+console.log('test', SpriteDirt)
 
 const PRESETS = {
 	shape: {
@@ -154,7 +174,7 @@ const PRESETS = {
 			'emitter.shape.surface_only': true,
 			'motion.motion.direction_mode': 'direction',
 			'motion.motion.direction': ['0', '1', '0'],
-			'emitter.shape.offset': ['0', '0', '0'],
+			'emitter.shape.offset': ['0', '0.5', '0'],
 			'motion.motion.linear_acceleration': ['0', '0', '0'],
 			'motion.motion.linear_speed': 'math.random(1, 4)',
 		},
@@ -183,18 +203,55 @@ const PRESETS = {
 			'emitter.lifetime.active_time': '1',
 		}
 	},
-	sprite: {
+	sprite:{
 		ball: {
-			'emitter.rate.mode': 'instant',
-			'emitter.rate.amount': '100',
-			'emitter.lifetime.mode': 'once',
-			'emitter.lifetime.active_time': '1',
+			'appearance.appearance.size': ['0.5', '0.5'],
+			'texture.uv.size': [16, 16],
+			'texture.uv.uv': [0, 0],
+			'texture.uv.uv_size': [16, 16],
+			'texture.uv.mode': 'full',
 		},
-		steady: {
-			'emitter.rate.mode': 'steady',
-			'emitter.rate.rate': '60',
-			'emitter.lifetime.mode': 'once',
-			'emitter.lifetime.active_time': '1',
+		dirt: {
+			'appearance.appearance.size': ['0.5', '0.5'],
+			'texture.uv.size': [16, 16],
+			'texture.uv.uv': [0, 0],
+			'texture.uv.uv_size': [16, 16],
+			'texture.uv.mode': 'full',
+		},
+		leaves: {
+			'appearance.appearance.size': ['0.25', '0.25'],
+			'texture.uv.size': [16, 16],
+			'texture.uv.uv': ['Math.floor(v.particle_random_3 * 2) * 8' , 'Math.floor(v.particle_random_4 * 2) * 8'],
+			'texture.uv.uv_size': [8, 8],
+			'texture.uv.mode': 'static',
+		},
+		smoke: {
+			'appearance.appearance.size': ['0.5', '0.5'],
+			'texture.uv.size': [16, 16],
+			'texture.uv.uv': [0, 0],
+			'texture.uv.uv_size': [16, 16],
+			'texture.uv.mode': 'full',
+		},
+		dust: {
+			'appearance.appearance.size': ['0.5', '0.5'],
+			'texture.uv.size': [16, 16],
+			'texture.uv.uv': [0, 0],
+			'texture.uv.uv_size': [16, 16],
+			'texture.uv.mode': 'full',
+		},
+		sparkle: {
+			'appearance.appearance.size': ['0.5', '0.5'],
+			'texture.uv.size': [16, 16],
+			'texture.uv.uv': [0, 0],
+			'texture.uv.uv_size': [16, 16],
+			'texture.uv.mode': 'full',
+		},
+		magic: {
+			'appearance.appearance.size': ['0.25', '0.25'],
+			'texture.uv.size': [16, 16],
+			'texture.uv.uv': ['Math.floor(v.particle_random_3 * 2) * 8' , 'Math.floor(v.particle_random_4 * 2) * 8'],
+			'texture.uv.uv_size': [8, 8],
+			'texture.uv.mode': 'static',
 		}
 	},
 	collision: {
@@ -234,6 +291,15 @@ const PRESETS = {
 			'motion.collision.enabled': '',
 			'motion.collision.expire_on_contact': false,
 		},
+		paper: {
+			'motion.motion.linear_acceleration': ["math.sin(v.particle_age * 90)", -10, "math.cos(v.particle_age * 40)"],
+			'motion.motion.linear_drag_coefficient': 5,
+			'motion.collision.collision_radius': 0.2,
+			'motion.collision.collision_drag': 10,
+			'motion.collision.coefficient_of_restitution': 0,
+			'motion.collision.enabled': '',
+			'motion.collision.expire_on_contact': false,
+		},
 	}
 };
 
@@ -243,6 +309,7 @@ export default {
 		Checkbox,
 		CircleSlash,
 		Aperture,
+		Scroll,
 		Cloud,
 		Cuboid,
 		Loader,
@@ -261,18 +328,45 @@ export default {
 		
 		shape: '',
 		timing: '',
-		amount: 60,
+		speed: 1,
+		amount: 4,
 		particle_lifetime: 2,
 		sprite: '',
 		lightning: true,
 		collision: 'none',
 	}},
 	watch: {
+		speed(value) {
+			this.setInput('motion.motion.linear_speed', value);
+		},
+		amount(value) {
+			let steady = this.timing != 'burst';
+			this.setInput('emitter.rate.'+(steady?'rate':'amount'), value);
+		},
+		particle_lifetime(value) {
+			this.setInput('lifetime.lifetime.max_lifetime', value);
+		},
 		lightning(value) {
-			this.set('appearance.appearance.light', !value);
+			this.setInput('appearance.appearance.light', !value);
 		}
 	},
 	methods: {
+		setInput(path, value) {
+			path = path.split('.');
+			let input = this.data[path[0]][path[1]].inputs[path[2]];
+			if (input) {
+				if (input.type == 'molang') {
+					if (value instanceof Array) {
+						value.forEach((v, i) => {
+							value[i] = v.toString();
+						})
+					} else if (typeof value == 'number') {
+						value = value.toString();
+					}
+				}
+				input.set(value);
+			}
+		},
 		set(key, value) {
 			this[key] = value;
 			let preset = PRESETS[key][value];
@@ -280,8 +374,34 @@ export default {
 				let path = preset_path.split('.');
 				let input = this.data[path[0]][path[1]].inputs[path[2]];
 				if (input) {
+					if (input.type == 'molang') {
+						if (preset[preset_path] instanceof Array) {
+							preset[preset_path].forEach((v, i) => {
+								preset[preset_path][i] = v.toString();
+							})
+						} else if (typeof preset[preset_path] == 'number') {
+							preset[preset_path] = preset[preset_path].toString();
+						}
+					}
 					input.set(preset[preset_path]);
 				}
+			}
+
+			if (key == 'sprite') {
+				let source = '';
+				switch (value) {
+					case 'ball': source = SpriteBall; break;
+					case 'dirt': source = SpriteDirt; break;
+					case 'leaves': source = SpriteLeaves; break;
+					case 'smoke': source = SpriteSmoke; break;
+					case 'dust': source = SpriteDust; break;
+					case 'sparkle': source = SpriteSparkle; break;
+					case 'magic': source = SpriteMagic; break;
+				}
+				console.log(value, source)
+				Texture.source = source;
+				Texture.internal_changes = true;
+				Texture.update();
 			}
 		}
 	}
@@ -331,5 +451,6 @@ export default {
 	.input_bar label.range_number_label {
 		width: 46px;
 		text-align: center;
+		display: block;
 	}
 </style>

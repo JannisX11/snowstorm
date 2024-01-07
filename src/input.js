@@ -2,6 +2,7 @@ import registerEdit from './edits'
 
 import {ExpandedInput} from './components/ExpressionBar'
 import { Config, updateMaterial } from './emitter'
+import { Texture } from './texture_edit';
 
 export default class Input {
 	constructor(data) {
@@ -77,8 +78,6 @@ export default class Input {
 		var scope = this;
 		if (this.type === 'select') {
 			if (this.mode_groups instanceof Array) {
-				console.log(this.mode_groups)
-
 				this.mode_groups.forEach((group, i) => {
 					if (group instanceof Array) {
 						group = scope.mode_groups[i] = Data[group[0]][group[1]]
@@ -93,7 +92,6 @@ export default class Input {
 		this.change(event)
 	}
 	change(e, node) {
-		console.trace(e, node)
 		var scope = this;
 		if (this.type === 'image' && e) {
 			var file = e instanceof Uint8Array ? new File([e], 'unknown.png') : e.target.files[0];
@@ -102,7 +100,7 @@ export default class Input {
 				var reader = new FileReader()
 				reader.onloadend = function() {
 					scope.image.name = file.name;
-					scope.image.data = reader.result;
+					scope.image.data = Texture.source = reader.result;
 					scope.image.loaded = true;
 					scope.image.hidden = true;
 					scope.image.hidden = false;
@@ -154,7 +152,8 @@ export default class Input {
 	}
 	reset() {
 		if (this.type == 'image') {
-			this.image.data = '';
+			this.image.data = Texture.source = '';
+			Texture.internal_changes = false;
 			this.image.name = '';
 			this.image.loaded = false;
 			this.image.hidden = true;
