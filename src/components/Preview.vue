@@ -1,6 +1,7 @@
 <template>
     <main id="preview" class="preview">
         <div id="canvas_wrapper">
+            <div id="overlay_timestamp">{{ timestamp }}</div>
             <canvas id="canvas" @click="blur()" ref="canvas"></canvas>
         </div>
         <footer>
@@ -53,6 +54,10 @@
     } from 'lucide-vue'
 
     const View = {}
+
+    const stats = {
+        time: 0
+    };
     
     const gizmo_colors = {
         r: new THREE.Color(0xfd3043),
@@ -142,6 +147,7 @@
             Scene.updateFacingRotation(View.camera);
             View.renderer.render(View.scene, View.camera);
             View.frames_this_second++;
+            stats.time = Emitter.age;
         }
     }
     function resizeCanvas() {
@@ -182,6 +188,7 @@
             loop_mode: 'Looping',
             parent_mode: 'World',
             warning_count: 0,
+            stats,
             collision: true
         }},
         components: {
@@ -219,6 +226,13 @@
             particle_counter() {
                 let string = this.particles.toString();
                 return string.replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
+            },
+            timestamp() {
+                let time = this.stats.time;
+                let fractions = Math.floor((time % 1) * 10).toString();
+                //if (fractions.length == 1) fractions = '0'+fractions;
+                console.log(time)
+                return `${Math.floor(time)}:${fractions}`;
             }
         },
         mounted() {
@@ -254,6 +268,16 @@
 		width: 100%;
         outline: none;
 	}
+    #overlay_timestamp {
+        top: 0;
+        left: 0;
+        position: absolute;
+        opacity: 0.5;
+        padding: 4px 10px;
+        font-size: 1.1em;
+        font-family: Consolas, monospace;
+        pointer-events: none;
+    }
 	footer {
 		width: 100%;
 		font-size: 1.1em;
@@ -299,10 +323,9 @@
         min-width: 72px;
 	}
     div.warning {
-        color: var(--yellow);
+        color: #ffc107;
         float: right;
         width: auto;
-        padding-top: 0px;
     }
     div.warning:hover {
         color: #ffe060;

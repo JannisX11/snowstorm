@@ -66,6 +66,6 @@ export {validate}
     li.warning {
         list-style: inside;
         padding: 10px;
-        color: var(--yellow);
+        color: #ffc107;
     }
 </style>

@@ -154,7 +154,7 @@ export default {
 <style scoped>
 	div#app {
 		display: grid;
-		grid-template-rows:  66px calc(100% - 66px);
+		grid-template-rows: 74px calc(100% - 74px);
 		grid-template-columns: var(--sidebar) calc(100% - var(--sidebar));
 		grid-template-areas: "sidebar header" "sidebar preview";
 		height: 100%;
@@ -177,7 +177,7 @@ export default {
 
 	/* Portrait View */
 	div#app.portrait_view {
-		grid-template-rows:  66px calc(100% - 102px) 36px;
+		grid-template-rows:  74px calc(100% - 102px) 36px;
 		grid-template-columns: 100%;
 		grid-template-areas: "header" "main" "mode_selector";
 	}

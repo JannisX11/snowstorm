@@ -21,6 +21,7 @@
 				</div>
 			</div>
 
+			<h3>{{ selected_subject.label }}</h3>
 			<div class="input_group" v-for="(group, group_key) in input_groups" :key="group_key">
 				<h4 @click="fold(group)">{{ group.label }}</h4>
 				<template v-if="!group._folded">
@@ -178,6 +179,16 @@ export default {
 	.sidebar_tab:last-of-type > .sidebar_tab_tooltip {
 		right: 0;
 		left: unset;
+	}
+	h3 {
+		margin: 8px;
+		margin-bottom: -2px;
+		font-size: 1.1em;
+		text-align: center;
+		text-transform: uppercase;
+		padding-left: 12px;
+		color: var(--color-text_grayed);
+		cursor: pointer;
 	}
 	.input_subject {
 		border-right: 1px solid var(--color-border);

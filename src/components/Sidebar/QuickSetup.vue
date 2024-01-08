@@ -199,13 +199,14 @@ const PRESETS = {
 		steady: {
 			'emitter.rate.mode': 'steady',
 			'emitter.rate.rate': '60',
+			'emitter.rate.maximum': '400',
 			'emitter.lifetime.mode': 'once',
 			'emitter.lifetime.active_time': '1',
 		}
 	},
 	sprite:{
 		ball: {
-			'appearance.appearance.size': ['0.5', '0.5'],
+			'appearance.appearance.size': ['0.4', '0.4'],
 			'texture.uv.size': [16, 16],
 			'texture.uv.uv': [0, 0],
 			'texture.uv.uv_size': [16, 16],
@@ -373,17 +374,25 @@ export default {
 			for (let preset_path in preset) {
 				let path = preset_path.split('.');
 				let input = this.data[path[0]][path[1]].inputs[path[2]];
+				let value = preset[preset_path];
+
+				if (preset_path == 'motion.motion.linear_speed') this.speed = value;
+				if (preset_path == 'emitter.rate.rate') this.amount = value;
+				if (preset_path == 'emitter.rate.amount') this.amount = value;
+				if (preset_path == 'lifetime.lifetime.max_lifetime') this.particle_lifetime = value;
+				if (preset_path == 'appearance.appearance.light') this.lightning = value;
+
 				if (input) {
 					if (input.type == 'molang') {
-						if (preset[preset_path] instanceof Array) {
-							preset[preset_path].forEach((v, i) => {
-								preset[preset_path][i] = v.toString();
+						if (value instanceof Array) {
+							value.forEach((v, i) => {
+								value[i] = v.toString();
 							})
-						} else if (typeof preset[preset_path] == 'number') {
-							preset[preset_path] = preset[preset_path].toString();
+						} else if (typeof value == 'number') {
+							value = value.toString();
 						}
 					}
-					input.set(preset[preset_path]);
+					input.set(value);
 				}
 			}
 

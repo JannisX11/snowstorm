@@ -7,7 +7,7 @@ const Data = {
 	setup: {
 		label: 'Quick Setup',
 		setup: {
-			label: 'Quick Setup',
+			label: 'File',
 			_folded: false,
 			inputs: {
 				identifier: new Input({
