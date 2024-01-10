@@ -56,7 +56,6 @@ export default function getPathAutocompleteData(text, position, type) {
     let folders = beginning.split('/');
     let current = folders.at(-1);
     let base_path = folders.slice(0, -1).join('/');
-    console.log({folders, base_path, current, beginning, known_directories, directory_cache})
 
     if (directory_cache[base_path]) return filterAndSortList(directory_cache[base_path], current, null);
     
@@ -69,7 +68,6 @@ export default function getPathAutocompleteData(text, position, type) {
         
         return new Promise(resolve => {
             function update(event) {
-                console.log('message', event.data)
                 if (event.data.type == 'texture_autocomplete') {
                     window.removeEventListener('message', update);
                     directory_cache[base_path] = event.data.list;

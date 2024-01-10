@@ -59,18 +59,30 @@ module.exports.SnowstormEditorProvider = class SnowstormEditorProvider {
 
 		webviewPanel.webview.onDidReceiveMessage(e => {
 			switch (e.type) {
-				case 'save':
+				case 'save': {
 					this.updateText(document, e.content);
 					latest_change_from_snowstorm = true;
 					break;
-				case 'view_code':
+				}
+				case 'save_texture': {
+					let path_arr = document.fileName.split(path.sep);
+					let particle_index = path_arr.indexOf('particles')
+					path_arr.splice(particle_index)
+					let filePath = path.join(path_arr.join(path.sep), e.path.replace(/\.png$/, '')+'.png')
+
+					fs.writeFileSync(filePath, e.content.split(',')[1], {encoding: 'base64'});
+					break;
+				}
+				case 'view_code': {
 					if (e.side) vscode.commands.executeCommand('workbench.action.splitEditor')
 					vscode.commands.executeCommand('workbench.action.toggleEditorType');
 					break;
-				case 'link':
+				}
+				case 'link': {
 					vscode.commands.executeCommand('vscode.open', vscode.Uri.parse(e.link));
 					break;
-				case 'request_texture':
+				}
+				case 'request_texture': {
 					let path_arr = document.fileName.split(path.sep);
 					let particle_index = path_arr.indexOf('particles')
 					path_arr.splice(particle_index)
@@ -91,7 +103,8 @@ module.exports.SnowstormEditorProvider = class SnowstormEditorProvider {
 						});
 					}
 					break;
-				case 'texture_autocomplete':
+				}
+				case 'texture_autocomplete': {
 					let json_path_arr = document.fileName.split(path.sep);
 					let json_particle_index = json_path_arr.indexOf('particles');
 					json_path_arr.splice(json_particle_index);
@@ -108,6 +121,7 @@ module.exports.SnowstormEditorProvider = class SnowstormEditorProvider {
 						fromExtension: true
 					});
 					break;
+				}
 			}
 		});
 		

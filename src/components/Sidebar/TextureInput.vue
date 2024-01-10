@@ -1,16 +1,49 @@
 <template>
 	<div class="texture_input">
-		<div class="meta">
+		<div class="meta toolbar">
 			<template v-if="input.allow_upload">
-				<div class="tool" v-on:click="input.reset()"><i class="unicode_icon">{{'\u2A09'}}</i></div>
+				<div class="tool" v-on:click="input.reset()"><X /></div>
 				<input id="particle-texture-image" type="file" accept=".png" v-on:change="input.change($event)">
 			</template>
 			<template v-if="!input.allow_upload">
 				<div class="tool" style="width: auto;" v-on:click="input.updatePreview()" title="Reload"><i class="unicode_icon" style="display: inline;">⟳</i> Reload</div>
 			</template>
+			<div class="tool" @click="newTexture()" title="New Texture">
+				<PlusSquare />
+			</div>
+			<div class="tool" @click="saveTexture()" title="Save">
+				<Save />
+			</div>
 		</div>
-		<div class="input_texture_wrapper checkerboard" :class="{vertical: isVertical()}" ref="texture_wrapper" @mouseenter="onMouseEnter($event)" @mousemove="onMouseMove($event)" @mouseleave="onMouseLeave($event)">
-			<div v-html="input.image_element.outerHTML"></div>
+		<div class="toolbar">
+			<div class="tool" @click="selectTool('select')" :class="{selected: tool == 'select'}" title="Select">
+				<MousePointer />
+			</div>
+			<div class="tool" @click="selectTool('brush')" :class="{selected: tool == 'brush'}" title="Brush">
+				<Brush />
+			</div>
+			<div class="tool" @click="selectTool('eraser')" :class="{selected: tool == 'eraser'}" title="Eraser">
+				<Eraser />
+			</div>
+			<div class="tool" @click="selectTool('fill_tool')" :class="{selected: tool == 'fill_tool'}" title="PaintBucket">
+				<PaintBucket />
+			</div>
+
+			<div class="color_preview" @click.stop="color_picker_open = !color_picker_open">
+				<div class="color_preview_color" :style="{backgroundColor: paint_color.hex8}"></div>
+			</div>
+		</div>
+		<div id="color_picker_overlay" v-if="color_picker_open" @click.stop>
+			<color-picker v-model="paint_color" @change="paint_color = $event" />
+		</div>
+		<div class="input_texture_wrapper checkerboard" :class="{vertical: isVertical()}"
+			ref="texture_wrapper"
+			@mouseenter="onMouseEnter($event)"
+			@mousemove="onMouseMove($event)"
+			@mouseleave="onMouseLeave($event)"
+			@mousedown="onMouseDown($event)"
+		>
+			<div ref="canvas_wrapper"></div>
 			<div class="uv_preview uv_perimeter_preview" :style="calculateUVPerimeter()"></div>
 			<div class="uv_preview uv_sample_preview" :style="calculateUVSample()"></div>
 		</div>
@@ -23,31 +56,102 @@
 
 <script>
 
+import VueColor from 'vue-color'
+import {
+	MousePointer,
+	Brush,
+	Eraser,
+	PaintBucket,
+	PlusSquare,
+	Save,
+	X,
+
+} from 'lucide-vue'
 import Input from '../../input'
 import Molang from 'molangjs'
+import { Texture } from '../../texture_edit';
 let parser = new Molang();
+
+/*
+	New
+	Import
+	Save
+	Tools
+		Select
+		Paint
+		Erase
+		Bucket
+	Color Picker
+
+*/
 
 export default {
 	name: 'texture-input',
 	components: {
+		'color-picker': VueColor.Chrome,
+		MousePointer,
+		Brush,
+		Eraser,
+		PaintBucket,
+		PlusSquare,
+		Save,
+		X,
 	},
 	props: {
 		input: Input,
 		data: Object
 	},
 	data() {return {
+		paint_color: {
+			hex8: '#ffffffff'
+		},
+		tool: 'select',
+		color_picker_open: false,
 		cursor_position: {
 			x: 0,
 			y: 0,
 			active: false
+		},
+		pixel_position: {
+			x: 0,
+			y: 0
 		}
 	}},
 	methods: {
+		newTexture() {
+			Texture.createEmpty();
+		},
+		saveTexture() {
+			if (!Texture.source) return;
+			Texture.save();
+		},
+		selectTool(tool) {
+			this.tool = tool;
+		},
 		onMouseEnter(event) {
 			this.cursor_position.active = true;
 		},
 		onMouseLeave(event) {
 			this.cursor_position.active = false;
+		},
+		onMouseDown(event) {
+			console.log(this.tool)
+			let context = {
+				wrapper: this.$refs.texture_wrapper,
+				position: this.pixel_position,
+				tool: this.tool,
+				color: this.paint_color.hex8
+			};
+			if (event.altKey) {
+				let color = Texture.pickColor(event, context);
+				console.log(color + '');
+				this.paint_color.hex8 = color;
+
+			} if (this.tool == 'brush' || this.tool == 'eraser') {
+				Texture.usePaintTool(event, context);
+			} else if (this.tool == 'fill_tool') {
+				Texture.useFillTool(event, context);
+			}
 		},
 		onMouseMove(event) {
 			let uv_inputs = this.data.texture.uv.inputs;
@@ -57,6 +161,8 @@ export default {
 			let rect = this.$refs.texture_wrapper.getBoundingClientRect();
 			this.cursor_position.x = Math.floor((event.clientX-1-rect.left) / frame_width * uv_width);
 			this.cursor_position.y = Math.floor((event.clientY-1-rect.top) / frame_height * uv_height);
+			this.pixel_position.x = Math.floor((event.clientX-1-rect.left) / frame_width * this.input.image_element.naturalWidth);
+			this.pixel_position.y = Math.floor((event.clientY-1-rect.top) / frame_height * this.input.image_element.naturalHeight);
 		},
 		isVertical() {
 			return this.input.image_element.naturalWidth < this.input.image_element.naturalHeight;
@@ -114,6 +220,12 @@ export default {
 				height: ((bounding_box[3] - bounding_box[1]) / uv_height * frame_height)+'px',
 			};
 		}
+	},
+	mounted() {
+		document.addEventListener('click', () => {
+			if (this.color_picker_open) this.color_picker_open = false;
+		}, {passive: true});
+		this.$refs.canvas_wrapper.append(Texture.canvas);
 	}
 }
 </script>
@@ -122,6 +234,7 @@ export default {
 <style scoped>
 	.texture_input {
 		width: 100%;
+		position: relative;
 	}
 	input#image {
 		width: calc(100% - 40px);
@@ -169,11 +282,55 @@ export default {
 		text-align: center;
 		padding: 2px;
 	}
+	.toolbar {
+		height: 34px;
+		display: flex;
+		margin-top: 6px;
+	}
+	.tool {
+		cursor: pointer;
+		padding: 4px 4px;
+		width: 40px;
+		text-align: center;
+		border-radius: 2px;
+	}
+	.tool.selected {
+		background-color: var(--color-title);
+		color: var(--color-highlight);
+	}
+	.tool:hover {
+		outline-color: var(--color-highlight);
+	}
+	.color_preview {
+		height: 100%;
+		width: 34px;
+		height: 34px;
+		cursor: pointer;
+		border: 1px solid var(--color-border);
+		border-radius: 50%;
+		overflow: hidden;
+		margin-left: auto;
+		position: relative;
+		background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAADBJREFUOE9jfPbs2X8GPEBSUhKfNAPjqAHDIgz+//+PNx08f/4cfzoYNYCBceiHAQC5flV5JzgrxQAAAABJRU5ErkJggg==');
+	}
+	.color_preview_color {
+		position: absolute;
+		top: 0;
+		left: 0;
+		bottom: 0;
+		right: 0;
+	}
+	#color_picker_overlay {
+		position: absolute;
+		z-index: 4;
+		right: 0;
+	}
 </style>
 <style>
-	.input_texture_wrapper img {
+	.input_texture_wrapper canvas {
 		width: 100%;
 		background-size: contain;
 		background-repeat: no-repeat;
+		pointer-events: none;
 	}
 </style>

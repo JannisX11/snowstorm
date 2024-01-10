@@ -407,10 +407,10 @@ export default {
 					case 'sparkle': source = SpriteSparkle; break;
 					case 'magic': source = SpriteMagic; break;
 				}
-				console.log(value, source)
 				Texture.source = source;
 				Texture.internal_changes = true;
 				Texture.update();
+				Texture.updateCanvasFromSource();
 			}
 		}
 	}

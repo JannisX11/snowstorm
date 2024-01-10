@@ -254,6 +254,9 @@ function calculateOffset(element) {
 		rect.top + window.scrollY,
 	]
 }
+function isFirefox() {
+	navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
+}
 
 const IO = {
 	import: function (options, cb) {
@@ -310,6 +313,17 @@ const IO = {
 		}
 		input.click();
 	},
+	/**
+	 * 
+	 * @param {object} options Export options
+	 * @param {string} options.name File name
+	 * @param {string[]} options.extensions Extensions List
+	 * @param {function} options.custom_writer 
+	 * @param {*} options.content 
+	 * @param {'image'|'text'} options.savetype 
+	 * @param {string} cb 
+	 * @returns 
+	 */
 	export: function(options, cb) {
 		if (!options) return;
 
@@ -326,9 +340,9 @@ const IO = {
 			element.href = options.content
 			element.download = file_name;
 			element.style.display = 'none';
-			if (Blockbench.browser === 'firefox') document.body.appendChild(element);
+			if (isFirefox()) document.body.appendChild(element);
 			element.click();
-			if (Blockbench.browser === 'firefox') document.body.removeChild(element);
+			if (isFirefox()) document.body.removeChild(element);
 
 		} else {
 			//var blob = new Blob([options.content], {type: "text/plain;charset=utf-8"});
@@ -343,10 +357,6 @@ const IO = {
 
 
 			//saveAs(blob, file_name, {autoBOM: true})
-		}
-		if (options.project_file) {
-			Prop.project_saved = true;
-			setProjectTitle(options.name)
 		}
 		if (!callback_used && typeof cb === 'function') {
 			cb()

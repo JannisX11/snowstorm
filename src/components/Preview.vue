@@ -231,7 +231,6 @@
                 let time = this.stats.time;
                 let fractions = Math.floor((time % 1) * 10).toString();
                 //if (fractions.length == 1) fractions = '0'+fractions;
-                console.log(time)
                 return `${Math.floor(time)}:${fractions}`;
             }
         },

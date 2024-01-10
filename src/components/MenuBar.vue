@@ -84,7 +84,7 @@ const Menu = [
 			{label: 'MoLang Sheet', click: (vm) => { vm.openDialog('molang_sheet') }},
 			{label: 'MoLang Grapher', click: () => { openLink('https://jannisx11.github.io/molang-grapher/') }},
 			{label: 'Report a Bug', click: () => { openLink('https://github.com/JannisX11/snowstorm/issues') }},
-			{label: 'Discord Channel', click: () => { openLink('https://discord.gg/eGqsNha') }},
+			{label: 'Discord Server', click: () => { openLink('https://discord.gg/W9d78Z8AvM') }},
 		]
 	}
 ]

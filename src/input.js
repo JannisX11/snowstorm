@@ -101,6 +101,7 @@ export default class Input {
 				reader.onloadend = function() {
 					scope.image.name = file.name;
 					scope.image.data = Texture.source = reader.result;
+					Texture.updateCanvasFromSource();
 					scope.image.loaded = true;
 					scope.image.hidden = true;
 					scope.image.hidden = false;
@@ -154,6 +155,7 @@ export default class Input {
 		if (this.type == 'image') {
 			this.image.data = Texture.source = '';
 			Texture.internal_changes = false;
+			Texture.updateCanvasFromSource();
 			this.image.name = '';
 			this.image.loaded = false;
 			this.image.hidden = true;

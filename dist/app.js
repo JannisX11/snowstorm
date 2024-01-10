@@ -560,9 +560,9 @@ var Menu = [{
       openLink('https://github.com/JannisX11/snowstorm/issues');
     }
   }, {
-    label: 'Discord Channel',
+    label: 'Discord Server',
     click: function click() {
-      openLink('https://discord.gg/eGqsNha');
+      openLink('https://discord.gg/W9d78Z8AvM');
     }
   }]
 }];
@@ -915,7 +915,6 @@ View.frames_this_second = 0;
       var time = this.stats.time;
       var fractions = Math.floor(time % 1 * 10).toString();
       //if (fractions.length == 1) fractions = '0'+fractions;
-      console.log(time);
       return "".concat(Math.floor(time), ":").concat(fractions);
     }
   },
@@ -2353,10 +2352,10 @@ var PRESETS = {
             source = _assets_magic_png__WEBPACK_IMPORTED_MODULE_9__;
             break;
         }
-        console.log(value, source);
         _texture_edit__WEBPACK_IMPORTED_MODULE_2__.Texture.source = source;
         _texture_edit__WEBPACK_IMPORTED_MODULE_2__.Texture.internal_changes = true;
         _texture_edit__WEBPACK_IMPORTED_MODULE_2__.Texture.update();
+        _texture_edit__WEBPACK_IMPORTED_MODULE_2__.Texture.updateCanvasFromSource();
       }
     }
   }
@@ -2375,8 +2374,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _input__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../input */ "./src/input.js");
-/* harmony import */ var molangjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! molangjs */ "./node_modules/molangjs/dist/molang.esm.js");
+/* harmony import */ var vue_color__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-color */ "./node_modules/vue-color/dist/vue-color.min.js");
+/* harmony import */ var vue_color__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue_color__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/mouse-pointer.js");
+/* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/brush.js");
+/* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/eraser.js");
+/* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/paint-bucket.js");
+/* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/plus-square.js");
+/* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/save.js");
+/* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/x.js");
+/* harmony import */ var _input__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../input */ "./src/input.js");
+/* harmony import */ var molangjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! molangjs */ "./node_modules/molangjs/dist/molang.esm.js");
+/* harmony import */ var _texture_edit__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../texture_edit */ "./src/texture_edit.js");
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
@@ -2406,32 +2415,129 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
-var parser = new molangjs__WEBPACK_IMPORTED_MODULE_1__["default"]();
+
+
+
+var parser = new molangjs__WEBPACK_IMPORTED_MODULE_2__["default"]();
+
+/*
+	New
+	Import
+	Save
+	Tools
+		Select
+		Paint
+		Erase
+		Bucket
+	Color Picker
+
+*/
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: 'texture-input',
-  components: {},
+  components: {
+    'color-picker': (vue_color__WEBPACK_IMPORTED_MODULE_0___default().Chrome),
+    MousePointer: lucide_vue__WEBPACK_IMPORTED_MODULE_4__["default"],
+    Brush: lucide_vue__WEBPACK_IMPORTED_MODULE_5__["default"],
+    Eraser: lucide_vue__WEBPACK_IMPORTED_MODULE_6__["default"],
+    PaintBucket: lucide_vue__WEBPACK_IMPORTED_MODULE_7__["default"],
+    PlusSquare: lucide_vue__WEBPACK_IMPORTED_MODULE_8__["default"],
+    Save: lucide_vue__WEBPACK_IMPORTED_MODULE_9__["default"],
+    X: lucide_vue__WEBPACK_IMPORTED_MODULE_10__["default"]
+  },
   props: {
-    input: _input__WEBPACK_IMPORTED_MODULE_0__["default"],
+    input: _input__WEBPACK_IMPORTED_MODULE_1__["default"],
     data: Object
   },
   data: function data() {
     return {
+      paint_color: {
+        hex8: '#ffffffff'
+      },
+      tool: 'select',
+      color_picker_open: false,
       cursor_position: {
         x: 0,
         y: 0,
         active: false
+      },
+      pixel_position: {
+        x: 0,
+        y: 0
       }
     };
   },
   methods: {
+    newTexture: function newTexture() {
+      _texture_edit__WEBPACK_IMPORTED_MODULE_3__.Texture.createEmpty();
+    },
+    saveTexture: function saveTexture() {
+      if (!_texture_edit__WEBPACK_IMPORTED_MODULE_3__.Texture.source) return;
+      _texture_edit__WEBPACK_IMPORTED_MODULE_3__.Texture.save();
+    },
+    selectTool: function selectTool(tool) {
+      this.tool = tool;
+    },
     onMouseEnter: function onMouseEnter(event) {
       this.cursor_position.active = true;
     },
     onMouseLeave: function onMouseLeave(event) {
       this.cursor_position.active = false;
+    },
+    onMouseDown: function onMouseDown(event) {
+      console.log(this.tool);
+      var context = {
+        wrapper: this.$refs.texture_wrapper,
+        position: this.pixel_position,
+        tool: this.tool,
+        color: this.paint_color.hex8
+      };
+      if (event.altKey) {
+        var color = _texture_edit__WEBPACK_IMPORTED_MODULE_3__.Texture.pickColor(event, context);
+        console.log(color + '');
+        this.paint_color.hex8 = color;
+      }
+      if (this.tool == 'brush' || this.tool == 'eraser') {
+        _texture_edit__WEBPACK_IMPORTED_MODULE_3__.Texture.usePaintTool(event, context);
+      } else if (this.tool == 'fill_tool') {
+        _texture_edit__WEBPACK_IMPORTED_MODULE_3__.Texture.useFillTool(event, context);
+      }
     },
     onMouseMove: function onMouseMove(event) {
       var uv_inputs = this.data.texture.uv.inputs;
@@ -2443,6 +2549,8 @@ var parser = new molangjs__WEBPACK_IMPORTED_MODULE_1__["default"]();
       var rect = this.$refs.texture_wrapper.getBoundingClientRect();
       this.cursor_position.x = Math.floor((event.clientX - 1 - rect.left) / frame_width * uv_width);
       this.cursor_position.y = Math.floor((event.clientY - 1 - rect.top) / frame_height * uv_height);
+      this.pixel_position.x = Math.floor((event.clientX - 1 - rect.left) / frame_width * this.input.image_element.naturalWidth);
+      this.pixel_position.y = Math.floor((event.clientY - 1 - rect.top) / frame_height * this.input.image_element.naturalHeight);
     },
     isVertical: function isVertical() {
       return this.input.image_element.naturalWidth < this.input.image_element.naturalHeight;
@@ -2513,6 +2621,15 @@ var parser = new molangjs__WEBPACK_IMPORTED_MODULE_1__["default"]();
         height: (bounding_box[3] - bounding_box[1]) / uv_height * frame_height + 'px'
       };
     }
+  },
+  mounted: function mounted() {
+    var _this = this;
+    document.addEventListener('click', function () {
+      if (_this.color_picker_open) _this.color_picker_open = false;
+    }, {
+      passive: true
+    });
+    this.$refs.canvas_wrapper.append(_texture_edit__WEBPACK_IMPORTED_MODULE_3__.Texture.canvas);
   }
 });
 
@@ -3914,6 +4031,7 @@ var Input = /*#__PURE__*/function () {
           reader.onloadend = function () {
             scope.image.name = file.name;
             scope.image.data = _texture_edit__WEBPACK_IMPORTED_MODULE_3__.Texture.source = reader.result;
+            _texture_edit__WEBPACK_IMPORTED_MODULE_3__.Texture.updateCanvasFromSource();
             scope.image.loaded = true;
             scope.image.hidden = true;
             scope.image.hidden = false;
@@ -3972,6 +4090,7 @@ var Input = /*#__PURE__*/function () {
       if (this.type == 'image') {
         this.image.data = _texture_edit__WEBPACK_IMPORTED_MODULE_3__.Texture.source = '';
         _texture_edit__WEBPACK_IMPORTED_MODULE_3__.Texture.internal_changes = false;
+        _texture_edit__WEBPACK_IMPORTED_MODULE_3__.Texture.updateCanvasFromSource();
         this.image.name = '';
         this.image.loaded = false;
         this.image.hidden = true;
@@ -5084,14 +5203,6 @@ function getPathAutocompleteData(text, position, type) {
   var folders = beginning.split('/');
   var current = folders.at(-1);
   var base_path = folders.slice(0, -1).join('/');
-  console.log({
-    folders: folders,
-    base_path: base_path,
-    current: current,
-    beginning: beginning,
-    known_directories: known_directories,
-    directory_cache: directory_cache
-  });
   if (directory_cache[base_path]) return filterAndSortList(directory_cache[base_path], current, null);
   if (_vscode_extension__WEBPACK_IMPORTED_MODULE_0__["default"]) {
     _vscode_extension__WEBPACK_IMPORTED_MODULE_0__["default"].postMessage({
@@ -5101,7 +5212,6 @@ function getPathAutocompleteData(text, position, type) {
     directory_cache[base_path] = [];
     return new Promise(function (resolve) {
       function update(event) {
-        console.log('message', event.data);
         if (event.data.type == 'texture_autocomplete') {
           window.removeEventListener('message', update);
           directory_cache[base_path] = event.data.list;
@@ -5229,16 +5339,24 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   Texture: () => (/* binding */ Texture)
 /* harmony export */ });
+/* harmony import */ var _util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./util */ "./src/util.js");
+/* harmony import */ var _vscode_extension__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./vscode_extension */ "./src/vscode_extension.js");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return e; }; var t, e = {}, r = Object.prototype, n = r.hasOwnProperty, o = Object.defineProperty || function (t, e, r) { t[e] = r.value; }, i = "function" == typeof Symbol ? Symbol : {}, a = i.iterator || "@@iterator", c = i.asyncIterator || "@@asyncIterator", u = i.toStringTag || "@@toStringTag"; function define(t, e, r) { return Object.defineProperty(t, e, { value: r, enumerable: !0, configurable: !0, writable: !0 }), t[e]; } try { define({}, ""); } catch (t) { define = function define(t, e, r) { return t[e] = r; }; } function wrap(t, e, r, n) { var i = e && e.prototype instanceof Generator ? e : Generator, a = Object.create(i.prototype), c = new Context(n || []); return o(a, "_invoke", { value: makeInvokeMethod(t, r, c) }), a; } function tryCatch(t, e, r) { try { return { type: "normal", arg: t.call(e, r) }; } catch (t) { return { type: "throw", arg: t }; } } e.wrap = wrap; var h = "suspendedStart", l = "suspendedYield", f = "executing", s = "completed", y = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var p = {}; define(p, a, function () { return this; }); var d = Object.getPrototypeOf, v = d && d(d(values([]))); v && v !== r && n.call(v, a) && (p = v); var g = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(p); function defineIteratorMethods(t) { ["next", "throw", "return"].forEach(function (e) { define(t, e, function (t) { return this._invoke(e, t); }); }); } function AsyncIterator(t, e) { function invoke(r, o, i, a) { var c = tryCatch(t[r], t, o); if ("throw" !== c.type) { var u = c.arg, h = u.value; return h && "object" == _typeof(h) && n.call(h, "__await") ? e.resolve(h.__await).then(function (t) { invoke("next", t, i, a); }, function (t) { invoke("throw", t, i, a); }) : e.resolve(h).then(function (t) { u.value = t, i(u); }, function (t) { return invoke("throw", t, i, a); }); } a(c.arg); } var r; o(this, "_invoke", { value: function value(t, n) { function callInvokeWithMethodAndArg() { return new e(function (e, r) { invoke(t, n, e, r); }); } return r = r ? r.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(e, r, n) { var o = h; return function (i, a) { if (o === f) throw new Error("Generator is already running"); if (o === s) { if ("throw" === i) throw a; return { value: t, done: !0 }; } for (n.method = i, n.arg = a;;) { var c = n.delegate; if (c) { var u = maybeInvokeDelegate(c, n); if (u) { if (u === y) continue; return u; } } if ("next" === n.method) n.sent = n._sent = n.arg;else if ("throw" === n.method) { if (o === h) throw o = s, n.arg; n.dispatchException(n.arg); } else "return" === n.method && n.abrupt("return", n.arg); o = f; var p = tryCatch(e, r, n); if ("normal" === p.type) { if (o = n.done ? s : l, p.arg === y) continue; return { value: p.arg, done: n.done }; } "throw" === p.type && (o = s, n.method = "throw", n.arg = p.arg); } }; } function maybeInvokeDelegate(e, r) { var n = r.method, o = e.iterator[n]; if (o === t) return r.delegate = null, "throw" === n && e.iterator["return"] && (r.method = "return", r.arg = t, maybeInvokeDelegate(e, r), "throw" === r.method) || "return" !== n && (r.method = "throw", r.arg = new TypeError("The iterator does not provide a '" + n + "' method")), y; var i = tryCatch(o, e.iterator, r.arg); if ("throw" === i.type) return r.method = "throw", r.arg = i.arg, r.delegate = null, y; var a = i.arg; return a ? a.done ? (r[e.resultName] = a.value, r.next = e.nextLoc, "return" !== r.method && (r.method = "next", r.arg = t), r.delegate = null, y) : a : (r.method = "throw", r.arg = new TypeError("iterator result is not an object"), r.delegate = null, y); } function pushTryEntry(t) { var e = { tryLoc: t[0] }; 1 in t && (e.catchLoc = t[1]), 2 in t && (e.finallyLoc = t[2], e.afterLoc = t[3]), this.tryEntries.push(e); } function resetTryEntry(t) { var e = t.completion || {}; e.type = "normal", delete e.arg, t.completion = e; } function Context(t) { this.tryEntries = [{ tryLoc: "root" }], t.forEach(pushTryEntry, this), this.reset(!0); } function values(e) { if (e || "" === e) { var r = e[a]; if (r) return r.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) { var o = -1, i = function next() { for (; ++o < e.length;) if (n.call(e, o)) return next.value = e[o], next.done = !1, next; return next.value = t, next.done = !0, next; }; return i.next = i; } } throw new TypeError(_typeof(e) + " is not iterable"); } return GeneratorFunction.prototype = GeneratorFunctionPrototype, o(g, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), o(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, u, "GeneratorFunction"), e.isGeneratorFunction = function (t) { var e = "function" == typeof t && t.constructor; return !!e && (e === GeneratorFunction || "GeneratorFunction" === (e.displayName || e.name)); }, e.mark = function (t) { return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, define(t, u, "GeneratorFunction")), t.prototype = Object.create(g), t; }, e.awrap = function (t) { return { __await: t }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, c, function () { return this; }), e.AsyncIterator = AsyncIterator, e.async = function (t, r, n, o, i) { void 0 === i && (i = Promise); var a = new AsyncIterator(wrap(t, r, n, o), i); return e.isGeneratorFunction(r) ? a : a.next().then(function (t) { return t.done ? t.value : a.next(); }); }, defineIteratorMethods(g), define(g, u, "Generator"), define(g, a, function () { return this; }), define(g, "toString", function () { return "[object Generator]"; }), e.keys = function (t) { var e = Object(t), r = []; for (var n in e) r.push(n); return r.reverse(), function next() { for (; r.length;) { var t = r.pop(); if (t in e) return next.value = t, next.done = !1, next; } return next.done = !0, next; }; }, e.values = values, Context.prototype = { constructor: Context, reset: function reset(e) { if (this.prev = 0, this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(resetTryEntry), !e) for (var r in this) "t" === r.charAt(0) && n.call(this, r) && !isNaN(+r.slice(1)) && (this[r] = t); }, stop: function stop() { this.done = !0; var t = this.tryEntries[0].completion; if ("throw" === t.type) throw t.arg; return this.rval; }, dispatchException: function dispatchException(e) { if (this.done) throw e; var r = this; function handle(n, o) { return a.type = "throw", a.arg = e, r.next = n, o && (r.method = "next", r.arg = t), !!o; } for (var o = this.tryEntries.length - 1; o >= 0; --o) { var i = this.tryEntries[o], a = i.completion; if ("root" === i.tryLoc) return handle("end"); if (i.tryLoc <= this.prev) { var c = n.call(i, "catchLoc"), u = n.call(i, "finallyLoc"); if (c && u) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } else if (c) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); } else { if (!u) throw new Error("try statement without catch or finally"); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } } } }, abrupt: function abrupt(t, e) { for (var r = this.tryEntries.length - 1; r >= 0; --r) { var o = this.tryEntries[r]; if (o.tryLoc <= this.prev && n.call(o, "finallyLoc") && this.prev < o.finallyLoc) { var i = o; break; } } i && ("break" === t || "continue" === t) && i.tryLoc <= e && e <= i.finallyLoc && (i = null); var a = i ? i.completion : {}; return a.type = t, a.arg = e, i ? (this.method = "next", this.next = i.finallyLoc, y) : this.complete(a); }, complete: function complete(t, e) { if ("throw" === t.type) throw t.arg; return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && e && (this.next = e), y; }, finish: function finish(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.finallyLoc === t) return this.complete(r.completion, r.afterLoc), resetTryEntry(r), y; } }, "catch": function _catch(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.tryLoc === t) { var n = r.completion; if ("throw" === n.type) { var o = n.arg; resetTryEntry(r); } return o; } } throw new Error("illegal catch attempt"); }, delegateYield: function delegateYield(e, r, n) { return this.delegate = { iterator: values(e), resultName: r, nextLoc: n }, "next" === this.method && (this.arg = t), y; } }, e; }
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, _toPropertyKey(descriptor.key), descriptor); } }
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
 function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : String(i); }
 function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+
+
 var TextureClass = /*#__PURE__*/function () {
   function TextureClass() {
     _classCallCheck(this, TextureClass);
     this.canvas = document.createElement('canvas');
+    this.ctx = this.canvas.getContext('2d');
     this.source = '';
     this.internal_changes = false;
   }
@@ -5252,8 +5370,40 @@ var TextureClass = /*#__PURE__*/function () {
   }, {
     key: "canvasToDataURL",
     value: function canvasToDataURL() {
-      this.sourec = this.canvas.toDataURL();
+      this.source = this.canvas.toDataURL();
     }
+  }, {
+    key: "updateCanvasFromSource",
+    value: function () {
+      var _updateCanvasFromSource = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
+        var _this = this;
+        var img;
+        return _regeneratorRuntime().wrap(function _callee$(_context) {
+          while (1) switch (_context.prev = _context.next) {
+            case 0:
+              img = new Image();
+              img.src = this.source;
+              _context.next = 4;
+              return new Promise(function (resolve, reject) {
+                img.onload = function () {
+                  _this.canvas.width = img.naturalWidth;
+                  _this.canvas.height = img.naturalHeight;
+                  _this.ctx.drawImage(img, 0, 0);
+                  resolve();
+                };
+                img.onerror = reject;
+              });
+            case 4:
+            case "end":
+              return _context.stop();
+          }
+        }, _callee, this);
+      }));
+      function updateCanvasFromSource() {
+        return _updateCanvasFromSource.apply(this, arguments);
+      }
+      return updateCanvasFromSource;
+    }()
   }, {
     key: "update",
     value: function update() {
@@ -5265,9 +5415,104 @@ var TextureClass = /*#__PURE__*/function () {
       this.source = '';
       this.internal_changes = false;
     }
+  }, {
+    key: "createEmpty",
+    value: function createEmpty() {
+      var width = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 16;
+      var height = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 16;
+      this.canvas.width = width;
+      this.canvas.height = height;
+      this.canvasToDataURL();
+      this.internal_changes = true;
+      this.update();
+    }
+  }, {
+    key: "save",
+    value: function save() {
+      if (!this.source) return;
+      if (_vscode_extension__WEBPACK_IMPORTED_MODULE_1__["default"]) {
+        var content = this.source;
+        _vscode_extension__WEBPACK_IMPORTED_MODULE_1__["default"].postMessage({
+          type: 'save_texture',
+          path: this.config.particle_texture_path,
+          content: content
+        });
+      } else {
+        _util__WEBPACK_IMPORTED_MODULE_0__.IO["export"]({
+          name: this.name || 'Texture',
+          extensions: ['png'],
+          savetype: 'image',
+          content: this.source
+        });
+      }
+      this.markAsSaved();
+    }
+  }, {
+    key: "markAsSaved",
+    value: function markAsSaved() {
+      this.internal_changes = false;
+    }
+  }, {
+    key: "pickColor",
+    value: function pickColor(event, context) {
+      var coords = context.position;
+      var _this$ctx$getImageDat = this.ctx.getImageData(coords.x, coords.y, 1, 1),
+        data = _this$ctx$getImageDat.data;
+      var string = '#';
+      data.forEach(function (value) {
+        var s = value.toString(16);
+        if (s.length == 1) s = '0' + s;
+        string = string + s;
+      });
+      return string;
+    }
+  }, {
+    key: "usePaintTool",
+    value: function usePaintTool(e1, context) {
+      var _this2 = this;
+      var last_coords = {};
+      var onMove = function onMove(e2) {
+        var coords = context.position;
+        if (last_coords.x == coords.x && last_coords.y == coords.y) return;
+        var r = 0;
+        if (context.tool == 'brush') {
+          _this2.ctx.fillStyle = context.color;
+          _this2.ctx.fillRect(coords.x - Math.round(r), coords.y - Math.round(r), 1 + r, 1 + r);
+        } else {
+          _this2.ctx.clearRect(coords.x - Math.round(r), coords.y - Math.round(r), 1 + r, 1 + r);
+        }
+        _this2.canvasToDataURL();
+        _this2.internal_changes = true;
+        _this2.update();
+        last_coords.x = coords.x;
+        last_coords.y = coords.y;
+      };
+      var onEnd = function onEnd(e2) {
+        document.removeEventListener('mousemove', onMove);
+        document.removeEventListener('mouseup', onEnd);
+      };
+      document.addEventListener('mousemove', onMove);
+      document.addEventListener('mouseup', onEnd);
+      onMove(e1);
+    }
+  }, {
+    key: "useFillTool",
+    value: function useFillTool(event, context) {}
   }]);
   return TextureClass;
 }();
+function calculatePixelCoords(event, context, canvas) {
+  var round = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : false;
+  var rect = context.wrapper.getBoundingClientRect();
+  var offset = [(event.clientX - rect.x) * (canvas.width / context.wrapper.firstElementChild.clientWidth), (event.clientY - rect.y) * (canvas.height / context.wrapper.firstElementChild.clientHeight)];
+  if (round) {
+    return offset.map(function (v) {
+      return Math.floor(v);
+    });
+  } else {
+    return offset;
+  }
+}
 var Texture = new TextureClass();
 
 /***/ }),
@@ -5547,6 +5792,9 @@ function calculateOffset(element) {
   var rect = element.getBoundingClientRect();
   return [rect.left + window.scrollX, rect.top + window.scrollY];
 }
+function isFirefox() {
+  navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
+}
 var IO = {
   "import": function _import(options, cb) {
     if (_typeof(options) !== 'object') {
@@ -5602,6 +5850,17 @@ var IO = {
     };
     input.click();
   },
+  /**
+   * 
+   * @param {object} options Export options
+   * @param {string} options.name File name
+   * @param {string[]} options.extensions Extensions List
+   * @param {function} options.custom_writer 
+   * @param {*} options.content 
+   * @param {'image'|'text'} options.savetype 
+   * @param {string} cb 
+   * @returns 
+   */
   "export": function _export(options, cb) {
     if (!options) return;
     var file_name = options.name + (options.extensions ? '.' + options.extensions[0] : '');
@@ -5614,9 +5873,9 @@ var IO = {
       element.href = options.content;
       element.download = file_name;
       element.style.display = 'none';
-      if (Blockbench.browser === 'firefox') document.body.appendChild(element);
+      if (isFirefox()) document.body.appendChild(element);
       element.click();
-      if (Blockbench.browser === 'firefox') document.body.removeChild(element);
+      if (isFirefox()) document.body.removeChild(element);
     } else {
       //var blob = new Blob([options.content], {type: "text/plain;charset=utf-8"});
 
@@ -5629,10 +5888,6 @@ var IO = {
       document.body.removeChild(element);
 
       //saveAs(blob, file_name, {autoBOM: true})
-    }
-    if (options.project_file) {
-      Prop.project_saved = true;
-      setProjectTitle(options.name);
     }
     if (!callback_used && typeof cb === 'function') {
       cb();
@@ -7271,7 +7526,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.texture_input[data-v-5a205692] {\n\twidth: 100%;\n}\ninput#image[data-v-5a205692] {\n\twidth: calc(100% - 40px);\n}\n.input_right.image[data-v-5a205692] {\n\tflex-direction: column;\n}\n.input_texture_wrapper[data-v-5a205692] {\n\t--size: 256px;\n\tdisplay: block;\n\theight: var(--size);\n\twidth: var(--size);\n\tmargin: auto;\n\tmargin-top: 8px;\n\tflex-shrink: 0;\n\tborder: 1px solid var(--color-border);\n\tbox-sizing: content-box;\n\tposition: relative;\n\toverflow: hidden;\n\tcursor: crosshair;\n}\n.input_texture_wrapper.vertical[data-v-5a205692] {\n\twidth: calc(var(--size) + 8px);\n\toverflow-y: auto;\n}\n.uv_preview[data-v-5a205692] {\n\tposition: absolute;\n\ttop: 0;\n\toutline: 1px solid var(--color-border);\n}\n.uv_preview[data-v-5a205692]:hover {\n\toutline-color: var(--color-highlight);\n}\n.uv_sample_preview[data-v-5a205692] {\n\tborder: 1px solid var(--color-accent);\n}\n.uv_perimeter_preview[data-v-5a205692] {\n\tborder: 1px solid var(--color-text);\n}\n.texture_info_bar[data-v-5a205692] {\n\tdisplay: flex;\n}\n.texture_info_bar > *[data-v-5a205692] {\n\tflex: 1 1 80px;\n\ttext-align: center;\n\tpadding: 2px;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.texture_input[data-v-5a205692] {\n\twidth: 100%;\n\tposition: relative;\n}\ninput#image[data-v-5a205692] {\n\twidth: calc(100% - 40px);\n}\n.input_right.image[data-v-5a205692] {\n\tflex-direction: column;\n}\n.input_texture_wrapper[data-v-5a205692] {\n\t--size: 256px;\n\tdisplay: block;\n\theight: var(--size);\n\twidth: var(--size);\n\tmargin: auto;\n\tmargin-top: 8px;\n\tflex-shrink: 0;\n\tborder: 1px solid var(--color-border);\n\tbox-sizing: content-box;\n\tposition: relative;\n\toverflow: hidden;\n\tcursor: crosshair;\n}\n.input_texture_wrapper.vertical[data-v-5a205692] {\n\twidth: calc(var(--size) + 8px);\n\toverflow-y: auto;\n}\n.uv_preview[data-v-5a205692] {\n\tposition: absolute;\n\ttop: 0;\n\toutline: 1px solid var(--color-border);\n}\n.uv_preview[data-v-5a205692]:hover {\n\toutline-color: var(--color-highlight);\n}\n.uv_sample_preview[data-v-5a205692] {\n\tborder: 1px solid var(--color-accent);\n}\n.uv_perimeter_preview[data-v-5a205692] {\n\tborder: 1px solid var(--color-text);\n}\n.texture_info_bar[data-v-5a205692] {\n\tdisplay: flex;\n}\n.texture_info_bar > *[data-v-5a205692] {\n\tflex: 1 1 80px;\n\ttext-align: center;\n\tpadding: 2px;\n}\n.toolbar[data-v-5a205692] {\n\theight: 34px;\n\tdisplay: flex;\n\tmargin-top: 6px;\n}\n.tool[data-v-5a205692] {\n\tcursor: pointer;\n\tpadding: 4px 4px;\n\twidth: 40px;\n\ttext-align: center;\n\tborder-radius: 2px;\n}\n.tool.selected[data-v-5a205692] {\n\tbackground-color: var(--color-title);\n\tcolor: var(--color-highlight);\n}\n.tool[data-v-5a205692]:hover {\n\toutline-color: var(--color-highlight);\n}\n.color_preview[data-v-5a205692] {\n\theight: 100%;\n\twidth: 34px;\n\theight: 34px;\n\tcursor: pointer;\n\tborder: 1px solid var(--color-border);\n\tborder-radius: 50%;\n\toverflow: hidden;\n\tmargin-left: auto;\n\tposition: relative;\n\tbackground-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAADBJREFUOE9jfPbs2X8GPEBSUhKfNAPjqAHDIgz+//+PNx08f/4cfzoYNYCBceiHAQC5flV5JzgrxQAAAABJRU5ErkJggg==');\n}\n.color_preview_color[data-v-5a205692] {\n\tposition: absolute;\n\ttop: 0;\n\tleft: 0;\n\tbottom: 0;\n\tright: 0;\n}\n#color_picker_overlay[data-v-5a205692] {\n\tposition: absolute;\n\tz-index: 4;\n\tright: 0;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -7295,7 +7550,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.input_texture_wrapper img {\n\twidth: 100%;\n\tbackground-size: contain;\n\tbackground-repeat: no-repeat;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.input_texture_wrapper canvas {\n\twidth: 100%;\n\tbackground-size: contain;\n\tbackground-repeat: no-repeat;\n\tpointer-events: none;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -10237,6 +10492,44 @@ const Bomb = (0,_createVueComponent_js__WEBPACK_IMPORTED_MODULE_0__["default"])(
 
 /***/ }),
 
+/***/ "./node_modules/lucide-vue/dist/esm/icons/brush.js":
+/*!*********************************************************!*\
+  !*** ./node_modules/lucide-vue/dist/esm/icons/brush.js ***!
+  \*********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ Brush)
+/* harmony export */ });
+/* harmony import */ var _createVueComponent_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../createVueComponent.js */ "./node_modules/lucide-vue/dist/esm/createVueComponent.js");
+/**
+ * @license lucide-vue v0.298.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+
+
+
+const Brush = (0,_createVueComponent_js__WEBPACK_IMPORTED_MODULE_0__["default"])("BrushIcon", [
+  ["path", { d: "m9.06 11.9 8.07-8.06a2.85 2.85 0 1 1 4.03 4.03l-8.06 8.08", key: "1styjt" }],
+  [
+    "path",
+    {
+      d: "M7.07 14.94c-1.66 0-3 1.35-3 3.02 0 1.33-2.5 1.52-2 2.02 1.08 1.1 2.49 2.02 4 2.02 2.2 0 4-1.8 4-4.04a3.01 3.01 0 0 0-3-3.02z",
+      key: "z0l1mu"
+    }
+  ]
+]);
+
+
+//# sourceMappingURL=brush.js.map
+
+
+/***/ }),
+
 /***/ "./node_modules/lucide-vue/dist/esm/icons/check-square.js":
 /*!****************************************************************!*\
   !*** ./node_modules/lucide-vue/dist/esm/icons/check-square.js ***!
@@ -10583,6 +10876,45 @@ const Egg = (0,_createVueComponent_js__WEBPACK_IMPORTED_MODULE_0__["default"])("
 
 /***/ }),
 
+/***/ "./node_modules/lucide-vue/dist/esm/icons/eraser.js":
+/*!**********************************************************!*\
+  !*** ./node_modules/lucide-vue/dist/esm/icons/eraser.js ***!
+  \**********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ Eraser)
+/* harmony export */ });
+/* harmony import */ var _createVueComponent_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../createVueComponent.js */ "./node_modules/lucide-vue/dist/esm/createVueComponent.js");
+/**
+ * @license lucide-vue v0.298.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+
+
+
+const Eraser = (0,_createVueComponent_js__WEBPACK_IMPORTED_MODULE_0__["default"])("EraserIcon", [
+  [
+    "path",
+    {
+      d: "m7 21-4.3-4.3c-1-1-1-2.5 0-3.4l9.6-9.6c1-1 2.5-1 3.4 0l5.6 5.6c1 1 1 2.5 0 3.4L13 21",
+      key: "182aya"
+    }
+  ],
+  ["path", { d: "M22 21H7", key: "t4ddhn" }],
+  ["path", { d: "m5 11 9 9", key: "1mo9qw" }]
+]);
+
+
+//# sourceMappingURL=eraser.js.map
+
+
+/***/ }),
+
 /***/ "./node_modules/lucide-vue/dist/esm/icons/feather.js":
 /*!***********************************************************!*\
   !*** ./node_modules/lucide-vue/dist/esm/icons/feather.js ***!
@@ -10761,6 +11093,75 @@ const Magnet = (0,_createVueComponent_js__WEBPACK_IMPORTED_MODULE_0__["default"]
 
 /***/ }),
 
+/***/ "./node_modules/lucide-vue/dist/esm/icons/mouse-pointer.js":
+/*!*****************************************************************!*\
+  !*** ./node_modules/lucide-vue/dist/esm/icons/mouse-pointer.js ***!
+  \*****************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ MousePointer)
+/* harmony export */ });
+/* harmony import */ var _createVueComponent_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../createVueComponent.js */ "./node_modules/lucide-vue/dist/esm/createVueComponent.js");
+/**
+ * @license lucide-vue v0.298.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+
+
+
+const MousePointer = (0,_createVueComponent_js__WEBPACK_IMPORTED_MODULE_0__["default"])("MousePointerIcon", [
+  ["path", { d: "m3 3 7.07 16.97 2.51-7.39 7.39-2.51L3 3z", key: "y2ucgo" }],
+  ["path", { d: "m13 13 6 6", key: "1nhxnf" }]
+]);
+
+
+//# sourceMappingURL=mouse-pointer.js.map
+
+
+/***/ }),
+
+/***/ "./node_modules/lucide-vue/dist/esm/icons/paint-bucket.js":
+/*!****************************************************************!*\
+  !*** ./node_modules/lucide-vue/dist/esm/icons/paint-bucket.js ***!
+  \****************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ PaintBucket)
+/* harmony export */ });
+/* harmony import */ var _createVueComponent_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../createVueComponent.js */ "./node_modules/lucide-vue/dist/esm/createVueComponent.js");
+/**
+ * @license lucide-vue v0.298.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+
+
+
+const PaintBucket = (0,_createVueComponent_js__WEBPACK_IMPORTED_MODULE_0__["default"])("PaintBucketIcon", [
+  [
+    "path",
+    { d: "m19 11-8-8-8.6 8.6a2 2 0 0 0 0 2.8l5.2 5.2c.8.8 2 .8 2.8 0L19 11Z", key: "irua1i" }
+  ],
+  ["path", { d: "m5 2 5 5", key: "1lls2c" }],
+  ["path", { d: "M2 13h15", key: "1hkzvu" }],
+  ["path", { d: "M22 20a2 2 0 1 1-4 0c0-1.6 1.7-2.4 2-4 .3 1.6 2 2.4 2 4Z", key: "xk76lq" }]
+]);
+
+
+//# sourceMappingURL=paint-bucket.js.map
+
+
+/***/ }),
+
 /***/ "./node_modules/lucide-vue/dist/esm/icons/party-popper.js":
 /*!****************************************************************!*\
   !*** ./node_modules/lucide-vue/dist/esm/icons/party-popper.js ***!
@@ -10877,6 +11278,72 @@ const Play = (0,_createVueComponent_js__WEBPACK_IMPORTED_MODULE_0__["default"])(
 
 
 //# sourceMappingURL=play.js.map
+
+
+/***/ }),
+
+/***/ "./node_modules/lucide-vue/dist/esm/icons/plus-square.js":
+/*!***************************************************************!*\
+  !*** ./node_modules/lucide-vue/dist/esm/icons/plus-square.js ***!
+  \***************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ PlusSquare)
+/* harmony export */ });
+/* harmony import */ var _createVueComponent_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../createVueComponent.js */ "./node_modules/lucide-vue/dist/esm/createVueComponent.js");
+/**
+ * @license lucide-vue v0.298.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+
+
+
+const PlusSquare = (0,_createVueComponent_js__WEBPACK_IMPORTED_MODULE_0__["default"])("PlusSquareIcon", [
+  ["rect", { width: "18", height: "18", x: "3", y: "3", rx: "2", key: "afitv7" }],
+  ["path", { d: "M8 12h8", key: "1wcyev" }],
+  ["path", { d: "M12 8v8", key: "napkw2" }]
+]);
+
+
+//# sourceMappingURL=plus-square.js.map
+
+
+/***/ }),
+
+/***/ "./node_modules/lucide-vue/dist/esm/icons/save.js":
+/*!********************************************************!*\
+  !*** ./node_modules/lucide-vue/dist/esm/icons/save.js ***!
+  \********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ Save)
+/* harmony export */ });
+/* harmony import */ var _createVueComponent_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../createVueComponent.js */ "./node_modules/lucide-vue/dist/esm/createVueComponent.js");
+/**
+ * @license lucide-vue v0.298.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+
+
+
+const Save = (0,_createVueComponent_js__WEBPACK_IMPORTED_MODULE_0__["default"])("SaveIcon", [
+  ["path", { d: "M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z", key: "1owoqh" }],
+  ["polyline", { points: "17 21 17 13 7 13 7 21", key: "1md35c" }],
+  ["polyline", { points: "7 3 7 8 15 8", key: "8nz8an" }]
+]);
+
+
+//# sourceMappingURL=save.js.map
 
 
 /***/ }),
@@ -11157,6 +11624,38 @@ const Wand = (0,_createVueComponent_js__WEBPACK_IMPORTED_MODULE_0__["default"])(
 
 
 //# sourceMappingURL=wand.js.map
+
+
+/***/ }),
+
+/***/ "./node_modules/lucide-vue/dist/esm/icons/x.js":
+/*!*****************************************************!*\
+  !*** ./node_modules/lucide-vue/dist/esm/icons/x.js ***!
+  \*****************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ X)
+/* harmony export */ });
+/* harmony import */ var _createVueComponent_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../createVueComponent.js */ "./node_modules/lucide-vue/dist/esm/createVueComponent.js");
+/**
+ * @license lucide-vue v0.298.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+
+
+
+const X = (0,_createVueComponent_js__WEBPACK_IMPORTED_MODULE_0__["default"])("XIcon", [
+  ["path", { d: "M18 6 6 18", key: "1bl5f8" }],
+  ["path", { d: "m6 6 12 12", key: "d8bk6v" }]
+]);
+
+
+//# sourceMappingURL=x.js.map
 
 
 /***/ }),
@@ -71222,7 +71721,7 @@ var render = function() {
   return _c("div", { staticClass: "texture_input" }, [
     _c(
       "div",
-      { staticClass: "meta" },
+      { staticClass: "meta toolbar" },
       [
         _vm.input.allow_upload
           ? [
@@ -71236,11 +71735,8 @@ var render = function() {
                     }
                   }
                 },
-                [
-                  _c("i", { staticClass: "unicode_icon" }, [
-                    _vm._v(_vm._s("\u2A09"))
-                  ])
-                ]
+                [_c("X")],
+                1
               ),
               _vm._v(" "),
               _c("input", {
@@ -71285,10 +71781,156 @@ var render = function() {
                 ]
               )
             ]
-          : _vm._e()
+          : _vm._e(),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            staticClass: "tool",
+            attrs: { title: "New Texture" },
+            on: {
+              click: function($event) {
+                return _vm.newTexture()
+              }
+            }
+          },
+          [_c("PlusSquare")],
+          1
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            staticClass: "tool",
+            attrs: { title: "Save" },
+            on: {
+              click: function($event) {
+                return _vm.saveTexture()
+              }
+            }
+          },
+          [_c("Save")],
+          1
+        )
       ],
       2
     ),
+    _vm._v(" "),
+    _c("div", { staticClass: "toolbar" }, [
+      _c(
+        "div",
+        {
+          staticClass: "tool",
+          class: { selected: _vm.tool == "select" },
+          attrs: { title: "Select" },
+          on: {
+            click: function($event) {
+              return _vm.selectTool("select")
+            }
+          }
+        },
+        [_c("MousePointer")],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          staticClass: "tool",
+          class: { selected: _vm.tool == "brush" },
+          attrs: { title: "Brush" },
+          on: {
+            click: function($event) {
+              return _vm.selectTool("brush")
+            }
+          }
+        },
+        [_c("Brush")],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          staticClass: "tool",
+          class: { selected: _vm.tool == "eraser" },
+          attrs: { title: "Eraser" },
+          on: {
+            click: function($event) {
+              return _vm.selectTool("eraser")
+            }
+          }
+        },
+        [_c("Eraser")],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          staticClass: "tool",
+          class: { selected: _vm.tool == "fill_tool" },
+          attrs: { title: "PaintBucket" },
+          on: {
+            click: function($event) {
+              return _vm.selectTool("fill_tool")
+            }
+          }
+        },
+        [_c("PaintBucket")],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          staticClass: "color_preview",
+          on: {
+            click: function($event) {
+              $event.stopPropagation()
+              _vm.color_picker_open = !_vm.color_picker_open
+            }
+          }
+        },
+        [
+          _c("div", {
+            staticClass: "color_preview_color",
+            style: { backgroundColor: _vm.paint_color.hex8 }
+          })
+        ]
+      )
+    ]),
+    _vm._v(" "),
+    _vm.color_picker_open
+      ? _c(
+          "div",
+          {
+            attrs: { id: "color_picker_overlay" },
+            on: {
+              click: function($event) {
+                $event.stopPropagation()
+              }
+            }
+          },
+          [
+            _c("color-picker", {
+              on: {
+                change: function($event) {
+                  _vm.paint_color = $event
+                }
+              },
+              model: {
+                value: _vm.paint_color,
+                callback: function($$v) {
+                  _vm.paint_color = $$v
+                },
+                expression: "paint_color"
+              }
+            })
+          ],
+          1
+        )
+      : _vm._e(),
     _vm._v(" "),
     _c(
       "div",
@@ -71305,13 +71947,14 @@ var render = function() {
           },
           mouseleave: function($event) {
             return _vm.onMouseLeave($event)
+          },
+          mousedown: function($event) {
+            return _vm.onMouseDown($event)
           }
         }
       },
       [
-        _c("div", {
-          domProps: { innerHTML: _vm._s(_vm.input.image_element.outerHTML) }
-        }),
+        _c("div", { ref: "canvas_wrapper" }),
         _vm._v(" "),
         _c("div", {
           staticClass: "uv_preview uv_perimeter_preview",
@@ -85434,7 +86077,7 @@ module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf
 /***/ ((module) => {
 
 "use strict";
-module.exports = "data:image/png;base64,ZXhwb3J0IGRlZmF1bHQgImRhdGE6aW1hZ2UvcG5nO2Jhc2U2NCxpVkJPUncwS0dnb0FBQUFOU1VoRVVnQUFBSUFBQUFBUUNBWUFBQURlV0hlSUFBQURSVWxFUVZSb2dlMll2VXNqUVJqR256bURDdUo1RnFhUVE3amlTSW9FRG9SQU9JS2RCQ3hTaWtLS2dJVi9nUmFwdHpCL2dWMkV3SUdsaFpKV0ZoRUNnaENMTEJaQ09JSkVJZDZKaGNId1hyRzg2N3JPN01jbG1nMzRBMGsybVoyZCtEenZ4d3d3QUVyWkZKV3lLUnJFWEIrOEw1LzZuV0J2YmRrUy9zTUVvMGZFN2N0elhiY0UvWkhKQ05tWWR1Y09BQkNkL1dLOUR5djNPdzhFQU5QYlU5TGY0c1g2U1k0QTROZlBBMS8zbDh0bDYvL1hhclZRTEJiLzY3bHZpVElEbk9zNnpVU2ptSWxHcld2WnVLMXFUUUNtRWZqOW9IalUwd1BMS1BjN0R6UzlQU1dtdDZjRUc4SE8ra21PRm5kWGxNOWo4WTM2aytlenl1VXkyY1ZuTkUwTFhZWjB6UUFBOEtmZDlweEVKVHlYQk00T1FRMHlIbDhBY0Jya0Zsd3U5ZWo3OFpqZ1Y5bVk2Nk5KNmIyeFpBU3hreHlwSXR5b1ArRnM4ekRRYnlnVUNpL0dhNXBHWWNvRXJndnhVd0pVbExJcGNwYUZJQVo0MU5NMEhsOUF0OUhFUk9ZMDBMTTUycDJmWHk3MUNBQmt4dURvbHdtODdtSUtKNXFtMGZ6OFBJRFg0b2VSRnd1OE1neEw4Ryt4V0YrTFp3TUF6MzFDRUFQUXpTcGhOZzkwS2hCeis3N3Y4NU1CM2hKTy9hTWdQbURyQWV6aU82K3ZESVA0eisvRVc5V2FhSGZ1TFBIcnYvOGluNGhUUGhGM25lTlJUeFBkckpwanhwWUFtR2J3MncrdzZNTVFIekNidlZGQ0FLL0ZCNTVyUHplQjlzK0Rsb044SWs3SnI1OEJtRVlBZ01wRjQ4VWNuUElCQUxONVMzd0FRTzhZNkZRQVFGb1NWQ2wvR0lTdHhuc2gzUVdveEdkVU80Szl0V1dTSFFxeCtHNU1aRTZGbU5zWDNVYlRGUHQydy96aWRnUG9WTkJ0TkNIbTlvVktmRmxuYngvanVZQUJVU3dXaGF6YjF6U05WTHVEWWZMS0FINjZmaG4yQXlFdm5ORnZoNDBBd0l4OFFDbzh3K0tyTXNEOXpnTmRIMDIrdXduczE5d1lGZ29GMFdxMVFyVWRqQUNtNktwb1o5eU1JVHNCekNmaXhFSno4K2RWLysxMEcwMk1wODFYTDl6U3Y1ZEIvR0kvQndpeUZlU0k1OTRnYk9YQldvd3FyY3R3OWdDbGJJcDZtUnpHOUFNQXozVWVjSTkyTCtobWxZTHNBUHJGN2FTUHQ0bXhaQ1NRQ2NLK0s3QU9nbVNObmN3VXNuRmIxWnBBdFJZb3d2M2dKL3FkOUJ2dHFwTytzODFEc2JpN1FrYjlDYkZrQkdjQjVoeTFuVUZmOEZadjBHWjRhemo2L2VKMmJPd2tURFgvZ3lFUlZoUDhBeHNHMU11bTBqdWZBQUFBQUVsRlRrU3VRbUNDIg==";
+module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIAAAAAQCAYAAADeWHeIAAADRUlEQVRoge2YvUsjQRjGnzmDCuJ5FqaQQ7jiSIoEDoRAOIKdBCxSikKKgIV/gRaptzB/gV2EwIGlhZJWFhECghCLLBZCOIJEId6JhcHwXrG867rO7Mclmg34A0k2mZ2d+DzvxwwwAErZFJWyKRrEXB+8L5/6nWBvbdkS/sMEo0fE7ctzXbcE/ZHJCNmYducOABCd/WK9Dyv3Ow8EANPbU9Lf4sX6SY4A4NfPA1/3l8tl6//XarVQLBb/67lviTIDnOs6zUSjmIlGrWvZuK1qTQCmEfj9oHjU0wPLKPc7DzS9PSWmt6cEG8HO+kmOFndXlM9j8Y36k+ezyuUy2cVnNE0LXYZ0zQAA8Kfd9pxEJTyXBM4OQQ0yHl8AcBrkFlwu9ej78ZjgV9mY66NJ6b2xZASxkxypItyoP+Fs8zDQbygUCi/Ga5pGYcoErgvxUwJUlLIpcpaFIAZ41NM0Hl9At9HEROY00LM52p2fXy71CABkxuDolwm87mIKJ5qm0fz8PIDX4oeRFwu8MgxL8G+xWF+LZwMAz31CEAPQzSphNg90KhBz+77v85MB3hJO/aMgPmDrAeziO6+vDIP4z+/EW9WaaHfuLPHrv/8in4hTPhF3neNRTxPdrJpjxpYAmGbw2w+w6MMQHzCbvVFCAK/FB55rPzeB9s+DloN8Ik7Jr58BmEYAgMpF48UcnPIBALN5S3wAQO8Y6FQAQFoSVCl/GIStxnsh3QWoxGdUO4K9tWWSHQqx+G5MZE6FmNsX3UbTFPt2w/zidgPoVNBtNCHm9oVKfFlnbx/juYABUSwWhazb1zSNVLuDYfLKAH66fhn2AyEvnNFvh40AwIx8QCo8w+KrMsD9zgNdH02+uwns19wYFgoF0Wq1QrUdjACm6KpoZ9yMITsBzCfixEJz8+dV/+10G02Mp81XL9zSv5dB/GI/BwiyFeSI594gbOXBWowqrctw9gClbIp6mRzG9AMAz3UecI92L+hmlYLsAPrF7aSPt4mxZCSQCcK+K7AOgmSNncwUsnFb1ZpAtRYowv3gJ/qd9BvtqpO+s81Dsbi7Qkb9CbFkBGcB5hy1nUFf8FZv0GZ4azj6/eJ2bOwkTDX/gyERVhP8AxsG1Mum0jufAAAAAElFTkSuQmCC";
 
 /***/ }),
 
