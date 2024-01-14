@@ -81,31 +81,31 @@
 			<h4>Sprite</h4>
 			<ul class="preset_option_list">
 				<li @click="set('sprite', 'ball')" :class="{selected: sprite == 'ball'}">
-					<img src="assets/ball.png" height="45" />
+					<img :src="sprites.SpriteBall" height="45" />
 					Ball
 				</li>
 				<li @click="set('sprite', 'dirt')" :class="{selected: sprite == 'dirt'}">
-					<img src="assets/dirt.png" height="45" />
+					<img :src="sprites.SpriteDirt" height="45" />
 					Dirt
 				</li>
 				<li @click="set('sprite', 'leaves')" :class="{selected: sprite == 'leaves'}">
-					<img src="assets/leaves.png" height="45" />
+					<img :src="sprites.SpriteLeaves" height="45" />
 					Leaves
 				</li>
 				<li @click="set('sprite', 'smoke')" :class="{selected: sprite == 'smoke'}">
-					<img src="assets/smoke.png" height="45" />
+					<img :src="sprites.SpriteSmoke" height="45" />
 					Smoke
 				</li>
 				<li @click="set('sprite', 'dust')" :class="{selected: sprite == 'dust'}">
-					<img src="assets/dust.png" height="45" />
+					<img :src="sprites.SpriteDust" height="45" />
 					Dust
 				</li>
 				<li @click="set('sprite', 'sparkle')" :class="{selected: sprite == 'sparkle'}">
-					<img src="assets/sparkle.png" height="45" />
+					<img :src="sprites.SpriteSparkle" height="45" />
 					Sparkle
 				</li>
 				<li @click="set('sprite', 'magic')" :class="{selected: sprite == 'magic'}">
-					<img src="assets/magic.png" height="45" />
+					<img :src="sprites.SpriteMagic" height="45" />
 					Magic
 				</li>
 			</ul>
@@ -133,10 +133,9 @@ import {
 	Timer,
 } from 'lucide-vue'
 import Checkbox from '../Form/Checkbox.vue'
-import Sprite from './../../../assets/sample_sprites.png'
 import { Texture } from '../../texture_edit';
 
-import SpriteBall from '../../../assets/ball.png'
+import SpriteBall from '../../../assets/dirt.png'
 import SpriteDirt from '../../../assets/dirt.png'
 import SpriteLeaves from '../../../assets/leaves.png'
 import SpriteSmoke from '../../../assets/smoke.png'
@@ -325,7 +324,15 @@ export default {
 		data: Object
 	},
 	data() {return {
-		Sprite,
+		sprites: {
+			SpriteBall,
+			SpriteDirt,
+			SpriteLeaves,
+			SpriteSmoke,
+			SpriteDust,
+			SpriteSparkle,
+			SpriteMagic
+		},
 		
 		shape: '',
 		timing: '',

@@ -1,20 +1,5 @@
 <template>
 	<div class="texture_input">
-		<div class="meta toolbar">
-			<template v-if="input.allow_upload">
-				<div class="tool" v-on:click="input.reset()"><X /></div>
-				<input id="particle-texture-image" type="file" accept=".png" v-on:change="input.change($event)">
-			</template>
-			<template v-if="!input.allow_upload">
-				<div class="tool" style="width: auto;" v-on:click="input.updatePreview()" title="Reload"><i class="unicode_icon" style="display: inline;">⟳</i> Reload</div>
-			</template>
-			<div class="tool" @click="newTexture()" title="New Texture">
-				<PlusSquare />
-			</div>
-			<div class="tool" @click="saveTexture()" title="Save">
-				<Save />
-			</div>
-		</div>
 		<div class="toolbar">
 			<div class="tool" @click="selectTool('select')" :class="{selected: tool == 'select'}" title="Select">
 				<MousePointer />
@@ -25,8 +10,11 @@
 			<div class="tool" @click="selectTool('eraser')" :class="{selected: tool == 'eraser'}" title="Eraser">
 				<Eraser />
 			</div>
-			<div class="tool" @click="selectTool('fill_tool')" :class="{selected: tool == 'fill_tool'}" title="PaintBucket">
+			<div class="tool" @click="selectTool('fill_tool')" :class="{selected: tool == 'fill_tool'}" title="Paint Bucket">
 				<PaintBucket />
+			</div>
+			<div class="tool" @click="selectTool('color_picker')" :class="{selected: tool == 'color_picker'}" title="Color Picker">
+				<Pipette />
 			</div>
 
 			<div class="color_preview" @click.stop="color_picker_open = !color_picker_open">
@@ -44,12 +32,29 @@
 			@mousedown="onMouseDown($event)"
 		>
 			<div ref="canvas_wrapper"></div>
-			<div class="uv_preview uv_perimeter_preview" :style="calculateUVPerimeter()"></div>
-			<div class="uv_preview uv_sample_preview" :style="calculateUVSample()"></div>
+			<div class="uv_preview uv_perimeter_preview" @mousedown="dragUV($event)" :style="calculateUVPerimeter()"></div>
+			<div class="uv_preview uv_sample_preview" @mousedown="dragUV($event)" :style="calculateUVSample()">
+				<div class="uv_preview_size_handle" @mousedown.stop="dragUV($event, true)" v-if="tool == 'select'" />
+			</div>
 		</div>
 		<div class="texture_info_bar">
 			<div>{{ input.image_element.naturalWidth }} x {{ input.image_element.naturalHeight }} px</div>
 			<div>{{ cursor_position.active ? (cursor_position.x + ' x ' + cursor_position.y) : '' }}</div>
+		</div>
+		<div class="meta toolbar">
+			<template v-if="input.allow_upload">
+				<div class="tool" v-on:click="input.reset()"><X /></div>
+				<input id="particle-texture-image" type="file" accept=".png" v-on:change="input.change($event)">
+			</template>
+			<template v-if="!input.allow_upload">
+				<div class="tool" style="width: auto;" v-on:click="input.updatePreview()" title="Reload"><i class="unicode_icon" style="display: inline;">⟳</i> Reload</div>
+			</template>
+			<div class="tool" @click="newTexture()" title="New Texture">
+				<PlusSquare />
+			</div>
+			<div class="tool" v-if="Texture.internal_changes" @click="saveTexture()" title="Save">
+				<Save />
+			</div>
 		</div>
 	</div>
 </template>
@@ -62,6 +67,7 @@ import {
 	Brush,
 	Eraser,
 	PaintBucket,
+	Pipette,
 	PlusSquare,
 	Save,
 	X,
@@ -93,6 +99,7 @@ export default {
 		Brush,
 		Eraser,
 		PaintBucket,
+		Pipette,
 		PlusSquare,
 		Save,
 		X,
@@ -102,6 +109,7 @@ export default {
 		data: Object
 	},
 	data() {return {
+		Texture,
 		paint_color: {
 			hex8: '#ffffffff'
 		},
@@ -142,12 +150,12 @@ export default {
 				tool: this.tool,
 				color: this.paint_color.hex8
 			};
-			if (event.altKey) {
+			console.log(event, event.altKey, this.tool)
+			if (event.altKey || this.tool == 'color_picker') {
 				let color = Texture.pickColor(event, context);
-				console.log(color + '');
 				this.paint_color.hex8 = color;
 
-			} if (this.tool == 'brush' || this.tool == 'eraser') {
+			} else if (this.tool == 'brush' || this.tool == 'eraser') {
 				Texture.usePaintTool(event, context);
 			} else if (this.tool == 'fill_tool') {
 				Texture.useFillTool(event, context);
@@ -166,6 +174,72 @@ export default {
 		},
 		isVertical() {
 			return this.input.image_element.naturalWidth < this.input.image_element.naturalHeight;
+		},
+		offsetUVValue(value, amount) {
+			//let value = '100 * 2';
+			if (!value || value === '0') {
+				return amount.toString();
+			}
+			if (typeof value == 'string' && !isNaN(value)) {
+				value = parseFloat(value);
+			}
+			if (typeof value === 'number') {
+				return value+amount
+			}
+			let start = value.match(/^-?\s*\d+(\.\d+)?\s*(\+|-)/);
+			if (start) {
+				let number = parseFloat( start[0].substr(0, start[0].length-1) ) + amount;
+				if (number == 0) {
+					value = value.substr(start[0].length + (value[start[0].length-1] == '+' ? 0 : -1));
+					return value.trim();
+				} else {
+					return trimFloatNumber(number) + (start[0].substr(-2, 1) == ' ' ? ' ' : '') + value.substr(start[0].length-1);
+				}
+			} else {
+
+				let end = value.match(/(\+|-)\s*\d*(\.\d+)?\s*$/)
+				if (end) {
+					let number = (parseFloat( end[0] ) + amount)
+					return value.substr(0, end.index) + ((number.toString()).substr(0,1)=='-'?'':'+') + trimFloatNumber(number)
+				} else {
+					return trimFloatNumber(amount) +(value.substr(0,1)=='-'?'':'+')+ value
+				}
+			}
+		},
+		dragUV(e1, size) {
+			if (this.tool != 'select') return;
+			let target_input = this.data.texture.uv.inputs[size ? 'uv_size' : 'uv'];
+			let initial_value = target_input.value.slice();
+			let initial_coords = {
+				x: this.cursor_position.x,
+				y: this.cursor_position.y,
+			};
+			let last_coords = {
+				x: this.cursor_position.x,
+				y: this.cursor_position.y,
+			};
+			let onMove = (e2) => {
+				let coords = this.cursor_position;
+				if (last_coords.x == coords.x && last_coords.y == coords.y) return;
+
+				let offset = [
+					coords.x - initial_coords.x,
+					coords.y - initial_coords.y,
+				];
+				target_input.set([
+					this.offsetUVValue(initial_value[0], offset[0]).toString(),
+					this.offsetUVValue(initial_value[1], offset[1]).toString(),
+				]);
+
+				last_coords.x = coords.x;
+				last_coords.y = coords.y;
+			}
+			let onEnd = (e2) => {
+				document.removeEventListener('mousemove', onMove);
+				document.removeEventListener('mouseup', onEnd);
+			}
+			document.addEventListener('mousemove', onMove);
+			document.addEventListener('mouseup', onEnd);
 		},
 		calculateUVSample() {
 			let uv_inputs = this.data.texture.uv.inputs;
@@ -235,6 +309,7 @@ export default {
 	.texture_input {
 		width: 100%;
 		position: relative;
+		margin-top: 8px;
 	}
 	input#image {
 		width: calc(100% - 40px);
@@ -274,6 +349,16 @@ export default {
 	.uv_perimeter_preview {
 		border: 1px solid var(--color-text);
 	}
+	.uv_preview_size_handle {
+		position: absolute;
+		bottom: -10px;
+		right: -10px;
+		width: 10px;
+		height: 10px;
+		outline: 1px solid var(--color-border);
+		background-color: var(--color-text);
+		cursor: se-resize;
+	}
 	.texture_info_bar {
 		display: flex;
 	}
@@ -286,6 +371,8 @@ export default {
 		height: 34px;
 		display: flex;
 		margin-top: 6px;
+		display: flex;
+		align-items: center;
 	}
 	.tool {
 		cursor: pointer;

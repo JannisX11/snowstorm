@@ -4,9 +4,11 @@ import vscode from "./vscode_extension";
 class TextureClass {
     constructor() {
         this.canvas = document.createElement('canvas');
+        this.canvas.width = this.canvas.height = 16;
         this.ctx = this.canvas.getContext('2d');
 
         this.source = '';
+        this.history = [];
         this.internal_changes = false;
     }
     linkEmitter(emitter, config) {
@@ -78,6 +80,7 @@ class TextureClass {
         return string;
     }
     usePaintTool(e1, context) {
+        this.beforeEdit();
         let last_coords = {};
         let onMove = (e2) => {
             let coords = context.position;
@@ -109,6 +112,7 @@ class TextureClass {
             last_coords.y = coords.y;
         }
         let onEnd = (e2) => {
+            this.afterEdit();
             document.removeEventListener('mousemove', onMove);
             document.removeEventListener('mouseup', onEnd);
         }
@@ -117,7 +121,25 @@ class TextureClass {
         onMove(e1);
     }
     useFillTool(event, context) {
-        
+        this.beforeEdit();
+        this.afterEdit();
+    }
+    beforeEdit() {
+        let undo_entry = {
+            data_before: this.source
+        };
+        this.current_undo_entry = undo_entry;
+    }
+    afterEdit(label) {
+        this.current_undo_entry.label = label;
+        this.current_undo_entry.data_after = this.source;
+        this.history.push(this.current_undo_entry);
+        delete this.current_undo_entry;
+    }
+    cancelEdit() {
+        this.source = this.current_undo_entry.data_before;
+        this.updateCanvasFromSource();
+        delete this.current_undo_entry;
     }
 
 }
