@@ -6,11 +6,11 @@ import vscode from './vscode_extension';
 const Data = {
 	setup: {
 		label: 'Quick Setup',
-		setup: {
+		/*setup: {
 			label: 'File',
 			_folded: false,
 			inputs: {
-				identifier: new Input({
+				/*identifier: new Input({
 					id: 'identifier',
 					label: 'Identifier',
 					info: 'This is the name the particle emitter is referred to as. Should have a namespace.',
@@ -25,7 +25,7 @@ const Data = {
 					type: 'quick_setup'
 				}
 			}
-		},
+		},*/
 	},
 
 	effect: {

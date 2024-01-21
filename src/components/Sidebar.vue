@@ -43,6 +43,13 @@
 				<div v-else class="input_group_folded_indicator" @click="fold(group)">...</div>
 			</div>
 
+			<div class="input_group" v-if="selected_subject_key == 'effect'">
+				<button id="test_quick_setup_button" @click="selectSubject('setup')">
+					<Wand />
+					Quick Setup
+				</button>
+			</div>
+
 			<!--Quick Setup-->
 			<template v-if="selected_subject_key == 'setup'">
 				<quick-setup :data="data" />
@@ -77,8 +84,8 @@ export default {
 	name: 'sidebar',
 	data() {return {
 		data: Data,
-		selected_subject: Data.setup,
-		selected_subject_key: 'setup'
+		selected_subject: Data.effect,
+		selected_subject_key: 'effect'
 	}},
 	components: {
 		Logo,
@@ -179,6 +186,11 @@ export default {
 	.sidebar_tab:last-of-type > .sidebar_tab_tooltip {
 		right: 0;
 		left: unset;
+	}
+	#test_quick_setup_button {
+		display: block;
+		margin: auto;
+		margin-top: 16px;
 	}
 	h3 {
 		margin: 8px;

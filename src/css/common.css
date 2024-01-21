@@ -175,6 +175,20 @@
 	::file-selector-button:hover {
 		background-color: var(--color-title);
 	}
+	button {
+		appearance: none;
+		border: none;
+		background-color: var(--color-bar);
+		color: inherit;
+		font-size: inherit;
+		padding: 8px 12px;
+		border-radius: 1px;
+		cursor: pointer;
+	}
+	button:hover {
+		background-color: var(--color-accent);
+		color: black;
+	}
 	label {
 		display: inline-block;
 		margin-bottom: .5rem;

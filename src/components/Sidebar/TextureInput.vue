@@ -40,6 +40,7 @@
 			@mousemove="onMouseMove($event)"
 			@mouseleave="onMouseLeave($event)"
 			@mousedown="onMouseDown($event)"
+			@contextmenu.prevent
 			:style="{'--zoom': zoom, '--size': size+'px', '--offset-x': offset[0]+'px', '--offset-y': offset[1]+'px'}"
 			@mousewheel="onMouseWheel($event)"
 		>

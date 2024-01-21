@@ -41,7 +41,7 @@
 			</ul>
 			<div class="input_bar">
 				<label>Amount</label>
-				<input type="range" v-model="amount" min="1" max="150" step="1" >
+				<input type="range" v-model="amount" min="1" max="120" step="1" >
 				<label class="range_number_label">{{ amount }}</label>
 			</div>
 			<div class="input_bar">
@@ -424,7 +424,7 @@ export default {
 				let input = this.data[path[0]][path[1]].inputs[path[2]];
 				let value = preset[preset_path];
 
-				if (preset_path == 'motion.motion.linear_speed') this.speed = value;
+				if (preset_path == 'motion.motion.linear_speed' && !isNaN(value)) this.speed = value;
 				if (preset_path == 'emitter.rate.rate') this.amount = value;
 				if (preset_path == 'emitter.rate.amount') this.amount = value;
 				if (preset_path == 'lifetime.lifetime.max_lifetime') this.particle_lifetime = value;
