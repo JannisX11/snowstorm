@@ -77,8 +77,8 @@ export default {
 	name: 'sidebar',
 	data() {return {
 		data: Data,
-		selected_subject: Data.effect,
-		selected_subject_key: 'effect'
+		selected_subject: Data.setup,
+		selected_subject_key: 'setup'
 	}},
 	components: {
 		Logo,

@@ -4,7 +4,6 @@ import Wintersky from 'wintersky'
 
 const Scene = new Wintersky.Scene({
 	fetchTexture(config) {
-		console.log(Texture.internal_changes, Texture)
 		if (Texture.internal_changes) {
 			return Texture.source;
 		}
@@ -40,6 +39,7 @@ const Emitter = new Wintersky.Emitter(Scene, Config, {
 	loop_mode: 'looping',
 	parent_mode: 'world'
 });
+const QuickSetup = {};
 window.Emitter = Emitter;
 Texture.linkEmitter(Emitter, Config);
 
@@ -58,5 +58,5 @@ function updateMaterial() {
 	Emitter.updateMaterial();
 }
 
-export {Emitter, Config, updateMaterial, initParticles, Scene}
+export {Emitter, Config, updateMaterial, initParticles, Scene, QuickSetup}
 

@@ -21,7 +21,7 @@
 				</li>
 			</ul>
 			<div class="input_bar">
-				<label for="quick_lighting_checkbox">Speed</label>
+				<label>Speed</label>
 				<input type="range" v-model="speed" min="0" max="20" step="0.5" >
 				<label class="range_number_label">{{ speed }}</label>
 			</div>
@@ -40,12 +40,12 @@
 				</li>
 			</ul>
 			<div class="input_bar">
-				<label for="quick_lighting_checkbox">Amount</label>
-				<input type="range" v-model="amount" min="1" max="120" step="1" >
+				<label>Amount</label>
+				<input type="range" v-model="amount" min="1" max="150" step="1" >
 				<label class="range_number_label">{{ amount }}</label>
 			</div>
 			<div class="input_bar">
-				<label for="quick_lighting_checkbox">Particle Lifetime</label>
+				<label>Particle Lifetime</label>
 				<input type="range" v-model="particle_lifetime" min="0.1" max="10" step="0.1" >
 				<label class="range_number_label">{{ particle_lifetime }}</label>
 			</div>
@@ -93,25 +93,29 @@
 					Leaves
 				</li>
 				<li @click="set('sprite', 'smoke')" :class="{selected: sprite == 'smoke'}">
-					<img :src="sprites.SpriteSmoke" height="45" />
+					<img :src="sprites.SpriteSmoke" height="45" class="frames_8" />
 					Smoke
 				</li>
 				<li @click="set('sprite', 'dust')" :class="{selected: sprite == 'dust'}">
-					<img :src="sprites.SpriteDust" height="45" />
+					<img :src="sprites.SpriteDust" height="45" class="frames_8" />
 					Dust
 				</li>
 				<li @click="set('sprite', 'sparkle')" :class="{selected: sprite == 'sparkle'}">
-					<img :src="sprites.SpriteSparkle" height="45" />
+					<img :src="sprites.SpriteSparkle" height="45" class="frames_4" />
 					Sparkle
 				</li>
 				<li @click="set('sprite', 'magic')" :class="{selected: sprite == 'magic'}">
-					<img :src="sprites.SpriteMagic" height="45" />
+					<img :src="sprites.SpriteMagic" height="45" class="frames_8" />
 					Magic
 				</li>
 			</ul>
 			<div class="input_bar">
+				<label for="quick_rotation_checkbox">Random Rotation</label>
+				<checkbox id="quick_rotation_checkbox" v-model="random_rotation" />
+			</div>
+			<div class="input_bar">
 				<label for="quick_lighting_checkbox">Glow in the dark</label>
-				<checkbox id="quick_lighting_checkbox" v-model="lightning" />
+				<checkbox id="quick_lighting_checkbox" v-model="lighting" />
 			</div>
 		</div>
 	</div>
@@ -135,16 +139,15 @@ import {
 import Checkbox from '../Form/Checkbox.vue'
 import { Texture } from '../../texture_edit';
 
-import SpriteBall from '../../../assets/dirt.png'
+import SpriteBall from '../../../assets/ball.png'
 import SpriteDirt from '../../../assets/dirt.png'
 import SpriteLeaves from '../../../assets/leaves.png'
 import SpriteSmoke from '../../../assets/smoke.png'
 import SpriteDust from '../../../assets/dust.png'
 import SpriteSparkle from '../../../assets/sparkle.png'
 import SpriteMagic from '../../../assets/magic.png'
+import { QuickSetup } from '../../emitter';
 //SpriteBall = `data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAw0lEQVQ4ja2RsQ3CMBREzxaioU+DaBkDRmAQKiTGoGUQJBaAKSKKuEBIVio3NDRQnfX9bSdIcJVj/3d3doAfZWoHu3P/5rprA077ZXE22yQ4X0wBAI/7K5oAyIyMhglSNKiZ2CG4ps3hFq9nhwZlek2W6WMw6wfnEZyPLaw8rCVKWGvybTL17Pv8CqXBrg3JXnA+gwHxG+XLarE6DWZNg8txZZIGclB+a7jagC3GAJmeGWgTXRtAAhcNqPX2mryJBv+mD2GrgcizxUizAAAAAElFTkSuQmCC`
-
-console.log('test', SpriteDirt)
 
 const PRESETS = {
 	shape: {
@@ -227,31 +230,53 @@ const PRESETS = {
 		},
 		smoke: {
 			'appearance.appearance.size': ['0.5', '0.5'],
-			'texture.uv.size': [16, 16],
+			'texture.uv.size': [16, 128],
 			'texture.uv.uv': [0, 0],
 			'texture.uv.uv_size': [16, 16],
-			'texture.uv.mode': 'full',
+			'texture.uv.uv_size': [16, 16],
+			'texture.uv.mode': 'animated',
+			'texture.uv.uv_step': [0, 16],
+			'texture.uv.frames_per_second': '12',
+			'texture.uv.max_frame': '8',
+			'texture.uv.stretch_to_lifetime': true,
+			'texture.uv.loop': false,
 		},
 		dust: {
-			'appearance.appearance.size': ['0.5', '0.5'],
-			'texture.uv.size': [16, 16],
+			'appearance.appearance.size': ['0.3', '0.3'],
+			'texture.uv.size': [8, 64],
 			'texture.uv.uv': [0, 0],
-			'texture.uv.uv_size': [16, 16],
-			'texture.uv.mode': 'full',
+			'texture.uv.uv_size': [8, 8],
+			'texture.uv.uv_size': [8, 8],
+			'texture.uv.mode': 'animated',
+			'texture.uv.uv_step': [0, 8],
+			'texture.uv.frames_per_second': '12',
+			'texture.uv.max_frame': '8',
+			'texture.uv.stretch_to_lifetime': true,
+			'texture.uv.loop': false,
 		},
 		sparkle: {
 			'appearance.appearance.size': ['0.5', '0.5'],
-			'texture.uv.size': [16, 16],
+			'texture.uv.size': [16, 64],
 			'texture.uv.uv': [0, 0],
 			'texture.uv.uv_size': [16, 16],
-			'texture.uv.mode': 'full',
+			'texture.uv.mode': 'animated',
+			'texture.uv.uv_step': [0, 16],
+			'texture.uv.frames_per_second': '15',
+			'texture.uv.max_frame': '4',
+			'texture.uv.stretch_to_lifetime': false,
+			'texture.uv.loop': true,
 		},
 		magic: {
 			'appearance.appearance.size': ['0.25', '0.25'],
-			'texture.uv.size': [16, 16],
+			'texture.uv.size': [16, 128],
 			'texture.uv.uv': ['Math.floor(v.particle_random_3 * 2) * 8' , 'Math.floor(v.particle_random_4 * 2) * 8'],
 			'texture.uv.uv_size': [8, 8],
-			'texture.uv.mode': 'static',
+			'texture.uv.mode': 'animated',
+			'texture.uv.uv_step': [0, 16],
+			'texture.uv.frames_per_second': '12',
+			'texture.uv.max_frame': '8',
+			'texture.uv.stretch_to_lifetime': true,
+			'texture.uv.loop': false,
 		}
 	},
 	collision: {
@@ -303,6 +328,18 @@ const PRESETS = {
 	}
 };
 
+const DEFAULTS = {
+	shape: '',
+	timing: '',
+	speed: 0,
+	amount: 4,
+	particle_lifetime: 2,
+	sprite: '',
+	lighting: true,
+	random_rotation: false,
+	collision: 'none',
+}
+
 export default {
 	name: 'quick-setup',
 	components: {
@@ -334,14 +371,15 @@ export default {
 			SpriteMagic
 		},
 		
-		shape: '',
-		timing: '',
-		speed: 1,
-		amount: 4,
-		particle_lifetime: 2,
-		sprite: '',
-		lightning: true,
-		collision: 'none',
+		shape: DEFAULTS.shape,
+		timing: DEFAULTS.timing,
+		speed: DEFAULTS.speed,
+		amount: DEFAULTS.amount,
+		particle_lifetime: DEFAULTS.particle_lifetime,
+		sprite: DEFAULTS.sprite,
+		lighting: DEFAULTS.lighting,
+		random_rotation: DEFAULTS.random_rotation,
+		collision: DEFAULTS.collision,
 	}},
 	watch: {
 		speed(value) {
@@ -354,8 +392,11 @@ export default {
 		particle_lifetime(value) {
 			this.setInput('lifetime.lifetime.max_lifetime', value);
 		},
-		lightning(value) {
+		lighting(value) {
 			this.setInput('appearance.appearance.light', !value);
+		},
+		random_rotation(value) {
+			this.setInput('motion.rotation.initial_rotation', value ? 'math.random(-180, 180)' : '');
 		}
 	},
 	methods: {
@@ -387,7 +428,7 @@ export default {
 				if (preset_path == 'emitter.rate.rate') this.amount = value;
 				if (preset_path == 'emitter.rate.amount') this.amount = value;
 				if (preset_path == 'lifetime.lifetime.max_lifetime') this.particle_lifetime = value;
-				if (preset_path == 'appearance.appearance.light') this.lightning = value;
+				if (preset_path == 'appearance.appearance.light') this.lighting = value;
 
 				if (input) {
 					if (input.type == 'molang') {
@@ -419,6 +460,22 @@ export default {
 				Texture.update();
 				Texture.updateCanvasFromSource();
 			}
+		},
+		resetAll() {
+			this.shape = DEFAULTS.shape;
+			this.timing = DEFAULTS.timing;
+			this.speed = DEFAULTS.speed;
+			this.amount = DEFAULTS.amount;
+			this.particle_lifetime = DEFAULTS.particle_lifetime;
+			this.sprite = DEFAULTS.sprite;
+			this.lighting = DEFAULTS.lighting;
+			this.random_rotation = DEFAULTS.random_rotation;
+			this.collision = DEFAULTS.collision;
+		}
+	},
+	mounted() {
+		QuickSetup.resetAll = () => {
+			this.resetAll();
 		}
 	}
 }
@@ -449,6 +506,61 @@ export default {
 	}
 	.preset_option_list > li > img {
 		pointer-events: none;
+		aspect-ratio: 1/1;
+		object-fit: cover;
+		object-position: bottom;
+	}
+	.preset_option_list > li:hover > img.frames_8 {
+		animation: 1s step-end 0s infinite normal thumb_animation;
+	}
+	.preset_option_list > li:hover > img.frames_4 {
+		animation: 300ms step-end 0s infinite normal thumb_animation_4;
+	}
+	@keyframes thumb_animation {
+		0% {
+			object-position: 0 0;
+		}
+		12.5% {
+			object-position: 0 calc(100% / 7 * 1);
+		}
+		25% {
+			object-position: 0 calc(100% / 7 * 2);
+		}
+		37.5% {
+			object-position: 0 calc(100% / 7 * 3);
+		}
+		50% {
+			object-position: 0 calc(100% / 7 * 4);
+		}
+		62.5% {
+			object-position: 0 calc(100% / 7 * 5);
+		}
+		75% {
+			object-position: 0 calc(100% / 7 * 6);
+		}
+		87.5% {
+			object-position: 0 calc(100% / 7 * 7);
+		}
+		100% {
+			object-position: 0 0;
+		}
+	}
+	@keyframes thumb_animation_4 {
+		0% {
+			object-position: 0 0;
+		}
+		25% {
+			object-position: 0 calc(100% / 3 * 1);
+		}
+		50% {
+			object-position: 0 calc(100% / 3 * 2);
+		}
+		75% {
+			object-position: 0 calc(100% / 3 * 3);
+		}
+		100% {
+			object-position: 0 0;
+		}
 	}
 	.input_bar {
 		display: flex;

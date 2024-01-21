@@ -1,5 +1,5 @@
 <template>
-	<div class="texture_input">
+	<div class="texture_input" :tool="tool">
 		<div class="toolbar">
 			<div class="tool" @click="selectTool('select')" :class="{selected: tool == 'select'}" title="Select">
 				<MousePointer />
@@ -17,6 +17,15 @@
 				<Pipette />
 			</div>
 
+			<span class="undo_controls">
+				<div class="tool" @click="Texture.undo()" title="Undo">
+					<Undo />
+				</div>
+				<div class="tool" @click="Texture.redo()" title="Redo">
+					<Redo />
+				</div>
+			</span>
+
 			<div class="color_preview" @click.stop="color_picker_open = !color_picker_open">
 				<div class="color_preview_color" :style="{backgroundColor: paint_color.hex8}"></div>
 			</div>
@@ -24,17 +33,25 @@
 		<div id="color_picker_overlay" v-if="color_picker_open" @click.stop>
 			<color-picker v-model="paint_color" @change="paint_color = $event" />
 		</div>
-		<div class="input_texture_wrapper checkerboard" :class="{vertical: isVertical()}"
-			ref="texture_wrapper"
+
+		<div class="texture_viewport"
+			ref="texture_viewport"
 			@mouseenter="onMouseEnter($event)"
 			@mousemove="onMouseMove($event)"
 			@mouseleave="onMouseLeave($event)"
 			@mousedown="onMouseDown($event)"
+			:style="{'--zoom': zoom, '--size': size+'px', '--offset-x': offset[0]+'px', '--offset-y': offset[1]+'px'}"
+			@mousewheel="onMouseWheel($event)"
 		>
-			<div ref="canvas_wrapper"></div>
-			<div class="uv_preview uv_perimeter_preview" @mousedown="dragUV($event)" :style="calculateUVPerimeter()"></div>
-			<div class="uv_preview uv_sample_preview" @mousedown="dragUV($event)" :style="calculateUVSample()">
-				<div class="uv_preview_size_handle" @mousedown.stop="dragUV($event, true)" v-if="tool == 'select'" />
+			<div class="input_texture_wrapper checkerboard" :class="{vertical: isVertical()}"
+				:style="{left: offset[0]+'px', top: offset[1]+'px', height: height + 'px'}"
+				ref="texture_wrapper"
+			>
+				<div ref="canvas_wrapper"></div>
+				<div class="uv_preview uv_perimeter_preview" title="UV Perimeter" @mousedown="dragUV($event)" :style="calculateUVPerimeter()"></div>
+				<div class="uv_preview uv_sample_preview" title="UV Sample" @mousedown="dragUV($event)" :style="calculateUVSample()">
+					<div class="uv_preview_size_handle" @mousedown.stop="dragUV($event, true)" v-if="tool == 'select'" />
+				</div>
 			</div>
 		</div>
 		<div class="texture_info_bar">
@@ -71,11 +88,14 @@ import {
 	PlusSquare,
 	Save,
 	X,
+	Undo,
+	Redo,
 
 } from 'lucide-vue'
 import Input from '../../input'
 import Molang from 'molangjs'
 import { Texture } from '../../texture_edit';
+import { trimFloatNumber } from '../../util'
 let parser = new Molang();
 
 /*
@@ -103,6 +123,8 @@ export default {
 		PlusSquare,
 		Save,
 		X,
+		Undo,
+		Redo,
 	},
 	props: {
 		input: Input,
@@ -113,6 +135,9 @@ export default {
 		paint_color: {
 			hex8: '#ffffffff'
 		},
+		zoom: 1,
+		viewport_size: 256,
+		offset: [0, 0],
 		tool: 'select',
 		color_picker_open: false,
 		cursor_position: {
@@ -143,14 +168,32 @@ export default {
 			this.cursor_position.active = false;
 		},
 		onMouseDown(event) {
-			console.log(this.tool)
+			let initial_offset = this.offset.slice();
+			if (event.button == 2 || event.button == 1) {
+				event.preventDefault();
+				let onMove = (e2) => {
+					e2.preventDefault();
+					let offset = [
+						initial_offset[0] + (e2.clientX - event.clientX),
+						initial_offset[1] + (e2.clientY - event.clientY),
+					];
+					this.offset.splice(0, 2, ...offset);
+				}
+				let onEnd = (e2) => {
+					document.removeEventListener('mousemove', onMove);
+					document.removeEventListener('mouseup', onEnd);
+				}
+				document.addEventListener('mousemove', onMove);
+				document.addEventListener('mouseup', onEnd);
+				return;
+			}
+
 			let context = {
 				wrapper: this.$refs.texture_wrapper,
 				position: this.pixel_position,
 				tool: this.tool,
 				color: this.paint_color.hex8
 			};
-			console.log(event, event.altKey, this.tool)
 			if (event.altKey || this.tool == 'color_picker') {
 				let color = Texture.pickColor(event, context);
 				this.paint_color.hex8 = color;
@@ -164,19 +207,50 @@ export default {
 		onMouseMove(event) {
 			let uv_inputs = this.data.texture.uv.inputs;
 			let [uv_width, uv_height] = uv_inputs.size.value;
-			let frame_width = 256;
-			let frame_height = 256;
+			let frame_width = this.width;
+			let frame_height = this.height;
+			let img_width = this.input.image_element.naturalWidt || Texture.canvas.width;
+			let img_height = this.input.image_element.naturalHeight || Texture.canvas.height;
 			let rect = this.$refs.texture_wrapper.getBoundingClientRect();
 			this.cursor_position.x = Math.floor((event.clientX-1-rect.left) / frame_width * uv_width);
 			this.cursor_position.y = Math.floor((event.clientY-1-rect.top) / frame_height * uv_height);
-			this.pixel_position.x = Math.floor((event.clientX-1-rect.left) / frame_width * this.input.image_element.naturalWidth);
-			this.pixel_position.y = Math.floor((event.clientY-1-rect.top) / frame_height * this.input.image_element.naturalHeight);
+			this.pixel_position.x = Math.floor((event.clientX-1-rect.left) / frame_width * img_width);
+			this.pixel_position.y = Math.floor((event.clientY-1-rect.top) / frame_height * img_height);
+		},
+		onMouseWheel(event) {
+			event.preventDefault();
+			this.onMouseMove(event);
+
+			let initial_zoom = this.zoom;
+			if (event.deltaY > 1) {
+				this.zoom = this.zoom / 1.1;
+			} else {
+				this.zoom = this.zoom * 1.1;
+			}
+			this.zoom = Math.clamp(this.zoom, 0.5, 8);
+
+			if (this.zoom != initial_zoom) {
+				let rect = this.$refs.texture_wrapper.getBoundingClientRect();
+				let mouse_pos = [
+					(event.clientX-1-rect.left),
+					(event.clientY-1-rect.top),
+				];
+				let zoom_offset = 1 - (this.zoom / initial_zoom);
+				let is_wider_than_viewport = this.$refs.texture_wrapper.clientWidth > this.$refs.texture_viewport.clientWidth;
+				this.offset.splice(0, 2, 
+					this.offset[0] + mouse_pos[0] * zoom_offset * (is_wider_than_viewport ? 1 : 0),
+					this.offset[1] + mouse_pos[1] * zoom_offset,
+				)
+			}
 		},
 		isVertical() {
+			return false;
 			return this.input.image_element.naturalWidth < this.input.image_element.naturalHeight;
 		},
 		offsetUVValue(value, amount) {
-			//let value = '100 * 2';
+			if (!amount) {
+				return value;
+			}
 			if (!value || value === '0') {
 				return amount.toString();
 			}
@@ -201,7 +275,7 @@ export default {
 				if (end) {
 					let number = (parseFloat( end[0] ) + amount)
 					return value.substr(0, end.index) + ((number.toString()).substr(0,1)=='-'?'':'+') + trimFloatNumber(number)
-				} else {
+				} else if (amount) {
 					return trimFloatNumber(amount) +(value.substr(0,1)=='-'?'':'+')+ value
 				}
 			}
@@ -246,8 +320,8 @@ export default {
 			let [uv_width, uv_height] = uv_inputs.size.value;
 			let offset = uv_inputs.uv.value.map(v => parser.parse(v));
 			let size = uv_inputs.uv_size.value.map(v => parser.parse(v));
-			let frame_width = 256;
-			let frame_height = 256;
+			let frame_width = this.width;
+			let frame_height = this.height;
 			if (this.isVertical()) {
 				frame_height /= this.input.image_element.naturalWidth / this.input.image_element.naturalHeight
 			}
@@ -281,11 +355,8 @@ export default {
 				bounding_box[2] = Math.max(bounding_box[2], offset[0], offset[0] + size[0]);
 				bounding_box[3] = Math.max(bounding_box[3], offset[1], offset[1] + size[1]);
 			}
-			let frame_width = 256;
-			let frame_height = 256;
-			if (this.isVertical()) {
-				frame_height /= this.input.image_element.naturalWidth / this.input.image_element.naturalHeight
-			}
+			let frame_width = this.width;
+			let frame_height = this.height;
 
 			return {
 				left: (bounding_box[0] / uv_width * frame_width)+'px',
@@ -293,6 +364,27 @@ export default {
 				width: ((bounding_box[2] - bounding_box[0]) / uv_width * frame_width)+'px',
 				height: ((bounding_box[3] - bounding_box[1]) / uv_height * frame_height)+'px',
 			};
+		}
+	},
+	computed: {
+		size() {
+			return this.viewport_size * this.zoom;
+		},
+		width() {
+			return this.viewport_size * this.zoom;
+		},
+		ratio() {
+			if (this.inputs && this.inputs.image_element && this.inputs.image_element.naturalWidth) {
+				return this.input.image_element.naturalWidth / this.input.image_element.naturalHeight;
+			} else if (Texture.canvas) {
+				return Texture.canvas.width / Texture.canvas.height;
+			} else {
+				return 1;
+			}
+		},
+		height() {
+			console.log(this.ratio)
+			return this.viewport_size * this.zoom / this.ratio;
 		}
 	},
 	mounted() {
@@ -317,19 +409,28 @@ export default {
 	.input_right.image {
 		flex-direction: column;
 	}
-	.input_texture_wrapper {
-		--size: 256px;
+	.texture_viewport {
 		display: block;
-		height: var(--size);
-		width: var(--size);
-		margin: auto;
+		--size: 256px;
+		width: 100%;
+		overflow: hidden;
+		height: 258px;
 		margin-top: 8px;
 		flex-shrink: 0;
+	}
+	.input_texture_wrapper {
+		height: auto;
+		height: -webkit-fill-available;
+		width: var(--size);
+		margin: auto;
 		border: 1px solid var(--color-border);
 		box-sizing: content-box;
 		position: relative;
-		overflow: hidden;
+		overflow: visible;
 		cursor: crosshair;
+	}
+	.texture_input[tool="select"] .input_texture_wrapper {
+		cursor: default;
 	}
 	.input_texture_wrapper.vertical {
 		width: calc(var(--size) + 8px);
@@ -340,7 +441,7 @@ export default {
 		top: 0;
 		outline: 1px solid var(--color-border);
 	}
-	.uv_preview:hover {
+	.texture_input[tool="select"] .uv_preview:hover {
 		outline-color: var(--color-highlight);
 	}
 	.uv_sample_preview {
@@ -358,6 +459,10 @@ export default {
 		outline: 1px solid var(--color-border);
 		background-color: var(--color-text);
 		cursor: se-resize;
+		display: none;
+	}
+	.texture_viewport:hover .uv_preview_size_handle {
+		display: block;
 	}
 	.texture_info_bar {
 		display: flex;
@@ -387,6 +492,9 @@ export default {
 	}
 	.tool:hover {
 		outline-color: var(--color-highlight);
+	}
+	.undo_controls {
+		margin: auto;
 	}
 	.color_preview {
 		height: 100%;

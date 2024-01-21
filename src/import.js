@@ -1,5 +1,5 @@
 import {IO, pathToExtension} from './util'
-import {Config} from './emitter'
+import {Config, QuickSetup} from './emitter'
 import vscode from './vscode_extension'
 import {Emitter} from './emitter'
 import {ExpandedInput} from './components/ExpressionBar'
@@ -32,8 +32,25 @@ const Samples = {
 function updateInputsFromConfig() {
 	forEachInput(input => {
 		input.value = Config[input.id];
+		if (input.type == 'molang' && input.value) {
+			let lineify = string => {
+				if (typeof string == 'string' && string && string.includes(';')) {
+					input.expanded = true;
+					return string.replace(/;/g, ';\n').replace(/\n+$/, '');
+				} else {
+					return string;
+				}
+			}
+			if (input.value instanceof Array) {
+				input.value.forEach((v, i) => {
+					input.value[i] = lineify(v);
+				})
+			} else {
+				input.value = lineify(input.value);
+			}
+		}
 		if (input.type === 'select') {
-			input.update(Data)
+			input.update(Data);
 		}
 	})
 	Data.variables.curves.curves.splice(0, Infinity);
@@ -46,6 +63,16 @@ function updateInputsFromConfig() {
 		curve.updateMinMax();
 	}
 	Data.effect.meta.inputs.identifier.onchange();
+
+	Texture.source = Data.texture.texture.inputs.image.image_element.src;
+	Texture.updateCanvasFromSource();
+	//let texture_input = Data.texture.texture.inputs.image;
+	//texture_input.image.name = Data.texture.texture.inputs.path.value.split('/').at(-1);
+	//texture_input.image.data = Texture.source = reader.result;
+	//Texture.updateCanvasFromSource();
+	//texture_input.image.loaded = true;
+	//texture_input.image.hidden = true;
+	//texture_input.image.hidden = false;
 }
 //function importFile() {}
 function updateConfig(data) {
@@ -55,6 +82,7 @@ function updateConfig(data) {
 function loadFile(data, confirmNewProject=true) {
 	if (data && data.particle_effect && (!confirmNewProject || startNewProject())) {
 		Texture.reset();
+		QuickSetup.resetAll();
 		updateConfig(data);
 		Emitter.stop(true).playLoop();
 		registerEdit('load file')
@@ -73,6 +101,8 @@ function importFile() {
 function startNewProject(force) {
 	if (vscode || force || confirm('This action may clear your current work. Do you want to continue?')) {
 		Config.reset();
+		Texture.reset();
+		QuickSetup.resetAll();
 		updateInputsFromConfig();
 		return true;
 	}

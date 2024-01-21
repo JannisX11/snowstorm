@@ -159,7 +159,13 @@ function pathToExtension(path) {
 	if (!matches || !matches.length) return '';
 	return matches[0].replace('.', '').toLowerCase()
 }
-
+function trimFloatNumber(val, max_digits = 4) {
+	if (val == '') return val;
+	var string = val.toFixed(max_digits)
+	string = string.replace(/0+$/g, '').replace(/\.$/g, '')
+	if (string == -0) return 0;
+	return string;
+}
 
 
 //JSON
@@ -373,4 +379,5 @@ export {
 	pathToName,
 	convertTouchEvent,
 	calculateOffset,
+	trimFloatNumber
 }

@@ -1032,8 +1032,8 @@ function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == 
   data: function data() {
     return {
       data: _input_structure__WEBPACK_IMPORTED_MODULE_5__["default"],
-      selected_subject: _input_structure__WEBPACK_IMPORTED_MODULE_5__["default"].effect,
-      selected_subject_key: 'effect'
+      selected_subject: _input_structure__WEBPACK_IMPORTED_MODULE_5__["default"].setup,
+      selected_subject_key: 'setup'
     };
   },
   components: {
@@ -1934,15 +1934,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/bomb.js");
 /* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/timer.js");
 /* harmony import */ var _Form_Checkbox_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Form/Checkbox.vue */ "./src/components/Form/Checkbox.vue");
-/* harmony import */ var _assets_sample_sprites_png__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./../../../assets/sample_sprites.png */ "./assets/sample_sprites.png");
-/* harmony import */ var _texture_edit__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../texture_edit */ "./src/texture_edit.js");
-/* harmony import */ var _assets_ball_png__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../assets/ball.png */ "./assets/ball.png");
-/* harmony import */ var _assets_dirt_png__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../assets/dirt.png */ "./assets/dirt.png");
-/* harmony import */ var _assets_leaves_png__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../assets/leaves.png */ "./assets/leaves.png");
-/* harmony import */ var _assets_smoke_png__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../assets/smoke.png */ "./assets/smoke.png");
-/* harmony import */ var _assets_dust_png__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../../assets/dust.png */ "./assets/dust.png");
-/* harmony import */ var _assets_sparkle_png__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../../assets/sparkle.png */ "./assets/sparkle.png");
-/* harmony import */ var _assets_magic_png__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../../assets/magic.png */ "./assets/magic.png");
+/* harmony import */ var _texture_edit__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../texture_edit */ "./src/texture_edit.js");
+/* harmony import */ var _assets_ball_png__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../assets/ball.png */ "./assets/ball.png");
+/* harmony import */ var _assets_dirt_png__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../assets/dirt.png */ "./assets/dirt.png");
+/* harmony import */ var _assets_leaves_png__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../assets/leaves.png */ "./assets/leaves.png");
+/* harmony import */ var _assets_smoke_png__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../assets/smoke.png */ "./assets/smoke.png");
+/* harmony import */ var _assets_dust_png__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../assets/dust.png */ "./assets/dust.png");
+/* harmony import */ var _assets_sparkle_png__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../../assets/sparkle.png */ "./assets/sparkle.png");
+/* harmony import */ var _assets_magic_png__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../../assets/magic.png */ "./assets/magic.png");
+/* harmony import */ var _emitter__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../emitter */ "./src/emitter.js");
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : String(i); }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+//
+//
+//
+//
 //
 //
 //
@@ -2076,7 +2084,6 @@ __webpack_require__.r(__webpack_exports__);
 
 //SpriteBall = `data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAw0lEQVQ4ja2RsQ3CMBREzxaioU+DaBkDRmAQKiTGoGUQJBaAKSKKuEBIVio3NDRQnfX9bSdIcJVj/3d3doAfZWoHu3P/5rprA077ZXE22yQ4X0wBAI/7K5oAyIyMhglSNKiZ2CG4ps3hFq9nhwZlek2W6WMw6wfnEZyPLaw8rCVKWGvybTL17Pv8CqXBrg3JXnA+gwHxG+XLarE6DWZNg8txZZIGclB+a7jagC3GAJmeGWgTXRtAAhcNqPX2mryJBv+mD2GrgcizxUizAAAAAElFTkSuQmCC`
 
-console.log('test', _assets_dirt_png__WEBPACK_IMPORTED_MODULE_4__);
 var PRESETS = {
   shape: {
     sphere: {
@@ -2156,33 +2163,41 @@ var PRESETS = {
       'texture.uv.uv_size': [8, 8],
       'texture.uv.mode': 'static'
     },
-    smoke: {
+    smoke: _defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty({
       'appearance.appearance.size': ['0.5', '0.5'],
-      'texture.uv.size': [16, 16],
+      'texture.uv.size': [16, 128],
       'texture.uv.uv': [0, 0],
-      'texture.uv.uv_size': [16, 16],
-      'texture.uv.mode': 'full'
-    },
-    dust: {
-      'appearance.appearance.size': ['0.5', '0.5'],
-      'texture.uv.size': [16, 16],
+      'texture.uv.uv_size': [16, 16]
+    }, "texture.uv.uv_size", [16, 16]), 'texture.uv.mode', 'animated'), 'texture.uv.uv_step', [0, 16]), 'texture.uv.frames_per_second', '12'), 'texture.uv.max_frame', '8'), 'texture.uv.stretch_to_lifetime', true), 'texture.uv.loop', false),
+    dust: _defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty(_defineProperty({
+      'appearance.appearance.size': ['0.3', '0.3'],
+      'texture.uv.size': [8, 64],
       'texture.uv.uv': [0, 0],
-      'texture.uv.uv_size': [16, 16],
-      'texture.uv.mode': 'full'
-    },
+      'texture.uv.uv_size': [8, 8]
+    }, "texture.uv.uv_size", [8, 8]), 'texture.uv.mode', 'animated'), 'texture.uv.uv_step', [0, 8]), 'texture.uv.frames_per_second', '12'), 'texture.uv.max_frame', '8'), 'texture.uv.stretch_to_lifetime', true), 'texture.uv.loop', false),
     sparkle: {
       'appearance.appearance.size': ['0.5', '0.5'],
-      'texture.uv.size': [16, 16],
+      'texture.uv.size': [16, 64],
       'texture.uv.uv': [0, 0],
       'texture.uv.uv_size': [16, 16],
-      'texture.uv.mode': 'full'
+      'texture.uv.mode': 'animated',
+      'texture.uv.uv_step': [0, 16],
+      'texture.uv.frames_per_second': '15',
+      'texture.uv.max_frame': '4',
+      'texture.uv.stretch_to_lifetime': false,
+      'texture.uv.loop': true
     },
     magic: {
       'appearance.appearance.size': ['0.25', '0.25'],
-      'texture.uv.size': [16, 16],
+      'texture.uv.size': [16, 128],
       'texture.uv.uv': ['Math.floor(v.particle_random_3 * 2) * 8', 'Math.floor(v.particle_random_4 * 2) * 8'],
       'texture.uv.uv_size': [8, 8],
-      'texture.uv.mode': 'static'
+      'texture.uv.mode': 'animated',
+      'texture.uv.uv_step': [0, 16],
+      'texture.uv.frames_per_second': '12',
+      'texture.uv.max_frame': '8',
+      'texture.uv.stretch_to_lifetime': true,
+      'texture.uv.loop': false
     }
   },
   collision: {
@@ -2233,6 +2248,17 @@ var PRESETS = {
     }
   }
 };
+var DEFAULTS = {
+  shape: '',
+  timing: '',
+  speed: 0,
+  amount: 4,
+  particle_lifetime: 2,
+  sprite: '',
+  lighting: true,
+  random_rotation: false,
+  collision: 'none'
+};
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: 'quick-setup',
   components: {
@@ -2255,15 +2281,24 @@ var PRESETS = {
   },
   data: function data() {
     return {
-      Sprite: _assets_sample_sprites_png__WEBPACK_IMPORTED_MODULE_1__,
-      shape: '',
-      timing: '',
-      speed: 1,
-      amount: 4,
-      particle_lifetime: 2,
-      sprite: '',
-      lightning: true,
-      collision: 'none'
+      sprites: {
+        SpriteBall: _assets_ball_png__WEBPACK_IMPORTED_MODULE_2__,
+        SpriteDirt: _assets_dirt_png__WEBPACK_IMPORTED_MODULE_3__,
+        SpriteLeaves: _assets_leaves_png__WEBPACK_IMPORTED_MODULE_4__,
+        SpriteSmoke: _assets_smoke_png__WEBPACK_IMPORTED_MODULE_5__,
+        SpriteDust: _assets_dust_png__WEBPACK_IMPORTED_MODULE_6__,
+        SpriteSparkle: _assets_sparkle_png__WEBPACK_IMPORTED_MODULE_7__,
+        SpriteMagic: _assets_magic_png__WEBPACK_IMPORTED_MODULE_8__
+      },
+      shape: DEFAULTS.shape,
+      timing: DEFAULTS.timing,
+      speed: DEFAULTS.speed,
+      amount: DEFAULTS.amount,
+      particle_lifetime: DEFAULTS.particle_lifetime,
+      sprite: DEFAULTS.sprite,
+      lighting: DEFAULTS.lighting,
+      random_rotation: DEFAULTS.random_rotation,
+      collision: DEFAULTS.collision
     };
   },
   watch: {
@@ -2277,8 +2312,11 @@ var PRESETS = {
     particle_lifetime: function particle_lifetime(value) {
       this.setInput('lifetime.lifetime.max_lifetime', value);
     },
-    lightning: function lightning(value) {
+    lighting: function lighting(value) {
       this.setInput('appearance.appearance.light', !value);
+    },
+    random_rotation: function random_rotation(value) {
+      this.setInput('motion.rotation.initial_rotation', value ? 'math.random(-180, 180)' : '');
     }
   },
   methods: {
@@ -2310,7 +2348,7 @@ var PRESETS = {
         if (preset_path == 'emitter.rate.rate') _this.amount = value;
         if (preset_path == 'emitter.rate.amount') _this.amount = value;
         if (preset_path == 'lifetime.lifetime.max_lifetime') _this.particle_lifetime = value;
-        if (preset_path == 'appearance.appearance.light') _this.lightning = value;
+        if (preset_path == 'appearance.appearance.light') _this.lighting = value;
         if (input) {
           if (input.type == 'molang') {
             if (value instanceof Array) {
@@ -2331,33 +2369,50 @@ var PRESETS = {
         var source = '';
         switch (value) {
           case 'ball':
-            source = _assets_ball_png__WEBPACK_IMPORTED_MODULE_3__;
+            source = _assets_ball_png__WEBPACK_IMPORTED_MODULE_2__;
             break;
           case 'dirt':
-            source = _assets_dirt_png__WEBPACK_IMPORTED_MODULE_4__;
+            source = _assets_dirt_png__WEBPACK_IMPORTED_MODULE_3__;
             break;
           case 'leaves':
-            source = _assets_leaves_png__WEBPACK_IMPORTED_MODULE_5__;
+            source = _assets_leaves_png__WEBPACK_IMPORTED_MODULE_4__;
             break;
           case 'smoke':
-            source = _assets_smoke_png__WEBPACK_IMPORTED_MODULE_6__;
+            source = _assets_smoke_png__WEBPACK_IMPORTED_MODULE_5__;
             break;
           case 'dust':
-            source = _assets_dust_png__WEBPACK_IMPORTED_MODULE_7__;
+            source = _assets_dust_png__WEBPACK_IMPORTED_MODULE_6__;
             break;
           case 'sparkle':
-            source = _assets_sparkle_png__WEBPACK_IMPORTED_MODULE_8__;
+            source = _assets_sparkle_png__WEBPACK_IMPORTED_MODULE_7__;
             break;
           case 'magic':
-            source = _assets_magic_png__WEBPACK_IMPORTED_MODULE_9__;
+            source = _assets_magic_png__WEBPACK_IMPORTED_MODULE_8__;
             break;
         }
-        _texture_edit__WEBPACK_IMPORTED_MODULE_2__.Texture.source = source;
-        _texture_edit__WEBPACK_IMPORTED_MODULE_2__.Texture.internal_changes = true;
-        _texture_edit__WEBPACK_IMPORTED_MODULE_2__.Texture.update();
-        _texture_edit__WEBPACK_IMPORTED_MODULE_2__.Texture.updateCanvasFromSource();
+        _texture_edit__WEBPACK_IMPORTED_MODULE_1__.Texture.source = source;
+        _texture_edit__WEBPACK_IMPORTED_MODULE_1__.Texture.internal_changes = true;
+        _texture_edit__WEBPACK_IMPORTED_MODULE_1__.Texture.update();
+        _texture_edit__WEBPACK_IMPORTED_MODULE_1__.Texture.updateCanvasFromSource();
       }
+    },
+    resetAll: function resetAll() {
+      this.shape = DEFAULTS.shape;
+      this.timing = DEFAULTS.timing;
+      this.speed = DEFAULTS.speed;
+      this.amount = DEFAULTS.amount;
+      this.particle_lifetime = DEFAULTS.particle_lifetime;
+      this.sprite = DEFAULTS.sprite;
+      this.lighting = DEFAULTS.lighting;
+      this.random_rotation = DEFAULTS.random_rotation;
+      this.collision = DEFAULTS.collision;
     }
+  },
+  mounted: function mounted() {
+    var _this2 = this;
+    _emitter__WEBPACK_IMPORTED_MODULE_9__.QuickSetup.resetAll = function () {
+      _this2.resetAll();
+    };
   }
 });
 
@@ -2376,16 +2431,20 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var vue_color__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-color */ "./node_modules/vue-color/dist/vue-color.min.js");
 /* harmony import */ var vue_color__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue_color__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/mouse-pointer.js");
-/* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/brush.js");
-/* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/eraser.js");
-/* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/paint-bucket.js");
-/* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/plus-square.js");
-/* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/save.js");
-/* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/x.js");
+/* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/mouse-pointer.js");
+/* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/brush.js");
+/* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/eraser.js");
+/* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/paint-bucket.js");
+/* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/pipette.js");
+/* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/plus-square.js");
+/* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/save.js");
+/* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/x.js");
+/* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/undo.js");
+/* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/redo.js");
 /* harmony import */ var _input__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../input */ "./src/input.js");
 /* harmony import */ var molangjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! molangjs */ "./node_modules/molangjs/dist/molang.esm.js");
 /* harmony import */ var _texture_edit__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../texture_edit */ "./src/texture_edit.js");
+/* harmony import */ var _util__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../util */ "./src/util.js");
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
@@ -2448,6 +2507,29 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 
 
@@ -2473,13 +2555,16 @@ var parser = new molangjs__WEBPACK_IMPORTED_MODULE_2__["default"]();
   name: 'texture-input',
   components: {
     'color-picker': (vue_color__WEBPACK_IMPORTED_MODULE_0___default().Chrome),
-    MousePointer: lucide_vue__WEBPACK_IMPORTED_MODULE_4__["default"],
-    Brush: lucide_vue__WEBPACK_IMPORTED_MODULE_5__["default"],
-    Eraser: lucide_vue__WEBPACK_IMPORTED_MODULE_6__["default"],
-    PaintBucket: lucide_vue__WEBPACK_IMPORTED_MODULE_7__["default"],
-    PlusSquare: lucide_vue__WEBPACK_IMPORTED_MODULE_8__["default"],
-    Save: lucide_vue__WEBPACK_IMPORTED_MODULE_9__["default"],
-    X: lucide_vue__WEBPACK_IMPORTED_MODULE_10__["default"]
+    MousePointer: lucide_vue__WEBPACK_IMPORTED_MODULE_5__["default"],
+    Brush: lucide_vue__WEBPACK_IMPORTED_MODULE_6__["default"],
+    Eraser: lucide_vue__WEBPACK_IMPORTED_MODULE_7__["default"],
+    PaintBucket: lucide_vue__WEBPACK_IMPORTED_MODULE_8__["default"],
+    Pipette: lucide_vue__WEBPACK_IMPORTED_MODULE_9__["default"],
+    PlusSquare: lucide_vue__WEBPACK_IMPORTED_MODULE_10__["default"],
+    Save: lucide_vue__WEBPACK_IMPORTED_MODULE_11__["default"],
+    X: lucide_vue__WEBPACK_IMPORTED_MODULE_12__["default"],
+    Undo: lucide_vue__WEBPACK_IMPORTED_MODULE_13__["default"],
+    Redo: lucide_vue__WEBPACK_IMPORTED_MODULE_14__["default"]
   },
   props: {
     input: _input__WEBPACK_IMPORTED_MODULE_1__["default"],
@@ -2487,9 +2572,13 @@ var parser = new molangjs__WEBPACK_IMPORTED_MODULE_2__["default"]();
   },
   data: function data() {
     return {
+      Texture: _texture_edit__WEBPACK_IMPORTED_MODULE_3__.Texture,
       paint_color: {
         hex8: '#ffffffff'
       },
+      zoom: 1,
+      viewport_size: 256,
+      offset: [0, 0],
       tool: 'select',
       color_picker_open: false,
       cursor_position: {
@@ -2521,19 +2610,34 @@ var parser = new molangjs__WEBPACK_IMPORTED_MODULE_2__["default"]();
       this.cursor_position.active = false;
     },
     onMouseDown: function onMouseDown(event) {
-      console.log(this.tool);
+      var _this = this;
+      var initial_offset = this.offset.slice();
+      if (event.button == 2 || event.button == 1) {
+        event.preventDefault();
+        var onMove = function onMove(e2) {
+          var _this$offset;
+          e2.preventDefault();
+          var offset = [initial_offset[0] + (e2.clientX - event.clientX), initial_offset[1] + (e2.clientY - event.clientY)];
+          (_this$offset = _this.offset).splice.apply(_this$offset, [0, 2].concat(offset));
+        };
+        var onEnd = function onEnd(e2) {
+          document.removeEventListener('mousemove', onMove);
+          document.removeEventListener('mouseup', onEnd);
+        };
+        document.addEventListener('mousemove', onMove);
+        document.addEventListener('mouseup', onEnd);
+        return;
+      }
       var context = {
         wrapper: this.$refs.texture_wrapper,
         position: this.pixel_position,
         tool: this.tool,
         color: this.paint_color.hex8
       };
-      if (event.altKey) {
+      if (event.altKey || this.tool == 'color_picker') {
         var color = _texture_edit__WEBPACK_IMPORTED_MODULE_3__.Texture.pickColor(event, context);
-        console.log(color + '');
         this.paint_color.hex8 = color;
-      }
-      if (this.tool == 'brush' || this.tool == 'eraser') {
+      } else if (this.tool == 'brush' || this.tool == 'eraser') {
         _texture_edit__WEBPACK_IMPORTED_MODULE_3__.Texture.usePaintTool(event, context);
       } else if (this.tool == 'fill_tool') {
         _texture_edit__WEBPACK_IMPORTED_MODULE_3__.Texture.useFillTool(event, context);
@@ -2544,16 +2648,97 @@ var parser = new molangjs__WEBPACK_IMPORTED_MODULE_2__["default"]();
       var _uv_inputs$size$value = _slicedToArray(uv_inputs.size.value, 2),
         uv_width = _uv_inputs$size$value[0],
         uv_height = _uv_inputs$size$value[1];
-      var frame_width = 256;
-      var frame_height = 256;
+      var frame_width = this.width;
+      var frame_height = this.height;
+      var img_width = this.input.image_element.naturalWidt || _texture_edit__WEBPACK_IMPORTED_MODULE_3__.Texture.canvas.width;
+      var img_height = this.input.image_element.naturalHeight || _texture_edit__WEBPACK_IMPORTED_MODULE_3__.Texture.canvas.height;
       var rect = this.$refs.texture_wrapper.getBoundingClientRect();
       this.cursor_position.x = Math.floor((event.clientX - 1 - rect.left) / frame_width * uv_width);
       this.cursor_position.y = Math.floor((event.clientY - 1 - rect.top) / frame_height * uv_height);
-      this.pixel_position.x = Math.floor((event.clientX - 1 - rect.left) / frame_width * this.input.image_element.naturalWidth);
-      this.pixel_position.y = Math.floor((event.clientY - 1 - rect.top) / frame_height * this.input.image_element.naturalHeight);
+      this.pixel_position.x = Math.floor((event.clientX - 1 - rect.left) / frame_width * img_width);
+      this.pixel_position.y = Math.floor((event.clientY - 1 - rect.top) / frame_height * img_height);
+    },
+    onMouseWheel: function onMouseWheel(event) {
+      event.preventDefault();
+      this.onMouseMove(event);
+      var initial_zoom = this.zoom;
+      if (event.deltaY > 1) {
+        this.zoom = this.zoom / 1.1;
+      } else {
+        this.zoom = this.zoom * 1.1;
+      }
+      this.zoom = Math.clamp(this.zoom, 0.5, 8);
+      if (this.zoom != initial_zoom) {
+        var rect = this.$refs.texture_wrapper.getBoundingClientRect();
+        var mouse_pos = [event.clientX - 1 - rect.left, event.clientY - 1 - rect.top];
+        var zoom_offset = 1 - this.zoom / initial_zoom;
+        var is_wider_than_viewport = this.$refs.texture_wrapper.clientWidth > this.$refs.texture_viewport.clientWidth;
+        this.offset.splice(0, 2, this.offset[0] + mouse_pos[0] * zoom_offset * (is_wider_than_viewport ? 1 : 0), this.offset[1] + mouse_pos[1] * zoom_offset);
+      }
     },
     isVertical: function isVertical() {
+      return false;
       return this.input.image_element.naturalWidth < this.input.image_element.naturalHeight;
+    },
+    offsetUVValue: function offsetUVValue(value, amount) {
+      if (!amount) {
+        return value;
+      }
+      if (!value || value === '0') {
+        return amount.toString();
+      }
+      if (typeof value == 'string' && !isNaN(value)) {
+        value = parseFloat(value);
+      }
+      if (typeof value === 'number') {
+        return value + amount;
+      }
+      var start = value.match(/^-?\s*\d+(\.\d+)?\s*(\+|-)/);
+      if (start) {
+        var number = parseFloat(start[0].substr(0, start[0].length - 1)) + amount;
+        if (number == 0) {
+          value = value.substr(start[0].length + (value[start[0].length - 1] == '+' ? 0 : -1));
+          return value.trim();
+        } else {
+          return (0,_util__WEBPACK_IMPORTED_MODULE_4__.trimFloatNumber)(number) + (start[0].substr(-2, 1) == ' ' ? ' ' : '') + value.substr(start[0].length - 1);
+        }
+      } else {
+        var end = value.match(/(\+|-)\s*\d*(\.\d+)?\s*$/);
+        if (end) {
+          var _number = parseFloat(end[0]) + amount;
+          return value.substr(0, end.index) + (_number.toString().substr(0, 1) == '-' ? '' : '+') + (0,_util__WEBPACK_IMPORTED_MODULE_4__.trimFloatNumber)(_number);
+        } else if (amount) {
+          return (0,_util__WEBPACK_IMPORTED_MODULE_4__.trimFloatNumber)(amount) + (value.substr(0, 1) == '-' ? '' : '+') + value;
+        }
+      }
+    },
+    dragUV: function dragUV(e1, size) {
+      var _this2 = this;
+      if (this.tool != 'select') return;
+      var target_input = this.data.texture.uv.inputs[size ? 'uv_size' : 'uv'];
+      var initial_value = target_input.value.slice();
+      var initial_coords = {
+        x: this.cursor_position.x,
+        y: this.cursor_position.y
+      };
+      var last_coords = {
+        x: this.cursor_position.x,
+        y: this.cursor_position.y
+      };
+      var onMove = function onMove(e2) {
+        var coords = _this2.cursor_position;
+        if (last_coords.x == coords.x && last_coords.y == coords.y) return;
+        var offset = [coords.x - initial_coords.x, coords.y - initial_coords.y];
+        target_input.set([_this2.offsetUVValue(initial_value[0], offset[0]).toString(), _this2.offsetUVValue(initial_value[1], offset[1]).toString()]);
+        last_coords.x = coords.x;
+        last_coords.y = coords.y;
+      };
+      var onEnd = function onEnd(e2) {
+        document.removeEventListener('mousemove', onMove);
+        document.removeEventListener('mouseup', onEnd);
+      };
+      document.addEventListener('mousemove', onMove);
+      document.addEventListener('mouseup', onEnd);
     },
     calculateUVSample: function calculateUVSample() {
       var uv_inputs = this.data.texture.uv.inputs;
@@ -2566,8 +2751,8 @@ var parser = new molangjs__WEBPACK_IMPORTED_MODULE_2__["default"]();
       var size = uv_inputs.uv_size.value.map(function (v) {
         return parser.parse(v);
       });
-      var frame_width = 256;
-      var frame_height = 256;
+      var frame_width = this.width;
+      var frame_height = this.height;
       if (this.isVertical()) {
         frame_height /= this.input.image_element.naturalWidth / this.input.image_element.naturalHeight;
       }
@@ -2609,11 +2794,8 @@ var parser = new molangjs__WEBPACK_IMPORTED_MODULE_2__["default"]();
       for (var random = 0; random < 1; random += 0.249999999) {
         _loop();
       }
-      var frame_width = 256;
-      var frame_height = 256;
-      if (this.isVertical()) {
-        frame_height /= this.input.image_element.naturalWidth / this.input.image_element.naturalHeight;
-      }
+      var frame_width = this.width;
+      var frame_height = this.height;
       return {
         left: bounding_box[0] / uv_width * frame_width + 'px',
         top: bounding_box[1] / uv_height * frame_height + 'px',
@@ -2622,10 +2804,31 @@ var parser = new molangjs__WEBPACK_IMPORTED_MODULE_2__["default"]();
       };
     }
   },
+  computed: {
+    size: function size() {
+      return this.viewport_size * this.zoom;
+    },
+    width: function width() {
+      return this.viewport_size * this.zoom;
+    },
+    ratio: function ratio() {
+      if (this.inputs && this.inputs.image_element && this.inputs.image_element.naturalWidth) {
+        return this.input.image_element.naturalWidth / this.input.image_element.naturalHeight;
+      } else if (_texture_edit__WEBPACK_IMPORTED_MODULE_3__.Texture.canvas) {
+        return _texture_edit__WEBPACK_IMPORTED_MODULE_3__.Texture.canvas.width / _texture_edit__WEBPACK_IMPORTED_MODULE_3__.Texture.canvas.height;
+      } else {
+        return 1;
+      }
+    },
+    height: function height() {
+      console.log(this.ratio);
+      return this.viewport_size * this.zoom / this.ratio;
+    }
+  },
   mounted: function mounted() {
-    var _this = this;
+    var _this3 = this;
     document.addEventListener('click', function () {
-      if (_this.color_picker_open) _this.color_picker_open = false;
+      if (_this3.color_picker_open) _this3.color_picker_open = false;
     }, {
       passive: true
     });
@@ -3056,6 +3259,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   Config: () => (/* binding */ Config),
 /* harmony export */   Emitter: () => (/* binding */ Emitter),
+/* harmony export */   QuickSetup: () => (/* binding */ QuickSetup),
 /* harmony export */   Scene: () => (/* binding */ Scene),
 /* harmony export */   initParticles: () => (/* binding */ initParticles),
 /* harmony export */   updateMaterial: () => (/* binding */ updateMaterial)
@@ -3068,7 +3272,6 @@ __webpack_require__.r(__webpack_exports__);
 
 var Scene = new wintersky__WEBPACK_IMPORTED_MODULE_2__["default"].Scene({
   fetchTexture: function fetchTexture(config) {
-    console.log(_texture_edit__WEBPACK_IMPORTED_MODULE_0__.Texture.internal_changes, _texture_edit__WEBPACK_IMPORTED_MODULE_0__.Texture);
     if (_texture_edit__WEBPACK_IMPORTED_MODULE_0__.Texture.internal_changes) {
       return _texture_edit__WEBPACK_IMPORTED_MODULE_0__.Texture.source;
     }
@@ -3099,6 +3302,7 @@ var Emitter = new wintersky__WEBPACK_IMPORTED_MODULE_2__["default"].Emitter(Scen
   loop_mode: 'looping',
   parent_mode: 'world'
 });
+var QuickSetup = {};
 window.Emitter = Emitter;
 _texture_edit__WEBPACK_IMPORTED_MODULE_0__.Texture.linkEmitter(Emitter, Config);
 Config.reset();
@@ -3762,6 +3966,23 @@ var Samples = {
 function updateInputsFromConfig() {
   (0,_input_structure__WEBPACK_IMPORTED_MODULE_4__.forEachInput)(function (input) {
     input.value = _emitter__WEBPACK_IMPORTED_MODULE_1__.Config[input.id];
+    if (input.type == 'molang' && input.value) {
+      var lineify = function lineify(string) {
+        if (typeof string == 'string' && string && string.includes(';')) {
+          input.expanded = true;
+          return string.replace(/;/g, ';\n').replace(/\n+$/, '');
+        } else {
+          return string;
+        }
+      };
+      if (input.value instanceof Array) {
+        input.value.forEach(function (v, i) {
+          input.value[i] = lineify(v);
+        });
+      } else {
+        input.value = lineify(input.value);
+      }
+    }
     if (input.type === 'select') {
       input.update(_input_structure__WEBPACK_IMPORTED_MODULE_4__["default"]);
     }
@@ -3776,6 +3997,15 @@ function updateInputsFromConfig() {
     curve.updateMinMax();
   }
   _input_structure__WEBPACK_IMPORTED_MODULE_4__["default"].effect.meta.inputs.identifier.onchange();
+  _texture_edit__WEBPACK_IMPORTED_MODULE_15__.Texture.source = _input_structure__WEBPACK_IMPORTED_MODULE_4__["default"].texture.texture.inputs.image.image_element.src;
+  _texture_edit__WEBPACK_IMPORTED_MODULE_15__.Texture.updateCanvasFromSource();
+  //let texture_input = Data.texture.texture.inputs.image;
+  //texture_input.image.name = Data.texture.texture.inputs.path.value.split('/').at(-1);
+  //texture_input.image.data = Texture.source = reader.result;
+  //Texture.updateCanvasFromSource();
+  //texture_input.image.loaded = true;
+  //texture_input.image.hidden = true;
+  //texture_input.image.hidden = false;
 }
 //function importFile() {}
 function updateConfig(data) {
@@ -3786,6 +4016,7 @@ function loadFile(data) {
   var confirmNewProject = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
   if (data && data.particle_effect && (!confirmNewProject || startNewProject())) {
     _texture_edit__WEBPACK_IMPORTED_MODULE_15__.Texture.reset();
+    _emitter__WEBPACK_IMPORTED_MODULE_1__.QuickSetup.resetAll();
     updateConfig(data);
     _emitter__WEBPACK_IMPORTED_MODULE_1__.Emitter.stop(true).playLoop();
     (0,_edits__WEBPACK_IMPORTED_MODULE_14__["default"])('load file');
@@ -3803,6 +4034,8 @@ function importFile() {
 function startNewProject(force) {
   if (_vscode_extension__WEBPACK_IMPORTED_MODULE_2__["default"] || force || confirm('This action may clear your current work. Do you want to continue?')) {
     _emitter__WEBPACK_IMPORTED_MODULE_1__.Config.reset();
+    _texture_edit__WEBPACK_IMPORTED_MODULE_15__.Texture.reset();
+    _emitter__WEBPACK_IMPORTED_MODULE_1__.QuickSetup.resetAll();
     updateInputsFromConfig();
     return true;
   }
@@ -5342,6 +5575,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./util */ "./src/util.js");
 /* harmony import */ var _vscode_extension__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./vscode_extension */ "./src/vscode_extension.js");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
+function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return e; }; var t, e = {}, r = Object.prototype, n = r.hasOwnProperty, o = Object.defineProperty || function (t, e, r) { t[e] = r.value; }, i = "function" == typeof Symbol ? Symbol : {}, a = i.iterator || "@@iterator", c = i.asyncIterator || "@@asyncIterator", u = i.toStringTag || "@@toStringTag"; function define(t, e, r) { return Object.defineProperty(t, e, { value: r, enumerable: !0, configurable: !0, writable: !0 }), t[e]; } try { define({}, ""); } catch (t) { define = function define(t, e, r) { return t[e] = r; }; } function wrap(t, e, r, n) { var i = e && e.prototype instanceof Generator ? e : Generator, a = Object.create(i.prototype), c = new Context(n || []); return o(a, "_invoke", { value: makeInvokeMethod(t, r, c) }), a; } function tryCatch(t, e, r) { try { return { type: "normal", arg: t.call(e, r) }; } catch (t) { return { type: "throw", arg: t }; } } e.wrap = wrap; var h = "suspendedStart", l = "suspendedYield", f = "executing", s = "completed", y = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var p = {}; define(p, a, function () { return this; }); var d = Object.getPrototypeOf, v = d && d(d(values([]))); v && v !== r && n.call(v, a) && (p = v); var g = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(p); function defineIteratorMethods(t) { ["next", "throw", "return"].forEach(function (e) { define(t, e, function (t) { return this._invoke(e, t); }); }); } function AsyncIterator(t, e) { function invoke(r, o, i, a) { var c = tryCatch(t[r], t, o); if ("throw" !== c.type) { var u = c.arg, h = u.value; return h && "object" == _typeof(h) && n.call(h, "__await") ? e.resolve(h.__await).then(function (t) { invoke("next", t, i, a); }, function (t) { invoke("throw", t, i, a); }) : e.resolve(h).then(function (t) { u.value = t, i(u); }, function (t) { return invoke("throw", t, i, a); }); } a(c.arg); } var r; o(this, "_invoke", { value: function value(t, n) { function callInvokeWithMethodAndArg() { return new e(function (e, r) { invoke(t, n, e, r); }); } return r = r ? r.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(e, r, n) { var o = h; return function (i, a) { if (o === f) throw new Error("Generator is already running"); if (o === s) { if ("throw" === i) throw a; return { value: t, done: !0 }; } for (n.method = i, n.arg = a;;) { var c = n.delegate; if (c) { var u = maybeInvokeDelegate(c, n); if (u) { if (u === y) continue; return u; } } if ("next" === n.method) n.sent = n._sent = n.arg;else if ("throw" === n.method) { if (o === h) throw o = s, n.arg; n.dispatchException(n.arg); } else "return" === n.method && n.abrupt("return", n.arg); o = f; var p = tryCatch(e, r, n); if ("normal" === p.type) { if (o = n.done ? s : l, p.arg === y) continue; return { value: p.arg, done: n.done }; } "throw" === p.type && (o = s, n.method = "throw", n.arg = p.arg); } }; } function maybeInvokeDelegate(e, r) { var n = r.method, o = e.iterator[n]; if (o === t) return r.delegate = null, "throw" === n && e.iterator["return"] && (r.method = "return", r.arg = t, maybeInvokeDelegate(e, r), "throw" === r.method) || "return" !== n && (r.method = "throw", r.arg = new TypeError("The iterator does not provide a '" + n + "' method")), y; var i = tryCatch(o, e.iterator, r.arg); if ("throw" === i.type) return r.method = "throw", r.arg = i.arg, r.delegate = null, y; var a = i.arg; return a ? a.done ? (r[e.resultName] = a.value, r.next = e.nextLoc, "return" !== r.method && (r.method = "next", r.arg = t), r.delegate = null, y) : a : (r.method = "throw", r.arg = new TypeError("iterator result is not an object"), r.delegate = null, y); } function pushTryEntry(t) { var e = { tryLoc: t[0] }; 1 in t && (e.catchLoc = t[1]), 2 in t && (e.finallyLoc = t[2], e.afterLoc = t[3]), this.tryEntries.push(e); } function resetTryEntry(t) { var e = t.completion || {}; e.type = "normal", delete e.arg, t.completion = e; } function Context(t) { this.tryEntries = [{ tryLoc: "root" }], t.forEach(pushTryEntry, this), this.reset(!0); } function values(e) { if (e || "" === e) { var r = e[a]; if (r) return r.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) { var o = -1, i = function next() { for (; ++o < e.length;) if (n.call(e, o)) return next.value = e[o], next.done = !1, next; return next.value = t, next.done = !0, next; }; return i.next = i; } } throw new TypeError(_typeof(e) + " is not iterable"); } return GeneratorFunction.prototype = GeneratorFunctionPrototype, o(g, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), o(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, u, "GeneratorFunction"), e.isGeneratorFunction = function (t) { var e = "function" == typeof t && t.constructor; return !!e && (e === GeneratorFunction || "GeneratorFunction" === (e.displayName || e.name)); }, e.mark = function (t) { return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, define(t, u, "GeneratorFunction")), t.prototype = Object.create(g), t; }, e.awrap = function (t) { return { __await: t }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, c, function () { return this; }), e.AsyncIterator = AsyncIterator, e.async = function (t, r, n, o, i) { void 0 === i && (i = Promise); var a = new AsyncIterator(wrap(t, r, n, o), i); return e.isGeneratorFunction(r) ? a : a.next().then(function (t) { return t.done ? t.value : a.next(); }); }, defineIteratorMethods(g), define(g, u, "Generator"), define(g, a, function () { return this; }), define(g, "toString", function () { return "[object Generator]"; }), e.keys = function (t) { var e = Object(t), r = []; for (var n in e) r.push(n); return r.reverse(), function next() { for (; r.length;) { var t = r.pop(); if (t in e) return next.value = t, next.done = !1, next; } return next.done = !0, next; }; }, e.values = values, Context.prototype = { constructor: Context, reset: function reset(e) { if (this.prev = 0, this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(resetTryEntry), !e) for (var r in this) "t" === r.charAt(0) && n.call(this, r) && !isNaN(+r.slice(1)) && (this[r] = t); }, stop: function stop() { this.done = !0; var t = this.tryEntries[0].completion; if ("throw" === t.type) throw t.arg; return this.rval; }, dispatchException: function dispatchException(e) { if (this.done) throw e; var r = this; function handle(n, o) { return a.type = "throw", a.arg = e, r.next = n, o && (r.method = "next", r.arg = t), !!o; } for (var o = this.tryEntries.length - 1; o >= 0; --o) { var i = this.tryEntries[o], a = i.completion; if ("root" === i.tryLoc) return handle("end"); if (i.tryLoc <= this.prev) { var c = n.call(i, "catchLoc"), u = n.call(i, "finallyLoc"); if (c && u) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } else if (c) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); } else { if (!u) throw new Error("try statement without catch or finally"); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } } } }, abrupt: function abrupt(t, e) { for (var r = this.tryEntries.length - 1; r >= 0; --r) { var o = this.tryEntries[r]; if (o.tryLoc <= this.prev && n.call(o, "finallyLoc") && this.prev < o.finallyLoc) { var i = o; break; } } i && ("break" === t || "continue" === t) && i.tryLoc <= e && e <= i.finallyLoc && (i = null); var a = i ? i.completion : {}; return a.type = t, a.arg = e, i ? (this.method = "next", this.next = i.finallyLoc, y) : this.complete(a); }, complete: function complete(t, e) { if ("throw" === t.type) throw t.arg; return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && e && (this.next = e), y; }, finish: function finish(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.finallyLoc === t) return this.complete(r.completion, r.afterLoc), resetTryEntry(r), y; } }, "catch": function _catch(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.tryLoc === t) { var n = r.completion; if ("throw" === n.type) { var o = n.arg; resetTryEntry(r); } return o; } } throw new Error("illegal catch attempt"); }, delegateYield: function delegateYield(e, r, n) { return this.delegate = { iterator: values(e), resultName: r, nextLoc: n }, "next" === this.method && (this.arg = t), y; } }, e; }
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
@@ -5352,12 +5589,22 @@ function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" 
 function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 
 
+var line_start = null;
+function textureHexToArray(hex) {
+  return [parseInt(hex.substring(1, 3), 16), parseInt(hex.substring(3, 5), 16), parseInt(hex.substring(5, 7), 16), parseInt(hex.substring(7, 9), 16)];
+}
+function getIdentifier() {
+  return String.fromCharCode(65 + Math.random() * 26) + String.fromCharCode(65 + Math.random() * 26);
+}
 var TextureClass = /*#__PURE__*/function () {
   function TextureClass() {
     _classCallCheck(this, TextureClass);
     this.canvas = document.createElement('canvas');
+    this.canvas.width = this.canvas.height = 16;
     this.ctx = this.canvas.getContext('2d');
     this.source = '';
+    this.history = [];
+    this.history_index = 0;
     this.internal_changes = false;
   }
   _createClass(TextureClass, [{
@@ -5414,6 +5661,7 @@ var TextureClass = /*#__PURE__*/function () {
     value: function reset() {
       this.source = '';
       this.internal_changes = false;
+      line_start = null;
     }
   }, {
     key: "createEmpty",
@@ -5470,24 +5718,63 @@ var TextureClass = /*#__PURE__*/function () {
     key: "usePaintTool",
     value: function usePaintTool(e1, context) {
       var _this2 = this;
+      this.beforeEdit();
       var last_coords = {};
+      if (e1.shiftKey && line_start) {
+        last_coords = {
+          x: line_start[0],
+          y: line_start[1]
+        };
+      }
+      var color;
+      if (context.color) {
+        color = textureHexToArray(context.color);
+      }
+      var paint = function paint(x, y, context) {
+        var r = 0;
+        if (context.tool == 'brush') {
+          var data = _this2.ctx.getImageData(x - Math.round(r), y - Math.round(r), 1 + r, 1 + r);
+          for (var i = 0; i < data.data.length; i += 4) {
+            data.data[i + 0] = color[0];
+            data.data[i + 1] = color[1];
+            data.data[i + 2] = color[2];
+            data.data[i + 3] = color[3];
+          }
+          _this2.ctx.putImageData(data, x - Math.round(r), y - Math.round(r));
+        } else {
+          _this2.ctx.clearRect(x - Math.round(r), y - Math.round(r), 1 + r, 1 + r);
+        }
+      };
       var onMove = function onMove(e2) {
         var coords = context.position;
         if (last_coords.x == coords.x && last_coords.y == coords.y) return;
-        var r = 0;
-        if (context.tool == 'brush') {
-          _this2.ctx.fillStyle = context.color;
-          _this2.ctx.fillRect(coords.x - Math.round(r), coords.y - Math.round(r), 1 + r, 1 + r);
+        var diff_x = last_coords.x - coords.x;
+        var diff_y = last_coords.y - coords.y;
+        var length = Math.sqrt(Math.pow(diff_x, 2) + Math.pow(diff_y, 2));
+        if (length > 1.5 && last_coords.x != undefined) {
+          var interval = 1;
+          if (Math.abs(diff_x) > Math.abs(diff_y)) {
+            interval = Math.sqrt(Math.pow(diff_y / diff_x, 2) + 1);
+          } else {
+            interval = Math.sqrt(Math.pow(diff_x / diff_y, 2) + 1);
+          }
+          for (var i = 0; i <= length; i += interval) {
+            var x = length ? Math.round(last_coords.x - diff_x / length * i) : coords.x;
+            var y = length ? Math.round(last_coords.y - diff_y / length * i) : coords.y;
+            paint(x, y, context);
+          }
         } else {
-          _this2.ctx.clearRect(coords.x - Math.round(r), coords.y - Math.round(r), 1 + r, 1 + r);
+          paint(coords.x, coords.y, context);
         }
         _this2.canvasToDataURL();
         _this2.internal_changes = true;
         _this2.update();
         last_coords.x = coords.x;
         last_coords.y = coords.y;
+        line_start = [coords.x, coords.y];
       };
       var onEnd = function onEnd(e2) {
+        _this2.afterEdit();
         document.removeEventListener('mousemove', onMove);
         document.removeEventListener('mouseup', onEnd);
       };
@@ -5497,22 +5784,125 @@ var TextureClass = /*#__PURE__*/function () {
     }
   }, {
     key: "useFillTool",
-    value: function useFillTool(event, context) {}
+    value: function useFillTool(event, context) {
+      var _this3 = this;
+      this.beforeEdit();
+      var data = this.ctx.getImageData(0, 0, this.canvas.width, this.canvas.height);
+      var fill_color = textureHexToArray(context.color);
+      var matrix = _defineProperty({}, context.position.x, _defineProperty({}, context.position.y, true));
+      var getColor = function getColor(x, y) {
+        var offset = (y * _this3.canvas.width + x) * 4;
+        return [data.data[offset], data.data[offset + 1], data.data[offset + 2], data.data[offset + 3]];
+      };
+      var target_color = getColor(context.position.x, context.position.y);
+      var expandTo = function expandTo(x, y) {
+        if (matrix[x] && matrix[x][y] != undefined) return;
+        if (x < 0 || y < 0 || x >= _this3.canvas.width || y >= _this3.canvas.height) return;
+        var color = getColor(x, y);
+        var match = target_color.equals(color);
+        if (!matrix[x]) matrix[x] = {};
+        matrix[x][y] = match;
+        if (match) {
+          expandFrom(x, y);
+        }
+      };
+      var expandFrom = function expandFrom(x, y) {
+        expandTo(x + 1, y + 0);
+        expandTo(x - 1, y + 0);
+        expandTo(x + 0, y + 1);
+        expandTo(x + 0, y - 1);
+      };
+      expandFrom(context.position.x, context.position.y);
+      for (var x in matrix) {
+        for (var y in matrix[x]) {
+          var value = matrix[x][y];
+          if (value) {
+            var i = 0;
+            var _iterator = _createForOfIteratorHelper(fill_color),
+              _step;
+            try {
+              for (_iterator.s(); !(_step = _iterator.n()).done;) {
+                var fill_color_channel = _step.value;
+                data.data[(y * this.canvas.width + 1 * x) * 4 + i] = fill_color_channel;
+                i++;
+              }
+            } catch (err) {
+              _iterator.e(err);
+            } finally {
+              _iterator.f();
+            }
+          }
+        }
+      }
+      this.ctx.putImageData(data, 0, 0);
+      this.afterEdit();
+    }
+  }, {
+    key: "beforeEdit",
+    value: function beforeEdit() {
+      var undo_entry = {
+        id: getIdentifier(),
+        data_before: this.source
+      };
+      this.current_undo_entry = undo_entry;
+    }
+  }, {
+    key: "afterEdit",
+    value: function afterEdit(label) {
+      var entry = this.current_undo_entry;
+      entry.label = label;
+      entry.data_after = this.source;
+      if (this.history.length > this.history_index) {
+        console.log('set', this.history.length, 'to', this.history_index);
+        this.history.length = this.history_index;
+      }
+      this.history.push(entry);
+      this.history_index = this.history.length;
+      console.log('finish', entry.id, entry);
+      delete this.current_undo_entry;
+    }
+  }, {
+    key: "cancelEdit",
+    value: function cancelEdit() {
+      this.source = this.current_undo_entry.data_before;
+      this.updateCanvasFromSource();
+      delete this.current_undo_entry;
+    }
+  }, {
+    key: "undo",
+    value: function undo() {
+      var after = this.history[this.history_index - 1];
+      var before = this.history[this.history_index - 2];
+      if (!before) return;
+      this.history_index = Math.max(0, this.history_index - 1);
+      this.source = before ? before.data_after : after.data_before;
+      if (this.source) {
+        this.internal_changes = true;
+        this.updateCanvasFromSource();
+      } else {
+        this.internal_changes = false;
+        this.update();
+      }
+    }
+  }, {
+    key: "redo",
+    value: function redo() {
+      if (this.history_index >= this.history.length) return;
+      var change = this.history[this.history_index];
+      this.history_index += 1;
+      console.log('redoing', change.id);
+      this.source = change.data_after;
+      if (this.source) {
+        this.internal_changes = true;
+        this.updateCanvasFromSource();
+      } else {
+        this.internal_changes = false;
+        this.update();
+      }
+    }
   }]);
   return TextureClass;
 }();
-function calculatePixelCoords(event, context, canvas) {
-  var round = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : false;
-  var rect = context.wrapper.getBoundingClientRect();
-  var offset = [(event.clientX - rect.x) * (canvas.width / context.wrapper.firstElementChild.clientWidth), (event.clientY - rect.y) * (canvas.height / context.wrapper.firstElementChild.clientHeight)];
-  if (round) {
-    return offset.map(function (v) {
-      return Math.floor(v);
-    });
-  } else {
-    return offset;
-  }
-}
 var Texture = new TextureClass();
 
 /***/ }),
@@ -5533,7 +5923,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   convertTouchEvent: () => (/* binding */ convertTouchEvent),
 /* harmony export */   guid: () => (/* binding */ guid),
 /* harmony export */   pathToExtension: () => (/* binding */ pathToExtension),
-/* harmony export */   pathToName: () => (/* binding */ pathToName)
+/* harmony export */   pathToName: () => (/* binding */ pathToName),
+/* harmony export */   trimFloatNumber: () => (/* binding */ trimFloatNumber)
 /* harmony export */ });
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function bbuid(l) {
@@ -5690,6 +6081,14 @@ function pathToExtension(path) {
   var matches = path.match(/\.\w{2,24}$/);
   if (!matches || !matches.length) return '';
   return matches[0].replace('.', '').toLowerCase();
+}
+function trimFloatNumber(val) {
+  var max_digits = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 4;
+  if (val == '') return val;
+  var string = val.toFixed(max_digits);
+  string = string.replace(/0+$/g, '').replace(/\.$/g, '');
+  if (string == -0) return 0;
+  return string;
 }
 
 //JSON
@@ -7502,7 +7901,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.preset_option_list[data-v-698aa9f3] {\n\tdisplay: flex;\n\tgap: 2px;\n\toverflow-x: auto;\n}\n.preset_option_list > li[data-v-698aa9f3] {\n\twidth: 80px;\n\tpadding: 8px;\n\ttext-align: center;\n\tcursor: pointer;\n}\n.preset_option_list > li[data-v-698aa9f3]:hover {\n\tcolor: var(--color-highlight);\n}\n.preset_option_list > li.selected[data-v-698aa9f3] {\n\tbackground-color: var(--color-bar);\n}\n.preset_option_list > li > svg[data-v-698aa9f3] {\n\tdisplay: block;\n\tmargin: auto;\n}\n.preset_option_list > li > img[data-v-698aa9f3] {\n\tpointer-events: none;\n}\n.input_bar[data-v-698aa9f3] {\n\tdisplay: flex;\n\talign-items: center;\n\tmargin: 10px 14px;\n\tgap: 8px;\n}\n.input_bar label[data-v-698aa9f3] {\n\tdisplay: flex;\n\talign-items: center;\n\tmargin-block: 0;\n}\n.input_bar input[type=range][data-v-698aa9f3] {\n\tflex-grow: 1;\n}\n.input_bar label.range_number_label[data-v-698aa9f3] {\n\twidth: 46px;\n\ttext-align: center;\n\tdisplay: block;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.preset_option_list[data-v-698aa9f3] {\n\tdisplay: flex;\n\tgap: 2px;\n\toverflow-x: auto;\n}\n.preset_option_list > li[data-v-698aa9f3] {\n\twidth: 80px;\n\tpadding: 8px;\n\ttext-align: center;\n\tcursor: pointer;\n}\n.preset_option_list > li[data-v-698aa9f3]:hover {\n\tcolor: var(--color-highlight);\n}\n.preset_option_list > li.selected[data-v-698aa9f3] {\n\tbackground-color: var(--color-bar);\n}\n.preset_option_list > li > svg[data-v-698aa9f3] {\n\tdisplay: block;\n\tmargin: auto;\n}\n.preset_option_list > li > img[data-v-698aa9f3] {\n\tpointer-events: none;\n\taspect-ratio: 1/1;\n\t-o-object-fit: cover;\n\t   object-fit: cover;\n\t-o-object-position: bottom;\n\t   object-position: bottom;\n}\n.preset_option_list > li:hover > img.frames_8[data-v-698aa9f3] {\n\tanimation: 1s step-end 0s infinite normal thumb_animation-data-v-698aa9f3;\n}\n.preset_option_list > li:hover > img.frames_4[data-v-698aa9f3] {\n\tanimation: 300ms step-end 0s infinite normal thumb_animation_4-data-v-698aa9f3;\n}\n@keyframes thumb_animation-data-v-698aa9f3 {\n0% {\n\t\t-o-object-position: 0 0;\n\t\t   object-position: 0 0;\n}\n12.5% {\n\t\t-o-object-position: 0 calc(100% / 7 * 1);\n\t\t   object-position: 0 calc(100% / 7 * 1);\n}\n25% {\n\t\t-o-object-position: 0 calc(100% / 7 * 2);\n\t\t   object-position: 0 calc(100% / 7 * 2);\n}\n37.5% {\n\t\t-o-object-position: 0 calc(100% / 7 * 3);\n\t\t   object-position: 0 calc(100% / 7 * 3);\n}\n50% {\n\t\t-o-object-position: 0 calc(100% / 7 * 4);\n\t\t   object-position: 0 calc(100% / 7 * 4);\n}\n62.5% {\n\t\t-o-object-position: 0 calc(100% / 7 * 5);\n\t\t   object-position: 0 calc(100% / 7 * 5);\n}\n75% {\n\t\t-o-object-position: 0 calc(100% / 7 * 6);\n\t\t   object-position: 0 calc(100% / 7 * 6);\n}\n87.5% {\n\t\t-o-object-position: 0 calc(100% / 7 * 7);\n\t\t   object-position: 0 calc(100% / 7 * 7);\n}\n100% {\n\t\t-o-object-position: 0 0;\n\t\t   object-position: 0 0;\n}\n}\n@keyframes thumb_animation_4-data-v-698aa9f3 {\n0% {\n\t\t-o-object-position: 0 0;\n\t\t   object-position: 0 0;\n}\n25% {\n\t\t-o-object-position: 0 calc(100% / 3 * 1);\n\t\t   object-position: 0 calc(100% / 3 * 1);\n}\n50% {\n\t\t-o-object-position: 0 calc(100% / 3 * 2);\n\t\t   object-position: 0 calc(100% / 3 * 2);\n}\n75% {\n\t\t-o-object-position: 0 calc(100% / 3 * 3);\n\t\t   object-position: 0 calc(100% / 3 * 3);\n}\n100% {\n\t\t-o-object-position: 0 0;\n\t\t   object-position: 0 0;\n}\n}\n.input_bar[data-v-698aa9f3] {\n\tdisplay: flex;\n\talign-items: center;\n\tmargin: 10px 14px;\n\tgap: 8px;\n}\n.input_bar label[data-v-698aa9f3] {\n\tdisplay: flex;\n\talign-items: center;\n\tmargin-block: 0;\n}\n.input_bar input[type=range][data-v-698aa9f3] {\n\tflex-grow: 1;\n}\n.input_bar label.range_number_label[data-v-698aa9f3] {\n\twidth: 46px;\n\ttext-align: center;\n\tdisplay: block;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -7526,7 +7925,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.texture_input[data-v-5a205692] {\n\twidth: 100%;\n\tposition: relative;\n}\ninput#image[data-v-5a205692] {\n\twidth: calc(100% - 40px);\n}\n.input_right.image[data-v-5a205692] {\n\tflex-direction: column;\n}\n.input_texture_wrapper[data-v-5a205692] {\n\t--size: 256px;\n\tdisplay: block;\n\theight: var(--size);\n\twidth: var(--size);\n\tmargin: auto;\n\tmargin-top: 8px;\n\tflex-shrink: 0;\n\tborder: 1px solid var(--color-border);\n\tbox-sizing: content-box;\n\tposition: relative;\n\toverflow: hidden;\n\tcursor: crosshair;\n}\n.input_texture_wrapper.vertical[data-v-5a205692] {\n\twidth: calc(var(--size) + 8px);\n\toverflow-y: auto;\n}\n.uv_preview[data-v-5a205692] {\n\tposition: absolute;\n\ttop: 0;\n\toutline: 1px solid var(--color-border);\n}\n.uv_preview[data-v-5a205692]:hover {\n\toutline-color: var(--color-highlight);\n}\n.uv_sample_preview[data-v-5a205692] {\n\tborder: 1px solid var(--color-accent);\n}\n.uv_perimeter_preview[data-v-5a205692] {\n\tborder: 1px solid var(--color-text);\n}\n.texture_info_bar[data-v-5a205692] {\n\tdisplay: flex;\n}\n.texture_info_bar > *[data-v-5a205692] {\n\tflex: 1 1 80px;\n\ttext-align: center;\n\tpadding: 2px;\n}\n.toolbar[data-v-5a205692] {\n\theight: 34px;\n\tdisplay: flex;\n\tmargin-top: 6px;\n}\n.tool[data-v-5a205692] {\n\tcursor: pointer;\n\tpadding: 4px 4px;\n\twidth: 40px;\n\ttext-align: center;\n\tborder-radius: 2px;\n}\n.tool.selected[data-v-5a205692] {\n\tbackground-color: var(--color-title);\n\tcolor: var(--color-highlight);\n}\n.tool[data-v-5a205692]:hover {\n\toutline-color: var(--color-highlight);\n}\n.color_preview[data-v-5a205692] {\n\theight: 100%;\n\twidth: 34px;\n\theight: 34px;\n\tcursor: pointer;\n\tborder: 1px solid var(--color-border);\n\tborder-radius: 50%;\n\toverflow: hidden;\n\tmargin-left: auto;\n\tposition: relative;\n\tbackground-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAADBJREFUOE9jfPbs2X8GPEBSUhKfNAPjqAHDIgz+//+PNx08f/4cfzoYNYCBceiHAQC5flV5JzgrxQAAAABJRU5ErkJggg==');\n}\n.color_preview_color[data-v-5a205692] {\n\tposition: absolute;\n\ttop: 0;\n\tleft: 0;\n\tbottom: 0;\n\tright: 0;\n}\n#color_picker_overlay[data-v-5a205692] {\n\tposition: absolute;\n\tz-index: 4;\n\tright: 0;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.texture_input[data-v-5a205692] {\n\twidth: 100%;\n\tposition: relative;\n\tmargin-top: 8px;\n}\ninput#image[data-v-5a205692] {\n\twidth: calc(100% - 40px);\n}\n.input_right.image[data-v-5a205692] {\n\tflex-direction: column;\n}\n.texture_viewport[data-v-5a205692] {\n\tdisplay: block;\n\t--size: 256px;\n\twidth: 100%;\n\toverflow: hidden;\n\theight: 258px;\n\tmargin-top: 8px;\n\tflex-shrink: 0;\n}\n.input_texture_wrapper[data-v-5a205692] {\n\theight: auto;\n\theight: -webkit-fill-available;\n\twidth: var(--size);\n\tmargin: auto;\n\tborder: 1px solid var(--color-border);\n\tbox-sizing: content-box;\n\tposition: relative;\n\toverflow: visible;\n\tcursor: crosshair;\n}\n.texture_input[tool=\"select\"] .input_texture_wrapper[data-v-5a205692] {\n\tcursor: default;\n}\n.input_texture_wrapper.vertical[data-v-5a205692] {\n\twidth: calc(var(--size) + 8px);\n\toverflow-y: auto;\n}\n.uv_preview[data-v-5a205692] {\n\tposition: absolute;\n\ttop: 0;\n\toutline: 1px solid var(--color-border);\n}\n.texture_input[tool=\"select\"] .uv_preview[data-v-5a205692]:hover {\n\toutline-color: var(--color-highlight);\n}\n.uv_sample_preview[data-v-5a205692] {\n\tborder: 1px solid var(--color-accent);\n}\n.uv_perimeter_preview[data-v-5a205692] {\n\tborder: 1px solid var(--color-text);\n}\n.uv_preview_size_handle[data-v-5a205692] {\n\tposition: absolute;\n\tbottom: -10px;\n\tright: -10px;\n\twidth: 10px;\n\theight: 10px;\n\toutline: 1px solid var(--color-border);\n\tbackground-color: var(--color-text);\n\tcursor: se-resize;\n\tdisplay: none;\n}\n.texture_viewport:hover .uv_preview_size_handle[data-v-5a205692] {\n\tdisplay: block;\n}\n.texture_info_bar[data-v-5a205692] {\n\tdisplay: flex;\n}\n.texture_info_bar > *[data-v-5a205692] {\n\tflex: 1 1 80px;\n\ttext-align: center;\n\tpadding: 2px;\n}\n.toolbar[data-v-5a205692] {\n\theight: 34px;\n\tdisplay: flex;\n\tmargin-top: 6px;\n\tdisplay: flex;\n\talign-items: center;\n}\n.tool[data-v-5a205692] {\n\tcursor: pointer;\n\tpadding: 4px 4px;\n\twidth: 40px;\n\ttext-align: center;\n\tborder-radius: 2px;\n}\n.tool.selected[data-v-5a205692] {\n\tbackground-color: var(--color-title);\n\tcolor: var(--color-highlight);\n}\n.tool[data-v-5a205692]:hover {\n\toutline-color: var(--color-highlight);\n}\n.undo_controls[data-v-5a205692] {\n\tmargin: auto;\n}\n.color_preview[data-v-5a205692] {\n\theight: 100%;\n\twidth: 34px;\n\theight: 34px;\n\tcursor: pointer;\n\tborder: 1px solid var(--color-border);\n\tborder-radius: 50%;\n\toverflow: hidden;\n\tmargin-left: auto;\n\tposition: relative;\n\tbackground-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAADBJREFUOE9jfPbs2X8GPEBSUhKfNAPjqAHDIgz+//+PNx08f/4cfzoYNYCBceiHAQC5flV5JzgrxQAAAABJRU5ErkJggg==');\n}\n.color_preview_color[data-v-5a205692] {\n\tposition: absolute;\n\ttop: 0;\n\tleft: 0;\n\tbottom: 0;\n\tright: 0;\n}\n#color_picker_overlay[data-v-5a205692] {\n\tposition: absolute;\n\tz-index: 4;\n\tright: 0;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -11251,6 +11650,45 @@ const Pause = (0,_createVueComponent_js__WEBPACK_IMPORTED_MODULE_0__["default"])
 
 /***/ }),
 
+/***/ "./node_modules/lucide-vue/dist/esm/icons/pipette.js":
+/*!***********************************************************!*\
+  !*** ./node_modules/lucide-vue/dist/esm/icons/pipette.js ***!
+  \***********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ Pipette)
+/* harmony export */ });
+/* harmony import */ var _createVueComponent_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../createVueComponent.js */ "./node_modules/lucide-vue/dist/esm/createVueComponent.js");
+/**
+ * @license lucide-vue v0.298.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+
+
+
+const Pipette = (0,_createVueComponent_js__WEBPACK_IMPORTED_MODULE_0__["default"])("PipetteIcon", [
+  ["path", { d: "m2 22 1-1h3l9-9", key: "1sre89" }],
+  ["path", { d: "M3 21v-3l9-9", key: "hpe2y6" }],
+  [
+    "path",
+    {
+      d: "m15 6 3.4-3.4a2.1 2.1 0 1 1 3 3L18 9l.4.4a2.1 2.1 0 1 1-3 3l-3.8-3.8a2.1 2.1 0 1 1 3-3l.4.4Z",
+      key: "196du1"
+    }
+  ]
+]);
+
+
+//# sourceMappingURL=pipette.js.map
+
+
+/***/ }),
+
 /***/ "./node_modules/lucide-vue/dist/esm/icons/play.js":
 /*!********************************************************!*\
   !*** ./node_modules/lucide-vue/dist/esm/icons/play.js ***!
@@ -11311,6 +11749,38 @@ const PlusSquare = (0,_createVueComponent_js__WEBPACK_IMPORTED_MODULE_0__["defau
 
 
 //# sourceMappingURL=plus-square.js.map
+
+
+/***/ }),
+
+/***/ "./node_modules/lucide-vue/dist/esm/icons/redo.js":
+/*!********************************************************!*\
+  !*** ./node_modules/lucide-vue/dist/esm/icons/redo.js ***!
+  \********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ Redo)
+/* harmony export */ });
+/* harmony import */ var _createVueComponent_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../createVueComponent.js */ "./node_modules/lucide-vue/dist/esm/createVueComponent.js");
+/**
+ * @license lucide-vue v0.298.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+
+
+
+const Redo = (0,_createVueComponent_js__WEBPACK_IMPORTED_MODULE_0__["default"])("RedoIcon", [
+  ["path", { d: "M21 7v6h-6", key: "3ptur4" }],
+  ["path", { d: "M3 17a9 9 0 0 1 9-9 9 9 0 0 1 6 2.3l3 2.7", key: "1kgawr" }]
+]);
+
+
+//# sourceMappingURL=redo.js.map
 
 
 /***/ }),
@@ -11585,6 +12055,38 @@ const Torus = (0,_createVueComponent_js__WEBPACK_IMPORTED_MODULE_0__["default"])
 
 
 //# sourceMappingURL=torus.js.map
+
+
+/***/ }),
+
+/***/ "./node_modules/lucide-vue/dist/esm/icons/undo.js":
+/*!********************************************************!*\
+  !*** ./node_modules/lucide-vue/dist/esm/icons/undo.js ***!
+  \********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ Undo)
+/* harmony export */ });
+/* harmony import */ var _createVueComponent_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../createVueComponent.js */ "./node_modules/lucide-vue/dist/esm/createVueComponent.js");
+/**
+ * @license lucide-vue v0.298.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+
+
+
+const Undo = (0,_createVueComponent_js__WEBPACK_IMPORTED_MODULE_0__["default"])("UndoIcon", [
+  ["path", { d: "M3 7v6h6", key: "1v2h90" }],
+  ["path", { d: "M21 17a9 9 0 0 0-9-9 9 9 0 0 0-6 2.3L3 13", key: "1r6uu6" }]
+]);
+
+
+//# sourceMappingURL=undo.js.map
 
 
 /***/ }),
@@ -71339,9 +71841,7 @@ var render = function() {
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "input_bar" }, [
-        _c("label", { attrs: { for: "quick_lighting_checkbox" } }, [
-          _vm._v("Speed")
-        ]),
+        _c("label", [_vm._v("Speed")]),
         _vm._v(" "),
         _c("input", {
           directives: [
@@ -71407,9 +71907,7 @@ var render = function() {
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "input_bar" }, [
-        _c("label", { attrs: { for: "quick_lighting_checkbox" } }, [
-          _vm._v("Amount")
-        ]),
+        _c("label", [_vm._v("Amount")]),
         _vm._v(" "),
         _c("input", {
           directives: [
@@ -71420,7 +71918,7 @@ var render = function() {
               expression: "amount"
             }
           ],
-          attrs: { type: "range", min: "1", max: "120", step: "1" },
+          attrs: { type: "range", min: "1", max: "150", step: "1" },
           domProps: { value: _vm.amount },
           on: {
             __r: function($event) {
@@ -71435,9 +71933,7 @@ var render = function() {
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "input_bar" }, [
-        _c("label", { attrs: { for: "quick_lighting_checkbox" } }, [
-          _vm._v("Particle Lifetime")
-        ]),
+        _c("label", [_vm._v("Particle Lifetime")]),
         _vm._v(" "),
         _c("input", {
           directives: [
@@ -71569,7 +72065,7 @@ var render = function() {
             }
           },
           [
-            _c("img", { attrs: { src: "assets/ball.png", height: "45" } }),
+            _c("img", { attrs: { src: _vm.sprites.SpriteBall, height: "45" } }),
             _vm._v("\n\t\t\t\tBall\n\t\t\t")
           ]
         ),
@@ -71585,7 +72081,7 @@ var render = function() {
             }
           },
           [
-            _c("img", { attrs: { src: "assets/dirt.png", height: "45" } }),
+            _c("img", { attrs: { src: _vm.sprites.SpriteDirt, height: "45" } }),
             _vm._v("\n\t\t\t\tDirt\n\t\t\t")
           ]
         ),
@@ -71601,7 +72097,9 @@ var render = function() {
             }
           },
           [
-            _c("img", { attrs: { src: "assets/leaves.png", height: "45" } }),
+            _c("img", {
+              attrs: { src: _vm.sprites.SpriteLeaves, height: "45" }
+            }),
             _vm._v("\n\t\t\t\tLeaves\n\t\t\t")
           ]
         ),
@@ -71617,7 +72115,10 @@ var render = function() {
             }
           },
           [
-            _c("img", { attrs: { src: "assets/smoke.png", height: "45" } }),
+            _c("img", {
+              staticClass: "frames_8",
+              attrs: { src: _vm.sprites.SpriteSmoke, height: "45" }
+            }),
             _vm._v("\n\t\t\t\tSmoke\n\t\t\t")
           ]
         ),
@@ -71633,7 +72134,10 @@ var render = function() {
             }
           },
           [
-            _c("img", { attrs: { src: "assets/dust.png", height: "45" } }),
+            _c("img", {
+              staticClass: "frames_8",
+              attrs: { src: _vm.sprites.SpriteDust, height: "45" }
+            }),
             _vm._v("\n\t\t\t\tDust\n\t\t\t")
           ]
         ),
@@ -71649,7 +72153,10 @@ var render = function() {
             }
           },
           [
-            _c("img", { attrs: { src: "assets/sparkle.png", height: "45" } }),
+            _c("img", {
+              staticClass: "frames_4",
+              attrs: { src: _vm.sprites.SpriteSparkle, height: "45" }
+            }),
             _vm._v("\n\t\t\t\tSparkle\n\t\t\t")
           ]
         ),
@@ -71665,11 +72172,36 @@ var render = function() {
             }
           },
           [
-            _c("img", { attrs: { src: "assets/magic.png", height: "45" } }),
+            _c("img", {
+              staticClass: "frames_8",
+              attrs: { src: _vm.sprites.SpriteMagic, height: "45" }
+            }),
             _vm._v("\n\t\t\t\tMagic\n\t\t\t")
           ]
         )
       ]),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "input_bar" },
+        [
+          _c("label", { attrs: { for: "quick_rotation_checkbox" } }, [
+            _vm._v("Random Rotation")
+          ]),
+          _vm._v(" "),
+          _c("checkbox", {
+            attrs: { id: "quick_rotation_checkbox" },
+            model: {
+              value: _vm.random_rotation,
+              callback: function($$v) {
+                _vm.random_rotation = $$v
+              },
+              expression: "random_rotation"
+            }
+          })
+        ],
+        1
+      ),
       _vm._v(" "),
       _c(
         "div",
@@ -71682,11 +72214,11 @@ var render = function() {
           _c("checkbox", {
             attrs: { id: "quick_lighting_checkbox" },
             model: {
-              value: _vm.lightning,
+              value: _vm.lighting,
               callback: function($$v) {
-                _vm.lightning = $$v
+                _vm.lighting = $$v
               },
-              expression: "lightning"
+              expression: "lighting"
             }
           })
         ],
@@ -71718,83 +72250,24 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "texture_input" }, [
-    _c(
-      "div",
-      { staticClass: "meta toolbar" },
-      [
-        _vm.input.allow_upload
-          ? [
-              _c(
-                "div",
-                {
-                  staticClass: "tool",
-                  on: {
-                    click: function($event) {
-                      return _vm.input.reset()
-                    }
-                  }
-                },
-                [_c("X")],
-                1
-              ),
-              _vm._v(" "),
-              _c("input", {
-                attrs: {
-                  id: "particle-texture-image",
-                  type: "file",
-                  accept: ".png"
-                },
-                on: {
-                  change: function($event) {
-                    return _vm.input.change($event)
-                  }
-                }
-              })
-            ]
-          : _vm._e(),
-        _vm._v(" "),
-        !_vm.input.allow_upload
-          ? [
-              _c(
-                "div",
-                {
-                  staticClass: "tool",
-                  staticStyle: { width: "auto" },
-                  attrs: { title: "Reload" },
-                  on: {
-                    click: function($event) {
-                      return _vm.input.updatePreview()
-                    }
-                  }
-                },
-                [
-                  _c(
-                    "i",
-                    {
-                      staticClass: "unicode_icon",
-                      staticStyle: { display: "inline" }
-                    },
-                    [_vm._v("⟳")]
-                  ),
-                  _vm._v(" Reload")
-                ]
-              )
-            ]
-          : _vm._e(),
-        _vm._v(" "),
+  return _c(
+    "div",
+    { staticClass: "texture_input", attrs: { tool: _vm.tool } },
+    [
+      _c("div", { staticClass: "toolbar" }, [
         _c(
           "div",
           {
             staticClass: "tool",
-            attrs: { title: "New Texture" },
+            class: { selected: _vm.tool == "select" },
+            attrs: { title: "Select" },
             on: {
               click: function($event) {
-                return _vm.newTexture()
+                return _vm.selectTool("select")
               }
             }
           },
-          [_c("PlusSquare")],
+          [_c("MousePointer")],
           1
         ),
         _vm._v(" "),
@@ -71802,193 +72275,357 @@ var render = function() {
           "div",
           {
             staticClass: "tool",
-            attrs: { title: "Save" },
+            class: { selected: _vm.tool == "brush" },
+            attrs: { title: "Brush" },
             on: {
               click: function($event) {
-                return _vm.saveTexture()
+                return _vm.selectTool("brush")
               }
             }
           },
-          [_c("Save")],
+          [_c("Brush")],
           1
-        )
-      ],
-      2
-    ),
-    _vm._v(" "),
-    _c("div", { staticClass: "toolbar" }, [
-      _c(
-        "div",
-        {
-          staticClass: "tool",
-          class: { selected: _vm.tool == "select" },
-          attrs: { title: "Select" },
-          on: {
-            click: function($event) {
-              return _vm.selectTool("select")
-            }
-          }
-        },
-        [_c("MousePointer")],
-        1
-      ),
-      _vm._v(" "),
-      _c(
-        "div",
-        {
-          staticClass: "tool",
-          class: { selected: _vm.tool == "brush" },
-          attrs: { title: "Brush" },
-          on: {
-            click: function($event) {
-              return _vm.selectTool("brush")
-            }
-          }
-        },
-        [_c("Brush")],
-        1
-      ),
-      _vm._v(" "),
-      _c(
-        "div",
-        {
-          staticClass: "tool",
-          class: { selected: _vm.tool == "eraser" },
-          attrs: { title: "Eraser" },
-          on: {
-            click: function($event) {
-              return _vm.selectTool("eraser")
-            }
-          }
-        },
-        [_c("Eraser")],
-        1
-      ),
-      _vm._v(" "),
-      _c(
-        "div",
-        {
-          staticClass: "tool",
-          class: { selected: _vm.tool == "fill_tool" },
-          attrs: { title: "PaintBucket" },
-          on: {
-            click: function($event) {
-              return _vm.selectTool("fill_tool")
-            }
-          }
-        },
-        [_c("PaintBucket")],
-        1
-      ),
-      _vm._v(" "),
-      _c(
-        "div",
-        {
-          staticClass: "color_preview",
-          on: {
-            click: function($event) {
-              $event.stopPropagation()
-              _vm.color_picker_open = !_vm.color_picker_open
-            }
-          }
-        },
-        [
-          _c("div", {
-            staticClass: "color_preview_color",
-            style: { backgroundColor: _vm.paint_color.hex8 }
-          })
-        ]
-      )
-    ]),
-    _vm._v(" "),
-    _vm.color_picker_open
-      ? _c(
+        ),
+        _vm._v(" "),
+        _c(
           "div",
           {
-            attrs: { id: "color_picker_overlay" },
+            staticClass: "tool",
+            class: { selected: _vm.tool == "eraser" },
+            attrs: { title: "Eraser" },
+            on: {
+              click: function($event) {
+                return _vm.selectTool("eraser")
+              }
+            }
+          },
+          [_c("Eraser")],
+          1
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            staticClass: "tool",
+            class: { selected: _vm.tool == "fill_tool" },
+            attrs: { title: "Paint Bucket" },
+            on: {
+              click: function($event) {
+                return _vm.selectTool("fill_tool")
+              }
+            }
+          },
+          [_c("PaintBucket")],
+          1
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            staticClass: "tool",
+            class: { selected: _vm.tool == "color_picker" },
+            attrs: { title: "Color Picker" },
+            on: {
+              click: function($event) {
+                return _vm.selectTool("color_picker")
+              }
+            }
+          },
+          [_c("Pipette")],
+          1
+        ),
+        _vm._v(" "),
+        _c("span", { staticClass: "undo_controls" }, [
+          _c(
+            "div",
+            {
+              staticClass: "tool",
+              attrs: { title: "Undo" },
+              on: {
+                click: function($event) {
+                  return _vm.Texture.undo()
+                }
+              }
+            },
+            [_c("Undo")],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              staticClass: "tool",
+              attrs: { title: "Redo" },
+              on: {
+                click: function($event) {
+                  return _vm.Texture.redo()
+                }
+              }
+            },
+            [_c("Redo")],
+            1
+          )
+        ]),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            staticClass: "color_preview",
             on: {
               click: function($event) {
                 $event.stopPropagation()
+                _vm.color_picker_open = !_vm.color_picker_open
               }
             }
           },
           [
-            _c("color-picker", {
-              on: {
-                change: function($event) {
-                  _vm.paint_color = $event
-                }
-              },
-              model: {
-                value: _vm.paint_color,
-                callback: function($$v) {
-                  _vm.paint_color = $$v
-                },
-                expression: "paint_color"
-              }
+            _c("div", {
+              staticClass: "color_preview_color",
+              style: { backgroundColor: _vm.paint_color.hex8 }
             })
-          ],
-          1
-        )
-      : _vm._e(),
-    _vm._v(" "),
-    _c(
-      "div",
-      {
-        ref: "texture_wrapper",
-        staticClass: "input_texture_wrapper checkerboard",
-        class: { vertical: _vm.isVertical() },
-        on: {
-          mouseenter: function($event) {
-            return _vm.onMouseEnter($event)
-          },
-          mousemove: function($event) {
-            return _vm.onMouseMove($event)
-          },
-          mouseleave: function($event) {
-            return _vm.onMouseLeave($event)
-          },
-          mousedown: function($event) {
-            return _vm.onMouseDown($event)
-          }
-        }
-      },
-      [
-        _c("div", { ref: "canvas_wrapper" }),
-        _vm._v(" "),
-        _c("div", {
-          staticClass: "uv_preview uv_perimeter_preview",
-          style: _vm.calculateUVPerimeter()
-        }),
-        _vm._v(" "),
-        _c("div", {
-          staticClass: "uv_preview uv_sample_preview",
-          style: _vm.calculateUVSample()
-        })
-      ]
-    ),
-    _vm._v(" "),
-    _c("div", { staticClass: "texture_info_bar" }, [
-      _c("div", [
-        _vm._v(
-          _vm._s(_vm.input.image_element.naturalWidth) +
-            " x " +
-            _vm._s(_vm.input.image_element.naturalHeight) +
-            " px"
+          ]
         )
       ]),
       _vm._v(" "),
-      _c("div", [
-        _vm._v(
-          _vm._s(
-            _vm.cursor_position.active
-              ? _vm.cursor_position.x + " x " + _vm.cursor_position.y
-              : ""
+      _vm.color_picker_open
+        ? _c(
+            "div",
+            {
+              attrs: { id: "color_picker_overlay" },
+              on: {
+                click: function($event) {
+                  $event.stopPropagation()
+                }
+              }
+            },
+            [
+              _c("color-picker", {
+                on: {
+                  change: function($event) {
+                    _vm.paint_color = $event
+                  }
+                },
+                model: {
+                  value: _vm.paint_color,
+                  callback: function($$v) {
+                    _vm.paint_color = $$v
+                  },
+                  expression: "paint_color"
+                }
+              })
+            ],
+            1
           )
-        )
-      ])
-    ])
-  ])
+        : _vm._e(),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          ref: "texture_viewport",
+          staticClass: "texture_viewport",
+          style: {
+            "--zoom": _vm.zoom,
+            "--size": _vm.size + "px",
+            "--offset-x": _vm.offset[0] + "px",
+            "--offset-y": _vm.offset[1] + "px"
+          },
+          on: {
+            mouseenter: function($event) {
+              return _vm.onMouseEnter($event)
+            },
+            mousemove: function($event) {
+              return _vm.onMouseMove($event)
+            },
+            mouseleave: function($event) {
+              return _vm.onMouseLeave($event)
+            },
+            mousedown: function($event) {
+              return _vm.onMouseDown($event)
+            },
+            mousewheel: function($event) {
+              return _vm.onMouseWheel($event)
+            }
+          }
+        },
+        [
+          _c(
+            "div",
+            {
+              ref: "texture_wrapper",
+              staticClass: "input_texture_wrapper checkerboard",
+              class: { vertical: _vm.isVertical() },
+              style: {
+                left: _vm.offset[0] + "px",
+                top: _vm.offset[1] + "px",
+                height: _vm.height + "px"
+              }
+            },
+            [
+              _c("div", { ref: "canvas_wrapper" }),
+              _vm._v(" "),
+              _c("div", {
+                staticClass: "uv_preview uv_perimeter_preview",
+                style: _vm.calculateUVPerimeter(),
+                attrs: { title: "UV Perimeter" },
+                on: {
+                  mousedown: function($event) {
+                    return _vm.dragUV($event)
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  staticClass: "uv_preview uv_sample_preview",
+                  style: _vm.calculateUVSample(),
+                  attrs: { title: "UV Sample" },
+                  on: {
+                    mousedown: function($event) {
+                      return _vm.dragUV($event)
+                    }
+                  }
+                },
+                [
+                  _vm.tool == "select"
+                    ? _c("div", {
+                        staticClass: "uv_preview_size_handle",
+                        on: {
+                          mousedown: function($event) {
+                            $event.stopPropagation()
+                            return _vm.dragUV($event, true)
+                          }
+                        }
+                      })
+                    : _vm._e()
+                ]
+              )
+            ]
+          )
+        ]
+      ),
+      _vm._v(" "),
+      _c("div", { staticClass: "texture_info_bar" }, [
+        _c("div", [
+          _vm._v(
+            _vm._s(_vm.input.image_element.naturalWidth) +
+              " x " +
+              _vm._s(_vm.input.image_element.naturalHeight) +
+              " px"
+          )
+        ]),
+        _vm._v(" "),
+        _c("div", [
+          _vm._v(
+            _vm._s(
+              _vm.cursor_position.active
+                ? _vm.cursor_position.x + " x " + _vm.cursor_position.y
+                : ""
+            )
+          )
+        ])
+      ]),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "meta toolbar" },
+        [
+          _vm.input.allow_upload
+            ? [
+                _c(
+                  "div",
+                  {
+                    staticClass: "tool",
+                    on: {
+                      click: function($event) {
+                        return _vm.input.reset()
+                      }
+                    }
+                  },
+                  [_c("X")],
+                  1
+                ),
+                _vm._v(" "),
+                _c("input", {
+                  attrs: {
+                    id: "particle-texture-image",
+                    type: "file",
+                    accept: ".png"
+                  },
+                  on: {
+                    change: function($event) {
+                      return _vm.input.change($event)
+                    }
+                  }
+                })
+              ]
+            : _vm._e(),
+          _vm._v(" "),
+          !_vm.input.allow_upload
+            ? [
+                _c(
+                  "div",
+                  {
+                    staticClass: "tool",
+                    staticStyle: { width: "auto" },
+                    attrs: { title: "Reload" },
+                    on: {
+                      click: function($event) {
+                        return _vm.input.updatePreview()
+                      }
+                    }
+                  },
+                  [
+                    _c(
+                      "i",
+                      {
+                        staticClass: "unicode_icon",
+                        staticStyle: { display: "inline" }
+                      },
+                      [_vm._v("⟳")]
+                    ),
+                    _vm._v(" Reload")
+                  ]
+                )
+              ]
+            : _vm._e(),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              staticClass: "tool",
+              attrs: { title: "New Texture" },
+              on: {
+                click: function($event) {
+                  return _vm.newTexture()
+                }
+              }
+            },
+            [_c("PlusSquare")],
+            1
+          ),
+          _vm._v(" "),
+          _vm.Texture.internal_changes
+            ? _c(
+                "div",
+                {
+                  staticClass: "tool",
+                  attrs: { title: "Save" },
+                  on: {
+                    click: function($event) {
+                      return _vm.saveTexture()
+                    }
+                  }
+                },
+                [_c("Save")],
+                1
+              )
+            : _vm._e()
+        ],
+        2
+      )
+    ]
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -86044,7 +86681,7 @@ module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf
 /***/ ((module) => {
 
 "use strict";
-module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAhklEQVQ4jcWSwQ3FIAxD3apTsB1zcPYc2Y418k+RaOMWqh6+T4jgl4AB/q3tqWhmHuveO1pr6bwEjMYRACBBjtmItdaTgaSPkDQBSS+lSLPSft14Y5aAuOuqEuBN91uRTCmQdDNzldASMIwkfWwwHTWMdx9JvoGSMi8DnpKZAj4nElLJAMAPXX9AsfhJxEcAAAAASUVORK5CYII=";
+module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAABACAYAAAAnBDaKAAABEUlEQVRIicVUsZHEIAxcPK6C7pihC8d04Rl6oCEyZa6BD/7ECIzAF9zdZngX0K6Ege8jpVRSSoXXpicB4LouAIBzzuxSwMQUMcYSYyxr5efQ12B6Uq6dc2aTJBHdTqwCIoK1FixyzpmbOoRQQgjfzkC1yUWaESlFjU2ZA5+wyR2cwzAD4D+Hd02sMbRJRDiOoy2yt8n1mJ6UuwFglwSAhqxXaGSDz82B2k12c7PZi/b+Y9/JZh5GbW5yGGFTmR5aUGq7AcxtEhFyzg9syruHNq21KgkA2ywD4JWD+lAY3nt1WOpOWWzOGQBwnqep5ChJ731Z/5dWw7rxfapgyj4RAJjnUBFCKKpw6mR1/POh/SH+AEhEuwBr1yTIAAAAAElFTkSuQmCC";
 
 /***/ }),
 
@@ -86066,18 +86703,7 @@ module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf
 /***/ ((module) => {
 
 "use strict";
-module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAATklEQVQ4jWNgGFLgc+fX/587v/4nWzM2NhO6wtv2f/8j09jAi20cxNuGbjg+g4l2AfUB2SGLrBmfIQQtIKT5tv1f8uOfKBdQFdDXNmoAAJU7R2O4JAktAAAAAElFTkSuQmCC";
-
-/***/ }),
-
-/***/ "./assets/sample_sprites.png":
-/*!***********************************!*\
-  !*** ./assets/sample_sprites.png ***!
-  \***********************************/
-/***/ ((module) => {
-
-"use strict";
-module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIAAAAAQCAYAAADeWHeIAAADRUlEQVRoge2YvUsjQRjGnzmDCuJ5FqaQQ7jiSIoEDoRAOIKdBCxSikKKgIV/gRaptzB/gV2EwIGlhZJWFhECghCLLBZCOIJEId6JhcHwXrG867rO7Mclmg34A0k2mZ2d+DzvxwwwAErZFJWyKRrEXB+8L5/6nWBvbdkS/sMEo0fE7ctzXbcE/ZHJCNmYducOABCd/WK9Dyv3Ow8EANPbU9Lf4sX6SY4A4NfPA1/3l8tl6//XarVQLBb/67lviTIDnOs6zUSjmIlGrWvZuK1qTQCmEfj9oHjU0wPLKPc7DzS9PSWmt6cEG8HO+kmOFndXlM9j8Y36k+ezyuUy2cVnNE0LXYZ0zQAA8Kfd9pxEJTyXBM4OQQ0yHl8AcBrkFlwu9ej78ZjgV9mY66NJ6b2xZASxkxypItyoP+Fs8zDQbygUCi/Ga5pGYcoErgvxUwJUlLIpcpaFIAZ41NM0Hl9At9HEROY00LM52p2fXy71CABkxuDolwm87mIKJ5qm0fz8PIDX4oeRFwu8MgxL8G+xWF+LZwMAz31CEAPQzSphNg90KhBz+77v85MB3hJO/aMgPmDrAeziO6+vDIP4z+/EW9WaaHfuLPHrv/8in4hTPhF3neNRTxPdrJpjxpYAmGbw2w+w6MMQHzCbvVFCAK/FB55rPzeB9s+DloN8Ik7Jr58BmEYAgMpF48UcnPIBALN5S3wAQO8Y6FQAQFoSVCl/GIStxnsh3QWoxGdUO4K9tWWSHQqx+G5MZE6FmNsX3UbTFPt2w/zidgPoVNBtNCHm9oVKfFlnbx/juYABUSwWhazb1zSNVLuDYfLKAH66fhn2AyEvnNFvh40AwIx8QCo8w+KrMsD9zgNdH02+uwns19wYFgoF0Wq1QrUdjACm6KpoZ9yMITsBzCfixEJz8+dV/+10G02Mp81XL9zSv5dB/GI/BwiyFeSI594gbOXBWowqrctw9gClbIp6mRzG9AMAz3UecI92L+hmlYLsAPrF7aSPt4mxZCSQCcK+K7AOgmSNncwUsnFb1ZpAtRYowv3gJ/qd9BvtqpO+s81Dsbi7Qkb9CbFkBGcB5hy1nUFf8FZv0GZ4azj6/eJ2bOwkTDX/gyERVhP8AxsG1Mum0jufAAAAAElFTkSuQmCC";
+module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAACACAYAAAAClekiAAABRUlEQVRoge1YSw6DIBCtumnS9Biew2P1DF6oe8/hBbo3Lo1dkSDC/IAqdd6mBpnxleE9B2+362Hq51U8YewWOFiRCGiZKMGhJKQyRjFQnAGmzqF6T/28RvsBuJkwBgoCMDmTlAoFj90C74MkDBSZQZIz5AW+69oNboemwuT8ed/5DMw99QoCuIrblFH7gxJAkjMU7LveIPR29gWYOZuN1A5NNfXz2g5NJaIJ9Qf2mNgTrmAo2h+UCrJo3AV8vh50wflW34zVlMnsJ7lJIEMJJsEmmzHyQrhJxK5VAPT7wQE4Xs6iYPvert23f0WgeIH7QJABdn4gsbqSoWh/cBBYm8FeA5YfuMFsQMG7/iDKC7iG4p3HYZCErSgwz6GDY6ZokmyqQ/97FIMka3BuZJPzCfHvp/MQynkXRu9GtD/IykCU+SdV+ALAkeQN7U75oQAAAABJRU5ErkJggg==";
 
 /***/ }),
 
@@ -86088,7 +86714,7 @@ module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIAAAAAQCAYAAADe
 /***/ ((module) => {
 
 "use strict";
-module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAgklEQVQ4jWNgGGjAiE/ywuHD/2FsA1tbrGpxGnDh8OH//GJiDAwMDAwfX73CaQgTISfCNOMC1PXC/Zs34RoU1dXxGo5hALJmdEPwGYyhAAZgfocFJLI4snewBiIuzTCAHDYYBhAKdXTARKymj69eYVUH9wuyswgB5DAgOh1g0zw4AACOu0E/l21rUgAAAABJRU5ErkJggg==";
+module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAACACAYAAAAClekiAAACC0lEQVRoge1Yu23DMBQ8Ce7dqU/lVguozwYeIAt4lCyQaVgbUMtKnRGw0wRKEdChnt6Hsh0HjnlAgFjiHclHvuMTgb9Gpb3snZvi/23XsW1Fgd65ads0AIAxBFGktoYYyRJUAYsMAJv0x+D9ec45ZCCJQUqmIjEWAPCy283iUEvkiJQMzFfmLMBhDGFB5kTMVbBQx95o7/T5GAIb2HNA6Nw0pBsqeytz5IJv/Dc/+Hh/n617bkoD+Jlvmpm9c1P8k3hVbNh2XUXTOuZ+fE69AAAqicyZCSdSH49HcVqcHywM5e1wqNIeNXBtNlYDS3wRFMsX6GYycztnOz87rvYDMZ2jH0inkykQMYaAtusq89zonZuoH9D3KtkSF1/SXgfvJ+24p5hFllYoMfKD95NkrLVEps+l1TgLcEc6NxWxQmm7rtL8QHrH7i4t6iWl7w3rXARW1AcXLd/gvTkCAMuM1EZ1WzLFWi8AlA8OWgdIRQZrqmMIs5KHlj2sQFRO0zZn3hurQToqDqofcOdB8YN7IscLAON43zaN+lls4iryr8CMySV+wB7vnIgkbPpBSuZEVD/gSOoNRmpXNG3N+wMNpeR/aKy5GnpmiN8L3GUDB9EPqHCWoWhlPTWZiFl9IKXqqtucgoKCGyG3vItYlPufpxMrCvDpvhB43e8XjTjRgoKChwC9V8m9Zym4EF9Ejr63v2d0RQAAAABJRU5ErkJggg==";
 
 /***/ }),
 
@@ -86099,7 +86725,7 @@ module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf
 /***/ ((module) => {
 
 "use strict";
-module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAmElEQVQ4jWNgGN7g52HL/4TUMOGTZNOQI2gJTgNgthNyBU4D2DTkGBgEYwm6AsOAn4ct//9/HQ6xldmegYGBgeH/6/D/uFzCiKwRbptgLFwzAwMDA8PfgwwM7xczMDAwMPy68YiB3fY4I4YBWA0SmcPA8CYFq0aC4P/r8P///2xBeAcHwBmIv248QqHJAoRsx+sCim2nGwAAC/lAcYtTXMwAAAAASUVORK5CYII=";
+module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAABACAYAAAATffeWAAABQUlEQVRYhe1WsW6DMBB9aSM6R+rMzC8wVP0Mpmz5rGz5BX6gYsgvZM5KpQ5MRFTXITHgYvvONorSiichBrj3ns++8wH/G22VE/fPk+tjkqWsiJVAqXMurARJlgKbLetiQtBWOVFdXFWf3wEAVBdkc7IaB/Zqm20fDAD4/gC+DgCAy+mMl7fjakJgJHrdA587YyALqguirhyWY4E1iZfTWXsHgVN3OohWXxAJSR9QMG5jkqWiM+CEqwJlBF1J1JUagRcp1QURNTQuKtGy2iq/BlAzPF0pU1YqveLNgciy1soUoSEPXjCRekOcPM5JFMGCe4LbLnE9/P7R60SqahwPGOJq1EhUL6AmrDN5l/NsDqJzELULs5yDBY8K1/atueDhAB3DlO97N0bdzpqT0Plg4iZkQukJ5piRgss3eib4W43jB9xsrBE2kQXvAAAAAElFTkSuQmCC";
 
 /***/ }),
 
