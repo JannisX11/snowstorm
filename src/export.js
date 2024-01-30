@@ -37,13 +37,17 @@ function getValue(key, required) {
 
 
 function generateFile() {
+	let material = Data.appearance.appearance.inputs.material.value;
+	if (material == 'custom') {
+		material = Data.appearance.appearance.inputs.material_custom.value;
+	}
 	var file = {
 		format_version: '1.10.0',
 		particle_effect: {
 			description: {
 				identifier: Config.identifier,
 				basic_render_parameters: {
-					material: getValue('particle_appearance_material', true),
+					material,
 					texture: getValue('particle_texture_path') || 'textures/blocks/wool_colored_white'
 				}
 			}
@@ -81,6 +85,11 @@ function generateFile() {
 	}
 	if (Object.keys(json_curves).length) {
 		file.particle_effect.curves  = json_curves;
+	}
+
+	//Events
+	if (Config.unsupported_fields.events) {
+		file.particle_effect.events = Config.unsupported_fields.events;
 	}
 
 	var comps = file.particle_effect.components = {};
@@ -139,12 +148,11 @@ function generateFile() {
 				activation_expression: getValue('emitter_lifetime_activation'),
 				expiration_expression: getValue('emitter_lifetime_expiration'),
 			}
-		} else if (mode === 'events') {
-			comps['minecraft:emitter_lifetime_events'] = {
-				sleep_time: getValue('emitter_lifetime_sleep_time'),
-				active_time: getValue('emitter_lifetime_active_time'),
-			}
 		}
+	}
+	//Emitter Events
+	if (Config.unsupported_fields.emitter_lifetime_events) {
+		comps['minecraft:emitter_lifetime_events'] = Config.unsupported_fields.emitter_lifetime_events;
 	}
 	//Direction
 	var mode = getValue('particle_direction_mode');
@@ -250,6 +258,11 @@ function generateFile() {
 		comps['minecraft:particle_expire_if_not_in_blocks'] = getValue('particle_lifetime_expire_outside')
 	}
 
+	//Particle Events
+	if (Config.unsupported_fields.particle_lifetime_events) {
+		comps['minecraft:particle_lifetime_events'] = Config.unsupported_fields.particle_lifetime_events;
+	}
+
 	//Spin
 	var init_rot = getValue('particle_rotation_initial_rotation')
 	var init_rot_rate = getValue('particle_rotation_rotation_rate')
@@ -344,8 +357,9 @@ function generateFile() {
 		collision_collision_drag = getValue('particle_collision_collision_drag'),
 		collision_coefficient_of_restitution = getValue('particle_collision_coefficient_of_restitution'),
 		collision_collision_radius = getValue('particle_collision_collision_radius'),
-		collision_expire_on_contact = getValue('particle_collision_expire_on_contact');
-	if ((collision_enabled || collision_collision_drag || collision_coefficient_of_restitution || collision_collision_radius || collision_expire_on_contact) && collision_enabled != 'false') {
+		collision_expire_on_contact = getValue('particle_collision_expire_on_contact'),
+		collision_events = Config.unsupported_fields.collision_events;
+	if ((collision_enabled || collision_collision_drag || collision_coefficient_of_restitution || collision_collision_radius || collision_expire_on_contact || collision_events) && collision_enabled != 'false') {
 		if (collision_enabled == 'true') collision_enabled = undefined;
 		comps['minecraft:particle_motion_collision'] = {
 			enabled: collision_enabled,
@@ -353,6 +367,7 @@ function generateFile() {
 			coefficient_of_restitution: collision_coefficient_of_restitution,
 			collision_radius: collision_collision_radius,
 			expire_on_contact: collision_expire_on_contact,
+			events: collision_events,
 		}
 	}
 	if (getValue('particle_color_light')) {

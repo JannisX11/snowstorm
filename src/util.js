@@ -261,7 +261,7 @@ function calculateOffset(element) {
 	]
 }
 function isFirefox() {
-	navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
+	return navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
 }
 
 const IO = {

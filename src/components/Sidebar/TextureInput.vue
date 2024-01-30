@@ -97,6 +97,7 @@ import Input from '../../input'
 import Molang from 'molangjs'
 import { Texture } from '../../texture_edit';
 import { trimFloatNumber } from '../../util'
+import registerEdit from '../../edits'
 let parser = new Molang();
 
 /*
@@ -312,6 +313,7 @@ export default {
 			let onEnd = (e2) => {
 				document.removeEventListener('mousemove', onMove);
 				document.removeEventListener('mouseup', onEnd);
+				registerEdit('edit uv')
 			}
 			document.addEventListener('mousemove', onMove);
 			document.addEventListener('mouseup', onEnd);

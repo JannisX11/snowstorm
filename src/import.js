@@ -76,7 +76,18 @@ function updateInputsFromConfig() {
 }
 //function importFile() {}
 function updateConfig(data) {
+	Config.unsupported_fields = {};
 	Config.setFromJSON(data);
+
+	if (data.particle_effect) {
+		Config.unsupported_fields.events = data.particle_effect.events;
+		Config.unsupported_fields.emitter_lifetime_events = data.particle_effect.components['minecraft:emitter_lifetime_events'];
+		Config.unsupported_fields.particle_lifetime_events = data.particle_effect.components['minecraft:particle_lifetime_events'];
+		if (data.particle_effect.components['minecraft:particle_motion_collision']) {
+			Config.unsupported_fields.collision_events = data.particle_effect.components['minecraft:particle_motion_collision'].events;
+		}
+	}
+
 	updateInputsFromConfig();
 }
 function loadFile(data, confirmNewProject=true) {
@@ -100,6 +111,7 @@ function importFile() {
 }
 function startNewProject(force) {
 	if (vscode || force || confirm('This action may clear your current work. Do you want to continue?')) {
+		Config.unsupported_fields = {};
 		Config.reset();
 		Texture.reset();
 		QuickSetup.resetAll();

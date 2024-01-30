@@ -27,7 +27,7 @@
 	}
 	* {
 		scrollbar-width: thin;
-		scrollbar-color: white var(--color-bar);
+		scrollbar-color: var(--color-bar) var(--color-background);
 	}
 
 	body {

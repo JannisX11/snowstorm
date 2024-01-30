@@ -39,9 +39,14 @@ const Emitter = new Wintersky.Emitter(Scene, Config, {
 	loop_mode: 'looping',
 	parent_mode: 'world'
 });
-const QuickSetup = {};
+const QuickSetup = {
+	resetAll() {
+		// stub in case the tab was never opened
+	}
+};
 window.Emitter = Emitter;
 Texture.linkEmitter(Emitter, Config);
+Config.unsupported_fields = {};
 
 Config.reset()
 
