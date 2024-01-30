@@ -49,7 +49,7 @@ function updateInputsFromConfig() {
 				input.value = lineify(input.value);
 			}
 		}
-		if (input.type === 'select') {
+		if (input.type === 'select' || input.type === 'select_custom') {
 			input.update(Data);
 		}
 	})

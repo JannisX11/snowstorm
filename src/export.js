@@ -37,17 +37,13 @@ function getValue(key, required) {
 
 
 function generateFile() {
-	let material = Data.appearance.appearance.inputs.material.value;
-	if (material == 'custom') {
-		material = Data.appearance.appearance.inputs.material_custom.value;
-	}
 	var file = {
 		format_version: '1.10.0',
 		particle_effect: {
 			description: {
 				identifier: Config.identifier,
 				basic_render_parameters: {
-					material,
+					material: Data.appearance.appearance.inputs.material.value,
 					texture: getValue('particle_texture_path') || 'textures/blocks/wool_colored_white'
 				}
 			}

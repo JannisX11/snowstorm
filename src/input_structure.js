@@ -244,7 +244,7 @@ const Data = {
 				}),
 				material: new Input({
 					id: 'particle_appearance_material',
-					type: 'select',
+					type: 'select_custom',
 					info: 'Material to use for the particles',
 					label: 'Material',
 					options: {
@@ -254,16 +254,6 @@ const Data = {
 						particles_opaque: 'Opaque',
 						custom: 'Custom',
 					},
-				}),
-				material_custom: new Input({
-					id: 'particle_appearance_material',
-					label: 'Material ID',
-					info: 'Set the ID of your custom particle material.',
-					placeholder: 'particles_add',
-					type: 'text',
-					condition(group) {
-						return group.inputs.material.value == 'custom';
-					}
 				}),
 				facing_camera_mode: new Input({
 					id: 'particle_appearance_facing_camera_mode',
@@ -797,7 +787,7 @@ function forEachInput(cb) {
 }
 //Setup Data
 forEachInput(input => {
-	if (input.type === 'select') {
+	if (input.type === 'select' || input.type === 'select_custom') {
 		input.update(Data)
 	}
 })

@@ -94,6 +94,14 @@
 					<option v-for="(s_label, s_key) in input.options" :key="s_key" v-bind:id="s_key">{{s_label}}</option>
 				</select>
 
+				<!--Select+Custom-->
+				<template v-if="input.type == 'select_custom'">
+					<select v-bind:id="key" v-model="input.meta_value" v-on:change="input.change($event)">
+						<option v-for="(s_label, s_key) in input.options" :key="s_key" v-bind:id="s_key">{{ s_label }}</option>
+					</select>
+					<input v-if="input.meta_value == input.options.custom" type="text" v-model="input.value" v-on:input="input.change($event)">
+				</template>
+
 				<!--Color-->
 				<color-picker v-if="input.type == 'color'" v-model="input.value" v-on:input="input.change($event, $el)"></color-picker>
 
@@ -194,6 +202,7 @@ export default {
 	}
 	.input_right {
 		display: inline-flex;
+		gap: 2px;
 		vertical-align: middle;
 		width: calc(100% - 110px);
 		margin-left: 4px;
@@ -223,6 +232,10 @@ export default {
 		padding-top: 2px;
 	}
 	
+	li[input_type="select_custom"] select {
+		width: 140px;
+		flex-grow: 1;
+	}
 	.input_list li {
 		margin: 2px 0;
 	}
@@ -240,7 +253,6 @@ export default {
 	.input_vector {
 		width: 40px;
 		flex-grow: 1;
-		margin-left: 2px;
 	}
 	.input_vector:first-child {
 		margin-left: 0;

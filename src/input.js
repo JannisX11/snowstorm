@@ -65,7 +65,9 @@ export default class Input {
 			}
 		}
 		if (this.id) Config.set(this.id, v);
-		if (this.type == 'select') {
+		if (this.type === 'select_custom' && !this.options[v]) {
+			this.meta_value = this.options.custom;
+		} else if (this.type === 'select' || this.type === 'select_custom') {
 			this.meta_value = this.options[v];
 		}
 	}
@@ -76,7 +78,7 @@ export default class Input {
 	}
 	update(Data) {
 		var scope = this;
-		if (this.type === 'select') {
+		if (this.type === 'select' || this.type === 'select_custom') {
 			if (this.mode_groups instanceof Array) {
 				this.mode_groups.forEach((group, i) => {
 					if (group instanceof Array) {
@@ -110,9 +112,11 @@ export default class Input {
 				reader.readAsDataURL(file)
 			}
 		}
-		if (this.type === 'select') {
-			if (e) {
-				this.value = e.target.selectedOptions[0].id;
+		if (this.type === 'select' || this.type === 'select_custom') {
+			if (e instanceof Event) {
+				if (e.target.nodeName == 'SELECT') {
+					this.value = e.target.selectedOptions[0].id;
+				}
 			}
 			this.update()
 		}
@@ -138,9 +142,13 @@ export default class Input {
 	set(value) {
 		var scope = this;
 		if (value === undefined) return;
-		if (this.type === 'select') {
-			this.value = value
-			this.meta_value = this.options[this.value]
+		if (this.type === 'select' || this.type === 'select_custom') {
+			this.value = value;
+			if (this.type === 'select_custom' && !this.options[this.value]) {
+				this.meta_value = this.options.custom;
+			} else {
+				this.meta_value = this.options[this.value];
+			}
 		} else {
 			if (this.value instanceof Array) {
 				if (value instanceof Array) this.value.splice(0, Infinity, ...value);

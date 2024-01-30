@@ -1778,6 +1778,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -2417,7 +2425,6 @@ var DEFAULTS = {
   },
   mounted: function mounted() {
     var _this2 = this;
-    console.log('setup');
     _emitter__WEBPACK_IMPORTED_MODULE_9__.QuickSetup.resetAll = function () {
       _this2.resetAll();
     };
@@ -3402,17 +3409,13 @@ function getValue(key, required) {
   return result;
 }
 function generateFile() {
-  var material = _input_structure__WEBPACK_IMPORTED_MODULE_0__["default"].appearance.appearance.inputs.material.value;
-  if (material == 'custom') {
-    material = _input_structure__WEBPACK_IMPORTED_MODULE_0__["default"].appearance.appearance.inputs.material_custom.value;
-  }
   var file = {
     format_version: '1.10.0',
     particle_effect: {
       description: {
         identifier: _emitter__WEBPACK_IMPORTED_MODULE_2__.Config.identifier,
         basic_render_parameters: {
-          material: material,
+          material: _input_structure__WEBPACK_IMPORTED_MODULE_0__["default"].appearance.appearance.inputs.material.value,
           texture: getValue('particle_texture_path') || 'textures/blocks/wool_colored_white'
         }
       }
@@ -4015,7 +4018,7 @@ function updateInputsFromConfig() {
         input.value = lineify(input.value);
       }
     }
-    if (input.type === 'select') {
+    if (input.type === 'select' || input.type === 'select_custom') {
       input.update(_input_structure__WEBPACK_IMPORTED_MODULE_4__["default"]);
     }
   });
@@ -4263,7 +4266,9 @@ var Input = /*#__PURE__*/function () {
         }
       }
       if (this.id) _emitter__WEBPACK_IMPORTED_MODULE_2__.Config.set(this.id, v);
-      if (this.type == 'select') {
+      if (this.type === 'select_custom' && !this.options[v]) {
+        this.meta_value = this.options.custom;
+      } else if (this.type === 'select' || this.type === 'select_custom') {
         this.meta_value = this.options[v];
       }
     }
@@ -4278,7 +4283,7 @@ var Input = /*#__PURE__*/function () {
     key: "update",
     value: function update(Data) {
       var scope = this;
-      if (this.type === 'select') {
+      if (this.type === 'select' || this.type === 'select_custom') {
         if (this.mode_groups instanceof Array) {
           this.mode_groups.forEach(function (group, i) {
             if (group instanceof Array) {
@@ -4315,9 +4320,11 @@ var Input = /*#__PURE__*/function () {
           reader.readAsDataURL(file);
         }
       }
-      if (this.type === 'select') {
-        if (e) {
-          this.value = e.target.selectedOptions[0].id;
+      if (this.type === 'select' || this.type === 'select_custom') {
+        if (e instanceof Event) {
+          if (e.target.nodeName == 'SELECT') {
+            this.value = e.target.selectedOptions[0].id;
+          }
         }
         this.update();
       }
@@ -4345,9 +4352,13 @@ var Input = /*#__PURE__*/function () {
     value: function set(value) {
       var scope = this;
       if (value === undefined) return;
-      if (this.type === 'select') {
+      if (this.type === 'select' || this.type === 'select_custom') {
         this.value = value;
-        this.meta_value = this.options[this.value];
+        if (this.type === 'select_custom' && !this.options[this.value]) {
+          this.meta_value = this.options.custom;
+        } else {
+          this.meta_value = this.options[this.value];
+        }
       } else {
         if (this.value instanceof Array) {
           var _this$value;
@@ -4659,7 +4670,7 @@ var Data = {
         }),
         material: new _input__WEBPACK_IMPORTED_MODULE_0__["default"]({
           id: 'particle_appearance_material',
-          type: 'select',
+          type: 'select_custom',
           info: 'Material to use for the particles',
           label: 'Material',
           options: {
@@ -4668,16 +4679,6 @@ var Data = {
             particles_add: 'Additive',
             particles_opaque: 'Opaque',
             custom: 'Custom'
-          }
-        }),
-        material_custom: new _input__WEBPACK_IMPORTED_MODULE_0__["default"]({
-          id: 'particle_appearance_material',
-          label: 'Material ID',
-          info: 'Set the ID of your custom particle material.',
-          placeholder: 'particles_add',
-          type: 'text',
-          condition: function condition(group) {
-            return group.inputs.material.value == 'custom';
           }
         }),
         facing_camera_mode: new _input__WEBPACK_IMPORTED_MODULE_0__["default"]({
@@ -5207,7 +5208,7 @@ function forEachInput(cb) {
 }
 //Setup Data
 forEachInput(function (input) {
-  if (input.type === 'select') {
+  if (input.type === 'select' || input.type === 'select_custom') {
     input.update(Data);
   }
 });
@@ -6245,7 +6246,7 @@ function calculateOffset(element) {
   return [rect.left + window.scrollX, rect.top + window.scrollY];
 }
 function isFirefox() {
-  navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
+  return navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
 }
 var IO = {
   "import": function _import(options, cb) {
@@ -7906,7 +7907,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.input_wrapper[data-v-64472bb8] {\n\tmargin: 2px 0;\n}\n.input_wrapper > label[data-v-64472bb8] {\n\twidth: 100px;\n\ttext-align: right;\n\tvertical-align: middle;\n\tmargin: 3px 0;\n}\n.input_right[data-v-64472bb8] {\n\tdisplay: inline-flex;\n\tvertical-align: middle;\n\twidth: calc(100% - 110px);\n\tmargin-left: 4px;\n}\n.input_right.full_width[data-v-64472bb8] {\n\twidth: calc(100% - 8px);\n}\n.input_right.expandable[data-v-64472bb8] {\n\twidth: calc(100% - 134px);\n}\n.input_right[axes=\"1\"] input[data-v-64472bb8]:not([type=\"checkbox\"]), .input_right[axes=\"1\"] select[data-v-64472bb8]:not([type=\"checkbox\"]) {\n\twidth: 100%;\n}\n.input_right.expanded[data-v-64472bb8] {\n\tdisplay: block;\n\twidth: calc(100% - 7px);\n}\n.input_right.expanded input[data-v-64472bb8], .input_right.expanded .input_vector[data-v-64472bb8]  {\n\twidth: 100% !important;\n\tdisplay: block;\n\tmargin-left: 0;\n}\n.tool.input_expand_button[data-v-64472bb8] {\n\tfloat: right;\n\twidth: 22px;\n\tpadding-left: 0;\n\tpadding-top: 2px;\n}\n.input_list li[data-v-64472bb8] {\n\tmargin: 2px 0;\n}\nul.input_list input[data-v-64472bb8], ul.input_list .prism-editor-component[data-v-64472bb8] {\n\twidth: calc(100% - 80px);\n\tmargin-left: 52px;\n\tfloat: left;\n}\n.input_list li .tool[data-v-64472bb8] {\n\tpadding: 2px 0px;\n\twidth: 24px;\n\theight: 30px;\n}\n.input_vector[data-v-64472bb8] {\n\twidth: 40px;\n\tflex-grow: 1;\n\tmargin-left: 2px;\n}\n.input_vector[data-v-64472bb8]:first-child {\n\tmargin-left: 0;\n}\n.list_add_tool[data-v-64472bb8] {\n\tvertical-align: sub;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.input_wrapper[data-v-64472bb8] {\n\tmargin: 2px 0;\n}\n.input_wrapper > label[data-v-64472bb8] {\n\twidth: 100px;\n\ttext-align: right;\n\tvertical-align: middle;\n\tmargin: 3px 0;\n}\n.input_right[data-v-64472bb8] {\n\tdisplay: inline-flex;\n\tgap: 2px;\n\tvertical-align: middle;\n\twidth: calc(100% - 110px);\n\tmargin-left: 4px;\n}\n.input_right.full_width[data-v-64472bb8] {\n\twidth: calc(100% - 8px);\n}\n.input_right.expandable[data-v-64472bb8] {\n\twidth: calc(100% - 134px);\n}\n.input_right[axes=\"1\"] input[data-v-64472bb8]:not([type=\"checkbox\"]), .input_right[axes=\"1\"] select[data-v-64472bb8]:not([type=\"checkbox\"]) {\n\twidth: 100%;\n}\n.input_right.expanded[data-v-64472bb8] {\n\tdisplay: block;\n\twidth: calc(100% - 7px);\n}\n.input_right.expanded input[data-v-64472bb8], .input_right.expanded .input_vector[data-v-64472bb8]  {\n\twidth: 100% !important;\n\tdisplay: block;\n\tmargin-left: 0;\n}\n.tool.input_expand_button[data-v-64472bb8] {\n\tfloat: right;\n\twidth: 22px;\n\tpadding-left: 0;\n\tpadding-top: 2px;\n}\nli[input_type=\"select_custom\"] select[data-v-64472bb8] {\n\twidth: 140px;\n\tflex-grow: 1;\n}\n.input_list li[data-v-64472bb8] {\n\tmargin: 2px 0;\n}\nul.input_list input[data-v-64472bb8], ul.input_list .prism-editor-component[data-v-64472bb8] {\n\twidth: calc(100% - 80px);\n\tmargin-left: 52px;\n\tfloat: left;\n}\n.input_list li .tool[data-v-64472bb8] {\n\tpadding: 2px 0px;\n\twidth: 24px;\n\theight: 30px;\n}\n.input_vector[data-v-64472bb8] {\n\twidth: 40px;\n\tflex-grow: 1;\n}\n.input_vector[data-v-64472bb8]:first-child {\n\tmargin-left: 0;\n}\n.list_add_tool[data-v-64472bb8] {\n\tvertical-align: sub;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -8050,7 +8051,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\r\n\t/*Setup*/\r\n\r\n\t::-webkit-scrollbar {\r\n\t\twidth: 8px;\r\n\t\theight: 8px;\r\n\t}\r\n\t\r\n\t::-webkit-scrollbar-track {\r\n\t\tbackground: var(--color-interface);\r\n\t}\r\n\t::-webkit-scrollbar-corner {\r\n\t\tbackground: var(--color-interface);\r\n\t}\r\n\t\r\n\t::-webkit-scrollbar-thumb {\r\n\t\tbackground: var(--color-bar);\r\n\t}\r\n\t::-webkit-scrollbar-thumb:hover {\r\n\t\tbackground: var(--color-title);\r\n\t}\r\n\t::selection {\r\n\t\tbackground: var(--color-selection);\r\n\t}\r\n\t::placeholder {\r\n\t\topacity: 0.6;\r\n\t}\r\n\t* {\r\n\t\tscrollbar-width: thin;\r\n\t\tscrollbar-color: var(--color-bar) var(--color-background);\r\n\t}\r\n\r\n\tbody {\r\n\t\t--color-background: #29323a;\r\n\t\t--color-dark: #20272d;\r\n\t\t--color-border: #1a1c1f;\r\n\t\t--color-interface: #29323a;\r\n\t\t--color-bar: #34404a;\r\n\t\t--color-title: #4b5b69;\r\n\t\t--color-selection: rgba(110, 142, 191, 0.3);\r\n\t\t--color-highlight: #f7f9ff;\r\n\t\t--color-text: #bcc3ca;\r\n\t\t--color-text_grayed: #939aa3;\r\n\t\t--color-accent: #20ddff;\r\n\r\n\t\t--font-code: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;\r\n\t}\r\n\r\n\r\n\th1, h2, h3, h4, h5, h6 {\r\n\t\tmargin: 0;\r\n\t\tfont-weight: inherit;\r\n\t\tline-height: 1.2;\r\n    }\r\n\tul {\r\n\t\tlist-style: none;\r\n\t\tpadding-left: 0;\r\n\t\tmargin: 0;\r\n\t}\r\n\t* {\r\n\t\tmargin: 0;\r\n        padding: 0;\r\n        box-sizing: border-box;\r\n\t\tuser-select: none;\r\n\t}\r\n\t*, :after, :before {\r\n\t\tbox-sizing: border-box;\r\n\t}\r\n\timg, svg {\r\n\t\tvertical-align: middle;\r\n\t}\r\n\tbutton, input, optgroup, select, textarea {\r\n\t\tfont-family: inherit;\r\n\t\tfont-size: inherit;\r\n\t\tline-height: inherit;\r\n\t\tmargin: 0;\r\n\t}\r\n\tinput, select {\r\n\t\tfont-weight: inherit;\r\n\t\tbackground-color: var(--color-dark);\r\n\t\tborder: 1px solid var(--color-border);\r\n\t\tcolor: var(--color-text);\r\n\t\theight: 30px;\r\n\t\tpadding: 4px 1px;\r\n\t\toutline: none;\r\n\t}\r\n\tinput[type=text], input[type=number], input:not([type]) {\r\n\t\tfont-family: var(--font-code);\r\n\t}\r\n\tinput[type=checkbox].hidden {\r\n\t\tdisplay: none;\r\n\t}\r\n\tinput[type=file] {\r\n        padding: 1px;\r\n        border: none;\r\n        background-color: initial;\r\n\t}\r\n\tinput[type=range] {\r\n\t\t-webkit-appearance: none;\r\n\t\tappearance: none;\r\n\t\tborder: none;\r\n\t\tfont-size: 1em;\r\n\t\tfont-family: inherit;\r\n\t\toutline: none;\r\n\t\tbackground-color: transparent;\r\n\t\theight: 30px;\r\n\t\tposition: relative;\r\n\t\t--color-track: var(--color-bar);\r\n\t\t--color-thumb: var(--color-accent);\r\n\t\t--color-center: var(--color-interface);\r\n\t}\r\n\tinput[type=range]::-webkit-slider-thumb {\r\n\t\t-webkit-appearance: none;\r\n\t\t-moz-appearance: none;\r\n\t\tappearance: none;\r\n\t\theight: 20px;\r\n\t\twidth: 20px;\r\n\t\tmargin-top: -9px;\r\n\t\tborder: none;\r\n\t\tbackground-color: var(--color-center);\r\n\t\tborder: 2px solid var(--color-thumb);\r\n\t\tborder-radius: 50%;\r\n\t\tcursor: pointer;\r\n\t\tz-index: 3;\r\n\t}\r\n\tinput[type=range]::-moz-range-thumb {\r\n\t\t-webkit-appearance: none;\r\n\t\t-moz-appearance: none;\r\n\t\tappearance: none;\r\n\t\theight: 20px;\r\n\t\twidth: 20px;\r\n\t\tborder:none;\r\n\t\tbackground-color: var(--color-center);\r\n\t\tborder: 2px solid var(--color-thumb);\r\n\t\tborder-radius: 50%;\r\n\t\tcursor: pointer;\r\n\t\tz-index: 3;\r\n\t}\r\n\tinput[type=range]:not([disabled=disabled])::-webkit-slider-thumb:hover {\r\n\t\tbackground-color: var(--color-thumb);\r\n\t\tborder: none;\r\n\t}\r\n\tinput[type=range]:not([disabled=disabled])::-moz-range-thumb:hover {\r\n\t\tbackground-color: var(--color-thumb);\r\n\t\tborder: none;\r\n\t}\r\n\tinput[type=range][disabled=disabled]::-webkit-slider-thumb {\r\n\t\tbackground-color: var(--color-button);\r\n\t}\r\n\tinput[type=range][disabled=disabled]::-moz-range-thumb {\r\n\t\tbackground-color: var(--color-button);\r\n\t}\r\n\tinput[type=range]::-webkit-slider-runnable-track {\r\n\t\twidth: 100%;\r\n\t\theight: 4px;\r\n\t\tcursor: pointer;\r\n\t\tbackground: var(--color-track);\r\n\t}\r\n\tinput[type=range]::-moz-range-track {\r\n\t\twidth: 100%;\r\n\t\theight: 2px;\r\n\t\tcursor: pointer;\r\n\t\tbackground: var(--color-track);\r\n\t\tborder-radius: 3px;\r\n\t}\r\n\t::file-selector-button {\r\n\t\tborder: none;\r\n\t\tbackground-color: var(--color-bar);\r\n\t\tcolor: inherit;\r\n\t\tfont-size: inherit;\r\n\t\tpadding: 5px 12px;\r\n\t\tborder-radius: 1px;\r\n\t\tcursor: pointer;\r\n\t}\r\n\t::file-selector-button:hover {\r\n\t\tbackground-color: var(--color-title);\r\n\t}\r\n\tbutton {\r\n\t\tappearance: none;\r\n\t\tborder: none;\r\n\t\tbackground-color: var(--color-bar);\r\n\t\tcolor: inherit;\r\n\t\tfont-size: inherit;\r\n\t\tpadding: 8px 12px;\r\n\t\tborder-radius: 1px;\r\n\t\tcursor: pointer;\r\n\t}\r\n\tbutton:hover {\r\n\t\tbackground-color: var(--color-accent);\r\n\t\tcolor: black;\r\n\t}\r\n\tlabel {\r\n\t\tdisplay: inline-block;\r\n\t\tmargin-bottom: .5rem;\r\n\t}\r\n\t.unicode_icon {\r\n\t\tfont-style: unset;\r\n\t\tdisplay: block;\r\n\t\twidth: 24px;\r\n\t\theight: 24px;\r\n\t\ttext-align: center;\r\n\t\tfont-size: 14pt;\r\n\t\tfont-family: sans-serif;\r\n\t}\r\n\t.unicode_icon.caret {\r\n\t\tfont-size: 25pt;\r\n\t\toverflow: hidden;\r\n\t\tdisplay: block;\r\n\t\tmargin-top: -4px;\r\n\t\twidth: 12px;\r\n\t}\r\n\t.unicode_icon.plus {\r\n\t\tfont-size: 18pt;\r\n\t\tmargin-top: -4px;\r\n\t}\r\n\t.unicode_icon.split {\r\n\t\tfont-size: 22pt;\r\n\t\tmargin-top: -12px;\r\n\t}\r\n\t.unicode_icon.warning {\r\n\t\tmargin-top: -1px;\r\n\t}\r\n\t.checkerboard {\r\n\t\t--color-checker_offset: var(--color-bar);\r\n\t\t--color-checkerboard: var(--color-interface);\r\n\t\tbackground-color: var(--color-checkerboard) !important;\r\n\t\tbackground-image: linear-gradient(45deg, var(--color-checkerboard) 25%, transparent 25%), linear-gradient(-45deg, var(--color-checkerboard) 25%, transparent 25%), linear-gradient(45deg, transparent 75%, var(--color-checkerboard) 75%), linear-gradient(-45deg, var(--color-checker_offset) 75%, var(--color-checkerboard) 75%);\r\n\t\tbackground-size: 16px 16px;\r\n\t\tbackground-position: 0 0, 0 8px, 8px -8px, -8px 0px;\r\n\t}\r\n\tselect {\r\n\t\theight: 30px;\r\n\t\t-webkit-appearance: none;\r\n\t\tappearance: auto;\r\n\t\tborder-radius: 0;\r\n\t}\r\n\tbody {\r\n\t\timage-rendering: pixelated;\r\n\t\tbackground-color: var(--color-background);\r\n\t\tuser-select: none;\r\n\t\t-moz-user-select: none;\r\n\t\tfont-family: 'Lato', -apple-system, \"Segoe UI\", sans-serif;\r\n\t\theight: 100%;\r\n        width: 100%;\r\n        margin: 0;\r\n        font-size: 11pt;\r\n        font-weight: 400;\r\n        line-height: 1.5;\r\n        color: var(--color-text);\r\n        text-align: left;\r\n\t}\r\n\r\n/*Color Picker*/\r\n\t\r\n\tdiv.vc-chrome {\r\n\t\twidth: 310px;\r\n\t\tmargin: 2px 0;\r\n\t\tfont-family: inherit;\r\n\t}\r\n\tdiv.vc-chrome .vc-chrome-body {\r\n\t\tbackground-color: var(--color-interface);\r\n\t}\r\n\tdiv.vc-chrome .vc-chrome-fields .vc-input__input {\r\n\t\tcolor: var(--color-text);\r\n\t\tbox-shadow: none;\r\n\t\tfont-size: inherit;\r\n\t\tborder: 1px solid var(--color-border);\r\n\t\theight: 24px;\r\n\t}\r\n\tdiv.vc-chrome .vc-chrome-toggle-icon svg path {\r\n\t\tfill: var(--color-text);\r\n\t}\r\n\t.vc-chrome-saturation-wrap .vc-saturation-circle {\r\n\t\tmargin-top: -5px;\r\n\t\tmargin-left: -4px;\r\n\t}\r\n\r\n\r\n/* Prism Editor */\r\n\r\n.prism-editor-wrapper {\r\n\tbackground-color: var(--color-dark);\r\n\theight: auto;\r\n\tz-index: 3;\r\n\tfont-family: var(--font-code);\r\n\toutline: none;\r\n\tpadding: 4px;\r\n\tpadding-bottom: 2px;\r\n\tfont-size: 15px;\r\n\twidth: fit-content;\r\n\tmin-width: 100%;\r\n}\r\n.prism-editor-wrapper .prism-editor__editor, .prism-editor-wrapper .prism-editor__textarea {\r\n\twhite-space: pre;\r\n}\r\n.prism-editor-component {\r\n\tborder: 1px solid var(--color-border);\r\n\twidth: 100%;\r\n}\r\n.prism-editor-wrapper textarea {\r\n\toutline: none;\r\n}\r\n.prism-editor-wrapper pre {\r\n\tcolor: var(--color-text);\r\n}\r\n.prism-editor-wrapper .prism-editor-wrapper {\r\n\toverflow-y: hidden;\r\n}\r\n.prism-editor__autocomplete {\r\n\tbackground-color: var(--color-interface);\r\n\tborder: 1px solid var(--color-border);\r\n\tmax-height: 220px;\r\n\tpadding-bottom: 10px;\r\n}\r\n.prism-editor__autocomplete > li {\r\n\tpadding: 3px 8px;\r\n\tfont-family: var(--font-code);\r\n}\r\n.prism-editor__autocomplete > li:hover {\r\n\tcolor: var(--color-highlight);\r\n\tbackground-color: var(--color-bar);\r\n}\r\n.prism-editor__autocomplete > li.selected {\r\n\tcolor: var(--color-highlight);\r\n\tbackground-color: var(--color-bar);\r\n}\r\n\r\n.prism-editor-wrapper pre .token.punctuation {\r\n\tcolor: #5ba8c5\r\n}\r\n.prism-editor-wrapper pre .token.operator, .prism-editor-wrapper pre .token.keyword {\r\n\tcolor: #fc2f40\r\n}\r\n.prism-editor-wrapper pre .token.number, .prism-editor-wrapper pre .token.boolean, input[type=\"number\"] {\r\n\tcolor: #b99cff\r\n}\r\n.prism-editor-wrapper pre .token.function-name {\r\n\tcolor: #94e400\r\n}\r\n.prism-editor-wrapper pre .token.selector {\r\n\tcolor: #92dcff;\r\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\r\n\t/*Setup*/\r\n\r\n\t::-webkit-scrollbar {\r\n\t\twidth: 8px;\r\n\t\theight: 8px;\r\n\t}\r\n\t\r\n\t::-webkit-scrollbar-track {\r\n\t\tbackground: var(--color-interface);\r\n\t}\r\n\t::-webkit-scrollbar-corner {\r\n\t\tbackground: var(--color-interface);\r\n\t}\r\n\t\r\n\t::-webkit-scrollbar-thumb {\r\n\t\tbackground: var(--color-bar);\r\n\t}\r\n\t::-webkit-scrollbar-thumb:hover {\r\n\t\tbackground: var(--color-title);\r\n\t}\r\n\t::selection {\r\n\t\tbackground: var(--color-selection);\r\n\t}\r\n\t::placeholder {\r\n\t\topacity: 0.6;\r\n\t}\r\n\t* {\r\n\t\tscrollbar-width: thin;\r\n\t\tscrollbar-color: var(--color-bar) var(--color-background);\r\n\t}\r\n\r\n\tbody {\r\n\t\t--color-background: #29323a;\r\n\t\t--color-dark: #20272d;\r\n\t\t--color-border: #1a1c1f;\r\n\t\t--color-interface: #29323a;\r\n\t\t--color-bar: #34404a;\r\n\t\t--color-title: #4b5b69;\r\n\t\t--color-selection: rgba(110, 142, 191, 0.3);\r\n\t\t--color-highlight: #f7f9ff;\r\n\t\t--color-text: #bcc3ca;\r\n\t\t--color-text_grayed: #939aa3;\r\n\t\t--color-accent: #20ddff;\r\n\r\n\t\t--font-code: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;\r\n\t}\r\n\r\n\r\n\th1, h2, h3, h4, h5, h6 {\r\n\t\tmargin: 0;\r\n\t\tfont-weight: inherit;\r\n\t\tline-height: 1.2;\r\n    }\r\n\tul {\r\n\t\tlist-style: none;\r\n\t\tpadding-left: 0;\r\n\t\tmargin: 0;\r\n\t}\r\n\t* {\r\n\t\tmargin: 0;\r\n        padding: 0;\r\n        box-sizing: border-box;\r\n\t\tuser-select: none;\r\n\t}\r\n\t*, :after, :before {\r\n\t\tbox-sizing: border-box;\r\n\t}\r\n\timg, svg {\r\n\t\tvertical-align: middle;\r\n\t}\r\n\tbutton, input, optgroup, select, textarea {\r\n\t\tfont-family: inherit;\r\n\t\tfont-size: inherit;\r\n\t\tline-height: inherit;\r\n\t\tmargin: 0;\r\n\t}\r\n\tinput, select {\r\n\t\tfont-weight: inherit;\r\n\t\tbackground-color: var(--color-dark);\r\n\t\tborder: 1px solid var(--color-border);\r\n\t\tcolor: var(--color-text);\r\n\t\theight: 30px;\r\n\t\tpadding: 4px 1px;\r\n\t\toutline: none;\r\n\t}\r\n\tinput[type=text], input[type=number], input:not([type]) {\r\n\t\tfont-family: var(--font-code);\r\n\t\tpadding: 0 4px;\r\n\t}\r\n\tinput[type=checkbox].hidden {\r\n\t\tdisplay: none;\r\n\t}\r\n\tinput[type=file] {\r\n        padding: 1px;\r\n        border: none;\r\n        background-color: initial;\r\n\t}\r\n\tinput[type=range] {\r\n\t\t-webkit-appearance: none;\r\n\t\tappearance: none;\r\n\t\tborder: none;\r\n\t\tfont-size: 1em;\r\n\t\tfont-family: inherit;\r\n\t\toutline: none;\r\n\t\tbackground-color: transparent;\r\n\t\theight: 30px;\r\n\t\tposition: relative;\r\n\t\t--color-track: var(--color-bar);\r\n\t\t--color-thumb: var(--color-accent);\r\n\t\t--color-center: var(--color-interface);\r\n\t}\r\n\tinput[type=range]::-webkit-slider-thumb {\r\n\t\t-webkit-appearance: none;\r\n\t\t-moz-appearance: none;\r\n\t\tappearance: none;\r\n\t\theight: 20px;\r\n\t\twidth: 20px;\r\n\t\tmargin-top: -9px;\r\n\t\tborder: none;\r\n\t\tbackground-color: var(--color-center);\r\n\t\tborder: 2px solid var(--color-thumb);\r\n\t\tborder-radius: 50%;\r\n\t\tcursor: pointer;\r\n\t\tz-index: 3;\r\n\t}\r\n\tinput[type=range]::-moz-range-thumb {\r\n\t\t-webkit-appearance: none;\r\n\t\t-moz-appearance: none;\r\n\t\tappearance: none;\r\n\t\theight: 20px;\r\n\t\twidth: 20px;\r\n\t\tborder:none;\r\n\t\tbackground-color: var(--color-center);\r\n\t\tborder: 2px solid var(--color-thumb);\r\n\t\tborder-radius: 50%;\r\n\t\tcursor: pointer;\r\n\t\tz-index: 3;\r\n\t}\r\n\tinput[type=range]:not([disabled=disabled])::-webkit-slider-thumb:hover {\r\n\t\tbackground-color: var(--color-thumb);\r\n\t\tborder: none;\r\n\t}\r\n\tinput[type=range]:not([disabled=disabled])::-moz-range-thumb:hover {\r\n\t\tbackground-color: var(--color-thumb);\r\n\t\tborder: none;\r\n\t}\r\n\tinput[type=range][disabled=disabled]::-webkit-slider-thumb {\r\n\t\tbackground-color: var(--color-button);\r\n\t}\r\n\tinput[type=range][disabled=disabled]::-moz-range-thumb {\r\n\t\tbackground-color: var(--color-button);\r\n\t}\r\n\tinput[type=range]::-webkit-slider-runnable-track {\r\n\t\twidth: 100%;\r\n\t\theight: 4px;\r\n\t\tcursor: pointer;\r\n\t\tbackground: var(--color-track);\r\n\t}\r\n\tinput[type=range]::-moz-range-track {\r\n\t\twidth: 100%;\r\n\t\theight: 2px;\r\n\t\tcursor: pointer;\r\n\t\tbackground: var(--color-track);\r\n\t\tborder-radius: 3px;\r\n\t}\r\n\t::file-selector-button {\r\n\t\tborder: none;\r\n\t\tbackground-color: var(--color-bar);\r\n\t\tcolor: inherit;\r\n\t\tfont-size: inherit;\r\n\t\tpadding: 5px 12px;\r\n\t\tborder-radius: 1px;\r\n\t\tcursor: pointer;\r\n\t}\r\n\t::file-selector-button:hover {\r\n\t\tbackground-color: var(--color-title);\r\n\t}\r\n\tbutton {\r\n\t\tappearance: none;\r\n\t\tborder: none;\r\n\t\tbackground-color: var(--color-bar);\r\n\t\tcolor: inherit;\r\n\t\tfont-size: inherit;\r\n\t\tpadding: 8px 12px;\r\n\t\tborder-radius: 1px;\r\n\t\tcursor: pointer;\r\n\t}\r\n\tbutton:hover {\r\n\t\tbackground-color: var(--color-accent);\r\n\t\tcolor: black;\r\n\t}\r\n\tlabel {\r\n\t\tdisplay: inline-block;\r\n\t\tmargin-bottom: .5rem;\r\n\t}\r\n\t.unicode_icon {\r\n\t\tfont-style: unset;\r\n\t\tdisplay: block;\r\n\t\twidth: 24px;\r\n\t\theight: 24px;\r\n\t\ttext-align: center;\r\n\t\tfont-size: 14pt;\r\n\t\tfont-family: sans-serif;\r\n\t}\r\n\t.unicode_icon.caret {\r\n\t\tfont-size: 25pt;\r\n\t\toverflow: hidden;\r\n\t\tdisplay: block;\r\n\t\tmargin-top: -4px;\r\n\t\twidth: 12px;\r\n\t}\r\n\t.unicode_icon.plus {\r\n\t\tfont-size: 18pt;\r\n\t\tmargin-top: -4px;\r\n\t}\r\n\t.unicode_icon.split {\r\n\t\tfont-size: 22pt;\r\n\t\tmargin-top: -12px;\r\n\t}\r\n\t.unicode_icon.warning {\r\n\t\tmargin-top: -1px;\r\n\t}\r\n\t.checkerboard {\r\n\t\t--color-checker_offset: var(--color-bar);\r\n\t\t--color-checkerboard: var(--color-interface);\r\n\t\tbackground-color: var(--color-checkerboard) !important;\r\n\t\tbackground-image: linear-gradient(45deg, var(--color-checkerboard) 25%, transparent 25%), linear-gradient(-45deg, var(--color-checkerboard) 25%, transparent 25%), linear-gradient(45deg, transparent 75%, var(--color-checkerboard) 75%), linear-gradient(-45deg, var(--color-checker_offset) 75%, var(--color-checkerboard) 75%);\r\n\t\tbackground-size: 16px 16px;\r\n\t\tbackground-position: 0 0, 0 8px, 8px -8px, -8px 0px;\r\n\t}\r\n\tselect {\r\n\t\theight: 30px;\r\n\t\t-webkit-appearance: none;\r\n\t\tappearance: auto;\r\n\t\tborder-radius: 0;\r\n\t}\r\n\tbody {\r\n\t\timage-rendering: pixelated;\r\n\t\tbackground-color: var(--color-background);\r\n\t\tuser-select: none;\r\n\t\t-moz-user-select: none;\r\n\t\tfont-family: 'Lato', -apple-system, \"Segoe UI\", sans-serif;\r\n\t\theight: 100%;\r\n        width: 100%;\r\n        margin: 0;\r\n        font-size: 11pt;\r\n        font-weight: 400;\r\n        line-height: 1.5;\r\n        color: var(--color-text);\r\n        text-align: left;\r\n\t}\r\n\r\n/*Color Picker*/\r\n\t\r\n\tdiv.vc-chrome {\r\n\t\twidth: 310px;\r\n\t\tmargin: 2px 0;\r\n\t\tfont-family: inherit;\r\n\t}\r\n\tdiv.vc-chrome .vc-chrome-body {\r\n\t\tbackground-color: var(--color-interface);\r\n\t}\r\n\tdiv.vc-chrome .vc-chrome-fields .vc-input__input {\r\n\t\tcolor: var(--color-text);\r\n\t\tbox-shadow: none;\r\n\t\tfont-size: inherit;\r\n\t\tborder: 1px solid var(--color-border);\r\n\t\theight: 24px;\r\n\t}\r\n\tdiv.vc-chrome .vc-chrome-toggle-icon svg path {\r\n\t\tfill: var(--color-text);\r\n\t}\r\n\t.vc-chrome-saturation-wrap .vc-saturation-circle {\r\n\t\tmargin-top: -5px;\r\n\t\tmargin-left: -4px;\r\n\t}\r\n\r\n\r\n/* Prism Editor */\r\n\r\n.prism-editor-wrapper {\r\n\tbackground-color: var(--color-dark);\r\n\theight: auto;\r\n\tz-index: 3;\r\n\tfont-family: var(--font-code);\r\n\toutline: none;\r\n\tpadding: 4px;\r\n\tpadding-bottom: 2px;\r\n\tfont-size: 15px;\r\n\twidth: fit-content;\r\n\tmin-width: 100%;\r\n}\r\n.prism-editor-wrapper .prism-editor__editor, .prism-editor-wrapper .prism-editor__textarea {\r\n\twhite-space: pre;\r\n}\r\n.prism-editor-component {\r\n\tborder: 1px solid var(--color-border);\r\n\twidth: 100%;\r\n}\r\n.prism-editor-wrapper textarea {\r\n\toutline: none;\r\n}\r\n.prism-editor-wrapper pre {\r\n\tcolor: var(--color-text);\r\n}\r\n.prism-editor-wrapper .prism-editor-wrapper {\r\n\toverflow-y: hidden;\r\n}\r\n.prism-editor__autocomplete {\r\n\tbackground-color: var(--color-interface);\r\n\tborder: 1px solid var(--color-border);\r\n\tmax-height: 220px;\r\n\tpadding-bottom: 10px;\r\n}\r\n.prism-editor__autocomplete > li {\r\n\tpadding: 3px 8px;\r\n\tfont-family: var(--font-code);\r\n}\r\n.prism-editor__autocomplete > li:hover {\r\n\tcolor: var(--color-highlight);\r\n\tbackground-color: var(--color-bar);\r\n}\r\n.prism-editor__autocomplete > li.selected {\r\n\tcolor: var(--color-highlight);\r\n\tbackground-color: var(--color-bar);\r\n}\r\n\r\n.prism-editor-wrapper pre .token.punctuation {\r\n\tcolor: #5ba8c5\r\n}\r\n.prism-editor-wrapper pre .token.operator, .prism-editor-wrapper pre .token.keyword {\r\n\tcolor: #fc2f40\r\n}\r\n.prism-editor-wrapper pre .token.number, .prism-editor-wrapper pre .token.boolean, input[type=\"number\"] {\r\n\tcolor: #b99cff\r\n}\r\n.prism-editor-wrapper pre .token.function-name {\r\n\tcolor: #94e400\r\n}\r\n.prism-editor-wrapper pre .token.selector {\r\n\tcolor: #92dcff;\r\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -71629,6 +71630,90 @@ var render = function() {
                         }),
                         0
                       )
+                    : _vm._e(),
+                  _vm._v(" "),
+                  input.type == "select_custom"
+                    ? [
+                        _c(
+                          "select",
+                          {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: input.meta_value,
+                                expression: "input.meta_value"
+                              }
+                            ],
+                            attrs: { id: key },
+                            on: {
+                              change: [
+                                function($event) {
+                                  var $$selectedVal = Array.prototype.filter
+                                    .call($event.target.options, function(o) {
+                                      return o.selected
+                                    })
+                                    .map(function(o) {
+                                      var val =
+                                        "_value" in o ? o._value : o.value
+                                      return val
+                                    })
+                                  _vm.$set(
+                                    input,
+                                    "meta_value",
+                                    $event.target.multiple
+                                      ? $$selectedVal
+                                      : $$selectedVal[0]
+                                  )
+                                },
+                                function($event) {
+                                  return input.change($event)
+                                }
+                              ]
+                            }
+                          },
+                          _vm._l(input.options, function(s_label, s_key) {
+                            return _c(
+                              "option",
+                              { key: s_key, attrs: { id: s_key } },
+                              [_vm._v(_vm._s(s_label))]
+                            )
+                          }),
+                          0
+                        ),
+                        _vm._v(" "),
+                        input.meta_value == input.options.custom
+                          ? _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: input.value,
+                                  expression: "input.value"
+                                }
+                              ],
+                              attrs: { type: "text" },
+                              domProps: { value: input.value },
+                              on: {
+                                input: [
+                                  function($event) {
+                                    if ($event.target.composing) {
+                                      return
+                                    }
+                                    _vm.$set(
+                                      input,
+                                      "value",
+                                      $event.target.value
+                                    )
+                                  },
+                                  function($event) {
+                                    return input.change($event)
+                                  }
+                                ]
+                              }
+                            })
+                          : _vm._e()
+                      ]
                     : _vm._e(),
                   _vm._v(" "),
                   input.type == "color"
