@@ -337,6 +337,12 @@ function generateFile() {
 	if (getValue('particle_texture_mode') === 'static') {
 		tex_comp.uv.uv = getValue('particle_texture_uv')||[0, 0];
 		tex_comp.uv.uv_size = getValue('particle_texture_uv_size')||[tex_comp.uv.texture_width, tex_comp.uv.texture_height];
+
+	} else if (getValue('particle_texture_mode') === 'full') {
+		tex_comp.uv.uv = [0, 0];
+		tex_comp.uv.texture_width = tex_comp.uv.texture_height = 1;
+		tex_comp.uv.uv_size = [tex_comp.uv.texture_width, tex_comp.uv.texture_height];
+
 	} else {
 		tex_comp.uv.flipbook = {
 			base_UV: getValue('particle_texture_uv', true),
@@ -349,21 +355,14 @@ function generateFile() {
 		}
 	}
 	//Collision
-	let collision_enabled = getValue('particle_collision_enabled'),
-		collision_collision_drag = getValue('particle_collision_collision_drag'),
-		collision_coefficient_of_restitution = getValue('particle_collision_coefficient_of_restitution'),
-		collision_collision_radius = getValue('particle_collision_collision_radius'),
-		collision_expire_on_contact = getValue('particle_collision_expire_on_contact'),
-		collision_events = Config.unsupported_fields.collision_events;
-	if ((collision_enabled || collision_collision_drag || collision_coefficient_of_restitution || collision_collision_radius || collision_expire_on_contact || collision_events) && collision_enabled != 'false') {
-		if (collision_enabled == 'true') collision_enabled = undefined;
+	if (getValue('particle_collision_enabled')) {
 		comps['minecraft:particle_motion_collision'] = {
-			enabled: collision_enabled,
-			collision_drag: collision_collision_drag,
-			coefficient_of_restitution: collision_coefficient_of_restitution,
-			collision_radius: collision_collision_radius,
-			expire_on_contact: collision_expire_on_contact,
-			events: collision_events,
+			enabled: getValue('particle_collision_condition'),
+			collision_drag: getValue('particle_collision_collision_drag'),
+			coefficient_of_restitution: getValue('particle_collision_coefficient_of_restitution'),
+			collision_radius: getValue('particle_collision_collision_radius'),
+			expire_on_contact: getValue('particle_collision_expire_on_contact'),
+			events: Config.unsupported_fields.collision_events,
 		}
 	}
 	if (getValue('particle_color_light')) {

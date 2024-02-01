@@ -608,6 +608,13 @@ const Data = {
 			label: 'Collision',
 			_folded: false,
 			inputs: {
+				toggle: new Input({
+					id: 'particle_collision_toggle',
+					label: 'Collide',
+					info: 'Make the particle collide with the world',
+					type: 'checkbox',
+					mode_groups: ['motion', 'collision'],
+				}),
 				collision_radius: new Input({
 					id: 'particle_collision_collision_radius',
 					label: 'Radius',
@@ -617,6 +624,7 @@ const Data = {
 					step: 0.05,
 					required: true,
 					type: 'number',
+					enabled_modes: [true]
 				}),
 				collision_drag: new Input({
 					id: 'particle_collision_collision_drag',
@@ -624,6 +632,7 @@ const Data = {
 					info: 'Alters the speed of the particle when it has collided',
 					type: 'number',
 					step: 0.1,
+					enabled_modes: [true]
 				}),
 				coefficient_of_restitution: new Input({
 					id: 'particle_collision_coefficient_of_restitution',
@@ -631,17 +640,20 @@ const Data = {
 					info: 'Set to 0.0 to not bounce, 1.0 to bounce back up to original hight',
 					type: 'number',
 					step: 0.1,
+					enabled_modes: [true]
 				}),
-				enabled: new Input({
+				condition: new Input({
 					id: 'particle_collision_enabled',
 					label: 'Condition',
 					info: 'Enables collision when true / non-zero or unset',
+					enabled_modes: [true]
 				}),
 				expire_on_contact: new Input({
 					id: 'particle_collision_expire_on_contact',
 					label: 'Expire On Contact',
 					info: 'Removes the particle when it hits a block',
 					type: 'checkbox',
+					enabled_modes: [true]
 				}),
 			}
 		}
@@ -787,9 +799,7 @@ function forEachInput(cb) {
 }
 //Setup Data
 forEachInput(input => {
-	if (input.type === 'select' || input.type === 'select_custom') {
-		input.update(Data)
-	}
+	input.update(Data);
 })
 
 window.Data = Data;

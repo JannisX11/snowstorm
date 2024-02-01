@@ -1,6 +1,7 @@
 import { Texture } from './texture_edit';
 import vscode from './vscode_extension'
 import Wintersky from 'wintersky'
+import {View} from './components/Preview'
 
 const Scene = new Wintersky.Scene({
 	fetchTexture(config) {
@@ -58,6 +59,35 @@ Config.onTextureUpdate = function() {
 	window.Data.texture.texture.inputs.image.image.hidden = true;
 	window.Data.texture.texture.inputs.image.image.hidden = false;
 };
+
+Emitter.Molang.global_variables = {
+	/*'query.camera_rotation'(axis) {
+		let val = cameraTargetToRotation(View.camera.position.toArray(), View.controls.target.toArray())[axis ? 0 : 1];
+		if (axis == 0) val *= -1;
+		return val;
+	},
+	'query.rotation_to_camera'(axis) {
+		let val = cameraTargetToRotation([0, 0, 0], View.camera.position.toArray())[axis ? 0 : 1] ;
+		if (axis == 0) val *= -1;
+		return val;
+	},*/
+	get 'query.distance_from_camera'() {
+		return View.camera.position.length();
+	},
+	'query.lod_index'(indices) {
+		indices.sort((a, b) => a - b);
+		let distance = View.camera.position.length();
+		let index = indices.length;
+		indices.forEachReverse((val, i) => {
+			if (distance < val) index = i;
+		})
+		return index;
+	},
+	'query.camera_distance_range_lerp'(a, b) {
+		let distance = View.camera.position.length();
+		return Math.clamp(Math.getLerp(a, b, distance), 0, 1);
+	}
+}
 
 function updateMaterial() {
 	Emitter.updateMaterial();

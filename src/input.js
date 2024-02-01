@@ -78,13 +78,20 @@ export default class Input {
 	}
 	update(Data) {
 		var scope = this;
-		if (this.type === 'select' || this.type === 'select_custom') {
-			if (this.mode_groups instanceof Array) {
+		if (this.mode_groups instanceof Array) {
+			if (this.type === 'select' || this.type === 'select_custom') {
 				this.mode_groups.forEach((group, i) => {
 					if (group instanceof Array) {
 						group = scope.mode_groups[i] = Data[group[0]][group[1]]
 					}
 					group._selected_mode = scope.value
+				})
+			} else if (this.type == 'checkbox') {
+				this.mode_groups.forEach((group, i) => {
+					if (group instanceof Array) {
+						group = scope.mode_groups[i] = Data[group[0]][group[1]]
+					}
+					group._selected_mode = scope.value;
 				})
 			}
 		}
@@ -118,7 +125,6 @@ export default class Input {
 					this.value = e.target.selectedOptions[0].id;
 				}
 			}
-			this.update()
 		}
 		if (this.type === 'color') {
 			if (typeof this.value == 'object') this.value = this.value.hex8;
@@ -137,6 +143,7 @@ export default class Input {
 			}
 			registerEdit('change input', e, this.type == 'color' && node)
 		}
+		this.update();
 		return this;
 	}
 	set(value) {

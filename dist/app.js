@@ -2217,48 +2217,53 @@ var PRESETS = {
   },
   collision: {
     none: {
+      'motion.collision.enabled': true,
       'motion.motion.linear_acceleration': ['', '', ''],
       'motion.motion.linear_drag_coefficient': 0,
       'motion.collision.collision_radius': 0,
       'motion.collision.collision_drag': 0,
+      'motion.collision.condition': '',
       'motion.collision.coefficient_of_restitution': 0,
-      'motion.collision.enabled': '',
       'motion.collision.expire_on_contact': false
     },
     solid: {
+      'motion.collision.enabled': true,
       'motion.motion.linear_acceleration': [0, -10, 0],
       'motion.motion.linear_drag_coefficient': 0.1,
       'motion.collision.collision_radius': 0.2,
       'motion.collision.collision_drag': 1,
+      'motion.collision.condition': '',
       'motion.collision.coefficient_of_restitution': 0.3,
-      'motion.collision.enabled': '',
       'motion.collision.expire_on_contact': false
     },
     smoke: {
+      'motion.collision.enabled': true,
       'motion.motion.linear_acceleration': [0, 1, 0],
       'motion.motion.linear_drag_coefficient': 4,
       'motion.collision.collision_radius': 0.2,
       'motion.collision.collision_drag': 0.4,
+      'motion.collision.condition': '',
       'motion.collision.coefficient_of_restitution': 0,
-      'motion.collision.enabled': '',
       'motion.collision.expire_on_contact': false
     },
     ball: {
+      'motion.collision.enabled': true,
       'motion.motion.linear_acceleration': [0, -10, 0],
       'motion.motion.linear_drag_coefficient': 0.2,
       'motion.collision.collision_radius': 0.2,
       'motion.collision.collision_drag': 0.2,
+      'motion.collision.condition': '',
       'motion.collision.coefficient_of_restitution': 0.6,
-      'motion.collision.enabled': '',
       'motion.collision.expire_on_contact': false
     },
     paper: {
+      'motion.collision.enabled': true,
       'motion.motion.linear_acceleration': ["math.sin(v.particle_age * 90)", -10, "math.cos(v.particle_age * 40)"],
       'motion.motion.linear_drag_coefficient': 5,
       'motion.collision.collision_radius': 0.2,
       'motion.collision.collision_drag': 10,
+      'motion.collision.condition': '',
       'motion.collision.coefficient_of_restitution': 0,
-      'motion.collision.enabled': '',
       'motion.collision.expire_on_contact': false
     }
   }
@@ -3286,6 +3291,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _texture_edit__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./texture_edit */ "./src/texture_edit.js");
 /* harmony import */ var _vscode_extension__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./vscode_extension */ "./src/vscode_extension.js");
 /* harmony import */ var wintersky__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! wintersky */ "../wintersky/dist/wintersky.esm.js");
+/* harmony import */ var _components_Preview__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/Preview */ "./src/components/Preview.vue");
+
 
 
 
@@ -3337,6 +3344,36 @@ Config.onTextureUpdate = function () {
   if (!window.Data) return;
   window.Data.texture.texture.inputs.image.image.hidden = true;
   window.Data.texture.texture.inputs.image.image.hidden = false;
+};
+Emitter.Molang.global_variables = {
+  /*'query.camera_rotation'(axis) {
+  	let val = cameraTargetToRotation(View.camera.position.toArray(), View.controls.target.toArray())[axis ? 0 : 1];
+  	if (axis == 0) val *= -1;
+  	return val;
+  },
+  'query.rotation_to_camera'(axis) {
+  	let val = cameraTargetToRotation([0, 0, 0], View.camera.position.toArray())[axis ? 0 : 1] ;
+  	if (axis == 0) val *= -1;
+  	return val;
+  },*/
+  get 'query.distance_from_camera'() {
+    return _components_Preview__WEBPACK_IMPORTED_MODULE_3__.View.camera.position.length();
+  },
+  'query.lod_index': function queryLod_index(indices) {
+    indices.sort(function (a, b) {
+      return a - b;
+    });
+    var distance = _components_Preview__WEBPACK_IMPORTED_MODULE_3__.View.camera.position.length();
+    var index = indices.length;
+    indices.forEachReverse(function (val, i) {
+      if (distance < val) index = i;
+    });
+    return index;
+  },
+  'query.camera_distance_range_lerp': function queryCamera_distance_range_lerp(a, b) {
+    var distance = _components_Preview__WEBPACK_IMPORTED_MODULE_3__.View.camera.position.length();
+    return Math.clamp(Math.getLerp(a, b, distance), 0, 1);
+  }
 };
 function updateMaterial() {
   Emitter.updateMaterial();
@@ -3718,6 +3755,10 @@ function generateFile() {
   if (getValue('particle_texture_mode') === 'static') {
     tex_comp.uv.uv = getValue('particle_texture_uv') || [0, 0];
     tex_comp.uv.uv_size = getValue('particle_texture_uv_size') || [tex_comp.uv.texture_width, tex_comp.uv.texture_height];
+  } else if (getValue('particle_texture_mode') === 'full') {
+    tex_comp.uv.uv = [0, 0];
+    tex_comp.uv.texture_width = tex_comp.uv.texture_height = 1;
+    tex_comp.uv.uv_size = [tex_comp.uv.texture_width, tex_comp.uv.texture_height];
   } else {
     tex_comp.uv.flipbook = {
       base_UV: getValue('particle_texture_uv', true),
@@ -3730,21 +3771,14 @@ function generateFile() {
     };
   }
   //Collision
-  var collision_enabled = getValue('particle_collision_enabled'),
-    collision_collision_drag = getValue('particle_collision_collision_drag'),
-    collision_coefficient_of_restitution = getValue('particle_collision_coefficient_of_restitution'),
-    collision_collision_radius = getValue('particle_collision_collision_radius'),
-    collision_expire_on_contact = getValue('particle_collision_expire_on_contact'),
-    collision_events = _emitter__WEBPACK_IMPORTED_MODULE_2__.Config.unsupported_fields.collision_events;
-  if ((collision_enabled || collision_collision_drag || collision_coefficient_of_restitution || collision_collision_radius || collision_expire_on_contact || collision_events) && collision_enabled != 'false') {
-    if (collision_enabled == 'true') collision_enabled = undefined;
+  if (getValue('particle_collision_enabled')) {
     comps['minecraft:particle_motion_collision'] = {
-      enabled: collision_enabled,
-      collision_drag: collision_collision_drag,
-      coefficient_of_restitution: collision_coefficient_of_restitution,
-      collision_radius: collision_collision_radius,
-      expire_on_contact: collision_expire_on_contact,
-      events: collision_events
+      enabled: getValue('particle_collision_condition'),
+      collision_drag: getValue('particle_collision_collision_drag'),
+      coefficient_of_restitution: getValue('particle_collision_coefficient_of_restitution'),
+      collision_radius: getValue('particle_collision_collision_radius'),
+      expire_on_contact: getValue('particle_collision_expire_on_contact'),
+      events: _emitter__WEBPACK_IMPORTED_MODULE_2__.Config.unsupported_fields.collision_events
     };
   }
   if (getValue('particle_color_light')) {
@@ -4018,9 +4052,7 @@ function updateInputsFromConfig() {
         input.value = lineify(input.value);
       }
     }
-    if (input.type === 'select' || input.type === 'select_custom') {
-      input.update(_input_structure__WEBPACK_IMPORTED_MODULE_4__["default"]);
-    }
+    input.update(_input_structure__WEBPACK_IMPORTED_MODULE_4__["default"]);
   });
   _input_structure__WEBPACK_IMPORTED_MODULE_4__["default"].variables.curves.curves.splice(0, Infinity);
   for (var id in _emitter__WEBPACK_IMPORTED_MODULE_1__.Config.curves) {
@@ -4283,8 +4315,15 @@ var Input = /*#__PURE__*/function () {
     key: "update",
     value: function update(Data) {
       var scope = this;
-      if (this.type === 'select' || this.type === 'select_custom') {
-        if (this.mode_groups instanceof Array) {
+      if (this.mode_groups instanceof Array) {
+        if (this.type === 'select' || this.type === 'select_custom') {
+          this.mode_groups.forEach(function (group, i) {
+            if (group instanceof Array) {
+              group = scope.mode_groups[i] = Data[group[0]][group[1]];
+            }
+            group._selected_mode = scope.value;
+          });
+        } else if (this.type == 'checkbox') {
           this.mode_groups.forEach(function (group, i) {
             if (group instanceof Array) {
               group = scope.mode_groups[i] = Data[group[0]][group[1]];
@@ -4326,7 +4365,6 @@ var Input = /*#__PURE__*/function () {
             this.value = e.target.selectedOptions[0].id;
           }
         }
-        this.update();
       }
       if (this.type === 'color') {
         if (_typeof(this.value) == 'object') this.value = this.value.hex8;
@@ -4345,6 +4383,7 @@ var Input = /*#__PURE__*/function () {
         }
         (0,_edits__WEBPACK_IMPORTED_MODULE_0__["default"])('change input', e, this.type == 'color' && node);
       }
+      this.update();
       return this;
     }
   }, {
@@ -5031,6 +5070,13 @@ var Data = {
       label: 'Collision',
       _folded: false,
       inputs: {
+        toggle: new _input__WEBPACK_IMPORTED_MODULE_0__["default"]({
+          id: 'particle_collision_toggle',
+          label: 'Collide',
+          info: 'Make the particle collide with the world',
+          type: 'checkbox',
+          mode_groups: ['motion', 'collision']
+        }),
         collision_radius: new _input__WEBPACK_IMPORTED_MODULE_0__["default"]({
           id: 'particle_collision_collision_radius',
           label: 'Radius',
@@ -5039,32 +5085,37 @@ var Data = {
           max: 0.5,
           step: 0.05,
           required: true,
-          type: 'number'
+          type: 'number',
+          enabled_modes: [true]
         }),
         collision_drag: new _input__WEBPACK_IMPORTED_MODULE_0__["default"]({
           id: 'particle_collision_collision_drag',
           label: 'Collision Drag',
           info: 'Alters the speed of the particle when it has collided',
           type: 'number',
-          step: 0.1
+          step: 0.1,
+          enabled_modes: [true]
         }),
         coefficient_of_restitution: new _input__WEBPACK_IMPORTED_MODULE_0__["default"]({
           id: 'particle_collision_coefficient_of_restitution',
           label: 'Bounciness',
           info: 'Set to 0.0 to not bounce, 1.0 to bounce back up to original hight',
           type: 'number',
-          step: 0.1
+          step: 0.1,
+          enabled_modes: [true]
         }),
-        enabled: new _input__WEBPACK_IMPORTED_MODULE_0__["default"]({
+        condition: new _input__WEBPACK_IMPORTED_MODULE_0__["default"]({
           id: 'particle_collision_enabled',
           label: 'Condition',
-          info: 'Enables collision when true / non-zero or unset'
+          info: 'Enables collision when true / non-zero or unset',
+          enabled_modes: [true]
         }),
         expire_on_contact: new _input__WEBPACK_IMPORTED_MODULE_0__["default"]({
           id: 'particle_collision_expire_on_contact',
           label: 'Expire On Contact',
           info: 'Removes the particle when it hits a block',
-          type: 'checkbox'
+          type: 'checkbox',
+          enabled_modes: [true]
         })
       }
     }
@@ -5208,9 +5259,7 @@ function forEachInput(cb) {
 }
 //Setup Data
 forEachInput(function (input) {
-  if (input.type === 'select' || input.type === 'select_custom') {
-    input.update(Data);
-  }
+  input.update(Data);
 });
 window.Data = Data;
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Data);

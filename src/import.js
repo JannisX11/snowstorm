@@ -49,9 +49,7 @@ function updateInputsFromConfig() {
 				input.value = lineify(input.value);
 			}
 		}
-		if (input.type === 'select' || input.type === 'select_custom') {
-			input.update(Data);
-		}
+		input.update(Data);
 	})
 	Data.variables.curves.curves.splice(0, Infinity);
 	for (var id in Config.curves) {
