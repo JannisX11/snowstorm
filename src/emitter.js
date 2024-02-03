@@ -33,6 +33,30 @@ const Scene = new Wintersky.Scene({
 			return window.Data.texture.texture.inputs.image.image.data;
 	
 		}
+	},
+	fetchParticleFile(identifier) {
+		if (vscode && identifier) {
+	
+			vscode.postMessage({
+				type: 'request_particle_file',
+				identifier
+			});
+			return new Promise((resolve, reject) => {
+				function update(event) {
+					if (event.data.type == 'provide_particle_file') {
+						let json = event.data.file_content;
+						window.removeEventListener('message', update);
+						resolve(json);
+					}
+				}
+				window.addEventListener('message', update, false);
+			})
+	
+		} else {
+			// Let user upload and return those uploads
+			return null;
+	
+		}
 	}
 });
 const Config = new Wintersky.Config(Scene);

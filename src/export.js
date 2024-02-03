@@ -84,8 +84,34 @@ function generateFile() {
 	}
 
 	//Events
-	if (Config.unsupported_fields.events) {
-		file.particle_effect.events = Config.unsupported_fields.events;
+	if (Data.events.events.events.length) {
+		function cleanEvent(subpart) {
+			if (!subpart) return;
+			if (subpart.randomize instanceof Array) {
+				for (let option of subpart.randomize) {
+					delete option.uuid;
+					cleanEvent(option);
+				}
+			}
+			if (subpart.sequence instanceof Array) {
+				for (let option of subpart.sequence) {
+					delete option.uuid;
+					cleanEvent(option);
+				}
+			}
+			if (subpart.particle_effect) {
+				if (!subpart.particle_effect.pre_effect_expression) {
+					delete subpart.particle_effect.pre_effect_expression;
+				}
+			}
+			return subpart;
+		}
+		file.particle_effect.events = {};
+		for (let entry of Data.events.events.events) {
+			console.log(entry, entry.id)
+			let copy = JSON.parse(JSON.stringify(entry.event));
+			file.particle_effect.events[entry.id] = cleanEvent(copy);
+		}
 	}
 
 	var comps = file.particle_effect.components = {};

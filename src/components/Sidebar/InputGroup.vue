@@ -102,6 +102,38 @@
 					<input v-if="input.meta_value == input.options.custom" type="text" v-model="input.value" v-on:input="input.change($event)">
 				</template>
 
+				<!--Event List-->
+				<template v-if="input.type == 'event_list'">
+					<ul class="event_list">
+						<li v-for="event_id in input.value" :key="event_id" class="event_list_event">
+							{{ event_id }}
+						</li>
+						<li class="event_list_add" @click="input.value.push('event')"><Plus /></li>
+					</ul>
+					<ul class="event_selector_popup">
+						<li v-for="event_id in input.value" :key="event_id" class="event_selector_event">
+							{{ event_id }}
+						</li>
+						<li class="event_list_add" @click="input.value.push('event')"><Plus /></li>
+					</ul>
+				</template>
+
+				<!--Event List-->
+				<template v-if="input.type == 'event_timeline'">
+					<ul class="event_list">
+						<li v-for="event_id in input.value" :key="event_id" class="event_list_event">
+							{{ event_id }}
+						</li>
+						<li class="event_list_add" @click="input.value.push('event')"><Plus /></li>
+					</ul>
+					<ul class="event_selector_popup">
+						<li v-for="event_id in input.value" :key="event_id" class="event_selector_event">
+							{{ event_id }}
+						</li>
+						<li class="event_list_add" @click="input.value.push('event')"><Plus /></li>
+					</ul>
+				</template>
+
 				<!--Color-->
 				<color-picker v-if="input.type == 'color'" v-model="input.value" v-on:input="input.change($event, $el)"></color-picker>
 
@@ -126,6 +158,7 @@ import Checkbox from '../Form/Checkbox.vue'
 import {
 	ChevronsUpDown,
 	ChevronsDownUp,
+	Plus
 } from 'lucide-vue'
 
 
@@ -157,6 +190,7 @@ export default {
 		Checkbox,
 		ChevronsUpDown,
 		ChevronsDownUp,
+		Plus
 	},
 	methods: {
 		isInputVisible(input, group) {

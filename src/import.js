@@ -1,4 +1,4 @@
-import {IO, pathToExtension} from './util'
+import {guid, IO, pathToExtension} from './util'
 import {Config, QuickSetup} from './emitter'
 import vscode from './vscode_extension'
 import {Emitter} from './emitter'
@@ -52,7 +52,7 @@ function updateInputsFromConfig() {
 		input.update(Data);
 	})
 	Data.variables.curves.curves.splice(0, Infinity);
-	for (var id in Config.curves) {
+	for (let id in Config.curves) {
 		let data = Config.curves[id];
 		let curve = new Curve(data);
 		curve.inputs.id.value = id;
@@ -60,6 +60,15 @@ function updateInputsFromConfig() {
 		Config.curves[id] = curve.config;
 		curve.updateMinMax();
 	}
+	Data.events.events.events.splice(0);
+	for (let id in Config.events) {
+		let event = Config.events[id];
+		let entry = {
+			uuid: guid(), id, event
+		};
+		Data.events.events.events.push(entry);
+	}
+
 	Data.effect.meta.inputs.identifier.onchange();
 
 	Texture.source = Data.texture.texture.inputs.image.image_element.src;

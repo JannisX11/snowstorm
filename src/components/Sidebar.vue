@@ -33,9 +33,10 @@
 							:curve.sync="curve" :group_key.sync="group_key" :subject_key.sync="selected_subject_key"
 						></curve>
 						<div id="add_curve_button" @click="addCurve()">
-							<i class="unicode_icon plus">{{'\uFF0B'}}</i>
+							<Plus :size="20" />
 						</div>
 					</ul>
+					<event-list v-else-if="group.type == 'events'" :group.sync="group" />
 					<ul v-else>
 						<input-group :group.sync="group" :group_key.sync="group_key" :subject_key.sync="selected_subject_key" :data="data"></input-group>
 					</ul>
@@ -77,7 +78,9 @@ import {
 	Clock8,
 	Tangent,
 	Zap,
+	Plus,
 } from 'lucide-vue'
+import EventList from './Sidebar/EventList.vue';
 
 
 export default {
@@ -91,6 +94,7 @@ export default {
 		Logo,
 		InputGroup,
 		QuickSetup,
+		EventList,
 		curve,
 
 		Wand,
@@ -102,6 +106,7 @@ export default {
 		Clock8,
 		Tangent,
 		Zap,
+		Plus,
 	},
 	computed: {
 		input_groups() {
@@ -215,16 +220,16 @@ export default {
 	#add_curve_button {
 		width: 100%;
 		border: 1px dashed var(--color-bar);
+		padding: 2px;
 		cursor: pointer;
 	}
 	#add_curve_button:hover {
 		background-color: var(--color-dark);
 	}
-	#add_curve_button > i {
-		margin-right: auto;
-		margin-left: auto;
+	#add_curve_button > svg {
+		margin: auto;
 		opacity: 0.8;
-		font-size: 1.4em;
+		display: block;
 	}
 
 

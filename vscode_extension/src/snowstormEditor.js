@@ -2,6 +2,74 @@ const vscode = require('vscode');
 const path = require('path');
 const fs = require('fs');
 
+//Find
+/**
+ * @callback checkFileCallback
+ * @param {{name: string, path: string, content: (string|object)}} x - test
+ */
+/**
+ * Find a file in a directory based on content within the file, optionally optimized via file name match
+ * @param {string[]} base_directories List of base directory paths to search in
+ * @param {{recursive: boolean, filter_regex: RegExp, priority_regex: RegExp, json: boolean}} options 
+ * @param {checkFileCallback} check_file 
+ */
+function findFileFromContent(base_directories, options, check_file) {
+	let deprioritized_files = [];
+
+	function checkFile(path) {
+		try {
+			let content;
+			if (options.read_file !== false) content = fs.readFileSync(path, 'utf-8');
+			
+			return check_file(path, options.json ? autoParseJSON(content, false) : content);
+
+		} catch (err) {
+			console.error(err);
+			return false;
+		}
+	}
+
+	let searchFolder = (path) => {
+		let files;
+		try {
+			files = fs.readdirSync(path, {withFileTypes: true});
+		} catch (err) {
+			files = [];
+		}
+		for (let dirent of files) {
+			if (dirent.isDirectory()) continue;
+
+			if (!options.filter_regex || options.filter_regex.exec(dirent.name)) {
+				let new_path = path + osfs + dirent.name;
+				if (!options.priority_regex || options.priority_regex.exec(dirent.name)) {
+					// priority checking
+					let result = checkFile(new_path);
+					if (result) return result;
+				} else {
+					deprioritized_files.push(new_path);
+				}
+			}
+		}
+		if (options.recursive !== false) {
+			for (let dirent of files) {
+				if (!dirent.isDirectory()) continue;
+
+				let result = searchFolder(path + osfs + dirent.name);
+				if (result) return result;
+			}
+		}
+	}
+	for (let directory of base_directories) {
+		let result = searchFolder(directory);
+		if (result) return result;
+	}
+
+	for (let path of deprioritized_files) {
+		let result = checkFile(path);
+		if (result) return result;
+	}
+}
+
 module.exports.SnowstormEditorProvider = class SnowstormEditorProvider {
 
 	constructor(context) {
@@ -99,6 +167,34 @@ module.exports.SnowstormEditorProvider = class SnowstormEditorProvider {
 						webviewPanel.webview.postMessage({
 							type: 'provide_texture',
 							url: null,
+							fromExtension: true
+						});
+					}
+					break;
+				}
+				case 'request_particle_file': {
+					let path_arr = document.fileName.split(path.sep);
+					let particle_index = path_arr.indexOf('particles');
+					path_arr.splice(particle_index+1);
+					let filePath = path_arr.join(path.sep);
+					let name = e.identifier.split(':')[0];
+					let match_content = findFileFromContent([filePath], {filter_regex: /\.json$/i, priority_regex: new RegExp(name, 'i'), json: true}, (path, content) => {
+						let file_id = content && content?.particle_effect?.description?.identifier;
+						if (file_id == e.identifier) {
+							return content;
+						}
+					})
+
+					if (match_content) {
+						webviewPanel.webview.postMessage({
+							type: 'provide_particle_file',
+							content: match_content,
+							fromExtension: true
+						});
+					} else {
+						webviewPanel.webview.postMessage({
+							type: 'provide_particle_file',
+							content: null,
 							fromExtension: true
 						});
 					}

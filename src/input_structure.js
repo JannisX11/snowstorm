@@ -6,26 +6,6 @@ import vscode from './vscode_extension';
 const Data = {
 	setup: {
 		label: 'Quick Setup',
-		/*setup: {
-			label: 'File',
-			_folded: false,
-			inputs: {
-				/*identifier: new Input({
-					id: 'identifier',
-					label: 'Identifier',
-					info: 'This is the name the particle emitter is referred to as. Should have a namespace.',
-					placeholder: 'space:name',
-					required: true,
-					type: 'text',
-					onchange() {
-						document.title = (this.value ? this.value + ' - ' : '') + 'Snowstorm';
-					}
-				}),
-				setup: {
-					type: 'quick_setup'
-				}
-			}
-		},*/
 	},
 
 	effect: {
@@ -702,15 +682,51 @@ const Data = {
 			}
 		},
 	},
-	/*events: {
+	events: {
 		label: 'Events',
-		lifetime: {
+		events: {
 			label: 'Events',
 			_folded: false,
+			type: 'events',
+			events: []
+		},
+		emitter_events: {
+			label: 'Emitter Event Triggers',
+			_folded: false,
 			inputs: {
+				creation: new Input({
+					id: 'particle_events_creation',
+					label: 'Creation Events',
+					info: 'Events to fire when the particle is spawned',
+					type: 'event_list',
+				}),
+				expiration: new Input({
+					id: 'particle_events_expiration',
+					label: 'Expiration Events',
+					info: 'Events to fire when the particle stops to exist',
+					type: 'event_list',
+				}),
 			}
 		},
-	},*/
+		particle_events: {
+			label: 'Particle Event Triggers',
+			_folded: false,
+			inputs: {
+				creation: new Input({
+					id: 'particle_events_creation',
+					label: 'Creation Events',
+					info: 'Events to fire when the particle is spawned',
+					type: 'event_list',
+				}),
+				expiration: new Input({
+					id: 'particle_events_expiration',
+					label: 'Expiration Events',
+					info: 'Events to fire when the particle stops to exist',
+					type: 'event_list',
+				}),
+			}
+		}
+	},
 	variables: {
 		label: 'Variables & Curves',
 		variables: {
