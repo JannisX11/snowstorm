@@ -107,27 +107,16 @@
 					<ul class="event_list">
 						<li v-for="event_id in input.value" :key="event_id" class="event_list_event">
 							{{ event_id }}
+							<X :size="18" class="highlighting_button" @click="input.value.remove(event_id); input.change($event);" />
 						</li>
-						<li class="event_list_add" @click="input.value.push('event')"><Plus /></li>
-					</ul>
-					<ul class="event_selector_popup">
-						<li v-for="event_id in input.value" :key="event_id" class="event_selector_event">
-							{{ event_id }}
-						</li>
-						<li class="event_list_add" @click="input.value.push('event')"><Plus /></li>
+						<event-picker :blacklist="input.value" @select="input.value.push($event); input.change($event);" />
 					</ul>
 				</template>
 
 				<!--Event List-->
 				<template v-if="input.type == 'event_timeline'">
-					<ul class="event_list">
-						<li v-for="event_id in input.value" :key="event_id" class="event_list_event">
-							{{ event_id }}
-						</li>
-						<li class="event_list_add" @click="input.value.push('event')"><Plus /></li>
-					</ul>
-					<ul class="event_selector_popup">
-						<li v-for="event_id in input.value" :key="event_id" class="event_selector_event">
+					<ul class="event_timeline">
+						<li v-for="(key, event_id) in input.value" :key="event_id" class="event_list_event">
 							{{ event_id }}
 						</li>
 						<li class="event_list_add" @click="input.value.push('event')"><Plus /></li>
@@ -155,10 +144,12 @@ import VueColor from 'vue-color'
 import Gradient from './Gradient';
 import TextureInput from './TextureInput';
 import Checkbox from '../Form/Checkbox.vue'
+import EventPicker from './EventPicker.vue'
 import {
 	ChevronsUpDown,
 	ChevronsDownUp,
-	Plus
+	Plus,
+	X,
 } from 'lucide-vue'
 
 
@@ -188,9 +179,11 @@ export default {
 		Gradient,
 		TextureInput,
 		Checkbox,
+		EventPicker,
 		ChevronsUpDown,
 		ChevronsDownUp,
-		Plus
+		Plus,
+		X,
 	},
 	methods: {
 		isInputVisible(input, group) {
@@ -293,6 +286,28 @@ export default {
 	}
 	.list_add_tool {
 		vertical-align: sub;
+	}
+
+	.event_list {
+		position: relative;
+		min-height: 30px;
+		width: auto;
+		flex-grow: 1;
+		padding: 1px;
+	}
+	.event_list > li.event_list_event {
+		display: inline-block;
+		padding: 3px 13px;
+		margin: 0 2px;
+		background-color: var(--color-bar);
+		border-radius: 24px;
+		box-shadow: 0 1px 14px rgba(0, 0, 0, 0.18);
+	}
+	.event_list > li.event_list_event > svg {
+		margin-top: -2px;
+	}
+	.event_list > div {
+		display: inline-block;
 	}
 </style>
 

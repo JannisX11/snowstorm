@@ -70,6 +70,20 @@ function findFileFromContent(base_directories, options, check_file) {
 	}
 }
 
+function getParticleFileFromIdentifier() {
+	let path_arr = document.fileName.split(path.sep);
+	let particle_index = path_arr.indexOf('particles');
+	path_arr.splice(particle_index+1);
+	let filePath = path_arr.join(path.sep);
+	let name = e.identifier.split(':')[0];
+	return findFileFromContent([filePath], {filter_regex: /\.json$/i, priority_regex: new RegExp(name, 'i'), json: true}, (path, content) => {
+		let file_id = content && content?.particle_effect?.description?.identifier;
+		if (file_id == e.identifier) {
+			return [path, content];
+		}
+	}) || [];
+}
+
 module.exports.SnowstormEditorProvider = class SnowstormEditorProvider {
 
 	constructor(context) {
@@ -173,18 +187,7 @@ module.exports.SnowstormEditorProvider = class SnowstormEditorProvider {
 					break;
 				}
 				case 'request_particle_file': {
-					let path_arr = document.fileName.split(path.sep);
-					let particle_index = path_arr.indexOf('particles');
-					path_arr.splice(particle_index+1);
-					let filePath = path_arr.join(path.sep);
-					let name = e.identifier.split(':')[0];
-					let match_content = findFileFromContent([filePath], {filter_regex: /\.json$/i, priority_regex: new RegExp(name, 'i'), json: true}, (path, content) => {
-						let file_id = content && content?.particle_effect?.description?.identifier;
-						if (file_id == e.identifier) {
-							return content;
-						}
-					})
-
+					let [match_path, match_content] = getParticleFileFromIdentifier(e.identifier, document.fileName);
 					if (match_content) {
 						webviewPanel.webview.postMessage({
 							type: 'provide_particle_file',
@@ -197,6 +200,19 @@ module.exports.SnowstormEditorProvider = class SnowstormEditorProvider {
 							content: null,
 							fromExtension: true
 						});
+					}
+					break;
+				}
+				case 'open_particle_file_tab': {
+					let [match_path] = getParticleFileFromIdentifier(e.identifier, document.fileName);
+					if (match_path) {
+						(async function() {
+							let uri = vscode.Uri.parse(match_path);
+							console.log(match_path, url)
+							vscode.workspace.openTextDocument(uri).then(doc => {
+								vscode.window.showTextDocument(doc, { preview: true });
+							})
+						})()
 					}
 					break;
 				}

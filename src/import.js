@@ -107,6 +107,8 @@ function loadFile(data, confirmNewProject=true) {
 	}
 }
 
+window.loadFile = loadFile;
+
 function importFile() {
 	IO.import({
 		extensions: ['json']

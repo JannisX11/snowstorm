@@ -250,6 +250,13 @@
         text-align: left;
 	}
 
+	.highlighting_button {
+		cursor: pointer;
+	}
+	.highlighting_button:hover {
+		color: var(--color-highlight);
+	}
+
 /*Color Picker*/
 	
 	div.vc-chrome {

@@ -434,6 +434,7 @@ function generateFile() {
 
 	return file;
 }
+window.generateFile = generateFile;
 function getName() {
 	var name = Data.effect.meta.inputs.identifier.value
 	if (name) {

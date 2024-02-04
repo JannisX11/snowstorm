@@ -32,9 +32,7 @@
 							v-bind:title="group.info" :id="selected_subject_key +'-curves-'+ curve.uuid" :uuid="curve.uuid" :key="curve.uuid"
 							:curve.sync="curve" :group_key.sync="group_key" :subject_key.sync="selected_subject_key"
 						></curve>
-						<div id="add_curve_button" @click="addCurve()">
-							<Plus :size="20" />
-						</div>
+						<list-add-button id="add_curve_button" @click="addCurve()" />
 					</ul>
 					<event-list v-else-if="group.type == 'events'" :group.sync="group" />
 					<ul v-else>
@@ -81,6 +79,7 @@ import {
 	Plus,
 } from 'lucide-vue'
 import EventList from './Sidebar/EventList.vue';
+import ListAddButton from './Form/ListAddButton.vue';
 
 
 export default {
@@ -107,6 +106,7 @@ export default {
 		Tangent,
 		Zap,
 		Plus,
+		ListAddButton,
 	},
 	computed: {
 		input_groups() {

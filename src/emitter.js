@@ -2,6 +2,7 @@ import { Texture } from './texture_edit';
 import vscode from './vscode_extension'
 import Wintersky from 'wintersky'
 import {View} from './components/Preview'
+import { EventSubEffects } from './event_sub_effects';
 
 const Scene = new Wintersky.Scene({
 	fetchTexture(config) {
@@ -35,7 +36,8 @@ const Scene = new Wintersky.Scene({
 		}
 	},
 	fetchParticleFile(identifier) {
-		if (vscode && identifier) {
+		if (!identifier) return;
+		if (vscode) {
 	
 			vscode.postMessage({
 				type: 'request_particle_file',
@@ -54,7 +56,8 @@ const Scene = new Wintersky.Scene({
 	
 		} else {
 			// Let user upload and return those uploads
-			return null;
+			console.log(EventSubEffects, identifier)
+			return EventSubEffects[identifier] || null;
 	
 		}
 	}

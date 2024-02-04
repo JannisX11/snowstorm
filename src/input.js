@@ -136,7 +136,7 @@ export default class Input {
 			this.updatePreview(this.value)
 		}
 		let color_input_sliding = this.type == 'color' && node && node.querySelector('.input_wrapper[input_type="color"]:active');
-		if (e instanceof Event || e instanceof Uint8Array || (this.type == 'color' && node))	{
+		if (e instanceof Event || e instanceof Uint8Array || (this.type == 'color' && node)) {
 			// User Input
 			if (ExpandedInput.setup && ['molang', 'text'].includes(this.type)) {
 				this.updateExpressionBar(false);

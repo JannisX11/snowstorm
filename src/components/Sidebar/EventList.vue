@@ -1,13 +1,13 @@
 <template>
-	<div class="event_list">
-		<ul>
+	<div id="event_list">
+		<ul class="sortable">
 			<li
 				class="event"
 				v-for="event_entry in group.events" :key="event_entry.uuid"
 				v-bind:title="group.info" :id="'event-'+ event_entry.uuid"
 			>
 				<div class="event_header_bar">
-					<div class="event_sort_handle"><GripHorizontal /></div>
+					<div class="event_sort_handle" @mousedown="startSortingList($event)"><GripVertical /></div>
 					<label>Event ID</label>
 					<input type="text" :value="event_entry.id" @input="renameEvent(event_entry, $event)">
 					<div class="remove_event_button" @click="removeEvent(event_entry)">
@@ -17,19 +17,19 @@
 				<event-subpart :subpart="event_entry.event" @modify_event="modifyEvent" />
 			</li>
 		</ul>
-		<div id="add_event_button" @click="addEvent()">
-			<Plus :size="20" />
-		</div>
+		<list-add-button title="Add Event" @click="addEvent()" />
 	</div>
 </template>
 
 <script>
-import { Plus, X, GripHorizontal } from 'lucide-vue'
+import { Plus, X, GripVertical } from 'lucide-vue'
 import Vue from 'vue';
 import EventSubpart from './EventSubpart.vue';
 import registerEdit from '../../edits';
 import { Config } from '../../emitter';
 import { guid } from '../../util';
+import sort from '../../sort'
+import ListAddButton from '../Form/ListAddButton.vue';
 
 Vue.component('event-subpart', EventSubpart);
 
@@ -38,7 +38,8 @@ export default {
 	components: {
 		Plus,
 		X,
-		GripHorizontal
+		GripVertical,
+		ListAddButton,
 	},
 	props: {
 		group: Object
@@ -71,6 +72,7 @@ export default {
 				id,
 				event: {}
 			}
+			Config.events[id] = event_entry.event;
 			this.group.events.push(event_entry);
 			this.modifyEvent();
 		},
@@ -78,6 +80,9 @@ export default {
 			this.group.events.remove(entry);
 			delete Config.events[entry.id];
 			this.modifyEvent();
+		},
+		startSortingList(event) {
+			sort(event, this.group.events)
 		},
 		modifyEvent(event) {
 			registerEdit('edit event', event);
@@ -88,16 +93,32 @@ export default {
 
 
 <style scoped>
+	#event_list {
+		margin-block: 12px;
+	}
 	.event {
 		padding: 20px 10px;
-		border-bottom: 2px solid var(--color-bar);
+		border-top: 2px solid var(--color-bar);
+		border-bottom: 2px solid transparent;
 	}
-	.event:last-of-type {
-		border-bottom: none;
+	.event:first-of-type {
+		border-top-color: transparent;
+		margin-top: 0;
+		padding-top: 4px;
+	}
+	.event.sort_before {
+		border-top: 2px solid var(--color-accent);
+	}
+	.event.sort_after {
+		border-bottom: 2px solid var(--color-accent);
 	}
 	.event_header_bar {
 		display: flex;
+		gap: 4px;
 		margin-bottom: 4px;
+		background-color: var(--color-bar);
+		padding: 5px;
+		margin: 0 -5px;
 	}
 	.event_header_bar > label {
 		padding: 4px;
@@ -109,29 +130,16 @@ export default {
 	}
 	.event_sort_handle {
 		cursor: grab;
+		padding-top: 2px;
 	}
 
 	.remove_event_button {
-		padding: 4;
+		padding: 4px;
 		cursor: pointer;
 	}
 	.remove_event_button:hover {
 		color: var(--color-highlight);
 	}
 	
-	#add_event_button {
-		width: 100%;
-		border: 1px dashed var(--color-bar);
-		padding: 2px;
-		cursor: pointer;
-	}
-	#add_event_button:hover {
-		background-color: var(--color-dark);
-	}
-	#add_event_button > svg {
-		margin: auto;
-		opacity: 0.8;
-		display: block;
-	}
 
 </style>

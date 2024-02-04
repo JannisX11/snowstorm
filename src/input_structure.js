@@ -695,16 +695,22 @@ const Data = {
 			_folded: false,
 			inputs: {
 				creation: new Input({
-					id: 'particle_events_creation',
-					label: 'Creation Events',
-					info: 'Events to fire when the particle is spawned',
+					id: 'emitter_events_creation',
+					label: 'On Creation',
+					info: 'Events to fire when the emitter is spawned',
 					type: 'event_list',
 				}),
 				expiration: new Input({
-					id: 'particle_events_expiration',
-					label: 'Expiration Events',
-					info: 'Events to fire when the particle stops to exist',
+					id: 'emitter_events_expiration',
+					label: 'On Expiration',
+					info: 'Events to fire when the emitter stops to exist',
 					type: 'event_list',
+				}),
+				timeline: new Input({
+					id: 'emitter_events_timeline',
+					label: 'Timeline',
+					info: 'Events to fire when the emitter stops to exist',
+					type: 'event_timeline',
 				}),
 			}
 		},
@@ -714,15 +720,21 @@ const Data = {
 			inputs: {
 				creation: new Input({
 					id: 'particle_events_creation',
-					label: 'Creation Events',
+					label: 'On Creation',
 					info: 'Events to fire when the particle is spawned',
 					type: 'event_list',
 				}),
 				expiration: new Input({
 					id: 'particle_events_expiration',
-					label: 'Expiration Events',
+					label: 'On Expiration',
 					info: 'Events to fire when the particle stops to exist',
 					type: 'event_list',
+				}),
+				timeline: new Input({
+					id: 'particle_events_timeline',
+					label: 'Timeline',
+					info: 'Events to fire when the particle stops to exist',
+					type: 'event_timeline',
 				}),
 			}
 		}

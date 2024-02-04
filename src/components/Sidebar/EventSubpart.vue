@@ -3,46 +3,52 @@
 		<div v-if="subpart.sequence">
 			<div class="subpart_option_head_bar">
 				<label class="descriptor_label">Sequence</label>
-				<div class="add_button" @click="addSequenceOption()"><Plus /></div>
 			</div>
-			<ul class="nested_list">
-				<li v-for="option in subpart.sequence" :key="option.uuid">
+			<ul class="nested_list sortable">
+				<li v-for="(option, index) in subpart.sequence" :key="option.uuid">
 					<div class="header_bar">
-						<GripHorizontal />
-						<div class="remove_button" @click="removeSequenceOption(option)"><X /></div>
+						<GripHorizontal @mousedown="sortList(subpart.sequence, $event)" />
+						<label>#{{ index }}</label>
+						<div class="fill_line" />
+						<div class="remove_button highlighting_button" title="Remove Option" @click="removeSequenceOption(option)"><X /></div>
 					</div>
 					<event-subpart :subpart="option" @modify_event="modifyEvent" />
 				</li>
 			</ul>
+			<list-add-button title="Add Sequence Option" class="list_add_button" @click="addSequenceOption()" />
 		</div>
 		<div v-if="subpart.randomize">
 			<div class="subpart_option_head_bar">
 				<label class="descriptor_label">Randomize</label>
-				<div class="add_button" @click="addRandomizeOption()"><Plus /></div>
 			</div>
-			<ul class="nested_list">
+			<ul class="nested_list sortable">
 				<li v-for="option in subpart.randomize" :key="option.uuid">
 					<div class="header_bar">
-						<GripHorizontal />
+						<GripHorizontal @mousedown="sortList(subpart.randomize, $event)" />
 						<label>Weight</label>
 						<input type="number" min="0" v-model.number="option.weight" @input="modifyEvent">
-						<div class="remove_button" @click="removeRandomizeOption(option)"><X /></div>
+						<div class="fill_line" />
+						<div class="remove_button highlighting_button" title="Remove Option" @click="removeRandomizeOption(option)"><X /></div>
 					</div>
 					<event-subpart :subpart="option" @modify_event="modifyEvent" />
 				</li>
 			</ul>
+			<list-add-button title="Add Random Option" class="list_add_button" @click="addRandomizeOption()" />
 		</div>
 		<ul v-if="subpart.particle_effect">
-			<label class="descriptor_label">Sound</label>
+			<div class="section_bar">
+				<label class="descriptor_label">Particle Effect</label>
+				<X :size="20" class="highlighting_button" title="Disable Particle Effect" @click="disableParticleSection()" />
+			</div>
 			<li class="input_wrapper">
-				<label>Particle Effect</label>
+				<label>Identifier</label>
 				<prism-editor :highlight="highlightGeneric" language="" :line-numbers="false"
 					v-model="subpart.particle_effect.effect"
 					placeholder="space:name"
 					@input="modifyEvent"
 				/>
-				<div class="icon_button" title="Select File" v-if="!is_extension"><Upload /></div>
-				<div class="icon_button"><Pencil /></div>
+				<div class="highlighting_button" @click="selectParticleFile()" v-if="!is_extension" title="Select File"><Upload :size="22" /></div>
+				<div class="highlighting_button" @click="editParticleFile()" v-if="canEditParticleFile()" title="Edit Linked Particle Effect"><Pencil :size="22" /></div>
 			</li>
 			<li class="input_wrapper">
 				<label>Type</label>
@@ -61,7 +67,10 @@
 			</li>
 		</ul>
 		<ul v-if="subpart.sound_effect">
-			<label class="descriptor_label">Sound</label>
+			<div class="section_bar">
+				<label class="descriptor_label">Sound</label>
+				<X :size="20" class="highlighting_button" title="Disable Sound Effect" @click="disableSoundSection()" />
+			</div>
 			<li class="input_wrapper">
 				<label>Sound Event</label>
 				<prism-editor :highlight="highlightGeneric" language="" :line-numbers="false"
@@ -72,10 +81,14 @@
 			</li>
 		</ul>
 		<ul class="create_bar">
-			<li v-if="!subpart.particle_effect" @click="createParticleSection();">Particle Effect</li>
-			<li v-if="!subpart.sound_effect" @click="createSoundSection();">Sound</li>
-			<li v-if="!subpart.sequence" @click="createSequenceSection();">Sequence</li>
-			<li v-if="!subpart.randomize" @click="createRandomizeSection();">Randomize</li>
+			<template v-if="!subpart.sequence && !subpart.randomize">
+				<li v-if="!subpart.particle_effect" @click="createParticleSection();"><Plus :size="18" />Particle Effect</li>
+				<li v-if="!subpart.sound_effect" @click="createSoundSection();"><Plus :size="18" />Sound</li>
+			</template>
+			<template v-if="!subpart.particle_effect && !subpart.sound_effect">
+				<li v-if="!subpart.sequence && !subpart.randomize" @click="createSequenceSection();"><Plus :size="18" />Sequence</li>
+				<li v-if="!subpart.sequence && !subpart.randomize" @click="createRandomizeSection();"><Plus :size="18" />Randomize</li>
+			</template>
 		</ul>
 	</div>
 </template>
@@ -91,6 +104,9 @@ import "prismjs/themes/prism-okaidia.css";
 import Languages from './../../languages';
 import vscode from '../../vscode_extension';
 import getAutocompleteData from '../../molang_autocomplete';
+import sort from '../../sort';
+import ListAddButton from '../Form/ListAddButton.vue';
+import { editEventSubEffect, EventSubEffects, loadEventSubEffect } from '../../event_sub_effects';
 
 const emitter_type_options = {
 	emitter: 'Emitter',
@@ -108,6 +124,7 @@ export default {
 		PrismEditor,
 		Upload,
 		Pencil,
+		ListAddButton,
 	},
 	props: {
 		subpart: Object
@@ -173,6 +190,30 @@ export default {
 			}
 			this.modifyEvent();
 		},
+		disableParticleSection() {
+			Vue.delete(this.subpart, 'particle_effect');
+			this.modifyEvent();
+		},
+		disableSoundSection() {
+			Vue.delete(this.subpart, 'sound_effect');
+			this.modifyEvent();
+		},
+		async selectParticleFile() {
+			let identifier = await loadEventSubEffect();
+			if (identifier && identifier != this.subpart.particle_effect.effect) {
+				this.subpart.particle_effect.effect = identifier;
+				this.modifyEvent();
+			}
+		},
+		editParticleFile() {
+			editEventSubEffect(this.subpart.particle_effect.effect);
+		},
+		canEditParticleFile() {
+			return this.is_extension || EventSubEffects[this.subpart.particle_effect.effect] != undefined;
+		},
+		sortList(list, event) {
+			sort(event, list);
+		},
 		modifyEvent(event) {
 			this.$emit('modify_event', event);
 		},
@@ -191,8 +232,14 @@ export default {
 
 
 <style scoped>
-	.event_subpart > div {
-		margin: 10px 0;
+	.event_subpart {
+		border-left: 5px solid var(--color-bar);
+		padding-left: 12px;
+		padding-top: 8px;
+		padding-bottom: 8px;
+	}
+	.event_subpart:hover {
+		border-left-color: var(--color-selection);
 	}
 	ul.create_bar {
 		display: flex;
@@ -203,31 +250,71 @@ export default {
 	}
 	ul.create_bar > li {
 		cursor: pointer;
-		text-decoration: underline;
 		white-space: nowrap;
+		color: var(--color-text_grayed);
 	}
 	ul.create_bar > li:hover {
-		color: var(--color-highlight);
+		color: var(--color-text);
+	}
+	ul.create_bar > li > svg {
+		vertical-align: sub;
 	}
 	ul.nested_list {
 		margin-left: 12px;
-		border-left: 5px solid var(--color-bar);
-		padding-left: 12px;
+	}
+	ul.sortable > li {
+		border-top: 2px solid transparent;
+		border-bottom: 2px solid transparent;
+	}
+	ul.sortable > .sort_before {
+		border-top: 2px solid var(--color-accent);
+	}
+	ul.sortable > .sort_after {
+		border-bottom: 2px solid var(--color-accent);
+	}
+	.list_add_button {
+		margin-left: 26px;
 	}
 	.header_bar {
 		display: flex;
+		gap: 8px;
+	}
+	.header_bar > label {
+		padding-top: 4px;
+	}
+	.header_bar > svg {
+		cursor: grab;
+		margin-left: -2px;
+		margin-top: 2px;
+	}
+	.header_bar .fill_line {
+		flex-grow: 1;
+	}
+	.header_bar .fill_line::after {
+		content: "";
+		pointer-events: none;
+		width: 100%;
+		height: 2px;
+		display: inline-block;
+		margin: auto;
+		background-color: var(--color-bar);
 	}
 	.add_button {
 		margin-left: auto;
 	}
 	.remove_button {
-		margin-left: auto;
 	}
 	.subpart_option_head_bar {
 		display: flex;
 	}
+	.section_bar {
+		margin-top: 8px;
+		margin-bottom: 4px;
+	}
 	.descriptor_label {
 		color: var(--color-text_grayed);
+		vertical-align: middle;
+		padding-right: 4px;
 	}
 	.input_wrapper {
 		display: flex;
