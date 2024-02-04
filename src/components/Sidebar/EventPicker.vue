@@ -1,6 +1,9 @@
 <template>
 	<div>
-		<div class="highlighting_button" @click="openMenu()"><Plus :size="22" /></div>
+		<div class="highlighting_button" @click="openMenu()">
+			<Zap :size="22" v-if="replace" />
+			<Plus :size="22" v-else />
+		</div>
 		<ul v-if="is_open" ref="list" class="list">
 			<li v-for="option in getEventIDs()" :key="option" @click="select(option)">
 				<Zap :size="20" />
@@ -23,7 +26,8 @@ export default {
 		Plus, Zap
 	},
 	props: {
-		blacklist: Array
+		blacklist: Array,
+		replace: Boolean
 	},
 	data() {return {
 		is_open: false

@@ -106,20 +106,30 @@
 				<template v-if="input.type == 'event_list'">
 					<ul class="event_list">
 						<li v-for="event_id in input.value" :key="event_id" class="event_list_event">
-							{{ event_id }}
+							<label>{{ event_id }}</label>
 							<X :size="18" class="highlighting_button" @click="input.value.remove(event_id); input.change($event);" />
 						</li>
 						<event-picker :blacklist="input.value" @select="input.value.push($event); input.change($event);" />
 					</ul>
 				</template>
 
-				<!--Event List-->
-				<template v-if="input.type == 'event_timeline'">
-					<ul class="event_timeline">
-						<li v-for="(key, event_id) in input.value" :key="event_id" class="event_list_event">
-							{{ event_id }}
+				<!--Event Timeline-->
+				<template v-else-if="input.type == 'event_timeline'">
+					<event-picker @select="addEventToTimeline(input, $event)" />
+				</template>
+
+				<!--Event Min Speed List-->
+				<template v-if="input.type == 'event_speed_list'">
+					<ul class="event_list event_speed_list">
+						<li v-for="event_obj in input.value" :key="event_obj.event" class="event_list_event">
+							<label>{{ event_obj.event }}</label>
+							<X :size="18" class="highlighting_button" @click="input.value.remove(event_obj); input.change($event);" />
+							<div class="event_min_speed">
+								<label>Min Speed</label>
+								<input type="number" v-model.number="event_obj.min_speed" min="0">
+							</div>
 						</li>
-						<li class="event_list_add" @click="input.value.push('event')"><Plus /></li>
+						<event-picker :blacklist="input.value.map(o => o.event)" @select="input.value.push({event: $event, min_speed: 0}); input.change($event);" />
 					</ul>
 				</template>
 
@@ -134,6 +144,27 @@
 					<texture-input :input.sync="input" :data="data" />
 				</template>
 			</div>
+			<!--Event Timeline-->
+			<template v-if="input.type == 'event_timeline'">
+				<ul class="event_timeline">
+					<li v-for="entry in input.timeline" :key="entry.uuid">
+						<input type="number" v-model.number="entry.time" @blur="input.change($event)" step="0.05">
+
+						<!--input type="number" v-model.number="entry.time" @blur="input.change($event)" step="0.05">
+						<label @click="pickEventOnNameClick($event)">{{ entry.event }}</label>
+						<event-picker class="event_switch_button" :replace="!!entry.event" @select="entry.event = $event; input.change($event);" /-->
+
+						<ul class="event_list timeline_event_list">
+							<li v-for="event_id in entry.event" :key="event_id" class="event_list_event">
+								<label>{{ event_id }}</label>
+								<X :size="18" class="highlighting_button" @click="entry.event.remove(event_id); input.change($event);" />
+							</li>
+							<event-picker :blacklist="entry.event" @select="entry.event.push($event); input.change($event);" />
+						</ul>
+						<X :size="18" class="highlighting_button timeline_remove_button" @click="input.timeline.remove(entry); input.change($event);" />
+					</li>
+				</ul>
+			</template>
 		</li>
 	</ul>
 </template>
@@ -161,6 +192,7 @@ import {PrismEditor} from "root/packages/vue-prism-editor";
 import "prismjs/themes/prism-okaidia.css";
 
 import Languages from './../../languages';
+import { guid } from '../../util';
 
 
 
@@ -211,6 +243,20 @@ export default {
 			if (input.expandable) {
 				input.expanded = !input.expanded;
 			}
+		},
+		addEventToTimeline(input, event_id) {
+			let entry = {
+				uuid: guid(),
+				event: [event_id],
+				time: 0
+			}
+			input.timeline.push(entry);
+			input.change();
+		},
+		pickEventOnNameClick(event) {
+			let clicker = event.target.nextElementSibling;
+			console.log(clicker)
+			clicker.click();
 		}
 	}
 }
@@ -240,7 +286,7 @@ export default {
 	.input_right.expandable {
 		width: calc(100% - 134px);
 	}
-	.input_right[axes="1"] input:not([type="checkbox"]), .input_right[axes="1"] select:not([type="checkbox"]) {
+	.input_right[axes="1"] > input:not([type="checkbox"]), .input_right[axes="1"] > select:not([type="checkbox"]) {
 		width: 100%;
 	}
 	.input_right.expanded {
@@ -293,21 +339,102 @@ export default {
 		min-height: 30px;
 		width: auto;
 		flex-grow: 1;
-		padding: 1px;
+		padding: 0 1px;
 	}
 	.event_list > li.event_list_event {
+		height: 30px;
 		display: inline-block;
-		padding: 3px 13px;
-		margin: 0 2px;
+		padding: 4px 13px;
+		margin: 1px 2px;
 		background-color: var(--color-bar);
-		border-radius: 24px;
+		border-radius: 5px;
 		box-shadow: 0 1px 14px rgba(0, 0, 0, 0.18);
+	}
+	.event_list > li.event_list_event > label {
+		font-family: var(--font-code);
 	}
 	.event_list > li.event_list_event > svg {
 		margin-top: -2px;
 	}
 	.event_list > div {
 		display: inline-block;
+	}
+	.timeline_event_list {
+		margin-top: -2px;
+		margin-bottom: 0;
+	}
+	.event_speed_list > li.event_list_event {
+		padding: 5px;
+		
+	}
+	.event_speed_list > li.event_list_event > .highlighting_button {
+		float: right;
+		margin-top: 1px;
+	}
+	.event_min_speed {
+		width: 100%;
+		display: flex;
+		gap: 5px;
+		border-top: 2px solid var(--color-interface);
+		padding-top: 4px;
+	}
+	.event_min_speed > label {
+		padding-top: 3px;
+	}
+	.event_min_speed > input {
+		width: 56px;
+	}
+	ul.event_timeline {
+		padding: 0 10px;
+		margin-left: 20px;
+		position: relative;
+	}
+	ul.event_timeline::before {
+		display: block;
+		content: "";
+		position: absolute;
+		top: -4px;
+		bottom: -2px;
+		left: -11px;
+		width: 6px;
+		background-color: var(--color-bar);
+		border-radius: 3px;
+	}
+	ul.event_timeline > li {
+		display: block;
+		position: relative;
+		display: flex;
+		gap: 6px;
+		margin: 2px 0;
+		padding-left: 2px;
+	}
+	ul.event_timeline > li::before {
+		display: block;
+		content: "";
+		position: absolute;
+		top: 7px;
+		left: -26px;
+		height: 16px;
+		width: 16px;
+		background-color: var(--color-title);
+		border-radius: 50%;
+	}
+	ul.event_timeline > li:hover::before {
+		filter: brightness(1.2);
+	}
+	ul.event_timeline > li:not(:hover) .event_switch_button {
+		display: none;
+	}
+	ul.event_timeline > li > input {
+		width: 64px;
+	}
+	ul.event_timeline > li > label {
+		font-family: var(--font-code);
+		padding: 3px;
+	}
+	ul.event_timeline > li > .timeline_remove_button {
+		margin-left: auto;
+		margin-top: 2px;
 	}
 </style>
 

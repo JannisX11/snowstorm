@@ -29,6 +29,9 @@ const Scene = new Wintersky.Scene({
 				window.addEventListener('message', update, false);
 			})
 	
+		} else if (EventSubEffects[config.identifier]) {
+			return EventSubEffects[config.identifier].texture;
+
 		} else if (window.Data.texture.texture.inputs.image.image && window.Data.texture.texture.inputs.image.image.loaded) {
 	
 			return window.Data.texture.texture.inputs.image.image.data;
@@ -55,10 +58,7 @@ const Scene = new Wintersky.Scene({
 			})
 	
 		} else {
-			// Let user upload and return those uploads
-			console.log(EventSubEffects, identifier)
-			return EventSubEffects[identifier] || null;
-	
+			return EventSubEffects[identifier]?.json || null;
 		}
 	}
 });

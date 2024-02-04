@@ -34,6 +34,24 @@ function getValue(key, required) {
 	}
 	return result;
 }
+function formatEventList(list) {
+	if (list.length == 1) {
+		return list[0]
+	} else if (list.length > 1) {
+		return list;
+	}
+}
+function formatEventTimeline(source) {
+	let has_data = false;
+	let copy = {};
+	for (let key in source) {
+		copy[key] = formatEventList(source[key]);
+		if (copy[key]) has_data = true;
+	}
+	if (has_data) {
+		return copy;
+	}
+}
 
 
 function generateFile() {
@@ -152,6 +170,10 @@ function generateFile() {
 			spawn_rate: getValue('emitter_rate_rate'),
 			max_particles: getValue('emitter_rate_maximum'),
 		}
+	} else if (mode === 'manual') {
+		comps['minecraft:emitter_rate_manual'] = {
+			max_particles: getValue('emitter_rate_maximum'),
+		}
 	}
 	//Lifetime
 	var mode = getValue('emitter_lifetime_mode')
@@ -172,9 +194,14 @@ function generateFile() {
 			}
 		}
 	}
-	//Emitter Events
-	if (Config.unsupported_fields.emitter_lifetime_events) {
-		comps['minecraft:emitter_lifetime_events'] = Config.unsupported_fields.emitter_lifetime_events;
+	//Particle Events
+	let emitter_events = {
+		creation_event: formatEventList(Config.emitter_events_creation),
+		expiration_event: formatEventList(Config.emitter_events_expiration),
+		timeline: formatEventTimeline(Config.emitter_events_timeline),
+	}
+	if (emitter_events.creation_event || emitter_events.expiration_event || emitter_events.timeline) {
+		comps['minecraft:emitter_lifetime_events'] = emitter_events;
 	}
 	//Direction
 	var mode = getValue('particle_direction_mode');
@@ -281,8 +308,13 @@ function generateFile() {
 	}
 
 	//Particle Events
-	if (Config.unsupported_fields.particle_lifetime_events) {
-		comps['minecraft:particle_lifetime_events'] = Config.unsupported_fields.particle_lifetime_events;
+	let particle_events = {
+		creation_event: formatEventList(Config.particle_events_creation),
+		expiration_event: formatEventList(Config.particle_events_expiration),
+		timeline: formatEventTimeline(Config.particle_events_timeline),
+	}
+	if (particle_events.creation_event || particle_events.expiration_event || particle_events.timeline) {
+		comps['minecraft:particle_lifetime_events'] = particle_events;
 	}
 
 	//Spin
@@ -381,14 +413,14 @@ function generateFile() {
 		}
 	}
 	//Collision
-	if (getValue('particle_collision_enabled')) {
+	if (getValue('particle_collision_toggle')) {
 		comps['minecraft:particle_motion_collision'] = {
-			enabled: getValue('particle_collision_condition'),
+			enabled: getValue('particle_collision_enabled'),
 			collision_drag: getValue('particle_collision_collision_drag'),
 			coefficient_of_restitution: getValue('particle_collision_coefficient_of_restitution'),
 			collision_radius: getValue('particle_collision_collision_radius'),
 			expire_on_contact: getValue('particle_collision_expire_on_contact'),
-			events: Config.unsupported_fields.collision_events,
+			events: getValue('particle_collision_events'),
 		}
 	}
 	if (getValue('particle_color_light')) {
@@ -434,7 +466,10 @@ function generateFile() {
 
 	return file;
 }
-window.generateFile = generateFile;
+window.generateFileForParentEffect = function() {
+	let json = generateFile();
+	return JSON.stringify(json);
+}
 function getName() {
 	var name = Data.effect.meta.inputs.identifier.value
 	if (name) {

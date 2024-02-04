@@ -76,7 +76,8 @@ const Data = {
 					mode_groups: ['emitter', 'rate'],
 					options: {
 						steady: 'Steady',
-						instant: 'Instant'
+						instant: 'Instant',
+						manual: 'Manual'
 					}
 				}),
 				rate: new Input({
@@ -98,7 +99,7 @@ const Data = {
 					id: 'emitter_rate_maximum',
 					label: 'Maximum',
 					info: '',
-					enabled_modes: ['steady'],
+					enabled_modes: ['steady', 'manual'],
 					required: true,
 					value: 100,
 				})
@@ -626,6 +627,13 @@ const Data = {
 					id: 'particle_collision_enabled',
 					label: 'Condition',
 					info: 'Enables collision when true / non-zero or unset',
+					enabled_modes: [true]
+				}),
+				events: new Input({
+					id: 'particle_collision_events',
+					label: 'Events',
+					info: 'Events to fire when the particle collides',
+					type: 'event_speed_list',
 					enabled_modes: [true]
 				}),
 				expire_on_contact: new Input({

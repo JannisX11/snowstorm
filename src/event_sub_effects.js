@@ -17,8 +17,23 @@ export async function loadEventSubEffect() {
             }
         })
     });
-    let identifier = json?.particle_effect?.description?.identifier;
-    EventSubEffects[identifier || ''] = json;
+	let image_url = await new Promise(resolve => {
+        IO.import({
+            readtype: 'image',
+            extensions: ['png']
+        }, (files) => {
+            console.log(files)
+            if (files[0]) {
+                resolve(files[0].content);
+            } else {
+                resolve();
+            }
+        })
+    });
+    let identifier = json?.particle_effect?.description?.identifier || '';
+    if (!EventSubEffects[identifier]) EventSubEffects[identifier] = {};
+    EventSubEffects[identifier].json = json;
+    EventSubEffects[identifier].texture = image_url;
     delete Scene.child_configs[identifier]
     return identifier;
 }
@@ -35,8 +50,8 @@ class SubEffectEditor {
         this.editor_tab = editor_tab;
     }
     updateConfig() {
-        let json = this.editor_tab.generateFile();
-        EventSubEffects[this.identifier] = json;
+        let json = JSON.parse(this.editor_tab.generateFileForParentEffect());
+        EventSubEffects[this.identifier].json = json;
         delete Scene.child_configs[this.identifier];
     }
 }
@@ -52,12 +67,13 @@ export function editEventSubEffect(identifier) {
         if (editor) {
             editor.editor_tab.focus();
         } else {
-            let json = EventSubEffects[identifier];
+            let {json, texture} = EventSubEffects[identifier];
+            console.log(json);
             let editor_tab = window.open(location.href);
             if (!editor_tab) return;
             setTimeout(() => {
-                editor_tab.loadFile(json, false);
-            }, 1000)
+                editor_tab.loadFileFromParentEffect(JSON.stringify(json), texture);
+            }, 500);
             SubEffectEditors[identifier] = new SubEffectEditor(identifier, editor_tab);
         }
     }

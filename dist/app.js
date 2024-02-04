@@ -1719,6 +1719,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 
 
@@ -1729,7 +1732,8 @@ __webpack_require__.r(__webpack_exports__);
     Zap: lucide_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
   },
   props: {
-    blacklist: Array
+    blacklist: Array,
+    replace: Boolean
   },
   data: function data() {
     return {
@@ -1907,6 +1911,21 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -1974,6 +1993,10 @@ var emitter_type_options = {
       });
       this.modifyEvent();
     },
+    createExpressionSection: function createExpressionSection() {
+      vue__WEBPACK_IMPORTED_MODULE_15__["default"].set(this.subpart, 'expression', '');
+      this.modifyEvent();
+    },
     addSequenceOption: function addSequenceOption() {
       var option = {
         uuid: (0,_util__WEBPACK_IMPORTED_MODULE_0__.guid)()
@@ -2011,6 +2034,10 @@ var emitter_type_options = {
       vue__WEBPACK_IMPORTED_MODULE_15__["default"]["delete"](this.subpart, 'sound_effect');
       this.modifyEvent();
     },
+    disableExpressionSection: function disableExpressionSection() {
+      vue__WEBPACK_IMPORTED_MODULE_15__["default"]["delete"](this.subpart, 'expression');
+      this.modifyEvent();
+    },
     selectParticleFile: function selectParticleFile() {
       var _this = this;
       return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
@@ -2022,11 +2049,13 @@ var emitter_type_options = {
               return (0,_event_sub_effects__WEBPACK_IMPORTED_MODULE_9__.loadEventSubEffect)();
             case 2:
               identifier = _context.sent;
+              _this.is_extension = !_this.is_extension;
+              _this.is_extension = !_this.is_extension;
               if (identifier && identifier != _this.subpart.particle_effect.effect) {
                 _this.subpart.particle_effect.effect = identifier;
                 _this.modifyEvent();
               }
-            case 4:
+            case 6:
             case "end":
               return _context.stop();
           }
@@ -2177,10 +2206,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _TextureInput__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./TextureInput */ "./src/components/Sidebar/TextureInput.vue");
 /* harmony import */ var _Form_Checkbox_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../Form/Checkbox.vue */ "./src/components/Form/Checkbox.vue");
 /* harmony import */ var _EventPicker_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./EventPicker.vue */ "./src/components/Sidebar/EventPicker.vue");
-/* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/chevrons-up-down.js");
-/* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/chevrons-down-up.js");
-/* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/plus.js");
-/* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/x.js");
+/* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/chevrons-up-down.js");
+/* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/chevrons-down-up.js");
+/* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/plus.js");
+/* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/x.js");
 /* harmony import */ var _molang_autocomplete__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./../../molang_autocomplete */ "./src/molang_autocomplete.js");
 /* harmony import */ var _path_autocomplete__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./../../path_autocomplete */ "./src/path_autocomplete.js");
 /* harmony import */ var root_packages_vue_prism_editor_dist_prismeditor_min_css__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! root/packages/vue-prism-editor/dist/prismeditor.min.css */ "./node_modules/root/packages/vue-prism-editor/dist/prismeditor.min.css");
@@ -2189,6 +2218,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var root_packages_vue_prism_editor__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! root/packages/vue-prism-editor */ "./node_modules/root/packages/vue-prism-editor/dist/prismeditor.esm.js");
 /* harmony import */ var prismjs_themes_prism_okaidia_css__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! prismjs/themes/prism-okaidia.css */ "./node_modules/prismjs/themes/prism-okaidia.css");
 /* harmony import */ var _languages__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./../../languages */ "./src/languages.js");
+/* harmony import */ var _util__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../../util */ "./src/util.js");
 //
 //
 //
@@ -2330,6 +2360,38 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 
 
@@ -2359,10 +2421,10 @@ __webpack_require__.r(__webpack_exports__);
     TextureInput: _TextureInput__WEBPACK_IMPORTED_MODULE_2__["default"],
     Checkbox: _Form_Checkbox_vue__WEBPACK_IMPORTED_MODULE_3__["default"],
     EventPicker: _EventPicker_vue__WEBPACK_IMPORTED_MODULE_4__["default"],
-    ChevronsUpDown: lucide_vue__WEBPACK_IMPORTED_MODULE_12__["default"],
-    ChevronsDownUp: lucide_vue__WEBPACK_IMPORTED_MODULE_13__["default"],
-    Plus: lucide_vue__WEBPACK_IMPORTED_MODULE_14__["default"],
-    X: lucide_vue__WEBPACK_IMPORTED_MODULE_15__["default"]
+    ChevronsUpDown: lucide_vue__WEBPACK_IMPORTED_MODULE_13__["default"],
+    ChevronsDownUp: lucide_vue__WEBPACK_IMPORTED_MODULE_14__["default"],
+    Plus: lucide_vue__WEBPACK_IMPORTED_MODULE_15__["default"],
+    X: lucide_vue__WEBPACK_IMPORTED_MODULE_16__["default"]
   },
   methods: {
     isInputVisible: function isInputVisible(input, group) {
@@ -2388,6 +2450,20 @@ __webpack_require__.r(__webpack_exports__);
       if (input.expandable) {
         input.expanded = !input.expanded;
       }
+    },
+    addEventToTimeline: function addEventToTimeline(input, event_id) {
+      var entry = {
+        uuid: (0,_util__WEBPACK_IMPORTED_MODULE_12__.guid)(),
+        event: [event_id],
+        time: 0
+      };
+      input.timeline.push(entry);
+      input.change();
+    },
+    pickEventOnNameClick: function pickEventOnNameClick(event) {
+      var clicker = event.target.nextElementSibling;
+      console.log(clicker);
+      clicker.click();
     }
   }
 });
@@ -3868,6 +3944,8 @@ var Scene = new wintersky__WEBPACK_IMPORTED_MODULE_2__["default"].Scene({
         }
         window.addEventListener('message', update, false);
       });
+    } else if (_event_sub_effects__WEBPACK_IMPORTED_MODULE_4__.EventSubEffects[config.identifier]) {
+      return _event_sub_effects__WEBPACK_IMPORTED_MODULE_4__.EventSubEffects[config.identifier].texture;
     } else if (window.Data.texture.texture.inputs.image.image && window.Data.texture.texture.inputs.image.image.loaded) {
       return window.Data.texture.texture.inputs.image.image.data;
     }
@@ -3890,9 +3968,8 @@ var Scene = new wintersky__WEBPACK_IMPORTED_MODULE_2__["default"].Scene({
         window.addEventListener('message', update, false);
       });
     } else {
-      // Let user upload and return those uploads
-      console.log(_event_sub_effects__WEBPACK_IMPORTED_MODULE_4__.EventSubEffects, identifier);
-      return _event_sub_effects__WEBPACK_IMPORTED_MODULE_4__.EventSubEffects[identifier] || null;
+      var _EventSubEffects$iden;
+      return ((_EventSubEffects$iden = _event_sub_effects__WEBPACK_IMPORTED_MODULE_4__.EventSubEffects[identifier]) === null || _EventSubEffects$iden === void 0 ? void 0 : _EventSubEffects$iden.json) || null;
     }
   }
 });
@@ -3991,7 +4068,7 @@ function loadEventSubEffect() {
 function _loadEventSubEffect() {
   _loadEventSubEffect = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
     var _json$particle_effect;
-    var json, identifier;
+    var json, image_url, identifier;
     return _regeneratorRuntime().wrap(function _callee$(_context) {
       while (1) switch (_context.prev = _context.next) {
         case 0:
@@ -4009,11 +4086,29 @@ function _loadEventSubEffect() {
           });
         case 2:
           json = _context.sent;
-          identifier = json === null || json === void 0 || (_json$particle_effect = json.particle_effect) === null || _json$particle_effect === void 0 || (_json$particle_effect = _json$particle_effect.description) === null || _json$particle_effect === void 0 ? void 0 : _json$particle_effect.identifier;
-          EventSubEffects[identifier || ''] = json;
+          _context.next = 5;
+          return new Promise(function (resolve) {
+            _util__WEBPACK_IMPORTED_MODULE_1__.IO["import"]({
+              readtype: 'image',
+              extensions: ['png']
+            }, function (files) {
+              console.log(files);
+              if (files[0]) {
+                resolve(files[0].content);
+              } else {
+                resolve();
+              }
+            });
+          });
+        case 5:
+          image_url = _context.sent;
+          identifier = (json === null || json === void 0 || (_json$particle_effect = json.particle_effect) === null || _json$particle_effect === void 0 || (_json$particle_effect = _json$particle_effect.description) === null || _json$particle_effect === void 0 ? void 0 : _json$particle_effect.identifier) || '';
+          if (!EventSubEffects[identifier]) EventSubEffects[identifier] = {};
+          EventSubEffects[identifier].json = json;
+          EventSubEffects[identifier].texture = image_url;
           delete _emitter__WEBPACK_IMPORTED_MODULE_0__.Scene.child_configs[identifier];
           return _context.abrupt("return", identifier);
-        case 7:
+        case 12:
         case "end":
           return _context.stop();
       }
@@ -4035,8 +4130,8 @@ var SubEffectEditor = /*#__PURE__*/function () {
   _createClass(SubEffectEditor, [{
     key: "updateConfig",
     value: function updateConfig() {
-      var json = this.editor_tab.generateFile();
-      EventSubEffects[this.identifier] = json;
+      var json = JSON.parse(this.editor_tab.generateFileForParentEffect());
+      EventSubEffects[this.identifier].json = json;
       delete _emitter__WEBPACK_IMPORTED_MODULE_0__.Scene.child_configs[this.identifier];
     }
   }]);
@@ -4053,12 +4148,15 @@ function editEventSubEffect(identifier) {
     if (editor) {
       editor.editor_tab.focus();
     } else {
-      var json = EventSubEffects[identifier];
+      var _EventSubEffects$iden = EventSubEffects[identifier],
+        json = _EventSubEffects$iden.json,
+        texture = _EventSubEffects$iden.texture;
+      console.log(json);
       var editor_tab = window.open(location.href);
       if (!editor_tab) return;
       setTimeout(function () {
-        editor_tab.loadFile(json, false);
-      }, 1000);
+        editor_tab.loadFileFromParentEffect(JSON.stringify(json), texture);
+      }, 500);
       SubEffectEditors[identifier] = new SubEffectEditor(identifier, editor_tab);
     }
   }
@@ -4128,6 +4226,24 @@ function getValue(key, required) {
     if (!result && !required) result = undefined;
   }
   return result;
+}
+function formatEventList(list) {
+  if (list.length == 1) {
+    return list[0];
+  } else if (list.length > 1) {
+    return list;
+  }
+}
+function formatEventTimeline(source) {
+  var has_data = false;
+  var copy = {};
+  for (var key in source) {
+    copy[key] = formatEventList(source[key]);
+    if (copy[key]) has_data = true;
+  }
+  if (has_data) {
+    return copy;
+  }
 }
 function generateFile() {
   var file = {
@@ -4280,6 +4396,10 @@ function generateFile() {
       spawn_rate: getValue('emitter_rate_rate'),
       max_particles: getValue('emitter_rate_maximum')
     };
+  } else if (mode === 'manual') {
+    comps['minecraft:emitter_rate_manual'] = {
+      max_particles: getValue('emitter_rate_maximum')
+    };
   }
   //Lifetime
   var mode = getValue('emitter_lifetime_mode');
@@ -4300,9 +4420,14 @@ function generateFile() {
       };
     }
   }
-  //Emitter Events
-  if (_emitter__WEBPACK_IMPORTED_MODULE_2__.Config.unsupported_fields.emitter_lifetime_events) {
-    comps['minecraft:emitter_lifetime_events'] = _emitter__WEBPACK_IMPORTED_MODULE_2__.Config.unsupported_fields.emitter_lifetime_events;
+  //Particle Events
+  var emitter_events = {
+    creation_event: formatEventList(_emitter__WEBPACK_IMPORTED_MODULE_2__.Config.emitter_events_creation),
+    expiration_event: formatEventList(_emitter__WEBPACK_IMPORTED_MODULE_2__.Config.emitter_events_expiration),
+    timeline: formatEventTimeline(_emitter__WEBPACK_IMPORTED_MODULE_2__.Config.emitter_events_timeline)
+  };
+  if (emitter_events.creation_event || emitter_events.expiration_event || emitter_events.timeline) {
+    comps['minecraft:emitter_lifetime_events'] = emitter_events;
   }
   //Direction
   var mode = getValue('particle_direction_mode');
@@ -4413,8 +4538,13 @@ function generateFile() {
   }
 
   //Particle Events
-  if (_emitter__WEBPACK_IMPORTED_MODULE_2__.Config.unsupported_fields.particle_lifetime_events) {
-    comps['minecraft:particle_lifetime_events'] = _emitter__WEBPACK_IMPORTED_MODULE_2__.Config.unsupported_fields.particle_lifetime_events;
+  var particle_events = {
+    creation_event: formatEventList(_emitter__WEBPACK_IMPORTED_MODULE_2__.Config.particle_events_creation),
+    expiration_event: formatEventList(_emitter__WEBPACK_IMPORTED_MODULE_2__.Config.particle_events_expiration),
+    timeline: formatEventTimeline(_emitter__WEBPACK_IMPORTED_MODULE_2__.Config.particle_events_timeline)
+  };
+  if (particle_events.creation_event || particle_events.expiration_event || particle_events.timeline) {
+    comps['minecraft:particle_lifetime_events'] = particle_events;
   }
 
   //Spin
@@ -4508,14 +4638,14 @@ function generateFile() {
     };
   }
   //Collision
-  if (getValue('particle_collision_enabled')) {
+  if (getValue('particle_collision_toggle')) {
     comps['minecraft:particle_motion_collision'] = {
-      enabled: getValue('particle_collision_condition'),
+      enabled: getValue('particle_collision_enabled'),
       collision_drag: getValue('particle_collision_collision_drag'),
       coefficient_of_restitution: getValue('particle_collision_coefficient_of_restitution'),
       collision_radius: getValue('particle_collision_collision_radius'),
       expire_on_contact: getValue('particle_collision_expire_on_contact'),
-      events: _emitter__WEBPACK_IMPORTED_MODULE_2__.Config.unsupported_fields.collision_events
+      events: getValue('particle_collision_events')
     };
   }
   if (getValue('particle_color_light')) {
@@ -4556,7 +4686,10 @@ function generateFile() {
   }
   return file;
 }
-window.generateFile = generateFile;
+window.generateFileForParentEffect = function () {
+  var json = generateFile();
+  return JSON.stringify(json);
+};
 function getName() {
   var name = _input_structure__WEBPACK_IMPORTED_MODULE_0__["default"].effect.meta.inputs.identifier.value;
   if (name) {
@@ -4846,7 +4979,21 @@ function loadFile(data) {
     (0,_edits__WEBPACK_IMPORTED_MODULE_14__["default"])('load file');
   }
 }
-window.loadFile = loadFile;
+window.loadFileFromParentEffect = function (raw_json, texture_url) {
+  loadFile(JSON.parse(raw_json), false);
+  console.log({
+    raw_json: raw_json,
+    texture_url: texture_url
+  });
+  if (texture_url) {
+    var input = _input_structure__WEBPACK_IMPORTED_MODULE_4__["default"].texture.texture.inputs.image;
+    input.image.data = _texture_edit__WEBPACK_IMPORTED_MODULE_15__.Texture.source = texture_url;
+    input.image.loaded = true;
+    _texture_edit__WEBPACK_IMPORTED_MODULE_15__.Texture.updateCanvasFromSource();
+    _emitter__WEBPACK_IMPORTED_MODULE_1__.Config.updateTexture();
+    (0,_emitter__WEBPACK_IMPORTED_MODULE_1__.updateMaterial)();
+  }
+};
 function importFile() {
   _util__WEBPACK_IMPORTED_MODULE_0__.IO["import"]({
     extensions: ['json']
@@ -4969,6 +5116,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_ExpressionBar__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/ExpressionBar */ "./src/components/ExpressionBar.vue");
 /* harmony import */ var _emitter__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./emitter */ "./src/emitter.js");
 /* harmony import */ var _texture_edit__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./texture_edit */ "./src/texture_edit.js");
+/* harmony import */ var _util__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./util */ "./src/util.js");
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
@@ -4981,6 +5129,7 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
 function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : String(i); }
 function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+
 
 
 
@@ -5022,6 +5171,9 @@ var Input = /*#__PURE__*/function () {
       this.min = data.min;
       this.max = data.max;
     }
+    if (this.type == 'event_timeline') {
+      this.timeline = [];
+    }
     if (this.id) {
       this.value = _emitter__WEBPACK_IMPORTED_MODULE_2__.Config[this.id];
     } else if (data.value != undefined) {
@@ -5051,6 +5203,16 @@ var Input = /*#__PURE__*/function () {
         this.meta_value = this.options.custom;
       } else if (this.type === 'select' || this.type === 'select_custom') {
         this.meta_value = this.options[v];
+      }
+      if (this.type == 'event_timeline') {
+        this.timeline.splice(0);
+        for (var key in this._value) {
+          this.timeline.push({
+            uuid: (0,_util__WEBPACK_IMPORTED_MODULE_4__.guid)(),
+            time: parseFloat(key),
+            event: this._value[key] instanceof Array ? this._value[key] : [this._value[key]]
+          });
+        }
       }
     }
   }, {
@@ -5091,6 +5253,7 @@ var Input = /*#__PURE__*/function () {
   }, {
     key: "change",
     value: function change(e, node) {
+      var _this = this;
       var scope = this;
       if (this.type === 'image' && e) {
         var file = e instanceof Uint8Array ? new File([e], 'unknown.png') : e.target.files[0];
@@ -5103,6 +5266,7 @@ var Input = /*#__PURE__*/function () {
             scope.image.loaded = true;
             scope.image.hidden = true;
             scope.image.hidden = false;
+            Emitter.config.updateTexture();
             (0,_emitter__WEBPACK_IMPORTED_MODULE_2__.updateMaterial)();
           };
           reader.readAsDataURL(file);
@@ -5117,6 +5281,18 @@ var Input = /*#__PURE__*/function () {
       }
       if (this.type === 'color') {
         if (_typeof(this.value) == 'object') this.value = this.value.hex8;
+      }
+      if (this.type == 'event_timeline') {
+        for (var key in this._value) {
+          delete this._value[key];
+        }
+        this.timeline.sort(function (a, b) {
+          return a.time - b.time;
+        });
+        console.log(this.timeline);
+        this.timeline.forEach(function (entry) {
+          _this._value[(0,_util__WEBPACK_IMPORTED_MODULE_4__.trimFloatNumber)(entry.time)] = entry.event;
+        });
       }
       if (typeof this.onchange === 'function') {
         this.onchange(e);
@@ -5290,7 +5466,8 @@ var Data = {
           mode_groups: ['emitter', 'rate'],
           options: {
             steady: 'Steady',
-            instant: 'Instant'
+            instant: 'Instant',
+            manual: 'Manual'
           }
         }),
         rate: new _input__WEBPACK_IMPORTED_MODULE_0__["default"]({
@@ -5312,7 +5489,7 @@ var Data = {
           id: 'emitter_rate_maximum',
           label: 'Maximum',
           info: '',
-          enabled_modes: ['steady'],
+          enabled_modes: ['steady', 'manual'],
           required: true,
           value: 100
         })
@@ -5837,6 +6014,13 @@ var Data = {
           id: 'particle_collision_enabled',
           label: 'Condition',
           info: 'Enables collision when true / non-zero or unset',
+          enabled_modes: [true]
+        }),
+        events: new _input__WEBPACK_IMPORTED_MODULE_0__["default"]({
+          id: 'particle_collision_events',
+          label: 'Events',
+          info: 'Events to fire when the particle collides',
+          type: 'event_speed_list',
           enabled_modes: [true]
         }),
         expire_on_contact: new _input__WEBPACK_IMPORTED_MODULE_0__["default"]({
@@ -7607,6 +7791,10 @@ var Config = /*#__PURE__*/function () {
           this.space_local_rotation = comp('emitter_local_space').rotation;
           this.space_local_velocity = comp('emitter_local_space').velocity;
         }
+        if (comp('emitter_rate_manual')) {
+          this.set('emitter_rate_mode', 'manual');
+          this.set('emitter_rate_maximum', comp('emitter_rate_manual').max_particles);
+        }
         if (comp('emitter_rate_steady')) {
           this.set('emitter_rate_mode', 'steady');
           this.set('emitter_rate_rate', comp('emitter_rate_steady').spawn_rate);
@@ -7742,6 +7930,7 @@ var Config = /*#__PURE__*/function () {
             this.set('particle_rotation_rotation', rotation);
           }
         }
+        this.set('particle_collision_toggle', comp('particle_motion_collision') != undefined);
         if (comp('particle_motion_collision')) {
           this.set('particle_collision_enabled', comp('particle_motion_collision').enabled);
           this.set('particle_collision_collision_drag', comp('particle_motion_collision').collision_drag);
@@ -7813,9 +8002,12 @@ var Config = /*#__PURE__*/function () {
         }
         if (comp('particle_appearance_tinting')) {
           var c = comp('particle_appearance_tinting').color;
+          console.log(c);
           if (typeof c == 'string') {
             this.set('particle_color_static', parseColor(c));
+            console.log('string');
           } else if (c instanceof Array && c.length >= 3) {
+            console.log('array');
             if ((_typeof(c[0]) + _typeof(c[1]) + _typeof(c[2]) + _typeof(c[3])).includes('string')) {
               this.set('particle_color_mode', 'expression');
               this.set('particle_color_expression', c);
@@ -7830,6 +8022,7 @@ var Config = /*#__PURE__*/function () {
               this.set('particle_color_static', color);
             }
           } else if (_typeof(c) == 'object') {
+            console.log('gradiente', c instanceof Array, _typeof(c));
             // Gradient
             this.set('particle_color_mode', 'gradient');
             this.set('particle_color_interpolant', c.interpolant);
@@ -8180,6 +8373,9 @@ Config.types = {
   particle_color_light: {
     type: 'boolean'
   },
+  particle_collision_toggle: {
+    type: 'boolean'
+  },
   particle_collision_enabled: {
     type: 'molang'
   },
@@ -8506,11 +8702,11 @@ var Particle = /*#__PURE__*/function () {
             return this;
           }
         }
-        if (this.emitter.ground_collision && (!this.emitter.config.particle_collision_enabled && this.emitter.config.particle_collision_collision_radius || this.emitter.calculate(this.emitter.config.particle_collision_enabled, params))) {
+        if (this.emitter.ground_collision && this.emitter.config.particle_collision_toggle && (!this.emitter.config.particle_collision_enabled || this.emitter.calculate(this.emitter.config.particle_collision_enabled, params))) {
           // Collision
           var _drag = this.emitter.config.particle_collision_collision_drag;
           var bounce = this.emitter.config.particle_collision_coefficient_of_restitution;
-          var radius = this.emitter.config.particle_collision_collision_radius;
+          var radius = Math.max(this.emitter.config.particle_collision_collision_radius, 0.0001);
           var _plane = collisionPlane;
           var sphere = new three__WEBPACK_IMPORTED_MODULE_2__.Sphere(this.position, radius);
           var previous_pos = new three__WEBPACK_IMPORTED_MODULE_2__.Vector3().copy(this.position).addScaledVector(this.speed, -step);
@@ -8931,8 +9127,13 @@ var Emitter = /*#__PURE__*/function (_EventClass) {
   }, {
     key: "updateMaterial",
     value: function updateMaterial() {
-      this.config.updateTexture();
+      var material = this.config.particle_appearance_material;
+      this.material.uniforms.materialType.value = materialTypes.indexOf(material);
+      this.material.side = material === 'particles_blend' || material === 'particles_add' ? three__WEBPACK_IMPORTED_MODULE_2__.DoubleSide : three__WEBPACK_IMPORTED_MODULE_2__.FrontSide;
+      this.material.blending = material === 'particles_add' ? three__WEBPACK_IMPORTED_MODULE_2__.AdditiveBlending : three__WEBPACK_IMPORTED_MODULE_2__.NormalBlending;
     }
+
+    // Playback Loop
   }, {
     key: "updateFacingRotation",
     value: function updateFacingRotation(camera) {
@@ -9054,6 +9255,7 @@ var Emitter = /*#__PURE__*/function (_EventClass) {
       this.dispatchEvent('start', {
         params: params
       });
+      this.updateMaterial();
       var _iterator7 = _createForOfIteratorHelper(this.config.emitter_events_creation),
         _step7;
       try {
@@ -9068,6 +9270,8 @@ var Emitter = /*#__PURE__*/function (_EventClass) {
       }
       if (this.config.emitter_rate_mode === 'instant') {
         this.spawnParticles(this.calculate(this.config.emitter_rate_amount, params));
+      } else if (this.config.emitter_rate_mode === 'manual') {
+        this.spawnParticles(1);
       }
       return this;
     }
@@ -9116,10 +9320,7 @@ var Emitter = /*#__PURE__*/function (_EventClass) {
 
       // Material
       if (!jump) {
-        var material = this.config.particle_appearance_material;
-        this.material.uniforms.materialType.value = materialTypes.indexOf(material);
-        this.material.side = material === 'particles_blend' || material === 'particles_add' ? three__WEBPACK_IMPORTED_MODULE_2__.DoubleSide : three__WEBPACK_IMPORTED_MODULE_2__.FrontSide;
-        this.material.blending = material === 'particles_add' ? three__WEBPACK_IMPORTED_MODULE_2__.AdditiveBlending : three__WEBPACK_IMPORTED_MODULE_2__.NormalBlending;
+        this.updateMaterial();
       }
       // Tick particles
       this.particles.forEach(function (p) {
@@ -9242,8 +9443,6 @@ var Emitter = /*#__PURE__*/function (_EventClass) {
       });
       return this;
     }
-
-    // Playback Loop
   }, {
     key: "playLoop",
     value: function playLoop() {
@@ -9355,6 +9554,9 @@ var Emitter = /*#__PURE__*/function (_EventClass) {
         }
 
         // Run event
+        if (subpart.expression) {
+          _this10.Molang.parse(subpart.expression, _this10.params());
+        }
         if (subpart.particle_effect) {
           var identifier = subpart.particle_effect.effect;
           var config = _this10.scene.child_configs[identifier];
@@ -9884,7 +10086,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.event_subpart[data-v-20a73c5c] {\n\tborder-left: 5px solid var(--color-bar);\n\tpadding-left: 12px;\n\tpadding-top: 8px;\n\tpadding-bottom: 8px;\n}\n.event_subpart[data-v-20a73c5c]:hover {\n\tborder-left-color: var(--color-selection);\n}\nul.create_bar[data-v-20a73c5c] {\n\tdisplay: flex;\n\tjustify-content: center;\n\tgap: 8px;\n\tpadding: 4px 6px;\n\tflex-wrap: wrap;\n}\nul.create_bar > li[data-v-20a73c5c] {\n\tcursor: pointer;\n\twhite-space: nowrap;\n\tcolor: var(--color-text_grayed);\n}\nul.create_bar > li[data-v-20a73c5c]:hover {\n\tcolor: var(--color-text);\n}\nul.create_bar > li > svg[data-v-20a73c5c] {\n\tvertical-align: sub;\n}\nul.nested_list[data-v-20a73c5c] {\n\tmargin-left: 12px;\n}\nul.sortable > li[data-v-20a73c5c] {\n\tborder-top: 2px solid transparent;\n\tborder-bottom: 2px solid transparent;\n}\nul.sortable > .sort_before[data-v-20a73c5c] {\n\tborder-top: 2px solid var(--color-accent);\n}\nul.sortable > .sort_after[data-v-20a73c5c] {\n\tborder-bottom: 2px solid var(--color-accent);\n}\n.list_add_button[data-v-20a73c5c] {\n\tmargin-left: 26px;\n}\n.header_bar[data-v-20a73c5c] {\n\tdisplay: flex;\n\tgap: 8px;\n}\n.header_bar > label[data-v-20a73c5c] {\n\tpadding-top: 4px;\n}\n.header_bar > svg[data-v-20a73c5c] {\n\tcursor: grab;\n\tmargin-left: -2px;\n\tmargin-top: 2px;\n}\n.header_bar .fill_line[data-v-20a73c5c] {\n\tflex-grow: 1;\n}\n.header_bar .fill_line[data-v-20a73c5c]::after {\n\tcontent: \"\";\n\tpointer-events: none;\n\twidth: 100%;\n\theight: 2px;\n\tdisplay: inline-block;\n\tmargin: auto;\n\tbackground-color: var(--color-bar);\n}\n.add_button[data-v-20a73c5c] {\n\tmargin-left: auto;\n}\n.remove_button[data-v-20a73c5c] {\n}\n.subpart_option_head_bar[data-v-20a73c5c] {\n\tdisplay: flex;\n}\n.section_bar[data-v-20a73c5c] {\n\tmargin-top: 8px;\n\tmargin-bottom: 4px;\n}\n.descriptor_label[data-v-20a73c5c] {\n\tcolor: var(--color-text_grayed);\n\tvertical-align: middle;\n\tpadding-right: 4px;\n}\n.input_wrapper[data-v-20a73c5c] {\n\tdisplay: flex;\n\tgap: 8px;\n\tmargin: 2px 0;\n}\n.input_wrapper > label[data-v-20a73c5c] {\n\twidth: 95px;\n\ttext-align: right;\n\tvertical-align: middle;\n\tmargin: 3px 0;\n\tflex-shrink: 0;\n}\n.input_wrapper > select[data-v-20a73c5c] {\n\tflex-grow: 1;\n}\n\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.event_subpart[data-v-20a73c5c] {\n\tborder-left: 5px solid var(--color-bar);\n\tpadding-left: 12px;\n\tpadding-top: 8px;\n\tpadding-bottom: 8px;\n}\n.event_subpart[data-v-20a73c5c]:hover {\n\tborder-left-color: var(--color-selection);\n}\nul.create_bar[data-v-20a73c5c] {\n\tdisplay: flex;\n\tjustify-content: center;\n\tgap: 6px;\n\tpadding: 4px 6px;\n\tflex-wrap: wrap;\n}\nul.create_bar > li[data-v-20a73c5c] {\n\tcursor: pointer;\n\twhite-space: nowrap;\n\tcolor: var(--color-text_grayed);\n\tfont-size: 0.96em;\n}\nul.create_bar > li[data-v-20a73c5c]:hover {\n\tcolor: var(--color-text);\n}\nul.create_bar > li > svg[data-v-20a73c5c] {\n\tvertical-align: sub;\n}\nul.nested_list[data-v-20a73c5c] {\n\tmargin-left: 12px;\n}\nul.sortable > li[data-v-20a73c5c] {\n\tborder-top: 2px solid transparent;\n\tborder-bottom: 2px solid transparent;\n}\nul.sortable > .sort_before[data-v-20a73c5c] {\n\tborder-top: 2px solid var(--color-accent);\n}\nul.sortable > .sort_after[data-v-20a73c5c] {\n\tborder-bottom: 2px solid var(--color-accent);\n}\n.list_add_button[data-v-20a73c5c] {\n\tmargin-left: 26px;\n}\n.header_bar[data-v-20a73c5c] {\n\tdisplay: flex;\n\tgap: 8px;\n}\n.header_bar > label[data-v-20a73c5c] {\n\tpadding-top: 4px;\n}\n.header_bar > svg[data-v-20a73c5c] {\n\tcursor: grab;\n\tmargin-left: -2px;\n\tmargin-top: 2px;\n}\n.header_bar .fill_line[data-v-20a73c5c] {\n\tflex-grow: 1;\n}\n.header_bar .fill_line[data-v-20a73c5c]::after {\n\tcontent: \"\";\n\tpointer-events: none;\n\twidth: 100%;\n\theight: 2px;\n\tdisplay: inline-block;\n\tmargin: auto;\n\tbackground-color: var(--color-bar);\n}\n.add_button[data-v-20a73c5c] {\n\tmargin-left: auto;\n}\n.remove_button[data-v-20a73c5c] {\n}\n.subpart_option_head_bar[data-v-20a73c5c] {\n\tdisplay: flex;\n}\n.section_bar[data-v-20a73c5c] {\n\tmargin-top: 8px;\n\tmargin-bottom: 4px;\n}\n.descriptor_label[data-v-20a73c5c] {\n\tcolor: var(--color-text_grayed);\n\tvertical-align: middle;\n\tpadding-right: 4px;\n}\n.input_wrapper[data-v-20a73c5c] {\n\tdisplay: flex;\n\tgap: 8px;\n\tmargin: 2px 0;\n}\n.input_wrapper > label[data-v-20a73c5c] {\n\twidth: 95px;\n\ttext-align: right;\n\tvertical-align: middle;\n\tmargin: 3px 0;\n\tflex-shrink: 0;\n}\n.input_wrapper > select[data-v-20a73c5c] {\n\tflex-grow: 1;\n}\n\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -9932,7 +10134,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.input_wrapper[data-v-64472bb8] {\n\tmargin: 2px 0;\n}\n.input_wrapper > label[data-v-64472bb8] {\n\twidth: 100px;\n\ttext-align: right;\n\tvertical-align: middle;\n\tmargin: 3px 0;\n}\n.input_right[data-v-64472bb8] {\n\tdisplay: inline-flex;\n\tgap: 2px;\n\tvertical-align: middle;\n\twidth: calc(100% - 110px);\n\tmargin-left: 4px;\n}\n.input_right.full_width[data-v-64472bb8] {\n\twidth: calc(100% - 8px);\n}\n.input_right.expandable[data-v-64472bb8] {\n\twidth: calc(100% - 134px);\n}\n.input_right[axes=\"1\"] input[data-v-64472bb8]:not([type=\"checkbox\"]), .input_right[axes=\"1\"] select[data-v-64472bb8]:not([type=\"checkbox\"]) {\n\twidth: 100%;\n}\n.input_right.expanded[data-v-64472bb8] {\n\tdisplay: block;\n\twidth: calc(100% - 7px);\n}\n.input_right.expanded input[data-v-64472bb8], .input_right.expanded .input_vector[data-v-64472bb8]  {\n\twidth: 100% !important;\n\tdisplay: block;\n\tmargin-left: 0;\n}\n.tool.input_expand_button[data-v-64472bb8] {\n\tfloat: right;\n\twidth: 22px;\n\tpadding-left: 0;\n\tpadding-top: 2px;\n}\nli[input_type=\"select_custom\"] select[data-v-64472bb8] {\n\twidth: 140px;\n\tflex-grow: 1;\n}\n.input_list li[data-v-64472bb8] {\n\tmargin: 2px 0;\n}\nul.input_list input[data-v-64472bb8], ul.input_list .prism-editor-component[data-v-64472bb8] {\n\twidth: calc(100% - 80px);\n\tmargin-left: 52px;\n\tfloat: left;\n}\n.input_list li .tool[data-v-64472bb8] {\n\tpadding: 2px 0px;\n\twidth: 24px;\n\theight: 30px;\n}\n.input_vector[data-v-64472bb8] {\n\twidth: 40px;\n\tflex-grow: 1;\n}\n.input_vector[data-v-64472bb8]:first-child {\n\tmargin-left: 0;\n}\n.list_add_tool[data-v-64472bb8] {\n\tvertical-align: sub;\n}\n.event_list[data-v-64472bb8] {\n\tposition: relative;\n\tmin-height: 30px;\n\twidth: auto;\n\tflex-grow: 1;\n\tpadding: 1px;\n}\n.event_list > li.event_list_event[data-v-64472bb8] {\n\tdisplay: inline-block;\n\tpadding: 3px 13px;\n\tmargin: 0 2px;\n\tbackground-color: var(--color-bar);\n\tborder-radius: 24px;\n\tbox-shadow: 0 1px 14px rgba(0, 0, 0, 0.18);\n}\n.event_list > li.event_list_event > svg[data-v-64472bb8] {\n\tmargin-top: -2px;\n}\n.event_list > div[data-v-64472bb8] {\n\tdisplay: inline-block;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.input_wrapper[data-v-64472bb8] {\n\tmargin: 2px 0;\n}\n.input_wrapper > label[data-v-64472bb8] {\n\twidth: 100px;\n\ttext-align: right;\n\tvertical-align: middle;\n\tmargin: 3px 0;\n}\n.input_right[data-v-64472bb8] {\n\tdisplay: inline-flex;\n\tgap: 2px;\n\tvertical-align: middle;\n\twidth: calc(100% - 110px);\n\tmargin-left: 4px;\n}\n.input_right.full_width[data-v-64472bb8] {\n\twidth: calc(100% - 8px);\n}\n.input_right.expandable[data-v-64472bb8] {\n\twidth: calc(100% - 134px);\n}\n.input_right[axes=\"1\"] > input[data-v-64472bb8]:not([type=\"checkbox\"]), .input_right[axes=\"1\"] > select[data-v-64472bb8]:not([type=\"checkbox\"]) {\n\twidth: 100%;\n}\n.input_right.expanded[data-v-64472bb8] {\n\tdisplay: block;\n\twidth: calc(100% - 7px);\n}\n.input_right.expanded input[data-v-64472bb8], .input_right.expanded .input_vector[data-v-64472bb8]  {\n\twidth: 100% !important;\n\tdisplay: block;\n\tmargin-left: 0;\n}\n.tool.input_expand_button[data-v-64472bb8] {\n\tfloat: right;\n\twidth: 22px;\n\tpadding-left: 0;\n\tpadding-top: 2px;\n}\nli[input_type=\"select_custom\"] select[data-v-64472bb8] {\n\twidth: 140px;\n\tflex-grow: 1;\n}\n.input_list li[data-v-64472bb8] {\n\tmargin: 2px 0;\n}\nul.input_list input[data-v-64472bb8], ul.input_list .prism-editor-component[data-v-64472bb8] {\n\twidth: calc(100% - 80px);\n\tmargin-left: 52px;\n\tfloat: left;\n}\n.input_list li .tool[data-v-64472bb8] {\n\tpadding: 2px 0px;\n\twidth: 24px;\n\theight: 30px;\n}\n.input_vector[data-v-64472bb8] {\n\twidth: 40px;\n\tflex-grow: 1;\n}\n.input_vector[data-v-64472bb8]:first-child {\n\tmargin-left: 0;\n}\n.list_add_tool[data-v-64472bb8] {\n\tvertical-align: sub;\n}\n.event_list[data-v-64472bb8] {\n\tposition: relative;\n\tmin-height: 30px;\n\twidth: auto;\n\tflex-grow: 1;\n\tpadding: 0 1px;\n}\n.event_list > li.event_list_event[data-v-64472bb8] {\n\theight: 30px;\n\tdisplay: inline-block;\n\tpadding: 4px 13px;\n\tmargin: 1px 2px;\n\tbackground-color: var(--color-bar);\n\tborder-radius: 5px;\n\tbox-shadow: 0 1px 14px rgba(0, 0, 0, 0.18);\n}\n.event_list > li.event_list_event > label[data-v-64472bb8] {\n\tfont-family: var(--font-code);\n}\n.event_list > li.event_list_event > svg[data-v-64472bb8] {\n\tmargin-top: -2px;\n}\n.event_list > div[data-v-64472bb8] {\n\tdisplay: inline-block;\n}\n.timeline_event_list[data-v-64472bb8] {\n\tmargin-top: -2px;\n\tmargin-bottom: 0;\n}\n.event_speed_list > li.event_list_event[data-v-64472bb8] {\n\tpadding: 5px;\n}\n.event_speed_list > li.event_list_event > .highlighting_button[data-v-64472bb8] {\n\tfloat: right;\n\tmargin-top: 1px;\n}\n.event_min_speed[data-v-64472bb8] {\n\twidth: 100%;\n\tdisplay: flex;\n\tgap: 5px;\n\tborder-top: 2px solid var(--color-interface);\n\tpadding-top: 4px;\n}\n.event_min_speed > label[data-v-64472bb8] {\n\tpadding-top: 3px;\n}\n.event_min_speed > input[data-v-64472bb8] {\n\twidth: 56px;\n}\nul.event_timeline[data-v-64472bb8] {\n\tpadding: 0 10px;\n\tmargin-left: 20px;\n\tposition: relative;\n}\nul.event_timeline[data-v-64472bb8]::before {\n\tdisplay: block;\n\tcontent: \"\";\n\tposition: absolute;\n\ttop: -4px;\n\tbottom: -2px;\n\tleft: -11px;\n\twidth: 6px;\n\tbackground-color: var(--color-bar);\n\tborder-radius: 3px;\n}\nul.event_timeline > li[data-v-64472bb8] {\n\tdisplay: block;\n\tposition: relative;\n\tdisplay: flex;\n\tgap: 6px;\n\tmargin: 2px 0;\n\tpadding-left: 2px;\n}\nul.event_timeline > li[data-v-64472bb8]::before {\n\tdisplay: block;\n\tcontent: \"\";\n\tposition: absolute;\n\ttop: 7px;\n\tleft: -26px;\n\theight: 16px;\n\twidth: 16px;\n\tbackground-color: var(--color-title);\n\tborder-radius: 50%;\n}\nul.event_timeline > li[data-v-64472bb8]:hover::before {\n\tfilter: brightness(1.2);\n}\nul.event_timeline > li:not(:hover) .event_switch_button[data-v-64472bb8] {\n\tdisplay: none;\n}\nul.event_timeline > li > input[data-v-64472bb8] {\n\twidth: 64px;\n}\nul.event_timeline > li > label[data-v-64472bb8] {\n\tfont-family: var(--font-code);\n\tpadding: 3px;\n}\nul.event_timeline > li > .timeline_remove_button[data-v-64472bb8] {\n\tmargin-left: auto;\n\tmargin-top: 2px;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -73909,7 +74111,11 @@ var render = function () {
           },
         },
       },
-      [_c("Plus", { attrs: { size: 22 } })],
+      [
+        _vm.replace
+          ? _c("Zap", { attrs: { size: 22 } })
+          : _c("Plus", { attrs: { size: 22 } }),
+      ],
       1
     ),
     _vm._v(" "),
@@ -74367,6 +74573,64 @@ var render = function () {
         ])
       : _vm._e(),
     _vm._v(" "),
+    typeof _vm.subpart.expression == "string"
+      ? _c(
+          "ul",
+          {
+            attrs: {
+              title: "Run a Molang expression on the event firing emitter",
+            },
+          },
+          [
+            _c(
+              "div",
+              { staticClass: "section_bar" },
+              [
+                _c("label", { staticClass: "descriptor_label" }, [
+                  _vm._v("Expression"),
+                ]),
+                _vm._v(" "),
+                _c("X", {
+                  staticClass: "highlighting_button",
+                  attrs: { size: 20, title: "Disable Expression" },
+                  on: {
+                    click: function ($event) {
+                      return _vm.disableExpressionSection()
+                    },
+                  },
+                }),
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "li",
+              { staticClass: "input_wrapper" },
+              [
+                _c("prism-editor", {
+                  attrs: {
+                    highlight: _vm.highlightMolang,
+                    language: "",
+                    "line-numbers": false,
+                    placeholder: "",
+                    autocomplete: _vm.autocomplete,
+                  },
+                  on: { input: _vm.modifyEvent },
+                  model: {
+                    value: _vm.subpart.expression,
+                    callback: function ($$v) {
+                      _vm.$set(_vm.subpart, "expression", $$v)
+                    },
+                    expression: "subpart.expression",
+                  },
+                }),
+              ],
+              1
+            ),
+          ]
+        )
+      : _vm._e(),
+    _vm._v(" "),
     _c(
       "ul",
       { staticClass: "create_bar" },
@@ -74383,10 +74647,7 @@ var render = function () {
                         },
                       },
                     },
-                    [
-                      _c("Plus", { attrs: { size: 18 } }),
-                      _vm._v("Particle Effect"),
-                    ],
+                    [_c("Plus", { attrs: { size: 18 } }), _vm._v("Particle")],
                     1
                   )
                 : _vm._e(),
@@ -74405,10 +74666,27 @@ var render = function () {
                     1
                   )
                 : _vm._e(),
+              _vm._v(" "),
+              !_vm.subpart.expression
+                ? _c(
+                    "li",
+                    {
+                      on: {
+                        click: function ($event) {
+                          return _vm.createExpressionSection()
+                        },
+                      },
+                    },
+                    [_c("Plus", { attrs: { size: 18 } }), _vm._v("Expression")],
+                    1
+                  )
+                : _vm._e(),
             ]
           : _vm._e(),
         _vm._v(" "),
-        !_vm.subpart.particle_effect && !_vm.subpart.sound_effect
+        !_vm.subpart.particle_effect &&
+        !_vm.subpart.sound_effect &&
+        _vm.subpart.expression == undefined
           ? [
               !_vm.subpart.sequence && !_vm.subpart.randomize
                 ? _c(
@@ -75116,11 +75394,8 @@ var render = function () {
                                   staticClass: "event_list_event",
                                 },
                                 [
-                                  _vm._v(
-                                    "\n\t\t\t\t\t\t" +
-                                      _vm._s(event_id) +
-                                      "\n\t\t\t\t\t\t"
-                                  ),
+                                  _c("label", [_vm._v(_vm._s(event_id))]),
+                                  _vm._v(" "),
                                   _c("X", {
                                     staticClass: "highlighting_button",
                                     attrs: { size: 18 },
@@ -75149,44 +75424,106 @@ var render = function () {
                           2
                         ),
                       ]
+                    : input.type == "event_timeline"
+                    ? [
+                        _c("event-picker", {
+                          on: {
+                            select: function ($event) {
+                              return _vm.addEventToTimeline(input, $event)
+                            },
+                          },
+                        }),
+                      ]
                     : _vm._e(),
                   _vm._v(" "),
-                  input.type == "event_timeline"
+                  input.type == "event_speed_list"
                     ? [
                         _c(
                           "ul",
-                          { staticClass: "event_timeline" },
+                          { staticClass: "event_list event_speed_list" },
                           [
-                            _vm._l(input.value, function (key, event_id) {
+                            _vm._l(input.value, function (event_obj) {
                               return _c(
                                 "li",
                                 {
-                                  key: event_id,
+                                  key: event_obj.event,
                                   staticClass: "event_list_event",
                                 },
                                 [
-                                  _vm._v(
-                                    "\n\t\t\t\t\t\t" +
-                                      _vm._s(event_id) +
-                                      "\n\t\t\t\t\t"
+                                  _c("label", [
+                                    _vm._v(_vm._s(event_obj.event)),
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("X", {
+                                    staticClass: "highlighting_button",
+                                    attrs: { size: 18 },
+                                    on: {
+                                      click: function ($event) {
+                                        input.value.remove(event_obj)
+                                        input.change($event)
+                                      },
+                                    },
+                                  }),
+                                  _vm._v(" "),
+                                  _c(
+                                    "div",
+                                    { staticClass: "event_min_speed" },
+                                    [
+                                      _c("label", [_vm._v("Min Speed")]),
+                                      _vm._v(" "),
+                                      _c("input", {
+                                        directives: [
+                                          {
+                                            name: "model",
+                                            rawName: "v-model.number",
+                                            value: event_obj.min_speed,
+                                            expression: "event_obj.min_speed",
+                                            modifiers: { number: true },
+                                          },
+                                        ],
+                                        attrs: { type: "number", min: "0" },
+                                        domProps: {
+                                          value: event_obj.min_speed,
+                                        },
+                                        on: {
+                                          input: function ($event) {
+                                            if ($event.target.composing) {
+                                              return
+                                            }
+                                            _vm.$set(
+                                              event_obj,
+                                              "min_speed",
+                                              _vm._n($event.target.value)
+                                            )
+                                          },
+                                          blur: function ($event) {
+                                            return _vm.$forceUpdate()
+                                          },
+                                        },
+                                      }),
+                                    ]
                                   ),
-                                ]
+                                ],
+                                1
                               )
                             }),
                             _vm._v(" "),
-                            _c(
-                              "li",
-                              {
-                                staticClass: "event_list_add",
-                                on: {
-                                  click: function ($event) {
-                                    return input.value.push("event")
-                                  },
+                            _c("event-picker", {
+                              attrs: {
+                                blacklist: input.value.map(function (o) {
+                                  return o.event
+                                }),
+                              },
+                              on: {
+                                select: function ($event) {
+                                  input.value.push({
+                                    event: $event,
+                                    min_speed: 0,
+                                  })
+                                  input.change($event)
                                 },
                               },
-                              [_c("Plus")],
-                              1
-                            ),
+                            }),
                           ],
                           2
                         ),
@@ -75229,6 +75566,112 @@ var render = function () {
                 ],
                 2
               ),
+          _vm._v(" "),
+          input.type == "event_timeline"
+            ? [
+                _c(
+                  "ul",
+                  { staticClass: "event_timeline" },
+                  _vm._l(input.timeline, function (entry) {
+                    return _c(
+                      "li",
+                      { key: entry.uuid },
+                      [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model.number",
+                              value: entry.time,
+                              expression: "entry.time",
+                              modifiers: { number: true },
+                            },
+                          ],
+                          attrs: { type: "number", step: "0.05" },
+                          domProps: { value: entry.time },
+                          on: {
+                            blur: [
+                              function ($event) {
+                                return input.change($event)
+                              },
+                              function ($event) {
+                                return _vm.$forceUpdate()
+                              },
+                            ],
+                            input: function ($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                entry,
+                                "time",
+                                _vm._n($event.target.value)
+                              )
+                            },
+                          },
+                        }),
+                        _vm._v(" "),
+                        _c(
+                          "ul",
+                          { staticClass: "event_list timeline_event_list" },
+                          [
+                            _vm._l(entry.event, function (event_id) {
+                              return _c(
+                                "li",
+                                {
+                                  key: event_id,
+                                  staticClass: "event_list_event",
+                                },
+                                [
+                                  _c("label", [_vm._v(_vm._s(event_id))]),
+                                  _vm._v(" "),
+                                  _c("X", {
+                                    staticClass: "highlighting_button",
+                                    attrs: { size: 18 },
+                                    on: {
+                                      click: function ($event) {
+                                        entry.event.remove(event_id)
+                                        input.change($event)
+                                      },
+                                    },
+                                  }),
+                                ],
+                                1
+                              )
+                            }),
+                            _vm._v(" "),
+                            _c("event-picker", {
+                              attrs: { blacklist: entry.event },
+                              on: {
+                                select: function ($event) {
+                                  entry.event.push($event)
+                                  input.change($event)
+                                },
+                              },
+                            }),
+                          ],
+                          2
+                        ),
+                        _vm._v(" "),
+                        _c("X", {
+                          staticClass:
+                            "highlighting_button timeline_remove_button",
+                          attrs: { size: 18 },
+                          on: {
+                            click: function ($event) {
+                              input.timeline.remove(entry)
+                              input.change($event)
+                            },
+                          },
+                        }),
+                      ],
+                      1
+                    )
+                  }),
+                  0
+                ),
+              ]
+            : _vm._e(),
         ],
         2
       )

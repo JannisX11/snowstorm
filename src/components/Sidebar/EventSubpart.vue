@@ -80,12 +80,27 @@
 				/>
 			</li>
 		</ul>
+		<ul v-if="typeof subpart.expression == 'string'" title="Run a Molang expression on the event firing emitter">
+			<div class="section_bar">
+				<label class="descriptor_label">Expression</label>
+				<X :size="20" class="highlighting_button" title="Disable Expression" @click="disableExpressionSection()" />
+			</div>
+			<li class="input_wrapper">
+				<prism-editor :highlight="highlightMolang" language="" :line-numbers="false"
+					v-model="subpart.expression"
+					placeholder=""
+					:autocomplete="autocomplete"
+					@input="modifyEvent"
+				/>
+			</li>
+		</ul>
 		<ul class="create_bar">
 			<template v-if="!subpart.sequence && !subpart.randomize">
-				<li v-if="!subpart.particle_effect" @click="createParticleSection();"><Plus :size="18" />Particle Effect</li>
+				<li v-if="!subpart.particle_effect" @click="createParticleSection();"><Plus :size="18" />Particle</li>
 				<li v-if="!subpart.sound_effect" @click="createSoundSection();"><Plus :size="18" />Sound</li>
+				<li v-if="!subpart.expression" @click="createExpressionSection();"><Plus :size="18" />Expression</li>
 			</template>
-			<template v-if="!subpart.particle_effect && !subpart.sound_effect">
+			<template v-if="!subpart.particle_effect && !subpart.sound_effect && subpart.expression == undefined">
 				<li v-if="!subpart.sequence && !subpart.randomize" @click="createSequenceSection();"><Plus :size="18" />Sequence</li>
 				<li v-if="!subpart.sequence && !subpart.randomize" @click="createRandomizeSection();"><Plus :size="18" />Randomize</li>
 			</template>
@@ -161,6 +176,10 @@ export default {
 			});
 			this.modifyEvent();
 		},
+		createExpressionSection() {
+			Vue.set(this.subpart, 'expression', '');
+			this.modifyEvent();
+		},
 		addSequenceOption() {
 			let option = {
 				uuid: guid()
@@ -198,8 +217,14 @@ export default {
 			Vue.delete(this.subpart, 'sound_effect');
 			this.modifyEvent();
 		},
+		disableExpressionSection() {
+			Vue.delete(this.subpart, 'expression');
+			this.modifyEvent();
+		},
 		async selectParticleFile() {
 			let identifier = await loadEventSubEffect();
+			this.is_extension = !this.is_extension;
+			this.is_extension = !this.is_extension;
 			if (identifier && identifier != this.subpart.particle_effect.effect) {
 				this.subpart.particle_effect.effect = identifier;
 				this.modifyEvent();
@@ -244,7 +269,7 @@ export default {
 	ul.create_bar {
 		display: flex;
 		justify-content: center;
-		gap: 8px;
+		gap: 6px;
 		padding: 4px 6px;
 		flex-wrap: wrap;
 	}
@@ -252,6 +277,7 @@ export default {
 		cursor: pointer;
 		white-space: nowrap;
 		color: var(--color-text_grayed);
+		font-size: 0.96em;
 	}
 	ul.create_bar > li:hover {
 		color: var(--color-text);

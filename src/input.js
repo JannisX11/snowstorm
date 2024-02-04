@@ -3,6 +3,7 @@ import registerEdit from './edits'
 import {ExpandedInput} from './components/ExpressionBar'
 import { Config, updateMaterial } from './emitter'
 import { Texture } from './texture_edit';
+import { trimFloatNumber, guid } from './util';
 
 export default class Input {
 	constructor(data) {
@@ -36,12 +37,14 @@ export default class Input {
 			}
 			this.image_element = Emitter.config.texture.image;
 			this.allow_upload = data.allow_upload;
-
 		}
 		if (this.type == 'number') {
 			this.step = data.step;
 			this.min = data.min;
 			this.max = data.max;
+		}
+		if (this.type == 'event_timeline') {
+			this.timeline = [];
 		}
 		if (this.id) {
 			this.value = Config[this.id];
@@ -69,6 +72,16 @@ export default class Input {
 			this.meta_value = this.options.custom;
 		} else if (this.type === 'select' || this.type === 'select_custom') {
 			this.meta_value = this.options[v];
+		}
+		if (this.type == 'event_timeline') {
+			this.timeline.splice(0);
+			for (let key in this._value) {
+				this.timeline.push({
+					uuid: guid(),
+					time: parseFloat(key),
+					event: this._value[key] instanceof Array ? this._value[key] : [this._value[key]],
+				});
+			}
 		}
 	}
 	toggleExpand() {
@@ -114,6 +127,7 @@ export default class Input {
 					scope.image.loaded = true;
 					scope.image.hidden = true;
 					scope.image.hidden = false;
+					Emitter.config.updateTexture();
 					updateMaterial();
 				}
 				reader.readAsDataURL(file)
@@ -128,6 +142,16 @@ export default class Input {
 		}
 		if (this.type === 'color') {
 			if (typeof this.value == 'object') this.value = this.value.hex8;
+		}
+		if (this.type == 'event_timeline') {
+			for (let key in this._value) {
+				delete this._value[key];
+			}
+			this.timeline.sort((a, b) => a.time - b.time);
+			console.log(this.timeline)
+			this.timeline.forEach(entry => {
+				this._value[trimFloatNumber(entry.time)] = entry.event;
+			})
 		}
 		if (typeof this.onchange === 'function') {
 			this.onchange(e)

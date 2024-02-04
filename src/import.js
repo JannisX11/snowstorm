@@ -1,5 +1,5 @@
 import {guid, IO, pathToExtension} from './util'
-import {Config, QuickSetup} from './emitter'
+import {Config, QuickSetup, updateMaterial} from './emitter'
 import vscode from './vscode_extension'
 import {Emitter} from './emitter'
 import {ExpandedInput} from './components/ExpressionBar'
@@ -107,7 +107,18 @@ function loadFile(data, confirmNewProject=true) {
 	}
 }
 
-window.loadFile = loadFile;
+window.loadFileFromParentEffect = function (raw_json, texture_url) {
+	loadFile(JSON.parse(raw_json), false);
+	console.log({raw_json, texture_url})
+	if (texture_url) {
+		let input = Data.texture.texture.inputs.image;
+		input.image.data = Texture.source = texture_url;
+		input.image.loaded = true;
+		Texture.updateCanvasFromSource();
+		Config.updateTexture();
+		updateMaterial()
+	}
+}
 
 function importFile() {
 	IO.import({
