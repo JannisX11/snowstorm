@@ -21,11 +21,9 @@ export default function sort(event, list, options = {}) {
 				let height = node.clientHeight;
 				let bounding_rect = node.getBoundingClientRect();
 				let cursor_offset = e2.clientY - bounding_rect.top;
-				console.log('test', i)
 				if (cursor_offset > height/2) {
 					i++;
 				}
-				console.log('test2', i)
 				break;
 			}
 			i++;

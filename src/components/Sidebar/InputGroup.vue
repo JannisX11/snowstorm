@@ -255,7 +255,6 @@ export default {
 		},
 		pickEventOnNameClick(event) {
 			let clicker = event.target.nextElementSibling;
-			console.log(clicker)
 			clicker.click();
 		}
 	}
@@ -426,7 +425,7 @@ export default {
 		display: none;
 	}
 	ul.event_timeline > li > input {
-		width: 64px;
+		width: 69px;
 	}
 	ul.event_timeline > li > label {
 		font-family: var(--font-code);

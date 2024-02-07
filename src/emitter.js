@@ -49,7 +49,6 @@ const Scene = new Wintersky.Scene({
 			return new Promise((resolve, reject) => {
 				function update(event) {
 					if (event.data.type == 'provide_particle_file') {
-						let json = event.data.file_content;
 						window.removeEventListener('message', update);
 						resolve(json);
 					}

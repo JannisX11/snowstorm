@@ -34,10 +34,8 @@ export default {
 	}},
 	methods: {
 		openMenu() {
-			console.log(this.is_open);
 			if (this.is_open) return;
 			this.is_open = true;
-			console.log(this.is_open);
 			this.click_listener = (e) => {
 				if (this.$refs.list) {
 					if (!this.$refs.list.contains(e.target)) {

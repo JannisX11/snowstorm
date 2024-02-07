@@ -53,7 +53,6 @@ export default {
 		renameEvent(event_entry, input_event) {
 			let value = input_event.target.value;
 			let old_value = event_entry.id;
-			console.log(value, old_value)
 			delete Config.events[old_value];
 			Config.events[value] = event_entry.event;
 			event_entry.id = value;
@@ -97,7 +96,7 @@ export default {
 		margin-block: 12px;
 	}
 	.event {
-		padding: 20px 10px;
+		padding: 20px 6px;
 		border-top: 2px solid var(--color-bar);
 		border-bottom: 2px solid transparent;
 	}
@@ -115,10 +114,8 @@ export default {
 	.event_header_bar {
 		display: flex;
 		gap: 4px;
-		margin-bottom: 4px;
 		background-color: var(--color-bar);
 		padding: 5px;
-		margin: 0 -5px;
 	}
 	.event_header_bar > label {
 		padding: 4px;

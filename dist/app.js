@@ -1649,7 +1649,6 @@ vue__WEBPACK_IMPORTED_MODULE_6__["default"].component('event-subpart', _EventSub
     renameEvent: function renameEvent(event_entry, input_event) {
       var value = input_event.target.value;
       var old_value = event_entry.id;
-      console.log(value, old_value);
       delete _emitter__WEBPACK_IMPORTED_MODULE_2__.Config.events[old_value];
       _emitter__WEBPACK_IMPORTED_MODULE_2__.Config.events[value] = event_entry.event;
       event_entry.id = value;
@@ -1743,10 +1742,8 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     openMenu: function openMenu() {
       var _this = this;
-      console.log(this.is_open);
       if (this.is_open) return;
       this.is_open = true;
-      console.log(this.is_open);
       this.click_listener = function (e) {
         if (_this.$refs.list) {
           if (!_this.$refs.list.contains(e.target)) {
@@ -2462,7 +2459,6 @@ __webpack_require__.r(__webpack_exports__);
     },
     pickEventOnNameClick: function pickEventOnNameClick(event) {
       var clicker = event.target.nextElementSibling;
-      console.log(clicker);
       clicker.click();
     }
   }
@@ -3960,7 +3956,7 @@ var Scene = new wintersky__WEBPACK_IMPORTED_MODULE_2__["default"].Scene({
       return new Promise(function (resolve, reject) {
         function update(event) {
           if (event.data.type == 'provide_particle_file') {
-            var json = event.data.file_content;
+            var json = JSON.parse(event.data.content);
             window.removeEventListener('message', update);
             resolve(json);
           }
@@ -4077,6 +4073,7 @@ function _loadEventSubEffect() {
             _util__WEBPACK_IMPORTED_MODULE_1__.IO["import"]({
               extensions: ['json']
             }, function (files) {
+              console.log(files);
               if (files[0]) {
                 resolve(JSON.parse(files[0].content));
               } else {
@@ -4348,7 +4345,6 @@ function generateFile() {
     try {
       for (_iterator4.s(); !(_step4 = _iterator4.n()).done;) {
         var entry = _step4.value;
-        console.log(entry, entry.id);
         var copy = JSON.parse(JSON.stringify(entry.event));
         file.particle_effect.events[entry.id] = cleanEvent(copy);
       }
@@ -5289,9 +5285,8 @@ var Input = /*#__PURE__*/function () {
         this.timeline.sort(function (a, b) {
           return a.time - b.time;
         });
-        console.log(this.timeline);
         this.timeline.forEach(function (entry) {
-          _this._value[(0,_util__WEBPACK_IMPORTED_MODULE_4__.trimFloatNumber)(entry.time)] = entry.event;
+          _this._value[entry.time.toFixed(2)] = entry.event;
         });
       }
       if (typeof this.onchange === 'function') {
@@ -6670,11 +6665,9 @@ function sort(event, list) {
           var height = node.clientHeight;
           var bounding_rect = node.getBoundingClientRect();
           var cursor_offset = e2.clientY - bounding_rect.top;
-          console.log('test', i);
           if (cursor_offset > height / 2) {
             i++;
           }
-          console.log('test2', i);
           break;
         }
         i++;
@@ -10038,7 +10031,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n#event_list[data-v-3223e676] {\n\tmargin-block: 12px;\n}\n.event[data-v-3223e676] {\n\tpadding: 20px 10px;\n\tborder-top: 2px solid var(--color-bar);\n\tborder-bottom: 2px solid transparent;\n}\n.event[data-v-3223e676]:first-of-type {\n\tborder-top-color: transparent;\n\tmargin-top: 0;\n\tpadding-top: 4px;\n}\n.event.sort_before[data-v-3223e676] {\n\tborder-top: 2px solid var(--color-accent);\n}\n.event.sort_after[data-v-3223e676] {\n\tborder-bottom: 2px solid var(--color-accent);\n}\n.event_header_bar[data-v-3223e676] {\n\tdisplay: flex;\n\tgap: 4px;\n\tmargin-bottom: 4px;\n\tbackground-color: var(--color-bar);\n\tpadding: 5px;\n\tmargin: 0 -5px;\n}\n.event_header_bar > label[data-v-3223e676] {\n\tpadding: 4px;\n\tmin-width: 80px;\n\ttext-align: right;\n}\n.event_header_bar > input[data-v-3223e676] {\n\tmargin-right: auto;\n}\n.event_sort_handle[data-v-3223e676] {\n\tcursor: grab;\n\tpadding-top: 2px;\n}\n.remove_event_button[data-v-3223e676] {\n\tpadding: 4px;\n\tcursor: pointer;\n}\n.remove_event_button[data-v-3223e676]:hover {\n\tcolor: var(--color-highlight);\n}\n\n\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n#event_list[data-v-3223e676] {\n\tmargin-block: 12px;\n}\n.event[data-v-3223e676] {\n\tpadding: 20px 6px;\n\tborder-top: 2px solid var(--color-bar);\n\tborder-bottom: 2px solid transparent;\n}\n.event[data-v-3223e676]:first-of-type {\n\tborder-top-color: transparent;\n\tmargin-top: 0;\n\tpadding-top: 4px;\n}\n.event.sort_before[data-v-3223e676] {\n\tborder-top: 2px solid var(--color-accent);\n}\n.event.sort_after[data-v-3223e676] {\n\tborder-bottom: 2px solid var(--color-accent);\n}\n.event_header_bar[data-v-3223e676] {\n\tdisplay: flex;\n\tgap: 4px;\n\tbackground-color: var(--color-bar);\n\tpadding: 5px;\n}\n.event_header_bar > label[data-v-3223e676] {\n\tpadding: 4px;\n\tmin-width: 80px;\n\ttext-align: right;\n}\n.event_header_bar > input[data-v-3223e676] {\n\tmargin-right: auto;\n}\n.event_sort_handle[data-v-3223e676] {\n\tcursor: grab;\n\tpadding-top: 2px;\n}\n.remove_event_button[data-v-3223e676] {\n\tpadding: 4px;\n\tcursor: pointer;\n}\n.remove_event_button[data-v-3223e676]:hover {\n\tcolor: var(--color-highlight);\n}\n\n\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -10134,7 +10127,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.input_wrapper[data-v-64472bb8] {\n\tmargin: 2px 0;\n}\n.input_wrapper > label[data-v-64472bb8] {\n\twidth: 100px;\n\ttext-align: right;\n\tvertical-align: middle;\n\tmargin: 3px 0;\n}\n.input_right[data-v-64472bb8] {\n\tdisplay: inline-flex;\n\tgap: 2px;\n\tvertical-align: middle;\n\twidth: calc(100% - 110px);\n\tmargin-left: 4px;\n}\n.input_right.full_width[data-v-64472bb8] {\n\twidth: calc(100% - 8px);\n}\n.input_right.expandable[data-v-64472bb8] {\n\twidth: calc(100% - 134px);\n}\n.input_right[axes=\"1\"] > input[data-v-64472bb8]:not([type=\"checkbox\"]), .input_right[axes=\"1\"] > select[data-v-64472bb8]:not([type=\"checkbox\"]) {\n\twidth: 100%;\n}\n.input_right.expanded[data-v-64472bb8] {\n\tdisplay: block;\n\twidth: calc(100% - 7px);\n}\n.input_right.expanded input[data-v-64472bb8], .input_right.expanded .input_vector[data-v-64472bb8]  {\n\twidth: 100% !important;\n\tdisplay: block;\n\tmargin-left: 0;\n}\n.tool.input_expand_button[data-v-64472bb8] {\n\tfloat: right;\n\twidth: 22px;\n\tpadding-left: 0;\n\tpadding-top: 2px;\n}\nli[input_type=\"select_custom\"] select[data-v-64472bb8] {\n\twidth: 140px;\n\tflex-grow: 1;\n}\n.input_list li[data-v-64472bb8] {\n\tmargin: 2px 0;\n}\nul.input_list input[data-v-64472bb8], ul.input_list .prism-editor-component[data-v-64472bb8] {\n\twidth: calc(100% - 80px);\n\tmargin-left: 52px;\n\tfloat: left;\n}\n.input_list li .tool[data-v-64472bb8] {\n\tpadding: 2px 0px;\n\twidth: 24px;\n\theight: 30px;\n}\n.input_vector[data-v-64472bb8] {\n\twidth: 40px;\n\tflex-grow: 1;\n}\n.input_vector[data-v-64472bb8]:first-child {\n\tmargin-left: 0;\n}\n.list_add_tool[data-v-64472bb8] {\n\tvertical-align: sub;\n}\n.event_list[data-v-64472bb8] {\n\tposition: relative;\n\tmin-height: 30px;\n\twidth: auto;\n\tflex-grow: 1;\n\tpadding: 0 1px;\n}\n.event_list > li.event_list_event[data-v-64472bb8] {\n\theight: 30px;\n\tdisplay: inline-block;\n\tpadding: 4px 13px;\n\tmargin: 1px 2px;\n\tbackground-color: var(--color-bar);\n\tborder-radius: 5px;\n\tbox-shadow: 0 1px 14px rgba(0, 0, 0, 0.18);\n}\n.event_list > li.event_list_event > label[data-v-64472bb8] {\n\tfont-family: var(--font-code);\n}\n.event_list > li.event_list_event > svg[data-v-64472bb8] {\n\tmargin-top: -2px;\n}\n.event_list > div[data-v-64472bb8] {\n\tdisplay: inline-block;\n}\n.timeline_event_list[data-v-64472bb8] {\n\tmargin-top: -2px;\n\tmargin-bottom: 0;\n}\n.event_speed_list > li.event_list_event[data-v-64472bb8] {\n\tpadding: 5px;\n}\n.event_speed_list > li.event_list_event > .highlighting_button[data-v-64472bb8] {\n\tfloat: right;\n\tmargin-top: 1px;\n}\n.event_min_speed[data-v-64472bb8] {\n\twidth: 100%;\n\tdisplay: flex;\n\tgap: 5px;\n\tborder-top: 2px solid var(--color-interface);\n\tpadding-top: 4px;\n}\n.event_min_speed > label[data-v-64472bb8] {\n\tpadding-top: 3px;\n}\n.event_min_speed > input[data-v-64472bb8] {\n\twidth: 56px;\n}\nul.event_timeline[data-v-64472bb8] {\n\tpadding: 0 10px;\n\tmargin-left: 20px;\n\tposition: relative;\n}\nul.event_timeline[data-v-64472bb8]::before {\n\tdisplay: block;\n\tcontent: \"\";\n\tposition: absolute;\n\ttop: -4px;\n\tbottom: -2px;\n\tleft: -11px;\n\twidth: 6px;\n\tbackground-color: var(--color-bar);\n\tborder-radius: 3px;\n}\nul.event_timeline > li[data-v-64472bb8] {\n\tdisplay: block;\n\tposition: relative;\n\tdisplay: flex;\n\tgap: 6px;\n\tmargin: 2px 0;\n\tpadding-left: 2px;\n}\nul.event_timeline > li[data-v-64472bb8]::before {\n\tdisplay: block;\n\tcontent: \"\";\n\tposition: absolute;\n\ttop: 7px;\n\tleft: -26px;\n\theight: 16px;\n\twidth: 16px;\n\tbackground-color: var(--color-title);\n\tborder-radius: 50%;\n}\nul.event_timeline > li[data-v-64472bb8]:hover::before {\n\tfilter: brightness(1.2);\n}\nul.event_timeline > li:not(:hover) .event_switch_button[data-v-64472bb8] {\n\tdisplay: none;\n}\nul.event_timeline > li > input[data-v-64472bb8] {\n\twidth: 64px;\n}\nul.event_timeline > li > label[data-v-64472bb8] {\n\tfont-family: var(--font-code);\n\tpadding: 3px;\n}\nul.event_timeline > li > .timeline_remove_button[data-v-64472bb8] {\n\tmargin-left: auto;\n\tmargin-top: 2px;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.input_wrapper[data-v-64472bb8] {\n\tmargin: 2px 0;\n}\n.input_wrapper > label[data-v-64472bb8] {\n\twidth: 100px;\n\ttext-align: right;\n\tvertical-align: middle;\n\tmargin: 3px 0;\n}\n.input_right[data-v-64472bb8] {\n\tdisplay: inline-flex;\n\tgap: 2px;\n\tvertical-align: middle;\n\twidth: calc(100% - 110px);\n\tmargin-left: 4px;\n}\n.input_right.full_width[data-v-64472bb8] {\n\twidth: calc(100% - 8px);\n}\n.input_right.expandable[data-v-64472bb8] {\n\twidth: calc(100% - 134px);\n}\n.input_right[axes=\"1\"] > input[data-v-64472bb8]:not([type=\"checkbox\"]), .input_right[axes=\"1\"] > select[data-v-64472bb8]:not([type=\"checkbox\"]) {\n\twidth: 100%;\n}\n.input_right.expanded[data-v-64472bb8] {\n\tdisplay: block;\n\twidth: calc(100% - 7px);\n}\n.input_right.expanded input[data-v-64472bb8], .input_right.expanded .input_vector[data-v-64472bb8]  {\n\twidth: 100% !important;\n\tdisplay: block;\n\tmargin-left: 0;\n}\n.tool.input_expand_button[data-v-64472bb8] {\n\tfloat: right;\n\twidth: 22px;\n\tpadding-left: 0;\n\tpadding-top: 2px;\n}\nli[input_type=\"select_custom\"] select[data-v-64472bb8] {\n\twidth: 140px;\n\tflex-grow: 1;\n}\n.input_list li[data-v-64472bb8] {\n\tmargin: 2px 0;\n}\nul.input_list input[data-v-64472bb8], ul.input_list .prism-editor-component[data-v-64472bb8] {\n\twidth: calc(100% - 80px);\n\tmargin-left: 52px;\n\tfloat: left;\n}\n.input_list li .tool[data-v-64472bb8] {\n\tpadding: 2px 0px;\n\twidth: 24px;\n\theight: 30px;\n}\n.input_vector[data-v-64472bb8] {\n\twidth: 40px;\n\tflex-grow: 1;\n}\n.input_vector[data-v-64472bb8]:first-child {\n\tmargin-left: 0;\n}\n.list_add_tool[data-v-64472bb8] {\n\tvertical-align: sub;\n}\n.event_list[data-v-64472bb8] {\n\tposition: relative;\n\tmin-height: 30px;\n\twidth: auto;\n\tflex-grow: 1;\n\tpadding: 0 1px;\n}\n.event_list > li.event_list_event[data-v-64472bb8] {\n\theight: 30px;\n\tdisplay: inline-block;\n\tpadding: 4px 13px;\n\tmargin: 1px 2px;\n\tbackground-color: var(--color-bar);\n\tborder-radius: 5px;\n\tbox-shadow: 0 1px 14px rgba(0, 0, 0, 0.18);\n}\n.event_list > li.event_list_event > label[data-v-64472bb8] {\n\tfont-family: var(--font-code);\n}\n.event_list > li.event_list_event > svg[data-v-64472bb8] {\n\tmargin-top: -2px;\n}\n.event_list > div[data-v-64472bb8] {\n\tdisplay: inline-block;\n}\n.timeline_event_list[data-v-64472bb8] {\n\tmargin-top: -2px;\n\tmargin-bottom: 0;\n}\n.event_speed_list > li.event_list_event[data-v-64472bb8] {\n\tpadding: 5px;\n}\n.event_speed_list > li.event_list_event > .highlighting_button[data-v-64472bb8] {\n\tfloat: right;\n\tmargin-top: 1px;\n}\n.event_min_speed[data-v-64472bb8] {\n\twidth: 100%;\n\tdisplay: flex;\n\tgap: 5px;\n\tborder-top: 2px solid var(--color-interface);\n\tpadding-top: 4px;\n}\n.event_min_speed > label[data-v-64472bb8] {\n\tpadding-top: 3px;\n}\n.event_min_speed > input[data-v-64472bb8] {\n\twidth: 56px;\n}\nul.event_timeline[data-v-64472bb8] {\n\tpadding: 0 10px;\n\tmargin-left: 20px;\n\tposition: relative;\n}\nul.event_timeline[data-v-64472bb8]::before {\n\tdisplay: block;\n\tcontent: \"\";\n\tposition: absolute;\n\ttop: -4px;\n\tbottom: -2px;\n\tleft: -11px;\n\twidth: 6px;\n\tbackground-color: var(--color-bar);\n\tborder-radius: 3px;\n}\nul.event_timeline > li[data-v-64472bb8] {\n\tdisplay: block;\n\tposition: relative;\n\tdisplay: flex;\n\tgap: 6px;\n\tmargin: 2px 0;\n\tpadding-left: 2px;\n}\nul.event_timeline > li[data-v-64472bb8]::before {\n\tdisplay: block;\n\tcontent: \"\";\n\tposition: absolute;\n\ttop: 7px;\n\tleft: -26px;\n\theight: 16px;\n\twidth: 16px;\n\tbackground-color: var(--color-title);\n\tborder-radius: 50%;\n}\nul.event_timeline > li[data-v-64472bb8]:hover::before {\n\tfilter: brightness(1.2);\n}\nul.event_timeline > li:not(:hover) .event_switch_button[data-v-64472bb8] {\n\tdisplay: none;\n}\nul.event_timeline > li > input[data-v-64472bb8] {\n\twidth: 69px;\n}\nul.event_timeline > li > label[data-v-64472bb8] {\n\tfont-family: var(--font-code);\n\tpadding: 3px;\n}\nul.event_timeline > li > .timeline_remove_button[data-v-64472bb8] {\n\tmargin-left: auto;\n\tmargin-top: 2px;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

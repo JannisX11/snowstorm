@@ -10,6 +10,7 @@ export async function loadEventSubEffect() {
         IO.import({
             extensions: ['json']
         }, (files) => {
+            console.log(files)
             if (files[0]) {
                 resolve(JSON.parse(files[0].content));
             } else {

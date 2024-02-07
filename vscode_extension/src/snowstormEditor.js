@@ -1,5 +1,5 @@
 const vscode = require('vscode');
-const path = require('path');
+const Path = require('path');
 const fs = require('fs');
 
 //Find
@@ -21,7 +21,7 @@ function findFileFromContent(base_directories, options, check_file) {
 			let content;
 			if (options.read_file !== false) content = fs.readFileSync(path, 'utf-8');
 			
-			return check_file(path, options.json ? autoParseJSON(content, false) : content);
+			return check_file(path, options.json ? JSON.parse(content, false) : content);
 
 		} catch (err) {
 			console.error(err);
@@ -40,7 +40,7 @@ function findFileFromContent(base_directories, options, check_file) {
 			if (dirent.isDirectory()) continue;
 
 			if (!options.filter_regex || options.filter_regex.exec(dirent.name)) {
-				let new_path = path + osfs + dirent.name;
+				let new_path = path + Path.sep + dirent.name;
 				if (!options.priority_regex || options.priority_regex.exec(dirent.name)) {
 					// priority checking
 					let result = checkFile(new_path);
@@ -54,7 +54,7 @@ function findFileFromContent(base_directories, options, check_file) {
 			for (let dirent of files) {
 				if (!dirent.isDirectory()) continue;
 
-				let result = searchFolder(path + osfs + dirent.name);
+				let result = searchFolder(path + Path.sep + dirent.name);
 				if (result) return result;
 			}
 		}
@@ -70,18 +70,19 @@ function findFileFromContent(base_directories, options, check_file) {
 	}
 }
 
-function getParticleFileFromIdentifier() {
-	let path_arr = document.fileName.split(path.sep);
+function getParticleFileFromIdentifier(identifier, document_path) {
+	let path_arr = document_path.split(Path.sep);
 	let particle_index = path_arr.indexOf('particles');
 	path_arr.splice(particle_index+1);
-	let filePath = path_arr.join(path.sep);
-	let name = e.identifier.split(':')[0];
-	return findFileFromContent([filePath], {filter_regex: /\.json$/i, priority_regex: new RegExp(name, 'i'), json: true}, (path, content) => {
+	let filePath = path_arr.join(Path.sep);
+	let name = identifier.split(':')[1];
+	let files = findFileFromContent([filePath], {filter_regex: /\.json$/i, priority_regex: new RegExp(name, 'i'), json: true}, (path, content) => {
 		let file_id = content && content?.particle_effect?.description?.identifier;
-		if (file_id == e.identifier) {
+		if (file_id == identifier) {
 			return [path, content];
 		}
 	}) || [];
+	return files;
 }
 
 module.exports.SnowstormEditorProvider = class SnowstormEditorProvider {
@@ -147,10 +148,10 @@ module.exports.SnowstormEditorProvider = class SnowstormEditorProvider {
 					break;
 				}
 				case 'save_texture': {
-					let path_arr = document.fileName.split(path.sep);
+					let path_arr = document.fileName.split(Path.sep);
 					let particle_index = path_arr.indexOf('particles')
 					path_arr.splice(particle_index)
-					let filePath = path.join(path_arr.join(path.sep), e.path.replace(/\.png$/, '')+'.png')
+					let filePath = Path.join(path_arr.join(Path.sep), e.path.replace(/\.png$/, '')+'.png')
 
 					fs.writeFileSync(filePath, e.content.split(',')[1], {encoding: 'base64'});
 					break;
@@ -165,10 +166,10 @@ module.exports.SnowstormEditorProvider = class SnowstormEditorProvider {
 					break;
 				}
 				case 'request_texture': {
-					let path_arr = document.fileName.split(path.sep);
+					let path_arr = document.fileName.split(Path.sep);
 					let particle_index = path_arr.indexOf('particles')
 					path_arr.splice(particle_index)
-					let filePath = path.join(path_arr.join(path.sep), e.path.replace(/\.png$/, '')+'.png')
+					let filePath = Path.join(path_arr.join(Path.sep), e.path.replace(/\.png$/, '')+'.png')
 
 					if (fs.existsSync(filePath)) {
 						const tex_url = webviewPanel.webview.asWebviewUri(vscode.Uri.file(filePath));
@@ -191,7 +192,7 @@ module.exports.SnowstormEditorProvider = class SnowstormEditorProvider {
 					if (match_content) {
 						webviewPanel.webview.postMessage({
 							type: 'provide_particle_file',
-							content: match_content,
+							content: JSON.stringify(match_content),
 							fromExtension: true
 						});
 					} else {
@@ -207,8 +208,7 @@ module.exports.SnowstormEditorProvider = class SnowstormEditorProvider {
 					let [match_path] = getParticleFileFromIdentifier(e.identifier, document.fileName);
 					if (match_path) {
 						(async function() {
-							let uri = vscode.Uri.parse(match_path);
-							console.log(match_path, url)
+							let uri = vscode.Uri.file(match_path);
 							vscode.workspace.openTextDocument(uri).then(doc => {
 								vscode.window.showTextDocument(doc, { preview: true });
 							})
@@ -217,11 +217,10 @@ module.exports.SnowstormEditorProvider = class SnowstormEditorProvider {
 					break;
 				}
 				case 'texture_autocomplete': {
-					let json_path_arr = document.fileName.split(path.sep);
+					let json_path_arr = document.fileName.split(Path.sep);
 					let json_particle_index = json_path_arr.indexOf('particles');
 					json_path_arr.splice(json_particle_index);
-					let directory_path = path.join(json_path_arr.join(path.sep), e.path);
-					console.log(directory_path)
+					let directory_path = Path.join(json_path_arr.join(Path.sep), e.path);
 
 					let list = [];
 					try {
@@ -243,7 +242,7 @@ module.exports.SnowstormEditorProvider = class SnowstormEditorProvider {
 	getHtmlForWebview(webview) {
 
 		const scriptUri = webview.asWebviewUri(vscode.Uri.file(
-			path.join(this.context.extensionPath, 'snowstorm', 'app.js')
+			Path.join(this.context.extensionPath, 'snowstorm', 'app.js')
 		));
 
 		return `<!DOCTYPE html>

@@ -126,7 +126,6 @@ function generateFile() {
 		}
 		file.particle_effect.events = {};
 		for (let entry of Data.events.events.events) {
-			console.log(entry, entry.id)
 			let copy = JSON.parse(JSON.stringify(entry.event));
 			file.particle_effect.events[entry.id] = cleanEvent(copy);
 		}

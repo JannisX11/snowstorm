@@ -148,9 +148,8 @@ export default class Input {
 				delete this._value[key];
 			}
 			this.timeline.sort((a, b) => a.time - b.time);
-			console.log(this.timeline)
 			this.timeline.forEach(entry => {
-				this._value[trimFloatNumber(entry.time)] = entry.event;
+				this._value[entry.time.toFixed(2)] = entry.event;
 			})
 		}
 		if (typeof this.onchange === 'function') {
