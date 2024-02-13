@@ -109,7 +109,6 @@ function loadFile(data, confirmNewProject=true) {
 
 window.loadFileFromParentEffect = function (raw_json, texture_url) {
 	loadFile(JSON.parse(raw_json), false);
-	console.log({raw_json, texture_url})
 	if (texture_url) {
 		let input = Data.texture.texture.inputs.image;
 		input.image.data = Texture.source = texture_url;

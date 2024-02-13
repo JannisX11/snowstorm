@@ -52,6 +52,20 @@ function formatEventTimeline(source) {
 		return copy;
 	}
 }
+function formatEventTimelineLooping(source) {
+	if (!source) return;
+	let copy_list = [];
+	for (let entry of source) {
+		let copy = {
+			distance: entry.distance,
+			effects: formatEventList(entry.effects)
+		};
+		copy_list.push(copy);
+	}
+	if (copy_list.length) {
+		return copy_list;
+	}
+}
 
 
 function generateFile() {
@@ -198,8 +212,10 @@ function generateFile() {
 		creation_event: formatEventList(Config.emitter_events_creation),
 		expiration_event: formatEventList(Config.emitter_events_expiration),
 		timeline: formatEventTimeline(Config.emitter_events_timeline),
+		travel_distance_events: formatEventTimeline(Config.emitter_events_distance),
+		looping_travel_distance_events: formatEventTimelineLooping(Config.emitter_events_distance_looping),
 	}
-	if (emitter_events.creation_event || emitter_events.expiration_event || emitter_events.timeline) {
+	if (emitter_events.creation_event || emitter_events.expiration_event || emitter_events.timeline || emitter_events.travel_distance_events || emitter_events.looping_travel_distance_events) {
 		comps['minecraft:emitter_lifetime_events'] = emitter_events;
 	}
 	//Direction

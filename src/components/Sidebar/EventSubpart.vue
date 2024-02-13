@@ -48,6 +48,7 @@
 					@input="modifyEvent"
 				/>
 				<div class="highlighting_button" @click="selectParticleFile()" v-if="!is_extension" title="Select File"><Upload :size="22" /></div>
+				<div class="highlighting_button" @click="selectParticleTexture()" v-if="!is_extension && canEditParticleFile()" title="Select Texture"><ImagePlus :size="22" /></div>
 				<div class="highlighting_button" @click="editParticleFile()" v-if="canEditParticleFile()" title="Edit Linked Particle Effect"><Pencil :size="22" /></div>
 			</li>
 			<li class="input_wrapper">
@@ -112,7 +113,7 @@
 
 import Vue from 'vue';
 import { guid } from '../../util';
-import { Plus, X, GripHorizontal, Upload, Pencil } from 'lucide-vue'
+import { Plus, X, GripHorizontal, Upload, ImagePlus, Pencil } from 'lucide-vue'
 import Prism from 'prismjs/components/prism-core';
 import {PrismEditor} from "root/packages/vue-prism-editor";
 import "prismjs/themes/prism-okaidia.css";
@@ -121,7 +122,7 @@ import vscode from '../../vscode_extension';
 import getAutocompleteData from '../../molang_autocomplete';
 import sort from '../../sort';
 import ListAddButton from '../Form/ListAddButton.vue';
-import { editEventSubEffect, EventSubEffects, loadEventSubEffect } from '../../event_sub_effects';
+import { editEventSubEffect, EventSubEffects, loadEventSubEffect, loadEventSubEffectTexture } from '../../event_sub_effects';
 
 const emitter_type_options = {
 	emitter: 'Emitter',
@@ -138,6 +139,7 @@ export default {
 		GripHorizontal,
 		PrismEditor,
 		Upload,
+		ImagePlus,
 		Pencil,
 		ListAddButton,
 	},
@@ -229,6 +231,9 @@ export default {
 				this.subpart.particle_effect.effect = identifier;
 				this.modifyEvent();
 			}
+		},
+		async selectParticleTexture() {
+			await loadEventSubEffectTexture();
 		},
 		editParticleFile() {
 			editEventSubEffect(this.subpart.particle_effect.effect);

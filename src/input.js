@@ -75,12 +75,23 @@ export default class Input {
 		}
 		if (this.type == 'event_timeline') {
 			this.timeline.splice(0);
-			for (let key in this._value) {
-				this.timeline.push({
-					uuid: guid(),
-					time: parseFloat(key),
-					event: this._value[key] instanceof Array ? this._value[key] : [this._value[key]],
-				});
+			if (this._value instanceof Array) {
+				for (let entry of this._value) {
+					let copy = {
+						uuid: guid(),
+						time: entry.distance,
+						event: entry.effects instanceof Array ? entry.effects : [entry.effects],
+					}
+					this.timeline.push(copy);
+				}
+			} else {
+				for (let key in this._value) {
+					this.timeline.push({
+						uuid: guid(),
+						time: parseFloat(key),
+						event: this._value[key] instanceof Array ? this._value[key] : [this._value[key]],
+					});
+				}
 			}
 		}
 	}
@@ -144,13 +155,25 @@ export default class Input {
 			if (typeof this.value == 'object') this.value = this.value.hex8;
 		}
 		if (this.type == 'event_timeline') {
-			for (let key in this._value) {
-				delete this._value[key];
+			if (this._value instanceof Array) {
+				this._value.empty();
+				this.timeline.sort((a, b) => a.time - b.time);
+				this.timeline.forEach(entry => {
+					let entry2 = {
+						distance: entry.time,
+						effects: entry.event
+					};
+					this._value.push(entry2);
+				})
+			} else {
+				for (let key in this._value) {
+					delete this._value[key];
+				}
+				this.timeline.sort((a, b) => a.time - b.time);
+				this.timeline.forEach(entry => {
+					this._value[entry.time.toFixed(2)] = entry.event;
+				})
 			}
-			this.timeline.sort((a, b) => a.time - b.time);
-			this.timeline.forEach(entry => {
-				this._value[entry.time.toFixed(2)] = entry.event;
-			})
 		}
 		if (typeof this.onchange === 'function') {
 			this.onchange(e)

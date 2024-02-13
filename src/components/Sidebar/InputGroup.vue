@@ -109,13 +109,13 @@
 							<label>{{ event_id }}</label>
 							<X :size="18" class="highlighting_button" @click="input.value.remove(event_id); input.change($event);" />
 						</li>
-						<event-picker :blacklist="input.value" @select="input.value.push($event); input.change($event);" />
+						<event-picker :blacklist="input.value" @select="($event, event) => {input.value.push($event); input.change(event);}" />
 					</ul>
 				</template>
 
 				<!--Event Timeline-->
 				<template v-else-if="input.type == 'event_timeline'">
-					<event-picker @select="addEventToTimeline(input, $event)" />
+					<event-picker @select="($event, event) => {addEventToTimeline(input, $event, event)}" />
 				</template>
 
 				<!--Event Min Speed List-->
@@ -129,7 +129,7 @@
 								<input type="number" v-model.number="event_obj.min_speed" min="0">
 							</div>
 						</li>
-						<event-picker :blacklist="input.value.map(o => o.event)" @select="input.value.push({event: $event, min_speed: 0}); input.change($event);" />
+						<event-picker :blacklist="input.value.map(o => o.event)" @select="($event, event) => {input.value.push({event: $event, min_speed: 0}); input.change(event);}" />
 					</ul>
 				</template>
 
@@ -148,18 +148,18 @@
 			<template v-if="input.type == 'event_timeline'">
 				<ul class="event_timeline">
 					<li v-for="entry in input.timeline" :key="entry.uuid">
-						<input type="number" v-model.number="entry.time" @blur="input.change($event)" step="0.05">
+						<input type="number" v-model.number="entry.time" @input="edit($event, 'change event timeline')" @blur="input.change($event)" step="0.05" min="0">
 
 						<!--input type="number" v-model.number="entry.time" @blur="input.change($event)" step="0.05">
 						<label @click="pickEventOnNameClick($event)">{{ entry.event }}</label>
-						<event-picker class="event_switch_button" :replace="!!entry.event" @select="entry.event = $event; input.change($event);" /-->
+						<event-picker class="event_switch_button" :replace="!!entry.event" @select="($event, event) => {entry.event = $event; input.change(event);" /-->
 
 						<ul class="event_list timeline_event_list">
 							<li v-for="event_id in entry.event" :key="event_id" class="event_list_event">
 								<label>{{ event_id }}</label>
 								<X :size="18" class="highlighting_button" @click="entry.event.remove(event_id); input.change($event);" />
 							</li>
-							<event-picker :blacklist="entry.event" @select="entry.event.push($event); input.change($event);" />
+							<event-picker :blacklist="entry.event" @select="($event, event) => {entry.event.push($event); input.change(event);}" />
 						</ul>
 						<X :size="18" class="highlighting_button timeline_remove_button" @click="input.timeline.remove(entry); input.change($event);" />
 					</li>
@@ -193,6 +193,7 @@ import "prismjs/themes/prism-okaidia.css";
 
 import Languages from './../../languages';
 import { guid } from '../../util';
+import registerEdit from '../../edits';
 
 
 
@@ -244,14 +245,17 @@ export default {
 				input.expanded = !input.expanded;
 			}
 		},
-		addEventToTimeline(input, event_id) {
+		edit(event, name) {
+			registerEdit(name, event);
+		},
+		addEventToTimeline(input, event_id, event) {
 			let entry = {
 				uuid: guid(),
 				event: [event_id],
 				time: 0
 			}
 			input.timeline.push(entry);
-			input.change();
+			input.change(event);
 		},
 		pickEventOnNameClick(event) {
 			let clicker = event.target.nextElementSibling;
@@ -357,6 +361,7 @@ export default {
 	}
 	.event_list > div {
 		display: inline-block;
+		margin-top: 4px;
 	}
 	.timeline_event_list {
 		margin-top: -2px;
@@ -434,6 +439,7 @@ export default {
 	ul.event_timeline > li > .timeline_remove_button {
 		margin-left: auto;
 		margin-top: 2px;
+		flex-shrink: 0;
 	}
 </style>
 

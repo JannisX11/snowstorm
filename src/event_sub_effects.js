@@ -10,22 +10,8 @@ export async function loadEventSubEffect() {
         IO.import({
             extensions: ['json']
         }, (files) => {
-            console.log(files)
             if (files[0]) {
                 resolve(JSON.parse(files[0].content));
-            } else {
-                resolve();
-            }
-        })
-    });
-	let image_url = await new Promise(resolve => {
-        IO.import({
-            readtype: 'image',
-            extensions: ['png']
-        }, (files) => {
-            console.log(files)
-            if (files[0]) {
-                resolve(files[0].content);
             } else {
                 resolve();
             }
@@ -34,9 +20,24 @@ export async function loadEventSubEffect() {
     let identifier = json?.particle_effect?.description?.identifier || '';
     if (!EventSubEffects[identifier]) EventSubEffects[identifier] = {};
     EventSubEffects[identifier].json = json;
-    EventSubEffects[identifier].texture = image_url;
     delete Scene.child_configs[identifier]
     return identifier;
+}
+
+export async function loadEventSubEffectTexture(identifier) {
+	let image_url = await new Promise(resolve => {
+        IO.import({
+            readtype: 'image',
+            extensions: ['png']
+        }, (files) => {
+            if (files[0]) {
+                resolve(files[0].content);
+            } else {
+                resolve();
+            }
+        })
+    });
+    EventSubEffects[identifier].texture = image_url;
 }
 
 window.addEventListener('focus', (e) => {
@@ -69,7 +70,6 @@ export function editEventSubEffect(identifier) {
             editor.editor_tab.focus();
         } else {
             let {json, texture} = EventSubEffects[identifier];
-            console.log(json);
             let editor_tab = window.open(location.href);
             if (!editor_tab) return;
             setTimeout(() => {

@@ -5,7 +5,7 @@
 			<Plus :size="22" v-else />
 		</div>
 		<ul v-if="is_open" ref="list" class="list">
-			<li v-for="option in getEventIDs()" :key="option" @click="select(option)">
+			<li v-for="option in getEventIDs()" :key="option" @click="select(option, $event)">
 				<Zap :size="20" />
 				{{ option }}
 			</li>
@@ -54,8 +54,8 @@ export default {
 				delete this.click_listener;
 			}
 		},
-		select(option) {
-			this.$emit('select', option);
+		select(option, event) {
+			this.$emit('select', option, event);
 			this.closeMenu();
 		},
 		getEventIDs() {

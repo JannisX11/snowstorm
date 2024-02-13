@@ -714,6 +714,18 @@ const Data = {
 					info: 'Events to fire when the emitter stops to exist',
 					type: 'event_list',
 				}),
+				travel_distance: new Input({
+					id: 'emitter_events_distance',
+					label: 'Travel Distance',
+					info: 'Fire an event when the emitter has moved a certain distance. Emitters can move when they are attached to an entity that moves. Distances are specified in blocks.',
+					type: 'event_timeline',
+				}),
+				looping_travel_distance: new Input({
+					id: 'emitter_events_distance_looping',
+					label: 'Travel Distance Looping',
+					info: 'Fire an event every time the emitter has moved a certain distance. Emitters can move when they are attached to an entity that moves. Distances are specified in blocks.',
+					type: 'event_timeline',
+				}),
 				timeline: new Input({
 					id: 'emitter_events_timeline',
 					label: 'Timeline',

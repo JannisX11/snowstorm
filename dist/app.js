@@ -1762,8 +1762,8 @@ __webpack_require__.r(__webpack_exports__);
         delete this.click_listener;
       }
     },
-    select: function select(option) {
-      this.$emit('select', option);
+    select: function select(option, event) {
+      this.$emit('select', option, event);
       this.closeMenu();
     },
     getEventIDs: function getEventIDs() {
@@ -1792,13 +1792,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
 /* harmony import */ var _util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../util */ "./src/util.js");
 /* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/plus.js");
 /* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/x.js");
 /* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/grip-horizontal.js");
 /* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/upload.js");
-/* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/pencil.js");
+/* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/image-plus.js");
+/* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/pencil.js");
 /* harmony import */ var prismjs_components_prism_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! prismjs/components/prism-core */ "./node_modules/prismjs/components/prism-core.js");
 /* harmony import */ var prismjs_components_prism_core__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(prismjs_components_prism_core__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var root_packages_vue_prism_editor__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! root/packages/vue-prism-editor */ "./node_modules/root/packages/vue-prism-editor/dist/prismeditor.esm.js");
@@ -1813,6 +1814,7 @@ function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == 
 function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return e; }; var t, e = {}, r = Object.prototype, n = r.hasOwnProperty, o = Object.defineProperty || function (t, e, r) { t[e] = r.value; }, i = "function" == typeof Symbol ? Symbol : {}, a = i.iterator || "@@iterator", c = i.asyncIterator || "@@asyncIterator", u = i.toStringTag || "@@toStringTag"; function define(t, e, r) { return Object.defineProperty(t, e, { value: r, enumerable: !0, configurable: !0, writable: !0 }), t[e]; } try { define({}, ""); } catch (t) { define = function define(t, e, r) { return t[e] = r; }; } function wrap(t, e, r, n) { var i = e && e.prototype instanceof Generator ? e : Generator, a = Object.create(i.prototype), c = new Context(n || []); return o(a, "_invoke", { value: makeInvokeMethod(t, r, c) }), a; } function tryCatch(t, e, r) { try { return { type: "normal", arg: t.call(e, r) }; } catch (t) { return { type: "throw", arg: t }; } } e.wrap = wrap; var h = "suspendedStart", l = "suspendedYield", f = "executing", s = "completed", y = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var p = {}; define(p, a, function () { return this; }); var d = Object.getPrototypeOf, v = d && d(d(values([]))); v && v !== r && n.call(v, a) && (p = v); var g = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(p); function defineIteratorMethods(t) { ["next", "throw", "return"].forEach(function (e) { define(t, e, function (t) { return this._invoke(e, t); }); }); } function AsyncIterator(t, e) { function invoke(r, o, i, a) { var c = tryCatch(t[r], t, o); if ("throw" !== c.type) { var u = c.arg, h = u.value; return h && "object" == _typeof(h) && n.call(h, "__await") ? e.resolve(h.__await).then(function (t) { invoke("next", t, i, a); }, function (t) { invoke("throw", t, i, a); }) : e.resolve(h).then(function (t) { u.value = t, i(u); }, function (t) { return invoke("throw", t, i, a); }); } a(c.arg); } var r; o(this, "_invoke", { value: function value(t, n) { function callInvokeWithMethodAndArg() { return new e(function (e, r) { invoke(t, n, e, r); }); } return r = r ? r.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(e, r, n) { var o = h; return function (i, a) { if (o === f) throw new Error("Generator is already running"); if (o === s) { if ("throw" === i) throw a; return { value: t, done: !0 }; } for (n.method = i, n.arg = a;;) { var c = n.delegate; if (c) { var u = maybeInvokeDelegate(c, n); if (u) { if (u === y) continue; return u; } } if ("next" === n.method) n.sent = n._sent = n.arg;else if ("throw" === n.method) { if (o === h) throw o = s, n.arg; n.dispatchException(n.arg); } else "return" === n.method && n.abrupt("return", n.arg); o = f; var p = tryCatch(e, r, n); if ("normal" === p.type) { if (o = n.done ? s : l, p.arg === y) continue; return { value: p.arg, done: n.done }; } "throw" === p.type && (o = s, n.method = "throw", n.arg = p.arg); } }; } function maybeInvokeDelegate(e, r) { var n = r.method, o = e.iterator[n]; if (o === t) return r.delegate = null, "throw" === n && e.iterator["return"] && (r.method = "return", r.arg = t, maybeInvokeDelegate(e, r), "throw" === r.method) || "return" !== n && (r.method = "throw", r.arg = new TypeError("The iterator does not provide a '" + n + "' method")), y; var i = tryCatch(o, e.iterator, r.arg); if ("throw" === i.type) return r.method = "throw", r.arg = i.arg, r.delegate = null, y; var a = i.arg; return a ? a.done ? (r[e.resultName] = a.value, r.next = e.nextLoc, "return" !== r.method && (r.method = "next", r.arg = t), r.delegate = null, y) : a : (r.method = "throw", r.arg = new TypeError("iterator result is not an object"), r.delegate = null, y); } function pushTryEntry(t) { var e = { tryLoc: t[0] }; 1 in t && (e.catchLoc = t[1]), 2 in t && (e.finallyLoc = t[2], e.afterLoc = t[3]), this.tryEntries.push(e); } function resetTryEntry(t) { var e = t.completion || {}; e.type = "normal", delete e.arg, t.completion = e; } function Context(t) { this.tryEntries = [{ tryLoc: "root" }], t.forEach(pushTryEntry, this), this.reset(!0); } function values(e) { if (e || "" === e) { var r = e[a]; if (r) return r.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) { var o = -1, i = function next() { for (; ++o < e.length;) if (n.call(e, o)) return next.value = e[o], next.done = !1, next; return next.value = t, next.done = !0, next; }; return i.next = i; } } throw new TypeError(_typeof(e) + " is not iterable"); } return GeneratorFunction.prototype = GeneratorFunctionPrototype, o(g, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), o(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, u, "GeneratorFunction"), e.isGeneratorFunction = function (t) { var e = "function" == typeof t && t.constructor; return !!e && (e === GeneratorFunction || "GeneratorFunction" === (e.displayName || e.name)); }, e.mark = function (t) { return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, define(t, u, "GeneratorFunction")), t.prototype = Object.create(g), t; }, e.awrap = function (t) { return { __await: t }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, c, function () { return this; }), e.AsyncIterator = AsyncIterator, e.async = function (t, r, n, o, i) { void 0 === i && (i = Promise); var a = new AsyncIterator(wrap(t, r, n, o), i); return e.isGeneratorFunction(r) ? a : a.next().then(function (t) { return t.done ? t.value : a.next(); }); }, defineIteratorMethods(g), define(g, u, "Generator"), define(g, a, function () { return this; }), define(g, "toString", function () { return "[object Generator]"; }), e.keys = function (t) { var e = Object(t), r = []; for (var n in e) r.push(n); return r.reverse(), function next() { for (; r.length;) { var t = r.pop(); if (t in e) return next.value = t, next.done = !1, next; } return next.done = !0, next; }; }, e.values = values, Context.prototype = { constructor: Context, reset: function reset(e) { if (this.prev = 0, this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(resetTryEntry), !e) for (var r in this) "t" === r.charAt(0) && n.call(this, r) && !isNaN(+r.slice(1)) && (this[r] = t); }, stop: function stop() { this.done = !0; var t = this.tryEntries[0].completion; if ("throw" === t.type) throw t.arg; return this.rval; }, dispatchException: function dispatchException(e) { if (this.done) throw e; var r = this; function handle(n, o) { return a.type = "throw", a.arg = e, r.next = n, o && (r.method = "next", r.arg = t), !!o; } for (var o = this.tryEntries.length - 1; o >= 0; --o) { var i = this.tryEntries[o], a = i.completion; if ("root" === i.tryLoc) return handle("end"); if (i.tryLoc <= this.prev) { var c = n.call(i, "catchLoc"), u = n.call(i, "finallyLoc"); if (c && u) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } else if (c) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); } else { if (!u) throw new Error("try statement without catch or finally"); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } } } }, abrupt: function abrupt(t, e) { for (var r = this.tryEntries.length - 1; r >= 0; --r) { var o = this.tryEntries[r]; if (o.tryLoc <= this.prev && n.call(o, "finallyLoc") && this.prev < o.finallyLoc) { var i = o; break; } } i && ("break" === t || "continue" === t) && i.tryLoc <= e && e <= i.finallyLoc && (i = null); var a = i ? i.completion : {}; return a.type = t, a.arg = e, i ? (this.method = "next", this.next = i.finallyLoc, y) : this.complete(a); }, complete: function complete(t, e) { if ("throw" === t.type) throw t.arg; return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && e && (this.next = e), y; }, finish: function finish(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.finallyLoc === t) return this.complete(r.completion, r.afterLoc), resetTryEntry(r), y; } }, "catch": function _catch(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.tryLoc === t) { var n = r.completion; if ("throw" === n.type) { var o = n.arg; resetTryEntry(r); } return o; } } throw new Error("illegal catch attempt"); }, delegateYield: function delegateYield(e, r, n) { return this.delegate = { iterator: values(e), resultName: r, nextLoc: n }, "next" === this.method && (this.arg = t), y; } }, e; }
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+//
 //
 //
 //
@@ -1950,7 +1952,8 @@ var emitter_type_options = {
     GripHorizontal: lucide_vue__WEBPACK_IMPORTED_MODULE_12__["default"],
     PrismEditor: root_packages_vue_prism_editor__WEBPACK_IMPORTED_MODULE_2__.PrismEditor,
     Upload: lucide_vue__WEBPACK_IMPORTED_MODULE_13__["default"],
-    Pencil: lucide_vue__WEBPACK_IMPORTED_MODULE_14__["default"],
+    ImagePlus: lucide_vue__WEBPACK_IMPORTED_MODULE_14__["default"],
+    Pencil: lucide_vue__WEBPACK_IMPORTED_MODULE_15__["default"],
     ListAddButton: _Form_ListAddButton_vue__WEBPACK_IMPORTED_MODULE_8__["default"]
   },
   props: {
@@ -1964,20 +1967,20 @@ var emitter_type_options = {
   },
   methods: {
     createSequenceSection: function createSequenceSection() {
-      vue__WEBPACK_IMPORTED_MODULE_15__["default"].set(this.subpart, 'sequence', [{
+      vue__WEBPACK_IMPORTED_MODULE_16__["default"].set(this.subpart, 'sequence', [{
         uuid: (0,_util__WEBPACK_IMPORTED_MODULE_0__.guid)()
       }]);
       this.modifyEvent();
     },
     createRandomizeSection: function createRandomizeSection() {
-      vue__WEBPACK_IMPORTED_MODULE_15__["default"].set(this.subpart, 'randomize', [{
+      vue__WEBPACK_IMPORTED_MODULE_16__["default"].set(this.subpart, 'randomize', [{
         uuid: (0,_util__WEBPACK_IMPORTED_MODULE_0__.guid)(),
         weight: 1
       }]);
       this.modifyEvent();
     },
     createParticleSection: function createParticleSection() {
-      vue__WEBPACK_IMPORTED_MODULE_15__["default"].set(this.subpart, 'particle_effect', {
+      vue__WEBPACK_IMPORTED_MODULE_16__["default"].set(this.subpart, 'particle_effect', {
         effect: '',
         type: 'emitter',
         pre_effect_expression: ''
@@ -1985,13 +1988,13 @@ var emitter_type_options = {
       this.modifyEvent();
     },
     createSoundSection: function createSoundSection() {
-      vue__WEBPACK_IMPORTED_MODULE_15__["default"].set(this.subpart, 'sound_effect', {
+      vue__WEBPACK_IMPORTED_MODULE_16__["default"].set(this.subpart, 'sound_effect', {
         event_name: ''
       });
       this.modifyEvent();
     },
     createExpressionSection: function createExpressionSection() {
-      vue__WEBPACK_IMPORTED_MODULE_15__["default"].set(this.subpart, 'expression', '');
+      vue__WEBPACK_IMPORTED_MODULE_16__["default"].set(this.subpart, 'expression', '');
       this.modifyEvent();
     },
     addSequenceOption: function addSequenceOption() {
@@ -2012,27 +2015,27 @@ var emitter_type_options = {
     removeSequenceOption: function removeSequenceOption(option) {
       this.subpart.sequence.remove(option);
       if (this.subpart.sequence.length == 0) {
-        vue__WEBPACK_IMPORTED_MODULE_15__["default"]["delete"](this.subpart, 'sequence');
+        vue__WEBPACK_IMPORTED_MODULE_16__["default"]["delete"](this.subpart, 'sequence');
       }
       this.modifyEvent();
     },
     removeRandomizeOption: function removeRandomizeOption(option) {
       this.subpart.randomize.remove(option);
       if (this.subpart.randomize.length == 0) {
-        vue__WEBPACK_IMPORTED_MODULE_15__["default"]["delete"](this.subpart, 'randomize');
+        vue__WEBPACK_IMPORTED_MODULE_16__["default"]["delete"](this.subpart, 'randomize');
       }
       this.modifyEvent();
     },
     disableParticleSection: function disableParticleSection() {
-      vue__WEBPACK_IMPORTED_MODULE_15__["default"]["delete"](this.subpart, 'particle_effect');
+      vue__WEBPACK_IMPORTED_MODULE_16__["default"]["delete"](this.subpart, 'particle_effect');
       this.modifyEvent();
     },
     disableSoundSection: function disableSoundSection() {
-      vue__WEBPACK_IMPORTED_MODULE_15__["default"]["delete"](this.subpart, 'sound_effect');
+      vue__WEBPACK_IMPORTED_MODULE_16__["default"]["delete"](this.subpart, 'sound_effect');
       this.modifyEvent();
     },
     disableExpressionSection: function disableExpressionSection() {
-      vue__WEBPACK_IMPORTED_MODULE_15__["default"]["delete"](this.subpart, 'expression');
+      vue__WEBPACK_IMPORTED_MODULE_16__["default"]["delete"](this.subpart, 'expression');
       this.modifyEvent();
     },
     selectParticleFile: function selectParticleFile() {
@@ -2057,6 +2060,20 @@ var emitter_type_options = {
               return _context.stop();
           }
         }, _callee);
+      }))();
+    },
+    selectParticleTexture: function selectParticleTexture() {
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
+        return _regeneratorRuntime().wrap(function _callee2$(_context2) {
+          while (1) switch (_context2.prev = _context2.next) {
+            case 0:
+              _context2.next = 2;
+              return (0,_event_sub_effects__WEBPACK_IMPORTED_MODULE_9__.loadEventSubEffectTexture)();
+            case 2:
+            case "end":
+              return _context2.stop();
+          }
+        }, _callee2);
       }))();
     },
     editParticleFile: function editParticleFile() {
@@ -2203,10 +2220,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _TextureInput__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./TextureInput */ "./src/components/Sidebar/TextureInput.vue");
 /* harmony import */ var _Form_Checkbox_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../Form/Checkbox.vue */ "./src/components/Form/Checkbox.vue");
 /* harmony import */ var _EventPicker_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./EventPicker.vue */ "./src/components/Sidebar/EventPicker.vue");
-/* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/chevrons-up-down.js");
-/* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/chevrons-down-up.js");
-/* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/plus.js");
-/* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/x.js");
+/* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/chevrons-up-down.js");
+/* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/chevrons-down-up.js");
+/* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/plus.js");
+/* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/x.js");
 /* harmony import */ var _molang_autocomplete__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./../../molang_autocomplete */ "./src/molang_autocomplete.js");
 /* harmony import */ var _path_autocomplete__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./../../path_autocomplete */ "./src/path_autocomplete.js");
 /* harmony import */ var root_packages_vue_prism_editor_dist_prismeditor_min_css__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! root/packages/vue-prism-editor/dist/prismeditor.min.css */ "./node_modules/root/packages/vue-prism-editor/dist/prismeditor.min.css");
@@ -2216,6 +2233,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var prismjs_themes_prism_okaidia_css__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! prismjs/themes/prism-okaidia.css */ "./node_modules/prismjs/themes/prism-okaidia.css");
 /* harmony import */ var _languages__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./../../languages */ "./src/languages.js");
 /* harmony import */ var _util__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../../util */ "./src/util.js");
+/* harmony import */ var _edits__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../../edits */ "./src/edits.js");
 //
 //
 //
@@ -2388,6 +2406,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 
 
 
@@ -2418,10 +2437,10 @@ __webpack_require__.r(__webpack_exports__);
     TextureInput: _TextureInput__WEBPACK_IMPORTED_MODULE_2__["default"],
     Checkbox: _Form_Checkbox_vue__WEBPACK_IMPORTED_MODULE_3__["default"],
     EventPicker: _EventPicker_vue__WEBPACK_IMPORTED_MODULE_4__["default"],
-    ChevronsUpDown: lucide_vue__WEBPACK_IMPORTED_MODULE_13__["default"],
-    ChevronsDownUp: lucide_vue__WEBPACK_IMPORTED_MODULE_14__["default"],
-    Plus: lucide_vue__WEBPACK_IMPORTED_MODULE_15__["default"],
-    X: lucide_vue__WEBPACK_IMPORTED_MODULE_16__["default"]
+    ChevronsUpDown: lucide_vue__WEBPACK_IMPORTED_MODULE_14__["default"],
+    ChevronsDownUp: lucide_vue__WEBPACK_IMPORTED_MODULE_15__["default"],
+    Plus: lucide_vue__WEBPACK_IMPORTED_MODULE_16__["default"],
+    X: lucide_vue__WEBPACK_IMPORTED_MODULE_17__["default"]
   },
   methods: {
     isInputVisible: function isInputVisible(input, group) {
@@ -2448,14 +2467,17 @@ __webpack_require__.r(__webpack_exports__);
         input.expanded = !input.expanded;
       }
     },
-    addEventToTimeline: function addEventToTimeline(input, event_id) {
+    edit: function edit(event, name) {
+      (0,_edits__WEBPACK_IMPORTED_MODULE_13__["default"])(name, event);
+    },
+    addEventToTimeline: function addEventToTimeline(input, event_id, event) {
       var entry = {
         uuid: (0,_util__WEBPACK_IMPORTED_MODULE_12__.guid)(),
         event: [event_id],
         time: 0
       };
       input.timeline.push(entry);
-      input.change();
+      input.change(event);
     },
     pickEventOnNameClick: function pickEventOnNameClick(event) {
       var clicker = event.target.nextElementSibling;
@@ -3956,7 +3978,6 @@ var Scene = new wintersky__WEBPACK_IMPORTED_MODULE_2__["default"].Scene({
       return new Promise(function (resolve, reject) {
         function update(event) {
           if (event.data.type == 'provide_particle_file') {
-            var json = JSON.parse(event.data.content);
             window.removeEventListener('message', update);
             resolve(json);
           }
@@ -4039,7 +4060,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   EventSubEffects: () => (/* binding */ EventSubEffects),
 /* harmony export */   editEventSubEffect: () => (/* binding */ editEventSubEffect),
-/* harmony export */   loadEventSubEffect: () => (/* binding */ loadEventSubEffect)
+/* harmony export */   loadEventSubEffect: () => (/* binding */ loadEventSubEffect),
+/* harmony export */   loadEventSubEffectTexture: () => (/* binding */ loadEventSubEffectTexture)
 /* harmony export */ });
 /* harmony import */ var _emitter__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./emitter */ "./src/emitter.js");
 /* harmony import */ var _util__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./util */ "./src/util.js");
@@ -4064,7 +4086,7 @@ function loadEventSubEffect() {
 function _loadEventSubEffect() {
   _loadEventSubEffect = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
     var _json$particle_effect;
-    var json, image_url, identifier;
+    var json, identifier;
     return _regeneratorRuntime().wrap(function _callee$(_context) {
       while (1) switch (_context.prev = _context.next) {
         case 0:
@@ -4073,7 +4095,6 @@ function _loadEventSubEffect() {
             _util__WEBPACK_IMPORTED_MODULE_1__.IO["import"]({
               extensions: ['json']
             }, function (files) {
-              console.log(files);
               if (files[0]) {
                 resolve(JSON.parse(files[0].content));
               } else {
@@ -4083,13 +4104,34 @@ function _loadEventSubEffect() {
           });
         case 2:
           json = _context.sent;
-          _context.next = 5;
+          identifier = (json === null || json === void 0 || (_json$particle_effect = json.particle_effect) === null || _json$particle_effect === void 0 || (_json$particle_effect = _json$particle_effect.description) === null || _json$particle_effect === void 0 ? void 0 : _json$particle_effect.identifier) || '';
+          if (!EventSubEffects[identifier]) EventSubEffects[identifier] = {};
+          EventSubEffects[identifier].json = json;
+          delete _emitter__WEBPACK_IMPORTED_MODULE_0__.Scene.child_configs[identifier];
+          return _context.abrupt("return", identifier);
+        case 8:
+        case "end":
+          return _context.stop();
+      }
+    }, _callee);
+  }));
+  return _loadEventSubEffect.apply(this, arguments);
+}
+function loadEventSubEffectTexture(_x) {
+  return _loadEventSubEffectTexture.apply(this, arguments);
+}
+function _loadEventSubEffectTexture() {
+  _loadEventSubEffectTexture = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2(identifier) {
+    var image_url;
+    return _regeneratorRuntime().wrap(function _callee2$(_context2) {
+      while (1) switch (_context2.prev = _context2.next) {
+        case 0:
+          _context2.next = 2;
           return new Promise(function (resolve) {
             _util__WEBPACK_IMPORTED_MODULE_1__.IO["import"]({
               readtype: 'image',
               extensions: ['png']
             }, function (files) {
-              console.log(files);
               if (files[0]) {
                 resolve(files[0].content);
               } else {
@@ -4097,21 +4139,16 @@ function _loadEventSubEffect() {
               }
             });
           });
-        case 5:
-          image_url = _context.sent;
-          identifier = (json === null || json === void 0 || (_json$particle_effect = json.particle_effect) === null || _json$particle_effect === void 0 || (_json$particle_effect = _json$particle_effect.description) === null || _json$particle_effect === void 0 ? void 0 : _json$particle_effect.identifier) || '';
-          if (!EventSubEffects[identifier]) EventSubEffects[identifier] = {};
-          EventSubEffects[identifier].json = json;
+        case 2:
+          image_url = _context2.sent;
           EventSubEffects[identifier].texture = image_url;
-          delete _emitter__WEBPACK_IMPORTED_MODULE_0__.Scene.child_configs[identifier];
-          return _context.abrupt("return", identifier);
-        case 12:
+        case 4:
         case "end":
-          return _context.stop();
+          return _context2.stop();
       }
-    }, _callee);
+    }, _callee2);
   }));
-  return _loadEventSubEffect.apply(this, arguments);
+  return _loadEventSubEffectTexture.apply(this, arguments);
 }
 window.addEventListener('focus', function (e) {
   for (var identifier in SubEffectEditors) {
@@ -4148,7 +4185,6 @@ function editEventSubEffect(identifier) {
       var _EventSubEffects$iden = EventSubEffects[identifier],
         json = _EventSubEffects$iden.json,
         texture = _EventSubEffects$iden.texture;
-      console.log(json);
       var editor_tab = window.open(location.href);
       if (!editor_tab) return;
       setTimeout(function () {
@@ -4242,6 +4278,29 @@ function formatEventTimeline(source) {
     return copy;
   }
 }
+function formatEventTimelineLooping(source) {
+  if (!source) return;
+  var copy_list = [];
+  var _iterator2 = _createForOfIteratorHelper(source),
+    _step2;
+  try {
+    for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
+      var entry = _step2.value;
+      var copy = {
+        distance: entry.distance,
+        effects: formatEventList(entry.effects)
+      };
+      copy_list.push(copy);
+    }
+  } catch (err) {
+    _iterator2.e(err);
+  } finally {
+    _iterator2.f();
+  }
+  if (copy_list.length) {
+    return copy_list;
+  }
+}
 function generateFile() {
   var file = {
     format_version: '1.10.0',
@@ -4303,33 +4362,33 @@ function generateFile() {
     var cleanEvent = function cleanEvent(subpart) {
       if (!subpart) return;
       if (subpart.randomize instanceof Array) {
-        var _iterator2 = _createForOfIteratorHelper(subpart.randomize),
-          _step2;
-        try {
-          for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
-            var option = _step2.value;
-            delete option.uuid;
-            cleanEvent(option);
-          }
-        } catch (err) {
-          _iterator2.e(err);
-        } finally {
-          _iterator2.f();
-        }
-      }
-      if (subpart.sequence instanceof Array) {
-        var _iterator3 = _createForOfIteratorHelper(subpart.sequence),
+        var _iterator3 = _createForOfIteratorHelper(subpart.randomize),
           _step3;
         try {
           for (_iterator3.s(); !(_step3 = _iterator3.n()).done;) {
-            var _option = _step3.value;
-            delete _option.uuid;
-            cleanEvent(_option);
+            var option = _step3.value;
+            delete option.uuid;
+            cleanEvent(option);
           }
         } catch (err) {
           _iterator3.e(err);
         } finally {
           _iterator3.f();
+        }
+      }
+      if (subpart.sequence instanceof Array) {
+        var _iterator4 = _createForOfIteratorHelper(subpart.sequence),
+          _step4;
+        try {
+          for (_iterator4.s(); !(_step4 = _iterator4.n()).done;) {
+            var _option = _step4.value;
+            delete _option.uuid;
+            cleanEvent(_option);
+          }
+        } catch (err) {
+          _iterator4.e(err);
+        } finally {
+          _iterator4.f();
         }
       }
       if (subpart.particle_effect) {
@@ -4340,18 +4399,18 @@ function generateFile() {
       return subpart;
     };
     file.particle_effect.events = {};
-    var _iterator4 = _createForOfIteratorHelper(_input_structure__WEBPACK_IMPORTED_MODULE_0__["default"].events.events.events),
-      _step4;
+    var _iterator5 = _createForOfIteratorHelper(_input_structure__WEBPACK_IMPORTED_MODULE_0__["default"].events.events.events),
+      _step5;
     try {
-      for (_iterator4.s(); !(_step4 = _iterator4.n()).done;) {
-        var entry = _step4.value;
+      for (_iterator5.s(); !(_step5 = _iterator5.n()).done;) {
+        var entry = _step5.value;
         var copy = JSON.parse(JSON.stringify(entry.event));
         file.particle_effect.events[entry.id] = cleanEvent(copy);
       }
     } catch (err) {
-      _iterator4.e(err);
+      _iterator5.e(err);
     } finally {
-      _iterator4.f();
+      _iterator5.f();
     }
   }
   var comps = file.particle_effect.components = {};
@@ -4420,9 +4479,11 @@ function generateFile() {
   var emitter_events = {
     creation_event: formatEventList(_emitter__WEBPACK_IMPORTED_MODULE_2__.Config.emitter_events_creation),
     expiration_event: formatEventList(_emitter__WEBPACK_IMPORTED_MODULE_2__.Config.emitter_events_expiration),
-    timeline: formatEventTimeline(_emitter__WEBPACK_IMPORTED_MODULE_2__.Config.emitter_events_timeline)
+    timeline: formatEventTimeline(_emitter__WEBPACK_IMPORTED_MODULE_2__.Config.emitter_events_timeline),
+    travel_distance_events: formatEventTimeline(_emitter__WEBPACK_IMPORTED_MODULE_2__.Config.emitter_events_distance),
+    looping_travel_distance_events: formatEventTimelineLooping(_emitter__WEBPACK_IMPORTED_MODULE_2__.Config.emitter_events_distance_looping)
   };
-  if (emitter_events.creation_event || emitter_events.expiration_event || emitter_events.timeline) {
+  if (emitter_events.creation_event || emitter_events.expiration_event || emitter_events.timeline || emitter_events.travel_distance_events || emitter_events.looping_travel_distance_events) {
     comps['minecraft:emitter_lifetime_events'] = emitter_events;
   }
   //Direction
@@ -4977,10 +5038,6 @@ function loadFile(data) {
 }
 window.loadFileFromParentEffect = function (raw_json, texture_url) {
   loadFile(JSON.parse(raw_json), false);
-  console.log({
-    raw_json: raw_json,
-    texture_url: texture_url
-  });
   if (texture_url) {
     var input = _input_structure__WEBPACK_IMPORTED_MODULE_4__["default"].texture.texture.inputs.image;
     input.image.data = _texture_edit__WEBPACK_IMPORTED_MODULE_15__.Texture.source = texture_url;
@@ -5115,11 +5172,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _util__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./util */ "./src/util.js");
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
 function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
 function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
-function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, _toPropertyKey(descriptor.key), descriptor); } }
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
@@ -5202,12 +5260,32 @@ var Input = /*#__PURE__*/function () {
       }
       if (this.type == 'event_timeline') {
         this.timeline.splice(0);
-        for (var key in this._value) {
-          this.timeline.push({
-            uuid: (0,_util__WEBPACK_IMPORTED_MODULE_4__.guid)(),
-            time: parseFloat(key),
-            event: this._value[key] instanceof Array ? this._value[key] : [this._value[key]]
-          });
+        if (this._value instanceof Array) {
+          var _iterator = _createForOfIteratorHelper(this._value),
+            _step;
+          try {
+            for (_iterator.s(); !(_step = _iterator.n()).done;) {
+              var entry = _step.value;
+              var copy = {
+                uuid: (0,_util__WEBPACK_IMPORTED_MODULE_4__.guid)(),
+                time: entry.distance,
+                event: entry.effects instanceof Array ? entry.effects : [entry.effects]
+              };
+              this.timeline.push(copy);
+            }
+          } catch (err) {
+            _iterator.e(err);
+          } finally {
+            _iterator.f();
+          }
+        } else {
+          for (var key in this._value) {
+            this.timeline.push({
+              uuid: (0,_util__WEBPACK_IMPORTED_MODULE_4__.guid)(),
+              time: parseFloat(key),
+              event: this._value[key] instanceof Array ? this._value[key] : [this._value[key]]
+            });
+          }
         }
       }
     }
@@ -5279,15 +5357,29 @@ var Input = /*#__PURE__*/function () {
         if (_typeof(this.value) == 'object') this.value = this.value.hex8;
       }
       if (this.type == 'event_timeline') {
-        for (var key in this._value) {
-          delete this._value[key];
+        if (this._value instanceof Array) {
+          this._value.empty();
+          this.timeline.sort(function (a, b) {
+            return a.time - b.time;
+          });
+          this.timeline.forEach(function (entry) {
+            var entry2 = {
+              distance: entry.time,
+              effects: entry.event
+            };
+            _this._value.push(entry2);
+          });
+        } else {
+          for (var key in this._value) {
+            delete this._value[key];
+          }
+          this.timeline.sort(function (a, b) {
+            return a.time - b.time;
+          });
+          this.timeline.forEach(function (entry) {
+            _this._value[entry.time.toFixed(2)] = entry.event;
+          });
         }
-        this.timeline.sort(function (a, b) {
-          return a.time - b.time;
-        });
-        this.timeline.forEach(function (entry) {
-          _this._value[entry.time.toFixed(2)] = entry.event;
-        });
       }
       if (typeof this.onchange === 'function') {
         this.onchange(e);
@@ -6095,6 +6187,18 @@ var Data = {
           label: 'On Expiration',
           info: 'Events to fire when the emitter stops to exist',
           type: 'event_list'
+        }),
+        travel_distance: new _input__WEBPACK_IMPORTED_MODULE_0__["default"]({
+          id: 'emitter_events_distance',
+          label: 'Travel Distance',
+          info: 'Fire an event when the emitter has moved a certain distance. Emitters can move when they are attached to an entity that moves. Distances are specified in blocks.',
+          type: 'event_timeline'
+        }),
+        looping_travel_distance: new _input__WEBPACK_IMPORTED_MODULE_0__["default"]({
+          id: 'emitter_events_distance_looping',
+          label: 'Travel Distance Looping',
+          info: 'Fire an event every time the emitter has moved a certain distance. Emitters can move when they are attached to an entity that moves. Distances are specified in blocks.',
+          type: 'event_timeline'
         }),
         timeline: new _input__WEBPACK_IMPORTED_MODULE_0__["default"]({
           id: 'emitter_events_timeline',
@@ -7815,9 +7919,9 @@ var Config = /*#__PURE__*/function () {
           var l_e_comp = comp('emitter_lifetime_events');
           this.set('emitter_events_creation', l_e_comp.creation_event);
           this.set('emitter_events_expiration', l_e_comp.expiration_event);
+          this.set('emitter_events_timeline', l_e_comp.timeline);
           this.set('emitter_events_distance', l_e_comp.travel_distance_events);
           this.set('emitter_events_distance_looping', l_e_comp.looping_travel_distance_events);
-          this.set('emitter_events_timeline', l_e_comp.timeline);
         }
         var shape_component = comp('emitter_shape_point') || comp('emitter_shape_custom');
         if (shape_component) {
@@ -7995,12 +8099,9 @@ var Config = /*#__PURE__*/function () {
         }
         if (comp('particle_appearance_tinting')) {
           var c = comp('particle_appearance_tinting').color;
-          console.log(c);
           if (typeof c == 'string') {
             this.set('particle_color_static', parseColor(c));
-            console.log('string');
           } else if (c instanceof Array && c.length >= 3) {
-            console.log('array');
             if ((_typeof(c[0]) + _typeof(c[1]) + _typeof(c[2]) + _typeof(c[3])).includes('string')) {
               this.set('particle_color_mode', 'expression');
               this.set('particle_color_expression', c);
@@ -8015,7 +8116,6 @@ var Config = /*#__PURE__*/function () {
               this.set('particle_color_static', color);
             }
           } else if (_typeof(c) == 'object') {
-            console.log('gradiente', c instanceof Array, _typeof(c));
             // Gradient
             this.set('particle_color_mode', 'gradient');
             this.set('particle_color_interpolant', c.interpolant);
@@ -8168,11 +8268,10 @@ Config.types = {
     array: true
   },
   emitter_events_distance: {
-    type: 'string',
-    array: true
+    type: 'object'
   },
   emitter_events_distance_looping: {
-    type: 'string',
+    type: 'object',
     array: true
   },
   emitter_events_timeline: {
@@ -8570,22 +8669,26 @@ var Particle = /*#__PURE__*/function () {
       //Speed
       this.speed.set(0, 0, 0);
       var dir = this.emitter.config.particle_direction_mode;
-      if (dir == 'inwards' || dir == 'outwards') {
-        if (this.emitter.config.emitter_shape_mode === 'point') {
-          this.speed.set(1, 0, 0).applyEuler(MathUtil.getRandomEuler());
-        } else {
-          this.speed.copy(this.position).normalize();
-          if (dir == 'inwards') {
-            this.speed.negate();
-          }
-        }
+      if (dir == 'outwards' && this.emitter.inherited_particle_speed) {
+        this.speed.copy(this.emitter.inherited_particle_speed);
       } else {
-        this.speed = this.emitter.calculate(this.emitter.config.particle_direction_direction, params).normalize();
+        if (dir == 'inwards' || dir == 'outwards') {
+          if (this.emitter.config.emitter_shape_mode === 'point') {
+            this.speed.set(1, 0, 0).applyEuler(MathUtil.getRandomEuler());
+          } else {
+            this.speed.copy(this.position).normalize();
+            if (dir == 'inwards') {
+              this.speed.negate();
+            }
+          }
+        } else {
+          this.speed = this.emitter.calculate(this.emitter.config.particle_direction_direction, params).normalize();
+        }
+        var linear_speed = this.emitter.calculate(this.emitter.config.particle_motion_linear_speed, params);
+        this.speed.x *= linear_speed;
+        this.speed.y *= linear_speed;
+        this.speed.z *= linear_speed;
       }
-      var speed = this.emitter.calculate(this.emitter.config.particle_motion_linear_speed, params);
-      this.speed.x *= speed;
-      this.speed.y *= speed;
-      this.speed.z *= speed;
       this.position.add(this.emitter.calculate(this.emitter.config.emitter_shape_offset, params));
       if (this.emitter.parent_mode == 'locator') {
         this.position.x *= -1;
@@ -9047,6 +9150,7 @@ var Emitter = /*#__PURE__*/function (_EventClass) {
     _this4.loop_mode = options.loop_mode || scene.global_options.loop_mode;
     _this4.parent_mode = options.parent_mode || scene.global_options.parent_mode;
     _this4.ground_collision = typeof options.ground_collision == 'boolean' ? options.ground_collision : scene.global_options.ground_collision;
+    _this4.inherited_particle_speed = null;
     _this4.random_vars = [Math.random(), Math.random(), Math.random(), Math.random()];
     _this4.tick_values = {};
     _this4.creation_values = {};
@@ -9572,8 +9676,11 @@ var Emitter = /*#__PURE__*/function (_EventClass) {
             emitter.creation_time = _this10.age;
             emitter.parent_emitter = _this10;
             _this10.child_emitters.push(emitter);
-
-            // todo: implement types: "emitter", "emitter_bound", "particle", "particle_with_velocity"
+            if (subpart.particle_effect.type == 'emitter_bound') {
+              emitter.parent_mode = _this10.parent_mode;
+            } else if (subpart.particle_effect.type == 'particle_with_velocity' && particle) {
+              emitter.inherited_particle_speed = new three__WEBPACK_IMPORTED_MODULE_2__.Vector3().copy(particle.speed);
+            }
             var position = particle ? particle.position : _this10.getActiveSpace().position;
             emitter.getActiveSpace().position.copy(position);
             emitter.start();
@@ -10127,7 +10234,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.input_wrapper[data-v-64472bb8] {\n\tmargin: 2px 0;\n}\n.input_wrapper > label[data-v-64472bb8] {\n\twidth: 100px;\n\ttext-align: right;\n\tvertical-align: middle;\n\tmargin: 3px 0;\n}\n.input_right[data-v-64472bb8] {\n\tdisplay: inline-flex;\n\tgap: 2px;\n\tvertical-align: middle;\n\twidth: calc(100% - 110px);\n\tmargin-left: 4px;\n}\n.input_right.full_width[data-v-64472bb8] {\n\twidth: calc(100% - 8px);\n}\n.input_right.expandable[data-v-64472bb8] {\n\twidth: calc(100% - 134px);\n}\n.input_right[axes=\"1\"] > input[data-v-64472bb8]:not([type=\"checkbox\"]), .input_right[axes=\"1\"] > select[data-v-64472bb8]:not([type=\"checkbox\"]) {\n\twidth: 100%;\n}\n.input_right.expanded[data-v-64472bb8] {\n\tdisplay: block;\n\twidth: calc(100% - 7px);\n}\n.input_right.expanded input[data-v-64472bb8], .input_right.expanded .input_vector[data-v-64472bb8]  {\n\twidth: 100% !important;\n\tdisplay: block;\n\tmargin-left: 0;\n}\n.tool.input_expand_button[data-v-64472bb8] {\n\tfloat: right;\n\twidth: 22px;\n\tpadding-left: 0;\n\tpadding-top: 2px;\n}\nli[input_type=\"select_custom\"] select[data-v-64472bb8] {\n\twidth: 140px;\n\tflex-grow: 1;\n}\n.input_list li[data-v-64472bb8] {\n\tmargin: 2px 0;\n}\nul.input_list input[data-v-64472bb8], ul.input_list .prism-editor-component[data-v-64472bb8] {\n\twidth: calc(100% - 80px);\n\tmargin-left: 52px;\n\tfloat: left;\n}\n.input_list li .tool[data-v-64472bb8] {\n\tpadding: 2px 0px;\n\twidth: 24px;\n\theight: 30px;\n}\n.input_vector[data-v-64472bb8] {\n\twidth: 40px;\n\tflex-grow: 1;\n}\n.input_vector[data-v-64472bb8]:first-child {\n\tmargin-left: 0;\n}\n.list_add_tool[data-v-64472bb8] {\n\tvertical-align: sub;\n}\n.event_list[data-v-64472bb8] {\n\tposition: relative;\n\tmin-height: 30px;\n\twidth: auto;\n\tflex-grow: 1;\n\tpadding: 0 1px;\n}\n.event_list > li.event_list_event[data-v-64472bb8] {\n\theight: 30px;\n\tdisplay: inline-block;\n\tpadding: 4px 13px;\n\tmargin: 1px 2px;\n\tbackground-color: var(--color-bar);\n\tborder-radius: 5px;\n\tbox-shadow: 0 1px 14px rgba(0, 0, 0, 0.18);\n}\n.event_list > li.event_list_event > label[data-v-64472bb8] {\n\tfont-family: var(--font-code);\n}\n.event_list > li.event_list_event > svg[data-v-64472bb8] {\n\tmargin-top: -2px;\n}\n.event_list > div[data-v-64472bb8] {\n\tdisplay: inline-block;\n}\n.timeline_event_list[data-v-64472bb8] {\n\tmargin-top: -2px;\n\tmargin-bottom: 0;\n}\n.event_speed_list > li.event_list_event[data-v-64472bb8] {\n\tpadding: 5px;\n}\n.event_speed_list > li.event_list_event > .highlighting_button[data-v-64472bb8] {\n\tfloat: right;\n\tmargin-top: 1px;\n}\n.event_min_speed[data-v-64472bb8] {\n\twidth: 100%;\n\tdisplay: flex;\n\tgap: 5px;\n\tborder-top: 2px solid var(--color-interface);\n\tpadding-top: 4px;\n}\n.event_min_speed > label[data-v-64472bb8] {\n\tpadding-top: 3px;\n}\n.event_min_speed > input[data-v-64472bb8] {\n\twidth: 56px;\n}\nul.event_timeline[data-v-64472bb8] {\n\tpadding: 0 10px;\n\tmargin-left: 20px;\n\tposition: relative;\n}\nul.event_timeline[data-v-64472bb8]::before {\n\tdisplay: block;\n\tcontent: \"\";\n\tposition: absolute;\n\ttop: -4px;\n\tbottom: -2px;\n\tleft: -11px;\n\twidth: 6px;\n\tbackground-color: var(--color-bar);\n\tborder-radius: 3px;\n}\nul.event_timeline > li[data-v-64472bb8] {\n\tdisplay: block;\n\tposition: relative;\n\tdisplay: flex;\n\tgap: 6px;\n\tmargin: 2px 0;\n\tpadding-left: 2px;\n}\nul.event_timeline > li[data-v-64472bb8]::before {\n\tdisplay: block;\n\tcontent: \"\";\n\tposition: absolute;\n\ttop: 7px;\n\tleft: -26px;\n\theight: 16px;\n\twidth: 16px;\n\tbackground-color: var(--color-title);\n\tborder-radius: 50%;\n}\nul.event_timeline > li[data-v-64472bb8]:hover::before {\n\tfilter: brightness(1.2);\n}\nul.event_timeline > li:not(:hover) .event_switch_button[data-v-64472bb8] {\n\tdisplay: none;\n}\nul.event_timeline > li > input[data-v-64472bb8] {\n\twidth: 69px;\n}\nul.event_timeline > li > label[data-v-64472bb8] {\n\tfont-family: var(--font-code);\n\tpadding: 3px;\n}\nul.event_timeline > li > .timeline_remove_button[data-v-64472bb8] {\n\tmargin-left: auto;\n\tmargin-top: 2px;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.input_wrapper[data-v-64472bb8] {\n\tmargin: 2px 0;\n}\n.input_wrapper > label[data-v-64472bb8] {\n\twidth: 100px;\n\ttext-align: right;\n\tvertical-align: middle;\n\tmargin: 3px 0;\n}\n.input_right[data-v-64472bb8] {\n\tdisplay: inline-flex;\n\tgap: 2px;\n\tvertical-align: middle;\n\twidth: calc(100% - 110px);\n\tmargin-left: 4px;\n}\n.input_right.full_width[data-v-64472bb8] {\n\twidth: calc(100% - 8px);\n}\n.input_right.expandable[data-v-64472bb8] {\n\twidth: calc(100% - 134px);\n}\n.input_right[axes=\"1\"] > input[data-v-64472bb8]:not([type=\"checkbox\"]), .input_right[axes=\"1\"] > select[data-v-64472bb8]:not([type=\"checkbox\"]) {\n\twidth: 100%;\n}\n.input_right.expanded[data-v-64472bb8] {\n\tdisplay: block;\n\twidth: calc(100% - 7px);\n}\n.input_right.expanded input[data-v-64472bb8], .input_right.expanded .input_vector[data-v-64472bb8]  {\n\twidth: 100% !important;\n\tdisplay: block;\n\tmargin-left: 0;\n}\n.tool.input_expand_button[data-v-64472bb8] {\n\tfloat: right;\n\twidth: 22px;\n\tpadding-left: 0;\n\tpadding-top: 2px;\n}\nli[input_type=\"select_custom\"] select[data-v-64472bb8] {\n\twidth: 140px;\n\tflex-grow: 1;\n}\n.input_list li[data-v-64472bb8] {\n\tmargin: 2px 0;\n}\nul.input_list input[data-v-64472bb8], ul.input_list .prism-editor-component[data-v-64472bb8] {\n\twidth: calc(100% - 80px);\n\tmargin-left: 52px;\n\tfloat: left;\n}\n.input_list li .tool[data-v-64472bb8] {\n\tpadding: 2px 0px;\n\twidth: 24px;\n\theight: 30px;\n}\n.input_vector[data-v-64472bb8] {\n\twidth: 40px;\n\tflex-grow: 1;\n}\n.input_vector[data-v-64472bb8]:first-child {\n\tmargin-left: 0;\n}\n.list_add_tool[data-v-64472bb8] {\n\tvertical-align: sub;\n}\n.event_list[data-v-64472bb8] {\n\tposition: relative;\n\tmin-height: 30px;\n\twidth: auto;\n\tflex-grow: 1;\n\tpadding: 0 1px;\n}\n.event_list > li.event_list_event[data-v-64472bb8] {\n\theight: 30px;\n\tdisplay: inline-block;\n\tpadding: 4px 13px;\n\tmargin: 1px 2px;\n\tbackground-color: var(--color-bar);\n\tborder-radius: 5px;\n\tbox-shadow: 0 1px 14px rgba(0, 0, 0, 0.18);\n}\n.event_list > li.event_list_event > label[data-v-64472bb8] {\n\tfont-family: var(--font-code);\n}\n.event_list > li.event_list_event > svg[data-v-64472bb8] {\n\tmargin-top: -2px;\n}\n.event_list > div[data-v-64472bb8] {\n\tdisplay: inline-block;\n\tmargin-top: 4px;\n}\n.timeline_event_list[data-v-64472bb8] {\n\tmargin-top: -2px;\n\tmargin-bottom: 0;\n}\n.event_speed_list > li.event_list_event[data-v-64472bb8] {\n\tpadding: 5px;\n}\n.event_speed_list > li.event_list_event > .highlighting_button[data-v-64472bb8] {\n\tfloat: right;\n\tmargin-top: 1px;\n}\n.event_min_speed[data-v-64472bb8] {\n\twidth: 100%;\n\tdisplay: flex;\n\tgap: 5px;\n\tborder-top: 2px solid var(--color-interface);\n\tpadding-top: 4px;\n}\n.event_min_speed > label[data-v-64472bb8] {\n\tpadding-top: 3px;\n}\n.event_min_speed > input[data-v-64472bb8] {\n\twidth: 56px;\n}\nul.event_timeline[data-v-64472bb8] {\n\tpadding: 0 10px;\n\tmargin-left: 20px;\n\tposition: relative;\n}\nul.event_timeline[data-v-64472bb8]::before {\n\tdisplay: block;\n\tcontent: \"\";\n\tposition: absolute;\n\ttop: -4px;\n\tbottom: -2px;\n\tleft: -11px;\n\twidth: 6px;\n\tbackground-color: var(--color-bar);\n\tborder-radius: 3px;\n}\nul.event_timeline > li[data-v-64472bb8] {\n\tdisplay: block;\n\tposition: relative;\n\tdisplay: flex;\n\tgap: 6px;\n\tmargin: 2px 0;\n\tpadding-left: 2px;\n}\nul.event_timeline > li[data-v-64472bb8]::before {\n\tdisplay: block;\n\tcontent: \"\";\n\tposition: absolute;\n\ttop: 7px;\n\tleft: -26px;\n\theight: 16px;\n\twidth: 16px;\n\tbackground-color: var(--color-title);\n\tborder-radius: 50%;\n}\nul.event_timeline > li[data-v-64472bb8]:hover::before {\n\tfilter: brightness(1.2);\n}\nul.event_timeline > li:not(:hover) .event_switch_button[data-v-64472bb8] {\n\tdisplay: none;\n}\nul.event_timeline > li > input[data-v-64472bb8] {\n\twidth: 69px;\n}\nul.event_timeline > li > label[data-v-64472bb8] {\n\tfont-family: var(--font-code);\n\tpadding: 3px;\n}\nul.event_timeline > li > .timeline_remove_button[data-v-64472bb8] {\n\tmargin-left: auto;\n\tmargin-top: 2px;\n\tflex-shrink: 0;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -13728,6 +13835,41 @@ const GripVertical = (0,_createVueComponent_js__WEBPACK_IMPORTED_MODULE_0__["def
 
 /***/ }),
 
+/***/ "./node_modules/lucide-vue/dist/esm/icons/image-plus.js":
+/*!**************************************************************!*\
+  !*** ./node_modules/lucide-vue/dist/esm/icons/image-plus.js ***!
+  \**************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ ImagePlus)
+/* harmony export */ });
+/* harmony import */ var _createVueComponent_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../createVueComponent.js */ "./node_modules/lucide-vue/dist/esm/createVueComponent.js");
+/**
+ * @license lucide-vue v0.298.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+
+
+
+const ImagePlus = (0,_createVueComponent_js__WEBPACK_IMPORTED_MODULE_0__["default"])("ImagePlusIcon", [
+  ["path", { d: "M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7", key: "31hg93" }],
+  ["line", { x1: "16", x2: "22", y1: "5", y2: "5", key: "ez7e4s" }],
+  ["line", { x1: "19", x2: "19", y1: "2", y2: "8", key: "1gkr8c" }],
+  ["circle", { cx: "9", cy: "9", r: "2", key: "af1f0g" }],
+  ["path", { d: "m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21", key: "1xmnt7" }]
+]);
+
+
+//# sourceMappingURL=image-plus.js.map
+
+
+/***/ }),
+
 /***/ "./node_modules/lucide-vue/dist/esm/icons/image.js":
 /*!*********************************************************!*\
   !*** ./node_modules/lucide-vue/dist/esm/icons/image.js ***!
@@ -14726,7 +14868,6 @@ function Molang() {
 
 	this.variableHandler = null;
 
-	let temp_variables = {};
 	let found_unassigned_variable = false;
 	let loop_status = 0;
 
@@ -15061,23 +15202,23 @@ function Molang() {
 			i--;
 		}
 	}
-	function compareValues(a, b) {
-		if (!(typeof a === 'string' && a[0] == `'`)) a = iterateExp(a, true);
-		if (!(typeof b === 'string' && b[0] == `'`)) b = iterateExp(b, true);
+	function compareValues(a, b, context) {
+		if (!(typeof a === 'string' && a[0] == `'`)) a = iterateExp(a, context, true);
+		if (!(typeof b === 'string' && b[0] == `'`)) b = iterateExp(b, context, true);
 		return a === b;
 	}
-	function iterateExp(T, allow_strings) {
+	function iterateExp(T, context, allow_strings) {
 		if (typeof T === 'number') {
 			return T;
 		} else if (typeof T === 'string') {
-			let val = temp_variables[T];
+			let val = context[T];
 			if (val === undefined && typeof self.variableHandler === 'function') {
-				val = self.variableHandler(T, temp_variables);
+				val = self.variableHandler(T, context);
 			}
 			if (typeof val === 'number') {
 				return val;
 			} else if (typeof val === 'string' && !allow_strings) {
-				return self.parse(val, temp_variables) || 0;
+				return self.parse(val, context) || 0;
 			} else if (val === undefined) {
 				found_unassigned_variable = true;
 			} else if (typeof val === 'function') {
@@ -15092,83 +15233,83 @@ function Molang() {
 
 				switch (T.operator) {
 					//Basic
-					case 1:		return iterateExp(T.a) + iterateExp(T.b);
-					case 2:		return iterateExp(T.a) - iterateExp(T.b);
-					case 3:		return iterateExp(T.a) * iterateExp(T.b);
-					case 4:		return iterateExp(T.a) / iterateExp(T.b);
-					case 5:		return iterateExp(T.a) == 0 ? 1 : 0;
+					case 1:		return iterateExp(T.a, context) + iterateExp(T.b, context);
+					case 2:		return iterateExp(T.a, context) - iterateExp(T.b, context);
+					case 3:		return iterateExp(T.a, context) * iterateExp(T.b, context);
+					case 4:		return iterateExp(T.a, context) / iterateExp(T.b, context);
+					case 5:		return iterateExp(T.a, context) == 0 ? 1 : 0;
 
 					//Logical
-					case 10:	return iterateExp(T.a) ?  iterateExp(T.b) : iterateExp(T.c);
-					case 11:	return iterateExp(T.a) && iterateExp(T.b) ? 1 : 0;
-					case 12:	return iterateExp(T.a) || iterateExp(T.b) ? 1 : 0;
-					case 13:	return iterateExp(T.a) <  iterateExp(T.b) ? 1 : 0;
-					case 14:	return iterateExp(T.a) <= iterateExp(T.b) ? 1 : 0;
-					case 15:	return iterateExp(T.a) >  iterateExp(T.b) ? 1 : 0;
-					case 16:	return iterateExp(T.a) >= iterateExp(T.b) ? 1 : 0;
-					case 17:	return compareValues(T.a, T.b) ? 1 : 0;
-					case 18:	return compareValues(T.a, T.b) ? 0 : 1;
+					case 10:	return iterateExp(T.a, context) ?  iterateExp(T.b, context) : iterateExp(T.c, context);
+					case 11:	return iterateExp(T.a, context) && iterateExp(T.b, context) ? 1 : 0;
+					case 12:	return iterateExp(T.a, context) || iterateExp(T.b, context) ? 1 : 0;
+					case 13:	return iterateExp(T.a, context) <  iterateExp(T.b, context) ? 1 : 0;
+					case 14:	return iterateExp(T.a, context) <= iterateExp(T.b, context) ? 1 : 0;
+					case 15:	return iterateExp(T.a, context) >  iterateExp(T.b, context) ? 1 : 0;
+					case 16:	return iterateExp(T.a, context) >= iterateExp(T.b, context) ? 1 : 0;
+					case 17:	return compareValues(T.a, T.b, context) ? 1 : 0;
+					case 18:	return compareValues(T.a, T.b, context) ? 0 : 1;
 					case 19:	found_unassigned_variable = false;
-								let variable = iterateExp(T.a);
-								return found_unassigned_variable ? iterateExp(T.b) : variable;
+								let variable = iterateExp(T.a, context);
+								return found_unassigned_variable ? iterateExp(T.b, context) : variable;
 
 					//Math
-					case 100:	return Math.abs(iterateExp(T.a));
-					case 101:	return Math.sin(iterateExp(T.a) * angleFactor());
-					case 102:	return Math.cos(iterateExp(T.a) * angleFactor());
-					case 103:	return Math.exp(iterateExp(T.a));
-					case 104:	return Math.log(iterateExp(T.a));
-					case 105:	return Math.pow(iterateExp(T.a), iterateExp(T.b));
-					case 106:	return Math.sqrt(iterateExp(T.a));
-					case 107:	return MathUtil.random(iterateExp(T.a), iterateExp(T.b));
-					case 108:	return Math.ceil(iterateExp(T.a));
-					case 109:	return Math.round(iterateExp(T.a));
-					case 110:	return Math.trunc(iterateExp(T.a));
-					case 111:	return Math.floor(iterateExp(T.a));
-					case 112:	return iterateExp(T.a) % iterateExp(T.b);
-					case 113:	return Math.min(iterateExp(T.a), iterateExp(T.b));
-					case 114:	return Math.max(iterateExp(T.a), iterateExp(T.b));
-					case 115:	return MathUtil.clamp(iterateExp(T.a), iterateExp(T.b), iterateExp(T.c));
+					case 100:	return Math.abs(iterateExp(T.a, context));
+					case 101:	return Math.sin(iterateExp(T.a, context) * angleFactor());
+					case 102:	return Math.cos(iterateExp(T.a, context) * angleFactor());
+					case 103:	return Math.exp(iterateExp(T.a, context));
+					case 104:	return Math.log(iterateExp(T.a, context));
+					case 105:	return iterateExp(T.a, context) ** iterateExp(T.b, context);
+					case 106:	return Math.sqrt(iterateExp(T.a, context));
+					case 107:	return MathUtil.random(iterateExp(T.a, context), iterateExp(T.b, context));
+					case 108:	return Math.ceil(iterateExp(T.a, context));
+					case 109:	return Math.round(iterateExp(T.a, context));
+					case 110:	return Math.trunc(iterateExp(T.a, context));
+					case 111:	return Math.floor(iterateExp(T.a, context));
+					case 112:	return iterateExp(T.a, context) % iterateExp(T.b, context);
+					case 113:	return Math.min(iterateExp(T.a, context), iterateExp(T.b, context));
+					case 114:	return Math.max(iterateExp(T.a, context), iterateExp(T.b, context));
+					case 115:	return MathUtil.clamp(iterateExp(T.a, context), iterateExp(T.b, context), iterateExp(T.c, context));
 					//	Lerp
-					case 116:	return MathUtil.lerp(iterateExp(T.a), iterateExp(T.b), iterateExp(T.c));
-					case 117:	return MathUtil.lerpRotate(iterateExp(T.a), iterateExp(T.b), iterateExp(T.c));
+					case 116:	return MathUtil.lerp(iterateExp(T.a, context), iterateExp(T.b, context), iterateExp(T.c, context));
+					case 117:	return MathUtil.lerpRotate(iterateExp(T.a, context), iterateExp(T.b, context), iterateExp(T.c, context));
 					// Inverse Trigonometry
-					case 118:	return Math.asin(iterateExp(T.a)) / angleFactor();
-					case 119:	return Math.acos(iterateExp(T.a)) / angleFactor();
-					case 120:	return Math.atan(iterateExp(T.a)) / angleFactor();
-					case 121:	return Math.atan2(iterateExp(T.a), iterateExp(T.b)) / angleFactor();
+					case 118:	return Math.asin(iterateExp(T.a, context)) / angleFactor();
+					case 119:	return Math.acos(iterateExp(T.a, context)) / angleFactor();
+					case 120:	return Math.atan(iterateExp(T.a, context)) / angleFactor();
+					case 121:	return Math.atan2(iterateExp(T.a, context), iterateExp(T.b, context)) / angleFactor();
 					// Misc
-					case 122:	return MathUtil.dieRoll(iterateExp(T.a), iterateExp(T.b), iterateExp(T.c));
-					case 123:	return MathUtil.dieRollInt(iterateExp(T.a), iterateExp(T.b), iterateExp(T.c));
+					case 122:	return MathUtil.dieRoll(iterateExp(T.a, context), iterateExp(T.b, context), iterateExp(T.c, context));
+					case 123:	return MathUtil.dieRollInt(iterateExp(T.a, context), iterateExp(T.b, context), iterateExp(T.c, context));
 					case 124:
-						let t = iterateExp(T.a);
-						return 3*Math.pow(t, 2) - 2*Math.pow(t, 3);
-					case 125:	return MathUtil.randomInt(iterateExp(T.a), iterateExp(T.b));
+						let t = iterateExp(T.a, context);
+						return 3*(t**2) - 2*(t**3);
+					case 125:	return MathUtil.randomInt(iterateExp(T.a, context), iterateExp(T.b, context));
 				}
 				break;
 
 			case ReturnStatement:
 				loop_status = 1;
-				return iterateExp(T.value);
+				return iterateExp(T.value, context);
 		
 			case Allocation:
-				temp_variables[T.name] = self.variables[T.name] = iterateExp(T.value);
+				context[T.name] = self.variables[T.name] = iterateExp(T.value, context);
 				return 0;
 		
 			case QueryFunction:
 
-				let args = T.args.map(arg => iterateExp(arg));
+				let args = T.args.map(arg => iterateExp(arg, context));
 				switch (T.query) {
 					case 'query.in_range': 	return MathUtil.inRange(...args);
 					case 'query.all': 		return MathUtil.all(...args);
 					case 'query.any': 		return MathUtil.any(...args);
 					case 'query.approx_eq': return MathUtil.approxEq(...args);
 				}
-				if (typeof temp_variables[T.query] == 'function') {
-					return temp_variables[T.query](...args) || 0;
+				if (typeof context[T.query] == 'function') {
+					return context[T.query](...args) || 0;
 				}
 				if (typeof self.variableHandler === 'function') {
-					return self.variableHandler(T.query, temp_variables, args) || 0;
+					return self.variableHandler(T.query, context, args) || 0;
 				}
 				return 0;
 		
@@ -15176,7 +15317,7 @@ function Molang() {
 				loop_status = 0;
 				let return_value = 0;
 				for (let line of T.lines) {
-					return_value = iterateExp(line);
+					return_value = iterateExp(line, context);
 					if (loop_status > 0) {
 						break;
 					}
@@ -15185,9 +15326,9 @@ function Molang() {
 
 			case Loop:
 				let return_value2 = 0;
-				let iterations = MathUtil.clamp(iterateExp(T.iterations), 0, 1024);
+				let iterations = MathUtil.clamp(iterateExp(T.iterations, context), 0, 1024);
 				for (let i = 0; i < iterations; i++) {
-					let result = iterateExp(T.body);
+					let result = iterateExp(T.body, context);
 					if (loop_status === 2) {
 						loop_status = 0;
 						break;
@@ -15213,19 +15354,19 @@ function Molang() {
 	}
 
 	function calculate(expression, variables) {
+		let context = {};
 		for (let key in self.global_variables) {
-			temp_variables[key] = self.global_variables[key];
+			context[key] = self.global_variables[key];
 		}
 		for (let key in self.variables) {
-			temp_variables[key] = self.variables[key];
+			context[key] = self.variables[key];
 		}
 		if (variables) {
 			for (let key in variables) {
-				temp_variables[key] = variables[key];
+				context[key] = variables[key];
 			}
 		}
-		let end_result = iterateExp(expression);
-		temp_variables = {};
+		let end_result = iterateExp(expression, context);
 		loop_status = 0;
 		return end_result;
 	}
@@ -15246,6 +15387,7 @@ function Molang() {
 				addToCache(input, expression);
 			}
 		}
+		if (Math.random() < 0.05) console.log(input, expression);
 		return calculate(expression, variables) || 0;
 	};
 	this.resetVariables = () => {
@@ -74124,7 +74266,7 @@ var render = function () {
                   key: option,
                   on: {
                     click: function ($event) {
-                      return _vm.select(option)
+                      return _vm.select(option, $event)
                     },
                   },
                 },
@@ -74406,6 +74548,23 @@ var render = function () {
                       },
                     },
                     [_c("Upload", { attrs: { size: 22 } })],
+                    1
+                  )
+                : _vm._e(),
+              _vm._v(" "),
+              !_vm.is_extension && _vm.canEditParticleFile()
+                ? _c(
+                    "div",
+                    {
+                      staticClass: "highlighting_button",
+                      attrs: { title: "Select Texture" },
+                      on: {
+                        click: function ($event) {
+                          return _vm.selectParticleTexture()
+                        },
+                      },
+                    },
+                    [_c("ImagePlus", { attrs: { size: 22 } })],
                     1
                   )
                 : _vm._e(),
@@ -75407,9 +75566,9 @@ var render = function () {
                             _c("event-picker", {
                               attrs: { blacklist: input.value },
                               on: {
-                                select: function ($event) {
+                                select: function ($event, event) {
                                   input.value.push($event)
-                                  input.change($event)
+                                  input.change(event)
                                 },
                               },
                             }),
@@ -75421,8 +75580,8 @@ var render = function () {
                     ? [
                         _c("event-picker", {
                           on: {
-                            select: function ($event) {
-                              return _vm.addEventToTimeline(input, $event)
+                            select: function ($event, event) {
+                              _vm.addEventToTimeline(input, $event, event)
                             },
                           },
                         }),
@@ -75508,12 +75667,12 @@ var render = function () {
                                 }),
                               },
                               on: {
-                                select: function ($event) {
+                                select: function ($event, event) {
                                   input.value.push({
                                     event: $event,
                                     min_speed: 0,
                                   })
-                                  input.change($event)
+                                  input.change(event)
                                 },
                               },
                             }),
@@ -75580,9 +75739,24 @@ var render = function () {
                               modifiers: { number: true },
                             },
                           ],
-                          attrs: { type: "number", step: "0.05" },
+                          attrs: { type: "number", step: "0.05", min: "0" },
                           domProps: { value: entry.time },
                           on: {
+                            input: [
+                              function ($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  entry,
+                                  "time",
+                                  _vm._n($event.target.value)
+                                )
+                              },
+                              function ($event) {
+                                return _vm.edit($event, "change event timeline")
+                              },
+                            ],
                             blur: [
                               function ($event) {
                                 return input.change($event)
@@ -75591,16 +75765,6 @@ var render = function () {
                                 return _vm.$forceUpdate()
                               },
                             ],
-                            input: function ($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.$set(
-                                entry,
-                                "time",
-                                _vm._n($event.target.value)
-                              )
-                            },
                           },
                         }),
                         _vm._v(" "),
@@ -75636,9 +75800,9 @@ var render = function () {
                             _c("event-picker", {
                               attrs: { blacklist: entry.event },
                               on: {
-                                select: function ($event) {
+                                select: function ($event, event) {
                                   entry.event.push($event)
-                                  input.change($event)
+                                  input.change(event)
                                 },
                               },
                             }),
@@ -89031,7 +89195,6 @@ function Molang() {
 
 	this.variableHandler = null;
 
-	let temp_variables = {};
 	let found_unassigned_variable = false;
 	let loop_status = 0;
 
@@ -89366,23 +89529,23 @@ function Molang() {
 			i--;
 		}
 	}
-	function compareValues(a, b) {
-		if (!(typeof a === 'string' && a[0] == `'`)) a = iterateExp(a, true);
-		if (!(typeof b === 'string' && b[0] == `'`)) b = iterateExp(b, true);
+	function compareValues(a, b, context) {
+		if (!(typeof a === 'string' && a[0] == `'`)) a = iterateExp(a, context, true);
+		if (!(typeof b === 'string' && b[0] == `'`)) b = iterateExp(b, context, true);
 		return a === b;
 	}
-	function iterateExp(T, allow_strings) {
+	function iterateExp(T, context, allow_strings) {
 		if (typeof T === 'number') {
 			return T;
 		} else if (typeof T === 'string') {
-			let val = temp_variables[T];
+			let val = context[T];
 			if (val === undefined && typeof self.variableHandler === 'function') {
-				val = self.variableHandler(T, temp_variables);
+				val = self.variableHandler(T, context);
 			}
 			if (typeof val === 'number') {
 				return val;
 			} else if (typeof val === 'string' && !allow_strings) {
-				return self.parse(val, temp_variables) || 0;
+				return self.parse(val, context) || 0;
 			} else if (val === undefined) {
 				found_unassigned_variable = true;
 			} else if (typeof val === 'function') {
@@ -89397,83 +89560,83 @@ function Molang() {
 
 				switch (T.operator) {
 					//Basic
-					case 1:		return iterateExp(T.a) + iterateExp(T.b);
-					case 2:		return iterateExp(T.a) - iterateExp(T.b);
-					case 3:		return iterateExp(T.a) * iterateExp(T.b);
-					case 4:		return iterateExp(T.a) / iterateExp(T.b);
-					case 5:		return iterateExp(T.a) == 0 ? 1 : 0;
+					case 1:		return iterateExp(T.a, context) + iterateExp(T.b, context);
+					case 2:		return iterateExp(T.a, context) - iterateExp(T.b, context);
+					case 3:		return iterateExp(T.a, context) * iterateExp(T.b, context);
+					case 4:		return iterateExp(T.a, context) / iterateExp(T.b, context);
+					case 5:		return iterateExp(T.a, context) == 0 ? 1 : 0;
 
 					//Logical
-					case 10:	return iterateExp(T.a) ?  iterateExp(T.b) : iterateExp(T.c);
-					case 11:	return iterateExp(T.a) && iterateExp(T.b) ? 1 : 0;
-					case 12:	return iterateExp(T.a) || iterateExp(T.b) ? 1 : 0;
-					case 13:	return iterateExp(T.a) <  iterateExp(T.b) ? 1 : 0;
-					case 14:	return iterateExp(T.a) <= iterateExp(T.b) ? 1 : 0;
-					case 15:	return iterateExp(T.a) >  iterateExp(T.b) ? 1 : 0;
-					case 16:	return iterateExp(T.a) >= iterateExp(T.b) ? 1 : 0;
-					case 17:	return compareValues(T.a, T.b) ? 1 : 0;
-					case 18:	return compareValues(T.a, T.b) ? 0 : 1;
+					case 10:	return iterateExp(T.a, context) ?  iterateExp(T.b, context) : iterateExp(T.c, context);
+					case 11:	return iterateExp(T.a, context) && iterateExp(T.b, context) ? 1 : 0;
+					case 12:	return iterateExp(T.a, context) || iterateExp(T.b, context) ? 1 : 0;
+					case 13:	return iterateExp(T.a, context) <  iterateExp(T.b, context) ? 1 : 0;
+					case 14:	return iterateExp(T.a, context) <= iterateExp(T.b, context) ? 1 : 0;
+					case 15:	return iterateExp(T.a, context) >  iterateExp(T.b, context) ? 1 : 0;
+					case 16:	return iterateExp(T.a, context) >= iterateExp(T.b, context) ? 1 : 0;
+					case 17:	return compareValues(T.a, T.b, context) ? 1 : 0;
+					case 18:	return compareValues(T.a, T.b, context) ? 0 : 1;
 					case 19:	found_unassigned_variable = false;
-								let variable = iterateExp(T.a);
-								return found_unassigned_variable ? iterateExp(T.b) : variable;
+								let variable = iterateExp(T.a, context);
+								return found_unassigned_variable ? iterateExp(T.b, context) : variable;
 
 					//Math
-					case 100:	return Math.abs(iterateExp(T.a));
-					case 101:	return Math.sin(iterateExp(T.a) * angleFactor());
-					case 102:	return Math.cos(iterateExp(T.a) * angleFactor());
-					case 103:	return Math.exp(iterateExp(T.a));
-					case 104:	return Math.log(iterateExp(T.a));
-					case 105:	return Math.pow(iterateExp(T.a), iterateExp(T.b));
-					case 106:	return Math.sqrt(iterateExp(T.a));
-					case 107:	return MathUtil.random(iterateExp(T.a), iterateExp(T.b));
-					case 108:	return Math.ceil(iterateExp(T.a));
-					case 109:	return Math.round(iterateExp(T.a));
-					case 110:	return Math.trunc(iterateExp(T.a));
-					case 111:	return Math.floor(iterateExp(T.a));
-					case 112:	return iterateExp(T.a) % iterateExp(T.b);
-					case 113:	return Math.min(iterateExp(T.a), iterateExp(T.b));
-					case 114:	return Math.max(iterateExp(T.a), iterateExp(T.b));
-					case 115:	return MathUtil.clamp(iterateExp(T.a), iterateExp(T.b), iterateExp(T.c));
+					case 100:	return Math.abs(iterateExp(T.a, context));
+					case 101:	return Math.sin(iterateExp(T.a, context) * angleFactor());
+					case 102:	return Math.cos(iterateExp(T.a, context) * angleFactor());
+					case 103:	return Math.exp(iterateExp(T.a, context));
+					case 104:	return Math.log(iterateExp(T.a, context));
+					case 105:	return iterateExp(T.a, context) ** iterateExp(T.b, context);
+					case 106:	return Math.sqrt(iterateExp(T.a, context));
+					case 107:	return MathUtil.random(iterateExp(T.a, context), iterateExp(T.b, context));
+					case 108:	return Math.ceil(iterateExp(T.a, context));
+					case 109:	return Math.round(iterateExp(T.a, context));
+					case 110:	return Math.trunc(iterateExp(T.a, context));
+					case 111:	return Math.floor(iterateExp(T.a, context));
+					case 112:	return iterateExp(T.a, context) % iterateExp(T.b, context);
+					case 113:	return Math.min(iterateExp(T.a, context), iterateExp(T.b, context));
+					case 114:	return Math.max(iterateExp(T.a, context), iterateExp(T.b, context));
+					case 115:	return MathUtil.clamp(iterateExp(T.a, context), iterateExp(T.b, context), iterateExp(T.c, context));
 					//	Lerp
-					case 116:	return MathUtil.lerp(iterateExp(T.a), iterateExp(T.b), iterateExp(T.c));
-					case 117:	return MathUtil.lerpRotate(iterateExp(T.a), iterateExp(T.b), iterateExp(T.c));
+					case 116:	return MathUtil.lerp(iterateExp(T.a, context), iterateExp(T.b, context), iterateExp(T.c, context));
+					case 117:	return MathUtil.lerpRotate(iterateExp(T.a, context), iterateExp(T.b, context), iterateExp(T.c, context));
 					// Inverse Trigonometry
-					case 118:	return Math.asin(iterateExp(T.a)) / angleFactor();
-					case 119:	return Math.acos(iterateExp(T.a)) / angleFactor();
-					case 120:	return Math.atan(iterateExp(T.a)) / angleFactor();
-					case 121:	return Math.atan2(iterateExp(T.a), iterateExp(T.b)) / angleFactor();
+					case 118:	return Math.asin(iterateExp(T.a, context)) / angleFactor();
+					case 119:	return Math.acos(iterateExp(T.a, context)) / angleFactor();
+					case 120:	return Math.atan(iterateExp(T.a, context)) / angleFactor();
+					case 121:	return Math.atan2(iterateExp(T.a, context), iterateExp(T.b, context)) / angleFactor();
 					// Misc
-					case 122:	return MathUtil.dieRoll(iterateExp(T.a), iterateExp(T.b), iterateExp(T.c));
-					case 123:	return MathUtil.dieRollInt(iterateExp(T.a), iterateExp(T.b), iterateExp(T.c));
+					case 122:	return MathUtil.dieRoll(iterateExp(T.a, context), iterateExp(T.b, context), iterateExp(T.c, context));
+					case 123:	return MathUtil.dieRollInt(iterateExp(T.a, context), iterateExp(T.b, context), iterateExp(T.c, context));
 					case 124:
-						let t = iterateExp(T.a);
-						return 3*Math.pow(t, 2) - 2*Math.pow(t, 3);
-					case 125:	return MathUtil.randomInt(iterateExp(T.a), iterateExp(T.b));
+						let t = iterateExp(T.a, context);
+						return 3*(t**2) - 2*(t**3);
+					case 125:	return MathUtil.randomInt(iterateExp(T.a, context), iterateExp(T.b, context));
 				}
 				break;
 
 			case ReturnStatement:
 				loop_status = 1;
-				return iterateExp(T.value);
+				return iterateExp(T.value, context);
 		
 			case Allocation:
-				temp_variables[T.name] = self.variables[T.name] = iterateExp(T.value);
+				context[T.name] = self.variables[T.name] = iterateExp(T.value, context);
 				return 0;
 		
 			case QueryFunction:
 
-				let args = T.args.map(arg => iterateExp(arg));
+				let args = T.args.map(arg => iterateExp(arg, context));
 				switch (T.query) {
 					case 'query.in_range': 	return MathUtil.inRange(...args);
 					case 'query.all': 		return MathUtil.all(...args);
 					case 'query.any': 		return MathUtil.any(...args);
 					case 'query.approx_eq': return MathUtil.approxEq(...args);
 				}
-				if (typeof temp_variables[T.query] == 'function') {
-					return temp_variables[T.query](...args) || 0;
+				if (typeof context[T.query] == 'function') {
+					return context[T.query](...args) || 0;
 				}
 				if (typeof self.variableHandler === 'function') {
-					return self.variableHandler(T.query, temp_variables, args) || 0;
+					return self.variableHandler(T.query, context, args) || 0;
 				}
 				return 0;
 		
@@ -89481,7 +89644,7 @@ function Molang() {
 				loop_status = 0;
 				let return_value = 0;
 				for (let line of T.lines) {
-					return_value = iterateExp(line);
+					return_value = iterateExp(line, context);
 					if (loop_status > 0) {
 						break;
 					}
@@ -89490,9 +89653,9 @@ function Molang() {
 
 			case Loop:
 				let return_value2 = 0;
-				let iterations = MathUtil.clamp(iterateExp(T.iterations), 0, 1024);
+				let iterations = MathUtil.clamp(iterateExp(T.iterations, context), 0, 1024);
 				for (let i = 0; i < iterations; i++) {
-					let result = iterateExp(T.body);
+					let result = iterateExp(T.body, context);
 					if (loop_status === 2) {
 						loop_status = 0;
 						break;
@@ -89518,19 +89681,19 @@ function Molang() {
 	}
 
 	function calculate(expression, variables) {
+		let context = {};
 		for (let key in self.global_variables) {
-			temp_variables[key] = self.global_variables[key];
+			context[key] = self.global_variables[key];
 		}
 		for (let key in self.variables) {
-			temp_variables[key] = self.variables[key];
+			context[key] = self.variables[key];
 		}
 		if (variables) {
 			for (let key in variables) {
-				temp_variables[key] = variables[key];
+				context[key] = variables[key];
 			}
 		}
-		let end_result = iterateExp(expression);
-		temp_variables = {};
+		let end_result = iterateExp(expression, context);
 		loop_status = 0;
 		return end_result;
 	}
