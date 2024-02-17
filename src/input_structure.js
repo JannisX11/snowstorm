@@ -210,6 +210,189 @@ const Data = {
 			}
 		},
 	},
+	motion: {
+		label: 'Motion',
+		motion: {
+			label: 'Motion',
+			_folded: false,
+			inputs: {
+				mode: new Input({
+					id: 'particle_motion_mode',
+					type: 'select',
+					label: 'Mode',
+					mode_groups: ['motion', 'motion'],
+					options: {
+						dynamic: 'Dynamic',
+						parametric: 'Parametric',
+						static: 'Static',
+					},
+				}),
+				direction_mode: new Input({
+					id: 'particle_direction_mode',
+					type: 'select',
+					label: 'Direction',
+					info: 'The direction of emitted particles in regards to the emitter shape',
+					enabled_modes: ['dynamic'],
+					options: {
+						outwards: 'Outwards',
+						inwards: 'Inwards',
+						direction: 'Custom',
+					},
+				}),
+				direction: new Input({
+					id: 'particle_direction_direction',
+					label: 'Direction',
+					info: 'The direction of emitted particles',
+					axis_count: 3,
+					enabled_modes: ['dynamic'],
+					condition(group) {
+						return group.inputs.mode.value == 'dynamic'
+							&& group.inputs.direction_mode.value == 'direction'
+					}
+				}),
+				linear_speed: new Input({
+					id: 'particle_motion_linear_speed',
+					label: 'Speed',
+					info: 'Starts the particle with a specified speed, using the direction specified by the emitter shape',
+					enabled_modes: ['dynamic'],
+					required: true
+				}),
+				linear_acceleration: new Input({
+					id: 'particle_motion_linear_acceleration',
+					label: 'Acceleration',
+					info: 'The linear acceleration applied to the particle in blocks/sec/sec',
+					axis_count: 3,
+					enabled_modes: ['dynamic'],
+				}),
+				linear_drag_coefficient: new Input({
+					id: 'particle_motion_linear_drag_coefficient',
+					label: 'Air Drag',
+					info: 'Think of this as air-drag.  The higher the value, the more drag evaluated every frame.',
+					enabled_modes: ['dynamic']
+				}),
+				relative_position: new Input({
+					id: 'particle_motion_relative_position',
+					label: 'Offset',
+					info: 'Directly set the position relative to the emitter',
+					axis_count: 3,
+					enabled_modes: ['parametric']
+				}),
+				relative_direction: new Input({
+					id: 'particle_motion_direction',
+					label: 'Direction',
+					info: 'Directly set the 3d direction of the particle',
+					axis_count: 3,
+					enabled_modes: ['parametric']
+				}),
+			}
+		},
+		rotation: {
+			label: 'Rotation',
+			_folded: false,
+			inputs: {
+				mode: new Input({
+					id: 'particle_rotation_mode',
+					type: 'select',
+					label: 'Mode',
+					mode_groups: ['motion', 'rotation'],
+					options: {
+						dynamic: 'Dynamic',
+						parametric: 'Parametric',
+					},
+				}),
+				initial_rotation: new Input({
+					id: 'particle_rotation_initial_rotation',
+					label: 'Start Rotation',
+					info: 'Specifies the initial rotation in degrees',
+					enabled_modes: ['dynamic']
+				}),
+				rotation_rate: new Input({
+					id: 'particle_rotation_rotation_rate',
+					label: 'Speed',
+					info: 'Specifies the spin rate in degrees/second',
+					enabled_modes: ['dynamic']
+				}),
+				rotation_acceleration: new Input({
+					id: 'particle_rotation_rotation_acceleration',
+					label: 'Acceleration',
+					info: 'Acceleration applied to the rotation speed of the particle in degrees/sec/sec.',
+					enabled_modes: ['dynamic']
+				}),
+				rotation_drag_coefficient: new Input({
+					id: 'particle_rotation_rotation_drag_coefficient',
+					label: 'Air Drag',
+					info: 'Rotation resistance. Higher numbers will retard the rotation over time.',
+					enabled_modes: ['dynamic']
+				}),
+				rotation: new Input({
+					id: 'particle_rotation_rotation',
+					label: 'Rotation',
+					info: 'Directly set the rotation of the particle',
+					enabled_modes: ['parametric']
+				})
+			}
+		},
+		collision: {
+			label: 'Collision',
+			_folded: false,
+			inputs: {
+				toggle: new Input({
+					id: 'particle_collision_toggle',
+					label: 'Collide',
+					info: 'Make the particle collide with the world',
+					type: 'checkbox',
+					mode_groups: ['motion', 'collision'],
+				}),
+				collision_radius: new Input({
+					id: 'particle_collision_collision_radius',
+					label: 'Radius',
+					info: 'Used to minimize interpenetration of particles with the environment',
+					min: 0.0,
+					max: 0.5,
+					step: 0.05,
+					required: true,
+					type: 'number',
+					enabled_modes: [true]
+				}),
+				collision_drag: new Input({
+					id: 'particle_collision_collision_drag',
+					label: 'Collision Drag',
+					info: 'Alters the speed of the particle when it has collided',
+					type: 'number',
+					step: 0.1,
+					enabled_modes: [true]
+				}),
+				coefficient_of_restitution: new Input({
+					id: 'particle_collision_coefficient_of_restitution',
+					label: 'Bounciness',
+					info: 'Set to 0.0 to not bounce, 1.0 to bounce back up to original hight',
+					type: 'number',
+					step: 0.1,
+					enabled_modes: [true]
+				}),
+				condition: new Input({
+					id: 'particle_collision_enabled',
+					label: 'Condition',
+					info: 'Enables collision when true / non-zero or unset',
+					enabled_modes: [true]
+				}),
+				events: new Input({
+					id: 'particle_collision_events',
+					label: 'Events',
+					info: 'Events to fire when the particle collides',
+					type: 'event_speed_list',
+					enabled_modes: [true]
+				}),
+				expire_on_contact: new Input({
+					id: 'particle_collision_expire_on_contact',
+					label: 'Expire On Contact',
+					info: 'Removes the particle when it hits a block',
+					type: 'checkbox',
+					enabled_modes: [true]
+				}),
+			}
+		}
+	},
 	appearance: {
 		label: 'Appearance',
 		appearance: {
@@ -233,7 +416,7 @@ const Data = {
 						particles_blend: 'Blend',
 						particles_add: 'Additive',
 						particles_opaque: 'Opaque',
-						custom: 'Custom',
+						custom: 'Custom:',
 					},
 				}),
 				facing_camera_mode: new Input({
@@ -463,193 +646,10 @@ const Data = {
 			}
 		},
 	},
-	motion: {
-		label: 'Motion',
-		motion: {
-			label: 'Motion',
-			_folded: false,
-			inputs: {
-				mode: new Input({
-					id: 'particle_motion_mode',
-					type: 'select',
-					label: 'Mode',
-					mode_groups: ['motion', 'motion'],
-					options: {
-						dynamic: 'Dynamic',
-						parametric: 'Parametric',
-						static: 'Static',
-					},
-				}),
-				direction_mode: new Input({
-					id: 'particle_direction_mode',
-					type: 'select',
-					label: 'Direction',
-					info: 'The direction of emitted particles in regards to the emitter shape',
-					enabled_modes: ['dynamic'],
-					options: {
-						outwards: 'Outwards',
-						inwards: 'Inwards',
-						direction: 'Custom',
-					},
-				}),
-				direction: new Input({
-					id: 'particle_direction_direction',
-					label: 'Direction',
-					info: 'The direction of emitted particles',
-					axis_count: 3,
-					enabled_modes: ['dynamic'],
-					condition(group) {
-						return group.inputs.mode.value == 'dynamic'
-							&& group.inputs.direction_mode.value == 'direction'
-					}
-				}),
-				linear_speed: new Input({
-					id: 'particle_motion_linear_speed',
-					label: 'Speed',
-					info: 'Starts the particle with a specified speed, using the direction specified by the emitter shape',
-					enabled_modes: ['dynamic'],
-					required: true
-				}),
-				linear_acceleration: new Input({
-					id: 'particle_motion_linear_acceleration',
-					label: 'Acceleration',
-					info: 'The linear acceleration applied to the particle in blocks/sec/sec',
-					axis_count: 3,
-					enabled_modes: ['dynamic'],
-				}),
-				linear_drag_coefficient: new Input({
-					id: 'particle_motion_linear_drag_coefficient',
-					label: 'Air Drag',
-					info: 'Think of this as air-drag.  The higher the value, the more drag evaluated every frame.',
-					enabled_modes: ['dynamic']
-				}),
-				relative_position: new Input({
-					id: 'particle_motion_relative_position',
-					label: 'Offset',
-					info: 'Directly set the position relative to the emitter',
-					axis_count: 3,
-					enabled_modes: ['parametric']
-				}),
-				relative_direction: new Input({
-					id: 'particle_motion_direction',
-					label: 'Direction',
-					info: 'Directly set the 3d direction of the particle',
-					axis_count: 3,
-					enabled_modes: ['parametric']
-				}),
-			}
-		},
-		rotation: {
-			label: 'Rotation',
-			_folded: false,
-			inputs: {
-				mode: new Input({
-					id: 'particle_rotation_mode',
-					type: 'select',
-					label: 'Mode',
-					mode_groups: ['motion', 'rotation'],
-					options: {
-						dynamic: 'Dynamic',
-						parametric: 'Parametric',
-					},
-				}),
-				initial_rotation: new Input({
-					id: 'particle_rotation_initial_rotation',
-					label: 'Start Rotation',
-					info: 'Specifies the initial rotation in degrees',
-					enabled_modes: ['dynamic']
-				}),
-				rotation_rate: new Input({
-					id: 'particle_rotation_rotation_rate',
-					label: 'Speed',
-					info: 'Specifies the spin rate in degrees/second',
-					enabled_modes: ['dynamic']
-				}),
-				rotation_acceleration: new Input({
-					id: 'particle_rotation_rotation_acceleration',
-					label: 'Acceleration',
-					info: 'Acceleration applied to the rotation speed of the particle in degrees/sec/sec.',
-					enabled_modes: ['dynamic']
-				}),
-				rotation_drag_coefficient: new Input({
-					id: 'particle_rotation_rotation_drag_coefficient',
-					label: 'Air Drag',
-					info: 'Rotation resistance. Higher numbers will retard the rotation over time.',
-					enabled_modes: ['dynamic']
-				}),
-				rotation: new Input({
-					id: 'particle_rotation_rotation',
-					label: 'Rotation',
-					info: 'Directly set the rotation of the particle',
-					enabled_modes: ['parametric']
-				})
-			}
-		},
-		collision: {
-			label: 'Collision',
-			_folded: false,
-			inputs: {
-				toggle: new Input({
-					id: 'particle_collision_toggle',
-					label: 'Collide',
-					info: 'Make the particle collide with the world',
-					type: 'checkbox',
-					mode_groups: ['motion', 'collision'],
-				}),
-				collision_radius: new Input({
-					id: 'particle_collision_collision_radius',
-					label: 'Radius',
-					info: 'Used to minimize interpenetration of particles with the environment',
-					min: 0.0,
-					max: 0.5,
-					step: 0.05,
-					required: true,
-					type: 'number',
-					enabled_modes: [true]
-				}),
-				collision_drag: new Input({
-					id: 'particle_collision_collision_drag',
-					label: 'Collision Drag',
-					info: 'Alters the speed of the particle when it has collided',
-					type: 'number',
-					step: 0.1,
-					enabled_modes: [true]
-				}),
-				coefficient_of_restitution: new Input({
-					id: 'particle_collision_coefficient_of_restitution',
-					label: 'Bounciness',
-					info: 'Set to 0.0 to not bounce, 1.0 to bounce back up to original hight',
-					type: 'number',
-					step: 0.1,
-					enabled_modes: [true]
-				}),
-				condition: new Input({
-					id: 'particle_collision_enabled',
-					label: 'Condition',
-					info: 'Enables collision when true / non-zero or unset',
-					enabled_modes: [true]
-				}),
-				events: new Input({
-					id: 'particle_collision_events',
-					label: 'Events',
-					info: 'Events to fire when the particle collides',
-					type: 'event_speed_list',
-					enabled_modes: [true]
-				}),
-				expire_on_contact: new Input({
-					id: 'particle_collision_expire_on_contact',
-					label: 'Expire On Contact',
-					info: 'Removes the particle when it hits a block',
-					type: 'checkbox',
-					enabled_modes: [true]
-				}),
-			}
-		}
-	},
 	lifetime: {
 		label: 'Time',
 		lifetime: {
-			label: 'Lifetime',
+			label: 'Particle Lifetime',
 			_folded: false,
 			inputs: {
 				max_lifetime: new Input({

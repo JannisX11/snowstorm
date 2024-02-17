@@ -15,9 +15,9 @@
                 <option id="entity">Entity</option>
                 <option id="locator">Locator</option>
             </select>
-            <div class="tool ground_collision" :class="{disabled: !collision}" @click="toggleCollision()" title="Ground Collision">
-                <Egg :size="20" v-if="collision" />
-                <EggOff :size="20" v-else />
+            <div class="tool ground_collision" :class="{disabled: !collision}" @click="toggleCollision()" title="Preview Collisions">
+                <FlipVertical2 :size="20" v-if="collision" />
+                <Minus :size="20" v-else />
             </div>
 
             <div class="spacing" />
@@ -49,8 +49,8 @@
     import minecraft_block from '../../assets/minecraft_block.png'
 
     import {
-        Egg,
-        EggOff,
+        FlipVertical2,
+        Minus,
         Play,
         Pause,
     } from 'lucide-vue'
@@ -232,8 +232,8 @@
             collision: true
         }},
         components: {
-            Egg,
-            EggOff,
+            FlipVertical2,
+            Minus,
             Play,
             Pause,
         },

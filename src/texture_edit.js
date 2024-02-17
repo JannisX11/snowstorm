@@ -56,6 +56,11 @@ class TextureClass {
         this.internal_changes = false;
         line_start = null;
     }
+    reload() {
+        this.internal_changes = false;
+        this.update();
+        this.updateCanvasFromSource();
+    }
     createEmpty(width = 16, height = 16) {
         this.canvas.width = width;
         this.canvas.height = height;

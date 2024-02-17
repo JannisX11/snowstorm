@@ -42,7 +42,7 @@ Math.roundTo = function(num, digits) {
 	return Math.round(num * d) / d
 }
 Math.lerp = function(a,b,m) {
-	return (m-a) / (b-a)
+	return a + (b-a) * m
 }
 Math.isBetween = function(n, a, b) {
    return (n - a) * (n - b) <= 0

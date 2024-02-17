@@ -11,8 +11,8 @@
 		>
 			<label v-bind:for="key" v-if="input.label">{{ input.label }}</label>
 			<div class="tool input_expand_button" v-if="input.expandable" @click="toggleExpand(input)" title="Expand">
-				<ChevronsUpDown :size="20" v-if="!input.expanded" />
-				<ChevronsDownUp :size="20" v-else />
+				<ChevronDown :size="20" v-if="!input.expanded" />
+				<ChevronUp :size="20" v-else />
 			</div>
 			<template v-if="input.axis_count == -1">
 				<!--List-->
@@ -177,8 +177,8 @@ import TextureInput from './TextureInput';
 import Checkbox from '../Form/Checkbox.vue'
 import EventPicker from './EventPicker.vue'
 import {
-	ChevronsUpDown,
-	ChevronsDownUp,
+	ChevronDown,
+	ChevronUp,
 	Plus,
 	X,
 } from 'lucide-vue'
@@ -213,8 +213,8 @@ export default {
 		TextureInput,
 		Checkbox,
 		EventPicker,
-		ChevronsUpDown,
-		ChevronsDownUp,
+		ChevronDown,
+		ChevronUp,
 		Plus,
 		X,
 	},

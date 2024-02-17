@@ -23,6 +23,11 @@ const Scene = new Wintersky.Scene({
 					if (event.data.type == 'provide_texture') {
 						let uri = (event.data.url && event.data.url + '?'+Math.floor(Math.random()*1000));
 						window.removeEventListener('message', update);
+
+						if (config == Config) {
+							Texture.source = uri;
+							Texture.updateCanvasFromSource();
+						}
 						resolve(uri);
 					}
 				}

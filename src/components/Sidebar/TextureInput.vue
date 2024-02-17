@@ -65,7 +65,7 @@
 				<input id="particle-texture-image" type="file" accept=".png" v-on:change="input.change($event)">
 			</template>
 			<template v-if="!input.allow_upload">
-				<div class="tool" style="width: auto;" v-on:click="input.updatePreview()" title="Reload"><i class="unicode_icon" style="display: inline;">⟳</i> Reload</div>
+				<div class="tool" style="width: auto;" v-on:click="reloadTexture()" title="Reload"><i class="unicode_icon" style="display: inline;">⟳</i> Reload</div>
 			</template>
 			<div class="tool" @click="newTexture()" title="New Texture">
 				<PlusSquare />
@@ -160,6 +160,10 @@ export default {
 			if (!Texture.source) return;
 			Texture.save();
 		},
+		reloadTexture() {
+			if (!Texture.source) return;
+			Texture.reload();
+		},
 		selectTool(tool) {
 			this.tool = tool;
 		},
@@ -223,26 +227,31 @@ export default {
 			event.preventDefault();
 			this.onMouseMove(event);
 
-			let initial_zoom = this.zoom;
-			if (event.deltaY > 1) {
-				this.zoom = this.zoom / 1.1;
-			} else {
-				this.zoom = this.zoom * 1.1;
-			}
-			this.zoom = Math.clamp(this.zoom, 0.5, 8);
+			if (event.ctrlKey || event.metaKey) {
+				let initial_zoom = this.zoom;
+				if (event.deltaY > 1) {
+					this.zoom = this.zoom / 1.1;
+				} else {
+					this.zoom = this.zoom * 1.1;
+				}
+				this.zoom = Math.clamp(this.zoom, 0.5, 8);
 
-			if (this.zoom != initial_zoom) {
-				let rect = this.$refs.texture_wrapper.getBoundingClientRect();
-				let mouse_pos = [
-					(event.clientX-1-rect.left),
-					(event.clientY-1-rect.top),
-				];
-				let zoom_offset = 1 - (this.zoom / initial_zoom);
-				let is_wider_than_viewport = this.$refs.texture_wrapper.clientWidth > this.$refs.texture_viewport.clientWidth;
-				this.offset.splice(0, 2, 
-					this.offset[0] + mouse_pos[0] * zoom_offset * (is_wider_than_viewport ? 1 : 0),
-					this.offset[1] + mouse_pos[1] * zoom_offset,
-				)
+				if (this.zoom != initial_zoom) {
+					let rect = this.$refs.texture_wrapper.getBoundingClientRect();
+					let mouse_pos = [
+						(event.clientX-1-rect.left),
+						(event.clientY-1-rect.top),
+					];
+					let zoom_offset = 1 - (this.zoom / initial_zoom);
+					let is_wider_than_viewport = this.$refs.texture_wrapper.clientWidth > this.$refs.texture_viewport.clientWidth;
+					this.offset.splice(0, 2, 
+						this.offset[0] + mouse_pos[0] * zoom_offset * (is_wider_than_viewport ? 1 : 0),
+						this.offset[1] + mouse_pos[1] * zoom_offset,
+					)
+				}
+			} else {
+
+				this.offset.splice(0, 2, this.offset[0], this.offset[1] - event.deltaY);
 			}
 		},
 		isVertical() {
