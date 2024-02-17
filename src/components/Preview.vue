@@ -46,6 +46,8 @@
     import {Emitter, Scene, initParticles} from './../emitter';
     import {validate} from './WarningDialog'
 
+    import minecraft_block from '../../assets/minecraft_block.png'
+
     import {
         Egg,
         EggOff,
@@ -133,6 +135,44 @@
         View.grid.position.y -= 0.0005
         View.scene.add(View.helper);
         View.scene.add(View.grid);
+
+        let cube_geometry = new THREE.BoxGeometry(1, 1, 1);
+		cube_geometry.setAttribute('color', new THREE.BufferAttribute(new Float32Array(24 * 3).fill(0.3), 3));
+        let setupFace = (offset, uv, shade) => {
+            for (let i = 0; i < 4; i++) {
+                uv[i] = Math.lerp(uv[i], uv[(i+2) % 4], 0.002);
+            }
+            cube_geometry.attributes.uv.array[offset*2+0] = uv[0];
+            cube_geometry.attributes.uv.array[offset*2+1] = uv[1];
+            cube_geometry.attributes.uv.array[offset*2+2] = uv[2];
+            cube_geometry.attributes.uv.array[offset*2+3] = uv[1];
+            cube_geometry.attributes.uv.array[offset*2+4] = uv[0];
+            cube_geometry.attributes.uv.array[offset*2+5] = uv[3];
+            cube_geometry.attributes.uv.array[offset*2+6] = uv[2];
+            cube_geometry.attributes.uv.array[offset*2+7] = uv[3];
+            for (let i = 0; i < 4; i++) {
+                cube_geometry.attributes.color.setXYZ((offset + i), shade, shade, shade);
+            }
+        }
+        setupFace(0, [0, 0.5, 0.5, 0.0], 0.64); // East/West
+        setupFace(4, [0, 0.5, 0.5, 0.0], 0.64); // East/West
+        setupFace(8, [0, 0.5, 0.5, 1], 1); // Up
+        setupFace(12, [0.5, 0.5, 1, 0.0], 0.5); // Down
+        setupFace(16, [0, 0.5, 0.5, 0.0], 0.8); // North/South
+        setupFace(20, [0, 0.5, 0.5, 0.0], 0.8); // North/South
+        cube_geometry.attributes.uv.needsUpdate = true;
+        cube_geometry.attributes.color.needsUpdate = true;
+        let cube_texture = new THREE.TextureLoader().load(minecraft_block);
+		cube_texture.magFilter = THREE.NearestFilter;
+		cube_texture.minFilter = THREE.NearestFilter;
+        let cube_material = new THREE.MeshBasicMaterial({
+            vertexColors: true,
+            map: cube_texture
+        });
+        View.minecraft_block = new THREE.Mesh(cube_geometry, cube_material);
+        View.minecraft_block.position.set(0, -0.51, 0);
+        View.scene.add(View.minecraft_block);
+        View.minecraft_block.visible = false;
 
         initParticles(View)
 

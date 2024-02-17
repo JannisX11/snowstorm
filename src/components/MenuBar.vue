@@ -70,8 +70,9 @@ const Menu = [
 	{
 		label: 'View',
 		children: [
-			{label: 'Grid Visibility', click: () => { View.grid.visible = !View.grid.visible }},
-			{label: 'Axis Helper Visibility', click: () => { View.helper.visible = !View.helper.visible }},
+			{label: 'Grid', click: () => { View.grid.visible = !View.grid.visible }},
+			{label: 'Reference Block', click: () => { View.minecraft_block.visible = !View.minecraft_block.visible }},
+			{label: 'Axis Helper', click: () => { View.helper.visible = !View.helper.visible }},
 			{label: 'Take Screenshot', click: () => { View.screenshot() }},
 		]
 	},
