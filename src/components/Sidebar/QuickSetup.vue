@@ -345,6 +345,28 @@ const DEFAULTS = {
 	collision: 'none',
 }
 
+const SetupData = {
+	sprites: {
+		SpriteBall,
+		SpriteDirt,
+		SpriteLeaves,
+		SpriteSmoke,
+		SpriteDust,
+		SpriteSparkle,
+		SpriteMagic
+	},
+	
+	shape: DEFAULTS.shape,
+	timing: DEFAULTS.timing,
+	speed: DEFAULTS.speed,
+	amount: DEFAULTS.amount,
+	particle_lifetime: DEFAULTS.particle_lifetime,
+	sprite: DEFAULTS.sprite,
+	lighting: DEFAULTS.lighting,
+	random_rotation: DEFAULTS.random_rotation,
+	collision: DEFAULTS.collision,
+};
+
 export default {
 	name: 'quick-setup',
 	components: {
@@ -365,27 +387,7 @@ export default {
 		input: Object,
 		data: Object
 	},
-	data() {return {
-		sprites: {
-			SpriteBall,
-			SpriteDirt,
-			SpriteLeaves,
-			SpriteSmoke,
-			SpriteDust,
-			SpriteSparkle,
-			SpriteMagic
-		},
-		
-		shape: DEFAULTS.shape,
-		timing: DEFAULTS.timing,
-		speed: DEFAULTS.speed,
-		amount: DEFAULTS.amount,
-		particle_lifetime: DEFAULTS.particle_lifetime,
-		sprite: DEFAULTS.sprite,
-		lighting: DEFAULTS.lighting,
-		random_rotation: DEFAULTS.random_rotation,
-		collision: DEFAULTS.collision,
-	}},
+	data() {return SetupData},
 	watch: {
 		speed(value) {
 			this.setInput('motion.motion.linear_speed', value);
@@ -409,6 +411,7 @@ export default {
 			path = path.split('.');
 			let input = this.data[path[0]][path[1]].inputs[path[2]];
 			if (input) {
+				console.log(path, input, value)
 				if (input.type == 'molang') {
 					if (value instanceof Array) {
 						value.forEach((v, i) => {
@@ -482,6 +485,8 @@ export default {
 		QuickSetup.resetAll = () => {
 			this.resetAll();
 		}
+		this.random_rotation = this.data.motion.rotation.inputs.initial_rotation.value == 'math.random(-180, 180)';
+		this.lighting = !this.data.appearance.appearance.inputs.light.value;
 	}
 }
 </script>
