@@ -239,6 +239,7 @@ export default {
 			editEventSubEffect(this.subpart.particle_effect.effect);
 		},
 		canEditParticleFile() {
+			// Todo: Remove extension override and make sure effects are instantly auto loaded
 			return this.is_extension || EventSubEffects[this.subpart.particle_effect.effect] != undefined;
 		},
 		sortList(list, event) {
