@@ -34,6 +34,7 @@ import { Share2 } from 'lucide-vue'
 import { shareParticle } from '../share'
 import { generateFile } from '../export'
 import { Texture } from '../texture_edit'
+import { Options, OptionValues, setOption } from '../options'
 const isVSCExtension = !!vscode;
 
 function openLink(link) {
@@ -70,9 +71,18 @@ const Menu = [
 	{
 		label: 'View',
 		children: [
-			{label: 'Grid', click: () => { View.grid.visible = !View.grid.visible }},
-			{label: 'Reference Block', click: () => { View.minecraft_block.visible = !View.minecraft_block.visible }},
-			{label: 'Axis Helper', click: () => { View.helper.visible = !View.helper.visible }},
+			{label: 'Grid', click: () => {
+				View.grid.visible = !View.grid.visible;
+				setOption('grid_visible', View.grid.visible);
+			}},
+			{label: 'Reference Block', click: () => {
+				View.minecraft_block.visible = !View.minecraft_block.visible;
+				setOption('minecraft_block_visible', View.grid.visible);
+			}},
+			{label: 'Axis Helper', click: () => {
+				View.helper.visible = !View.helper.visible;
+				setOption('axis_helper_visible', View.grid.visible);
+			}},
 			{label: 'Take Screenshot', click: () => { View.screenshot() }},
 		]
 	},
@@ -155,6 +165,7 @@ export default {
 		display: block;
 		padding: 2px 12px; 
 		padding-top: 3px;
+		color: inherit;
 	}
 	a:hover {
 		background-color: var(--color-interface);

@@ -46,6 +46,8 @@
     import {Emitter, Scene, initParticles} from './../emitter';
     import {validate} from './WarningDialog'
 
+    import {OptionValues} from './../options'
+
     import minecraft_block from '../../assets/minecraft_block.png'
 
     import {
@@ -135,6 +137,8 @@
         View.grid.position.y -= 0.0005
         View.scene.add(View.helper);
         View.scene.add(View.grid);
+        View.helper.visible = OptionValues.axis_helper_visible;
+        View.grid.visible = OptionValues.grid_visible;
 
         let cube_geometry = new THREE.BoxGeometry(1, 1, 1);
 		cube_geometry.setAttribute('color', new THREE.BufferAttribute(new Float32Array(24 * 3).fill(0.3), 3));
@@ -172,7 +176,7 @@
         View.minecraft_block = new THREE.Mesh(cube_geometry, cube_material);
         View.minecraft_block.position.set(0, -0.51, 0);
         View.scene.add(View.minecraft_block);
-        View.minecraft_block.visible = false;
+        View.minecraft_block.visible = OptionValues.minecraft_block_visible;
 
         initParticles(View)
 
