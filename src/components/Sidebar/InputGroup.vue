@@ -146,7 +146,7 @@
 			</div>
 			<!--Event Timeline-->
 			<template v-if="input.type == 'event_timeline'">
-				<ul class="event_timeline">
+				<ul class="event_timeline" :class="{has_entries: input.timeline.length}">
 					<li v-for="entry in input.timeline" :key="entry.uuid">
 						<input type="number" v-model.number="entry.time" @input="edit($event, 'change event timeline')" @blur="input.change($event)" step="0.05" min="0">
 
@@ -393,7 +393,7 @@ export default {
 		margin-left: 20px;
 		position: relative;
 	}
-	ul.event_timeline::before {
+	ul.event_timeline.has_entries:before {
 		display: block;
 		content: "";
 		position: absolute;

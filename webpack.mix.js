@@ -2,6 +2,8 @@ let mix = require('laravel-mix');
 let path = require('path');
 let {WebpackBundleSizeAnalyzerPlugin} = require('webpack-bundle-size-analyzer');
 
+process.argv.push('--https')
+
 let alias = {
 	'three/examples/jsm/controls/OrbitControls.js': path.join(__dirname, 'node_modules/three/examples/jsm/controls/OrbitControls.js'),
 	'three': path.join(__dirname, 'node_modules/three/build/three.module.js'),
@@ -34,7 +36,12 @@ mix.webpackConfig({
 	},
 	plugins: [
 		new WebpackBundleSizeAnalyzerPlugin('./plain-report.txt')
-	]
+	],
+	devServer: {
+		contentBase: path.join(__dirname, 'dist'),
+		port: 3000,
+		open: true
+	}
 });
 
 mix.js('src/app.js', 'dist/')

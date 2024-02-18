@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div class="event_picker_wrapper">
 		<div class="highlighting_button" @click="openMenu()">
 			<Zap :size="22" v-if="replace" />
 			<Plus :size="22" v-else />
@@ -71,6 +71,9 @@ export default {
 
 
 <style scoped>
+	.event_picker_wrapper {
+		position: relative;
+	}
 	.list {
 		position: absolute;
 		width: 200px;

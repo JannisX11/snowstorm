@@ -41,27 +41,43 @@
 			@mouseleave="onMouseLeave($event)"
 			@mousedown="onMouseDown($event)"
 			@contextmenu.prevent
-			:style="{'--zoom': zoom, '--size': size+'px', '--offset-x': offset[0]+'px', '--offset-y': offset[1]+'px'}"
+			:style="{'--zoom': zoom, '--size': size+'px', '--height': height+'px', '--offset-x': offset[0]+'px', '--offset-y': offset[1]+'px'}"
 			@mousewheel="onMouseWheel($event)"
 		>
-			<div class="input_texture_wrapper checkerboard" :class="{vertical: isVertical()}"
+			<div class="input_texture_wrapper checkerboard"
 				:style="{left: offset[0]+'px', top: offset[1]+'px', height: height + 'px'}"
 				ref="texture_wrapper"
 			>
-				<div ref="canvas_wrapper"></div>
-				<div class="uv_preview uv_perimeter_preview" title="UV Perimeter" @mousedown="dragUV($event)" :style="calculateUVPerimeter()"></div>
-				<div class="uv_preview uv_sample_preview" title="UV Sample" @mousedown="dragUV($event)" :style="calculateUVSample()">
-					<div class="uv_preview_size_handle" @mousedown.stop="dragUV($event, true)" v-if="tool == 'select'" />
-				</div>
+				<div id="canvas_wrapper" ref="canvas_wrapper"></div>
+				<template v-if="UVDefinitionMode() != 'full'">
+					<div class="uv_preview uv_perimeter_preview" title="UV Perimeter" @mousedown="dragUV($event)" :style="calculateUVPerimeter()"></div>
+					<div class="uv_preview uv_sample_preview" title="UV Sample" @mousedown="dragUV($event)" :style="calculateUVSample()">
+						<div class="uv_preview_size_handle" @mousedown.stop="dragUV($event, true)" v-if="tool == 'select'" />
+					</div>
+				</template>
 			</div>
+			<div v-if="!viewportIsCentered() && zoom > 1" class="viewport_scrollbar horizontal" @mousedown="slideScrollBar(0, $event)" :style="{left: getScrollBarOffset(0), width: (30 / zoom) + '%'}"></div>
+			<div v-if="(zoom/ratio) > 1" class="viewport_scrollbar vertical" @mousedown="slideScrollBar(1, $event)" :style="{top: getScrollBarOffset(1), height: (30 / (zoom/ratio)) + '%'}"></div>
 		</div>
 		<div class="texture_info_bar">
-			<div>{{ input.image_element.naturalWidth }} x {{ input.image_element.naturalHeight }} px</div>
-			<div>{{ cursor_position.active ? (cursor_position.x + ' x ' + cursor_position.y) : '' }}</div>
+			<div class="info">{{ input.image_element.naturalWidth }} x {{ input.image_element.naturalHeight }} px</div>
+			<div class="info">{{ cursor_position.active ? (cursor_position.x + ' x ' + cursor_position.y) : '' }}</div>
+			<div class="info">{{ Math.round(zoom * 100) + '%' }}</div>
+			<template v-if="UVDefinitionMode() == 'animated'">
+				<div class="tool" @click="moveByFrame(-1)" title="Previous Frame">
+					<ArrowBigLeft :size="20" />
+				</div>
+				<div class="tool" @click="moveByFrame(1)" title="Next Frame">
+					<ArrowBigRight :size="20" />
+				</div>
+			</template>
+			<div class="tool" @click="maximizeViewport()" title="Center Viewport">
+				<Maximize :size="20" />
+			</div>
 		</div>
 		<div class="meta toolbar">
 			<template v-if="input.allow_upload">
-				<div class="tool" v-on:click="input.reset()"><X /></div>
+				<div class="tool" v-on:click="Texture.reset()"><X /></div>
 				<input id="particle-texture-image" type="file" accept=".png" v-on:change="input.change($event)">
 			</template>
 			<template v-if="!input.allow_upload">
@@ -88,6 +104,9 @@ import {
 	Pipette,
 	PlusSquare,
 	Save,
+	Maximize,
+	ArrowBigLeft,
+	ArrowBigRight,
 	X,
 	Undo,
 	Redo,
@@ -124,6 +143,9 @@ export default {
 		Pipette,
 		PlusSquare,
 		Save,
+		Maximize,
+		ArrowBigLeft,
+		ArrowBigRight,
 		X,
 		Undo,
 		Redo,
@@ -174,8 +196,10 @@ export default {
 			this.cursor_position.active = false;
 		},
 		onMouseDown(event) {
-			let initial_offset = this.offset.slice();
+			if (event.target.classList.contains('viewport_scrollbar')) return;
+
 			if (event.button == 2 || event.button == 1) {
+				let initial_offset = this.offset.slice();
 				event.preventDefault();
 				let onMove = (e2) => {
 					e2.preventDefault();
@@ -215,7 +239,7 @@ export default {
 			let [uv_width, uv_height] = uv_inputs.size.value;
 			let frame_width = this.width;
 			let frame_height = this.height;
-			let img_width = this.input.image_element.naturalWidt || Texture.canvas.width;
+			let img_width = this.input.image_element.naturalWidth || Texture.canvas.width;
 			let img_height = this.input.image_element.naturalHeight || Texture.canvas.height;
 			let rect = this.$refs.texture_wrapper.getBoundingClientRect();
 			this.cursor_position.x = Math.floor((event.clientX-1-rect.left) / frame_width * uv_width);
@@ -234,7 +258,8 @@ export default {
 				} else {
 					this.zoom = this.zoom * 1.1;
 				}
-				this.zoom = Math.clamp(this.zoom, 0.5, 8);
+				if (this.zoom > 1 / 1.1 && this.zoom < 1.1) this.zoom = 1;
+				this.zoom = Math.clamp(this.zoom, Math.min(0.5, this.ratio), 8);
 
 				if (this.zoom != initial_zoom) {
 					let rect = this.$refs.texture_wrapper.getBoundingClientRect();
@@ -251,12 +276,52 @@ export default {
 				}
 			} else {
 
-				this.offset.splice(0, 2, this.offset[0], this.offset[1] - event.deltaY);
+				this.offset.splice(0, 2, this.offset[0], this.offset[1] - Math.sign(event.deltaY) * 50);
 			}
 		},
-		isVertical() {
-			return false;
-			return this.input.image_element.naturalWidth < this.input.image_element.naturalHeight;
+		viewportIsCentered() {
+			return this.zoom == 1 && !this.offset[0] && !this.offset[1];
+		},
+		maximizeViewport() {
+			if (this.viewportIsCentered()) {
+				this.zoom = Math.min(1, this.ratio);
+			} else {
+				this.offset.splice(0, 2, 0, 0);
+				this.zoom = 1;
+			}
+		},
+		getScrollBarOffset(axis) {
+			let position;
+			if (axis == 1) {
+				position =  (this.viewport_size-this.height) / 2;
+				let factor = this.zoom / this.ratio;
+				position = (position - this.offset[axis]) * 2 / factor;
+			} else {
+				let is_wider_than_viewport = this.$refs.texture_wrapper.clientWidth > this.$refs.texture_viewport.clientWidth;
+				if (is_wider_than_viewport) {
+					position = (this.$refs.texture_viewport.clientWidth -this.width) / 2;
+				} else {
+					position = 0;
+				}
+				let factor = this.$refs.texture_wrapper.clientWidth / this.$refs.texture_viewport.clientWidth;
+				position = (position - this.offset[axis]) * 2 / factor;
+			}
+			return position + 'px';
+		},
+		slideScrollBar(axis, event) {
+			let initial_offset = this.offset[axis];
+			let pos_key = axis ? 'clientY' : 'clientX';
+			let onMove = (e2) => {
+				let factor = axis ? this.zoom / this.ratio : this.$refs.texture_wrapper.clientWidth / this.$refs.texture_viewport.clientWidth;
+				let val = initial_offset - (e2[pos_key] - event[pos_key]) * factor;
+				this.offset.splice(axis, 1, val);
+			}
+			let onEnd = (e2) => {
+				document.removeEventListener('mousemove', onMove);
+				document.removeEventListener('mouseup', onEnd);
+			}
+			document.addEventListener('mousemove', onMove);
+			document.addEventListener('mouseup', onEnd);
 		},
 		offsetUVValue(value, amount) {
 			if (!amount) {
@@ -292,6 +357,7 @@ export default {
 			}
 		},
 		dragUV(e1, size) {
+			if (e1.button == 1 || e1.button == 2) return;
 			if (this.tool != 'select') return;
 			let target_input = this.data.texture.uv.inputs[size ? 'uv_size' : 'uv'];
 			let initial_value = target_input.value.slice();
@@ -334,9 +400,9 @@ export default {
 			let size = uv_inputs.uv_size.value.map(v => parser.parse(v));
 			let frame_width = this.width;
 			let frame_height = this.height;
-			if (this.isVertical()) {
+			/*if (this.isVertical()) {
 				frame_height /= this.input.image_element.naturalWidth / this.input.image_element.naturalHeight
-			}
+			}*/
 
 			return {
 				left: (offset[0] / uv_width * frame_width)+'px',
@@ -376,6 +442,19 @@ export default {
 				width: ((bounding_box[2] - bounding_box[0]) / uv_width * frame_width)+'px',
 				height: ((bounding_box[3] - bounding_box[1]) / uv_height * frame_height)+'px',
 			};
+		},
+		moveByFrame(steps) {
+			let uv_inputs = this.data.texture.uv.inputs;
+			let step = uv_inputs.uv_step.value.map(v => parser.parse(v));
+			let [uv_width, uv_height] = uv_inputs.size.value;
+			let frame_width = this.width;
+			let frame_height = this.height;
+			step[0] *= (frame_width / uv_width) * steps;
+			step[1] *= (frame_height / uv_height) * steps;
+			this.offset.splice(0, 2, this.offset[0]-step[0], this.offset[1]-step[1]);
+		},
+		UVDefinitionMode() {
+			return this.data.texture.uv.inputs.mode.value
 		}
 	},
 	computed: {
@@ -386,6 +465,12 @@ export default {
 			return this.viewport_size * this.zoom;
 		},
 		ratio() {
+			if (this.UVDefinitionMode() == 'full') return this.image_ratio;
+			let uv_inputs = this.data.texture.uv.inputs;
+			let [uv_width, uv_height] = uv_inputs.size.value;
+			return uv_width / uv_height;
+		},
+		image_ratio() {
 			if (this.inputs && this.inputs.image_element && this.inputs.image_element.naturalWidth) {
 				return this.input.image_element.naturalWidth / this.input.image_element.naturalHeight;
 			} else if (Texture.canvas) {
@@ -395,7 +480,6 @@ export default {
 			}
 		},
 		height() {
-			console.log(this.ratio)
 			return this.viewport_size * this.zoom / this.ratio;
 		}
 	},
@@ -429,6 +513,12 @@ export default {
 		height: 258px;
 		margin-top: 8px;
 		flex-shrink: 0;
+		position: relative;
+
+		background-color: var(--color-dark);
+		margin-left: -12px;
+		width: auto;
+		margin-right: -6px;
 	}
 	.input_texture_wrapper {
 		height: auto;
@@ -444,9 +534,8 @@ export default {
 	.texture_input[tool="select"] .input_texture_wrapper {
 		cursor: default;
 	}
-	.input_texture_wrapper.vertical {
-		width: calc(var(--size) + 8px);
-		overflow-y: auto;
+	#canvas_wrapper {
+		height: 100%;
 	}
 	.uv_preview {
 		position: absolute;
@@ -476,13 +565,39 @@ export default {
 	.texture_viewport:hover .uv_preview_size_handle {
 		display: block;
 	}
+	.viewport_scrollbar {
+		border-radius: 8px;
+		height: 12px;
+		width: 12px;
+		position: absolute;
+		margin: auto;
+		background-color: var(--color-bar);
+		border: 1px solid var(--color-border);
+	}
+	.viewport_scrollbar:hover, .viewport_scrollbar:active {
+		background-color: var(--color-accent);
+	}
+	.viewport_scrollbar.horizontal {
+		bottom: 4px;
+		right: 0;
+		left: 0;
+		min-width: 25px;
+		max-width: 100px;
+	}
+	.viewport_scrollbar.vertical {
+		right: 3px;
+		top: 0;
+		bottom: 0;
+		min-height: 25px;
+		max-height: 100px;
+	}
 	.texture_info_bar {
 		display: flex;
 	}
-	.texture_info_bar > * {
+	.texture_info_bar > div.info {
 		flex: 1 1 80px;
 		text-align: center;
-		padding: 2px;
+		padding-top: 5px;
 	}
 	.toolbar {
 		height: 34px;
@@ -536,6 +651,7 @@ export default {
 <style>
 	.input_texture_wrapper canvas {
 		width: 100%;
+		height: 100%;
 		background-size: contain;
 		background-repeat: no-repeat;
 		pointer-events: none;
