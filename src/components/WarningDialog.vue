@@ -24,12 +24,12 @@ function validate() {
 
 
     if (
-        (Config.particle_appearance_material != 'particles_blend' && Config.particle_appearance_material != 'particles_add') && (
+        (Config.particle_appearance_material == 'particles_alpha' || Config.particle_appearance_material == 'particles_opaque') && (
             (Config.particle_color_mode == 'static' && Config.particle_color_static.length == 9 && Config.particle_color_static.substr(-2).toUpperCase() != 'FF') ||
             (Config.particle_color_mode == 'expression' && ['', '1', '1.0'].includes(Config.particle_color_expression[3]) == false)
         )
     ) {
-        errors.push({text: `The effect attempts to use opacity but the material is not set to 'Blend'`})
+        errors.push({text: `The effect attempts to use opacity but the selected material does not support opacity`})
     }
 
     if (Config.particle_appearance_facing_camera_mode.includes('direction') && Config.particle_appearance_direction_mode == 'derive_from_velocity') {

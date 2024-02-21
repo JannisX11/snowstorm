@@ -75,4 +75,7 @@ export default {
         text-indent: -20px;
 	    padding-left: 20px;
     }
+    a[href] {
+        color: var(--color-accent);
+    }
 </style>

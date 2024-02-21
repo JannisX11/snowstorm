@@ -1,7 +1,7 @@
 <template>
     <main id="code" class="code">
         <div class="menu">
-            <a @click="copy()">Copy</a>
+            <button @click="copy()"><Copy :size="20" />Copy</button>
         </div>
 		<prism language="json">{{ code }}</prism>
     </main>
@@ -12,6 +12,7 @@ import 'prismjs'
 import 'prismjs/themes/prism-okaidia.css'
 import 'prismjs/components/prism-json'
 import Prism from 'vue-prism-component'
+import {Copy} from 'lucide-vue'
 
 import {generateFile} from '../export'
 import {EditListeners} from '../edits'
@@ -29,7 +30,7 @@ function selectText(element) {
 
 export default {
 	name: 'code-viewer',
-	components: {Prism},
+	components: {Prism, Copy},
 	data() {return {
 		code: compileJSON(generateFile())
 	}},
@@ -52,43 +53,35 @@ export default {
 
 <style scoped>
 	main#code {
-		background-color: var(--color-dark);
+		display: flex;
+		flex-direction: column;
 	}
 	main#code pre {
-		background-color: var(--color-background);
-		box-shadow: 0 0 10px black;
+		background-color: var(--color-dark);
 		user-select: text;
+		width: 100%;
 		max-width: 1000px;
+		margin: 0;
 		margin-left: auto;
 		margin-right: auto;
 		overflow-y: auto;
-		max-height: calc(100% - 60px);
 		border: none;
 		border-radius: 0;
 		cursor: text;
 	}
-	main#code .menu {
-		color: #ccc;
-		font-size: 14pt;
-	}
-	main#code .menu a {
-		cursor: default;
-		padding: 3px;
-		margin: 0 20px; 
-		display: inline-block;
-	}
-	main#code .menu a:hover {
-		color: white !important;
-	}
-	main#code .menu label {
-		float: right;
-		font-size: 0.9em;
-		opacity: 0.8;
-		padding-top: 3px;
-	}
 	#code pre code {
 		text-shadow: none;
 		user-select: text;
+	}
+	.menu {
+		flex: 0 0 42px;
+		padding: 5px;
+	}
+	.menu button {
+		width: 100px;
+	}
+	.menu button svg {
+		margin-right: 4px;
 	}
 </style>
 

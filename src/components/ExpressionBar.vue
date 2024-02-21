@@ -89,7 +89,7 @@ export {ExpandedInput}
 
 </script>
 
-<style scoped>
+<style>
 	#expression_bar {
 		width: 100%;
 		min-height: 20px;
@@ -101,5 +101,8 @@ export {ExpandedInput}
 		font-family: var(--font-code);
 		outline: none;
 		padding: 5px 8px;
+	}
+	#expression_bar .prism-editor-component {
+		border: none;
 	}
 </style>>
