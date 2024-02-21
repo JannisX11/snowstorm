@@ -5,8 +5,6 @@
 		<molang-dialog v-if="dialog == 'molang_sheet'" @close="closeDialog"></molang-dialog>
 		<warning-dialog v-if="dialog == 'warnings'" @close="closeDialog"></warning-dialog>
 
-		<info-box v-if="showVSCodeInfoBox" @close="closeInfoBox">Snowstorm is now available as an extension for VSCode!</info-box>
-
         <header>
 			<menu-bar @changetab="setTab" :selected_tab="tab" :portrait_view="portrait_view" @opendialog="openDialog"></menu-bar>
 			<expression-bar></expression-bar>
@@ -69,7 +67,6 @@ export default {
 		code: '',
 		tab: 'preview',
 		dialog: null,
-		showVSCodeInfoBox: (!vscode && [1, 3, 7, 11, 24].includes(startup_count)),
 		sidebar_width: getInitialSidebarWidth(),
 		portrait_view,
 	}},
@@ -85,9 +82,6 @@ export default {
 		},
 		closeDialog() {
 			this.dialog = null;
-		},
-		closeInfoBox() {
-			this.showVSCodeInfoBox = false;
 		},
 		setSidebarSize(size) {
 			this.sidebar_width = Math.clamp(size, 240, document.body.clientWidth - 200)
