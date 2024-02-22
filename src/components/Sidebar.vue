@@ -1,7 +1,7 @@
 <template>
     <content id="sidebar">
         <div id="sidebar_content">
-			<logo />
+			<logo v-if="!portrait_view" />
 			<div id="sidebar_tab_bar">
 				<div class="sidebar_tab"
 					v-for="(tab, tab_key) in data" :key="tab_key"
@@ -108,6 +108,9 @@ export default {
 		Plus,
 		ListAddButton,
 	},
+	props: {
+		portrait_view: Boolean
+	},
 	computed: {
 		input_groups() {
 			let input_groups = {};
@@ -156,8 +159,17 @@ export default {
 		background-color: var(--color-bar);
 		position: sticky;
 		top: 0;
-		z-index: 20;
+		z-index: 6;
 		box-shadow: 0 1px 12px rgba(0, 0, 0, 0.34);
+	}
+	.portrait_view #sidebar_tab_bar {
+		top: auto;
+		position: absolute;
+		right: 0;
+		left: 0;
+		bottom: 36px;
+		box-shadow: none;
+		border-bottom: 1px solid var(--color-border)
 	}
 	.sidebar_tab {
 		flex: 1 0.5 45px;
@@ -184,6 +196,9 @@ export default {
 		bottom: -28px;
 		left: 0;
 		white-space: nowrap;
+	}
+	.portrait_view .sidebar_tab_tooltip {
+		top: -28px;
 	}
 	.sidebar_tab:hover > .sidebar_tab_tooltip {
 		display: block;

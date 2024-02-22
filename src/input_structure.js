@@ -1,6 +1,6 @@
 import Input from './input'
 import Gradient from './gradient'
-import {Emitter, updateMaterial} from './emitter'
+import {Config} from './emitter'
 import vscode from './vscode_extension';
 
 const Data = {
@@ -555,7 +555,7 @@ const Data = {
 					placeholder: 'textures/particle/particles',
 					label: 'Texture',
 					updatePreview: function() {
-						updateMaterial()
+						Config.updateTexture();
 					}
 				}),
 				image: new Input({
@@ -563,7 +563,7 @@ const Data = {
 					type: 'image',
 					allow_upload: !vscode,
 					updatePreview: function(src) {
-						updateMaterial()
+						Config.updateTexture();
 					}
 				}),
 			}

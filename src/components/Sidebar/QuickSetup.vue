@@ -411,7 +411,6 @@ export default {
 			path = path.split('.');
 			let input = this.data[path[0]][path[1]].inputs[path[2]];
 			if (input) {
-				console.log(path, input, value)
 				if (input.type == 'molang') {
 					if (value instanceof Array) {
 						value.forEach((v, i) => {

@@ -1,5 +1,6 @@
 let mix = require('laravel-mix');
 let path = require('path');
+let fs = require('fs');
 let {WebpackBundleSizeAnalyzerPlugin} = require('webpack-bundle-size-analyzer');
 
 process.argv.push('--https')
@@ -46,4 +47,7 @@ mix.webpackConfig({
 
 mix.js('src/app.js', 'dist/')
 	.vue()
-	.setPublicPath('dist');
+	.setPublicPath('dist')
+	.after(() => {
+		fs.copyFileSync('./dist/app.js', './vscode_extension/snowstorm/app.js')
+	});

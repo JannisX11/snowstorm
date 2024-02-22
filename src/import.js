@@ -1,7 +1,6 @@
 import {guid, IO, pathToExtension} from './util'
-import {Config, QuickSetup, updateMaterial} from './emitter'
+import {Config, QuickSetup, Emitter} from './emitter'
 import vscode from './vscode_extension'
-import {Emitter} from './emitter'
 import {ExpandedInput} from './components/ExpressionBar'
 import Data, {forEachInput} from './input_structure'
 
@@ -70,16 +69,6 @@ function updateInputsFromConfig() {
 	}
 
 	Data.effect.meta.inputs.identifier.onchange();
-
-	Texture.source = Data.texture.texture.inputs.image.image_element.src;
-	Texture.updateCanvasFromSource();
-	//let texture_input = Data.texture.texture.inputs.image;
-	//texture_input.image.name = Data.texture.texture.inputs.path.value.split('/').at(-1);
-	//texture_input.image.data = Texture.source = reader.result;
-	//Texture.updateCanvasFromSource();
-	//texture_input.image.loaded = true;
-	//texture_input.image.hidden = true;
-	//texture_input.image.hidden = false;
 }
 //function importFile() {}
 function updateConfig(data) {
@@ -115,7 +104,7 @@ window.loadFileFromParentEffect = function (raw_json, texture_url) {
 		input.image.loaded = true;
 		Texture.updateCanvasFromSource();
 		Config.updateTexture();
-		updateMaterial()
+		Emitter.updateMaterial()
 	}
 }
 

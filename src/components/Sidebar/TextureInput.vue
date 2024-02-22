@@ -36,10 +36,10 @@
 
 		<div class="texture_viewport"
 			ref="texture_viewport"
-			@mouseenter="onMouseEnter($event)"
-			@mousemove="onMouseMove($event)"
-			@mouseleave="onMouseLeave($event)"
-			@mousedown="onMouseDown($event)"
+			@pointerenter="onMouseEnter($event)"
+			@pointermove="onMouseMove($event)"
+			@pointerleave="onMouseLeave($event)"
+			@pointerdown="onMouseDown($event)"
 			@contextmenu.prevent
 			:style="{'--zoom': zoom, '--size': size+'px', '--height': height+'px', '--offset-x': offset[0]+'px', '--offset-y': offset[1]+'px'}"
 			@mousewheel="onMouseWheel($event)"
@@ -50,17 +50,17 @@
 			>
 				<div id="canvas_wrapper" ref="canvas_wrapper"></div>
 				<template v-if="UVDefinitionMode() != 'full'">
-					<div class="uv_preview uv_perimeter_preview" title="UV Perimeter" @mousedown="dragUV($event)" :style="calculateUVPerimeter()"></div>
-					<div class="uv_preview uv_sample_preview" title="UV Sample" @mousedown="dragUV($event)" :style="calculateUVSample()">
-						<div class="uv_preview_size_handle" @mousedown.stop="dragUV($event, true)" v-if="tool == 'select'" />
+					<div class="uv_preview uv_perimeter_preview" title="UV Perimeter" @pointerdown="dragUV($event)" :style="calculateUVPerimeter()"></div>
+					<div class="uv_preview uv_sample_preview" title="UV Sample" @pointerdown="dragUV($event)" :style="calculateUVSample()">
+						<div class="uv_preview_size_handle" @pointerdown.stop="dragUV($event, true)" v-if="tool == 'select'" />
 					</div>
 				</template>
 			</div>
-			<div v-if="!viewportIsCentered() && zoom > 1" class="viewport_scrollbar horizontal" @mousedown="slideScrollBar(0, $event)" :style="{left: getScrollBarOffset(0), width: (30 / zoom) + '%'}"></div>
-			<div v-if="(zoom/ratio) > 1" class="viewport_scrollbar vertical" @mousedown="slideScrollBar(1, $event)" :style="{top: getScrollBarOffset(1), height: (30 / (zoom/ratio)) + '%'}"></div>
+			<div v-if="!viewportIsCentered() && zoom > 1" class="viewport_scrollbar horizontal" @pointerdown="slideScrollBar(0, $event)" :style="{left: getScrollBarOffset(0), width: (30 / zoom) + '%'}"></div>
+			<div v-if="(zoom/ratio) > 1" class="viewport_scrollbar vertical" @pointerdown="slideScrollBar(1, $event)" :style="{top: getScrollBarOffset(1), height: (30 / (zoom/ratio)) + '%'}"></div>
 		</div>
 		<div class="texture_info_bar">
-			<div class="info">{{ input.image_element.naturalWidth }} x {{ input.image_element.naturalHeight }} px</div>
+			<div class="info">{{ log }} .{{ input.image_element.naturalWidth }} x {{ input.image_element.naturalHeight }} px</div>
 			<div class="info">{{ cursor_position.active ? (cursor_position.x + ' x ' + cursor_position.y) : '' }}</div>
 			<div class="info">{{ Math.round(zoom * 100) + '%' }}</div>
 			<template v-if="UVDefinitionMode() == 'animated'">
@@ -164,6 +164,7 @@ export default {
 		offset: [0, 0],
 		tool: 'select',
 		color_picker_open: false,
+		log: '',
 		cursor_position: {
 			x: 0,
 			y: 0,
@@ -198,23 +199,51 @@ export default {
 		onMouseDown(event) {
 			if (event.target.classList.contains('viewport_scrollbar')) return;
 
-			if (event.button == 2 || event.button == 1) {
+			/*pointer_cache.push(event);
+			if (pointer_cache.length > 1) {
+				return;
+			}
+			let last_pointer_events = [];
+			let initial_distance;
+			let initial_zoom = this.zoom;*/
+
+			if (event.button == 2 || event.button == 1 || (this.tool == 'select' && event.pointerType == 'touch')) {
+
 				let initial_offset = this.offset.slice();
 				event.preventDefault();
 				let onMove = (e2) => {
 					e2.preventDefault();
+
 					let offset = [
 						initial_offset[0] + (e2.clientX - event.clientX),
 						initial_offset[1] + (e2.clientY - event.clientY),
 					];
 					this.offset.splice(0, 2, ...offset);
+
+					/*
+					let index = pointer_cache.findIndex((cachedEv) => cachedEv.pointerId === e2.pointerId);
+					if (index >= 0) last_pointer_events[index] = e2;
+					if (index == 1) return;
+					if (pointer_cache.length == 2 && last_pointer_events[1]) {
+						let e2_other = last_pointer_events[1];
+						let distance = Math.sqrt(Math.pow(e2.clientX - e2_other.clientX, 2) + Math.pow(e2.clientY - e2_other.clientY, 2));
+
+						if (!initial_distance) {
+							initial_distance = distance;
+						} else {
+							this.setZoom(initial_zoom * (distance / initial_distance));
+						}
+					};
+					*/
+
 				}
 				let onEnd = (e2) => {
-					document.removeEventListener('mousemove', onMove);
-					document.removeEventListener('mouseup', onEnd);
+					document.removeEventListener('pointermove', onMove);
+					document.removeEventListener('pointerup', onEnd);
+					//pointer_cache.splice(0);
 				}
-				document.addEventListener('mousemove', onMove);
-				document.addEventListener('mouseup', onEnd);
+				document.addEventListener('pointermove', onMove);
+				document.addEventListener('pointerup', onEnd);
 				return;
 			}
 
@@ -252,31 +281,37 @@ export default {
 			this.onMouseMove(event);
 
 			if (event.ctrlKey || event.metaKey) {
-				let initial_zoom = this.zoom;
+				let zoom = this.zoom;
 				if (event.deltaY > 1) {
-					this.zoom = this.zoom / 1.1;
+					zoom = zoom / 1.1;
 				} else {
-					this.zoom = this.zoom * 1.1;
+					zoom = zoom * 1.1;
 				}
-				if (this.zoom > 1 / 1.1 && this.zoom < 1.1) this.zoom = 1;
-				this.zoom = Math.clamp(this.zoom, Math.min(0.5, this.ratio), 8);
+				this.setZoom(zoom);
 
-				if (this.zoom != initial_zoom) {
-					let rect = this.$refs.texture_wrapper.getBoundingClientRect();
-					let mouse_pos = [
-						(event.clientX-1-rect.left),
-						(event.clientY-1-rect.top),
-					];
-					let zoom_offset = 1 - (this.zoom / initial_zoom);
-					let is_wider_than_viewport = this.$refs.texture_wrapper.clientWidth > this.$refs.texture_viewport.clientWidth;
-					this.offset.splice(0, 2, 
-						this.offset[0] + mouse_pos[0] * zoom_offset * (is_wider_than_viewport ? 1 : 0),
-						this.offset[1] + mouse_pos[1] * zoom_offset,
-					)
-				}
 			} else {
 
 				this.offset.splice(0, 2, this.offset[0], this.offset[1] - Math.sign(event.deltaY) * 50);
+			}
+		},
+		setZoom(zoom) {
+			let initial_zoom = this.zoom;
+			if (zoom > 1 / 1.1 && zoom < 1.1) zoom = 1;
+			zoom = Math.clamp(zoom, Math.min(0.5, this.ratio), 8);
+
+			if (zoom != this.zoom) {
+				this.zoom = zoom;
+				let rect = this.$refs.texture_wrapper.getBoundingClientRect();
+				let mouse_pos = [
+					(event.clientX-1-rect.left),
+					(event.clientY-1-rect.top),
+				];
+				let zoom_offset = 1 - (this.zoom / initial_zoom);
+				let is_wider_than_viewport = this.$refs.texture_wrapper.clientWidth > this.$refs.texture_viewport.clientWidth;
+				this.offset.splice(0, 2, 
+					this.offset[0] + mouse_pos[0] * zoom_offset * (is_wider_than_viewport ? 1 : 0),
+					this.offset[1] + mouse_pos[1] * zoom_offset,
+				)
 			}
 		},
 		viewportIsCentered() {
@@ -317,11 +352,11 @@ export default {
 				this.offset.splice(axis, 1, val);
 			}
 			let onEnd = (e2) => {
-				document.removeEventListener('mousemove', onMove);
-				document.removeEventListener('mouseup', onEnd);
+				document.removeEventListener('pointermove', onMove);
+				document.removeEventListener('pointerup', onEnd);
 			}
-			document.addEventListener('mousemove', onMove);
-			document.addEventListener('mouseup', onEnd);
+			document.addEventListener('pointermove', onMove);
+			document.addEventListener('pointerup', onEnd);
 		},
 		offsetUVValue(value, amount) {
 			if (!amount) {
@@ -386,12 +421,12 @@ export default {
 				last_coords.y = coords.y;
 			}
 			let onEnd = (e2) => {
-				document.removeEventListener('mousemove', onMove);
-				document.removeEventListener('mouseup', onEnd);
+				document.removeEventListener('pointermove', onMove);
+				document.removeEventListener('pointerup', onEnd);
 				registerEdit('edit uv')
 			}
-			document.addEventListener('mousemove', onMove);
-			document.addEventListener('mouseup', onEnd);
+			document.addEventListener('pointermove', onMove);
+			document.addEventListener('pointerup', onEnd);
 		},
 		calculateUVSample() {
 			let uv_inputs = this.data.texture.uv.inputs;
@@ -514,7 +549,7 @@ export default {
 		margin-top: 8px;
 		flex-shrink: 0;
 		position: relative;
-
+		touch-action: none;
 		background-color: var(--color-dark);
 		margin-left: -12px;
 		width: auto;
@@ -541,6 +576,11 @@ export default {
 		position: absolute;
 		top: 0;
 		outline: 1px solid var(--color-border);
+		touch-action: none;
+		cursor: move;
+	}
+	.texture_input:not([tool="select"]) .uv_preview {
+		pointer-events: none;
 	}
 	.texture_input[tool="select"] .uv_preview:hover {
 		outline-color: var(--color-highlight);
@@ -561,6 +601,7 @@ export default {
 		background-color: var(--color-text);
 		cursor: se-resize;
 		display: none;
+		touch-action: none;
 	}
 	.texture_viewport:hover .uv_preview_size_handle {
 		display: block;
@@ -573,6 +614,11 @@ export default {
 		margin: auto;
 		background-color: var(--color-bar);
 		border: 1px solid var(--color-border);
+		touch-action: none;
+	}
+	.portrait_view .viewport_scrollbar {
+		height: 16px;
+		width: 16px;
 	}
 	.viewport_scrollbar:hover, .viewport_scrollbar:active {
 		background-color: var(--color-accent);

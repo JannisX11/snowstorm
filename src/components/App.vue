@@ -6,6 +6,7 @@
 		<warning-dialog v-if="dialog == 'warnings'" @close="closeDialog"></warning-dialog>
 
         <header>
+			<logo v-if="portrait_view" />
 			<menu-bar @changetab="setTab" :selected_tab="tab" :portrait_view="portrait_view" @opendialog="openDialog"></menu-bar>
 			<expression-bar></expression-bar>
         </header>
@@ -15,12 +16,12 @@
 
 		<div class="resizer" :style="{left: sidebar_width+'px'}" ref="sidebar_resizer" @mousedown="resizeSidebarStart($event)"></div>
 
-		<sidebar ref="sidebar" v-show="!portrait_view || tab == 'config'"></sidebar>
+		<sidebar ref="sidebar" v-show="!portrait_view || tab == 'config'" :portrait_view="portrait_view"></sidebar>
 
 		<ul v-if="portrait_view" id="portrait_mode_selector">
-        	<li class="mode_selector config" :class="{selected: tab == 'config'}" @click="setTab('config')">Config</li>
-        	<li class="mode_selector code" :class="{selected: tab == 'code'}" @click="setTab('code')">Code</li>
-        	<li class="mode_selector preview" :class="{selected: tab == 'preview'}" @click="setTab('preview')">Preview</li>
+        	<li class="mode_selector config" :class="{selected: tab == 'config'}" @click="setTab('config')"><SlidersHorizontal :size="22" /></li>
+        	<li class="mode_selector code" :class="{selected: tab == 'code'}" @click="setTab('code')"><FileJson :size="22" /></li>
+        	<li class="mode_selector preview" :class="{selected: tab == 'preview'}" @click="setTab('preview')"><Move3D :size="22" /></li>
 		</ul>
 
     </div>
@@ -37,11 +38,18 @@ import WarningDialog from './WarningDialog'
 import ExpressionBar from './ExpressionBar'
 import InfoBox from './InfoBox'
 import vscode from '../vscode_extension';
+import {SlidersHorizontal, FileJson, Move3D} from 'lucide-vue'
+import Logo from './Sidebar/Logo.vue';
 
 if (!vscode) {
 	var startup_count = localStorage.getItem('snowstorm_startup_count') || 0;
 	startup_count ++;
-	localStorage.setItem('snowstorm_startup_count', startup_count)
+	localStorage.setItem('snowstorm_startup_count', startup_count);
+
+	// iOS auto zoom in input fix
+	if (navigator.userAgent.indexOf('iPhone') != -1) {
+		document.querySelector("meta[name=viewport]").setAttribute("content","width=device-width, initial-scale=1, maximum-scale=1");
+	}	
 }
 
 let portrait_view = document.body.clientWidth > 100 && document.body.clientWidth < 720
@@ -62,10 +70,13 @@ function getInitialSidebarWidth() {
 
 export default {
 	name: 'app',
-	components: {Preview, CodeViewer, MenuBar, Sidebar, MolangDialog, WarningDialog, ExpressionBar, InfoBox},
+	components: {
+		Preview, CodeViewer, MenuBar, Sidebar, MolangDialog, WarningDialog, ExpressionBar, InfoBox,
+		SlidersHorizontal, FileJson, Move3D, Logo
+	},
 	data() {return {
 		code: '',
-		tab: 'preview',
+		tab: portrait_view ? 'config' : 'preview',
 		dialog: null,
 		sidebar_width: getInitialSidebarWidth(),
 		portrait_view,
@@ -171,9 +182,14 @@ export default {
 
 	/* Portrait View */
 	div#app.portrait_view {
-		grid-template-rows:  74px calc(100% - 102px) 36px;
+		grid-template-rows: 114px calc(100% - 152px) 38px;
 		grid-template-columns: 100%;
 		grid-template-areas: "header" "main" "mode_selector";
+	}
+	header > svg {
+		height: 40px;
+		padding: 12px;
+		width: 100%;
 	}
 	div#app.portrait_view main {
 		grid-area: main;
@@ -188,7 +204,7 @@ export default {
 	li.mode_selector {
 		flex: 1 0 0;
 		text-align: center;
-		padding: 6px;
+		padding-top: 6px;
 		border-top: 1px solid var(--color-border);
 	}
 	li.mode_selector.selected {

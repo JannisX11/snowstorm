@@ -26,6 +26,7 @@ class TextureClass {
         this.history = [];
         this.history_index = 0;
         this.internal_changes = false;
+        window.tex = this;
     }
     linkEmitter(emitter, config) {
         this.texture = config.texture;
@@ -36,6 +37,11 @@ class TextureClass {
         this.source = this.canvas.toDataURL();
     }
     async updateCanvasFromSource() {
+        if (!this.source) {
+            this.canvas.width = 16;
+            this.canvas.height = 16;
+            return;
+        }
         let img = new Image();
         img.src = this.source;
         await new Promise((resolve, reject) => {
@@ -49,16 +55,19 @@ class TextureClass {
         })
     }
     update() {
-        this.config.updateTexture();
+        //this.config.updateTexture();
+        this.img.src = this.source;
     }
     reset() {
+        console.log('RESET')
         this.source = '';
         this.internal_changes = false;
         line_start = null;
+        this.updateCanvasFromSource();
     }
     reload() {
         this.internal_changes = false;
-        this.update();
+        this.config.updateTexture();
         this.updateCanvasFromSource();
     }
     createEmpty(width = 16, height = 16) {

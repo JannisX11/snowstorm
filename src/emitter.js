@@ -24,10 +24,6 @@ const Scene = new Wintersky.Scene({
 						let uri = (event.data.url && event.data.url + '?'+Math.floor(Math.random()*1000));
 						window.removeEventListener('message', update);
 
-						if (config == Config) {
-							Texture.source = uri;
-							Texture.updateCanvasFromSource();
-						}
 						resolve(uri);
 					}
 				}
@@ -89,6 +85,17 @@ function initParticles(View) {
 }
 Config.onTextureUpdate = function() {
 	if (!window.Data) return;
+
+	if (!Texture.internal_changes) {
+		if (Config.texture_source_category == 'placeholder') {
+			Texture.source = '';
+		} else {
+			Texture.source = Config.texture.image.src;
+		}
+		console.trace(Texture.source, Config.texture_source_category);
+		Texture.updateCanvasFromSource();
+	}
+	
 	window.Data.texture.texture.inputs.image.image.hidden = true;
 	window.Data.texture.texture.inputs.image.image.hidden = false;
 };
@@ -122,9 +129,5 @@ Emitter.Molang.global_variables = {
 	}
 }
 
-function updateMaterial() {
-	Emitter.updateMaterial();
-}
-
-export {Emitter, Config, updateMaterial, initParticles, Scene, QuickSetup}
+export {Emitter, Config, initParticles, Scene, QuickSetup}
 

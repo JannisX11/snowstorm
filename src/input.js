@@ -1,7 +1,7 @@
 import registerEdit from './edits'
 
 import {ExpandedInput} from './components/ExpressionBar'
-import { Config, updateMaterial } from './emitter'
+import { Config, Emitter } from './emitter'
 import { Texture } from './texture_edit';
 import { trimFloatNumber, guid } from './util';
 
@@ -139,7 +139,6 @@ export default class Input {
 					scope.image.hidden = true;
 					scope.image.hidden = false;
 					Emitter.config.updateTexture();
-					updateMaterial();
 				}
 				reader.readAsDataURL(file)
 			}
