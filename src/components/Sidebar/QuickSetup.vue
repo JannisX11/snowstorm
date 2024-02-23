@@ -78,7 +78,13 @@
 		</div>
 
 		<div class="input_group">
-			<h4>Sprite</h4>
+			<h4>
+				Sprite
+				<CreativeCommons :size="20" @click="show_sprite_license = !show_sprite_license" />
+			</h4>
+			<p style="padding: 2px 12px;" v-if="show_sprite_license">
+				All sprites listed below are <a href="https://creativecommons.org/publicdomain/zero/1.0/" target="_blank" rel="noopener noreferrer">copyright-free (CC0)</a> and free to use and modify.
+			</p>
 			<ul class="preset_option_list">
 				<li @click="set('sprite', 'ball')" :class="{selected: sprite == 'ball'}">
 					<img :src="sprites.SpriteBall" height="45" />
@@ -135,6 +141,7 @@ import {
 	Magnet,
 	Bomb,
 	Timer,
+	CreativeCommons,
 } from 'lucide-vue'
 import Checkbox from '../Form/Checkbox.vue'
 import { Texture } from '../../texture_edit';
@@ -157,6 +164,7 @@ const PRESETS = {
 			'emitter.shape.surface_only': false,
 			'motion.motion.direction_mode': 'outwards',
 			'emitter.shape.offset': ['0', '0', '0'],
+			'motion.motion.mode': 'dynamic',
 			'motion.motion.linear_acceleration': ['0', '0', '0'],
 			'motion.motion.linear_speed': '3',
 		},
@@ -167,6 +175,7 @@ const PRESETS = {
 			'motion.motion.direction_mode': 'direction',
 			'motion.motion.direction': ['0', '-1', '0'],
 			'emitter.shape.offset': ['0', '6', '0'],
+			'motion.motion.mode': 'dynamic',
 			'motion.motion.linear_acceleration': ['0', '-6', '0'],
 			'motion.motion.linear_speed': '5',
 		},
@@ -177,6 +186,7 @@ const PRESETS = {
 			'motion.motion.direction_mode': 'direction',
 			'motion.motion.direction': ['0', '1', '0'],
 			'emitter.shape.offset': ['0', '0.5', '0'],
+			'motion.motion.mode': 'dynamic',
 			'motion.motion.linear_acceleration': ['0', '0', '0'],
 			'motion.motion.linear_speed': 'math.random(1, 4)',
 		},
@@ -187,6 +197,7 @@ const PRESETS = {
 			'motion.motion.direction_mode': 'inwards',
 			'motion.motion.linear_speed': '2',
 			'emitter.shape.offset': ['0', '0', '0'],
+			'motion.motion.mode': 'dynamic',
 			'motion.motion.linear_acceleration': ['0', '0', '0'],
 			'lifetime.lifetime.max_lifetime': '1',
 		}
@@ -281,7 +292,8 @@ const PRESETS = {
 	},
 	collision: {
 		none: {
-			'motion.collision.enabled': true,
+			'motion.collision.toggle': true,
+			'motion.motion.mode': 'dynamic',
 			'motion.motion.linear_acceleration': ['', '', ''],
 			'motion.motion.linear_drag_coefficient': 0,
 			'motion.collision.collision_radius': 0,
@@ -291,7 +303,8 @@ const PRESETS = {
 			'motion.collision.expire_on_contact': false,
 		},
 		solid: {
-			'motion.collision.enabled': true,
+			'motion.collision.toggle': true,
+			'motion.motion.mode': 'dynamic',
 			'motion.motion.linear_acceleration': [0, -10, 0],
 			'motion.motion.linear_drag_coefficient': 0.1,
 			'motion.collision.collision_radius': 0.2,
@@ -301,7 +314,8 @@ const PRESETS = {
 			'motion.collision.expire_on_contact': false,
 		},
 		smoke: {
-			'motion.collision.enabled': true,
+			'motion.collision.toggle': true,
+			'motion.motion.mode': 'dynamic',
 			'motion.motion.linear_acceleration': [0, 1, 0],
 			'motion.motion.linear_drag_coefficient': 4,
 			'motion.collision.collision_radius': 0.2,
@@ -311,7 +325,8 @@ const PRESETS = {
 			'motion.collision.expire_on_contact': false,
 		},
 		ball: {
-			'motion.collision.enabled': true,
+			'motion.collision.toggle': true,
+			'motion.motion.mode': 'dynamic',
 			'motion.motion.linear_acceleration': [0, -10, 0],
 			'motion.motion.linear_drag_coefficient': 0.2,
 			'motion.collision.collision_radius': 0.2,
@@ -321,7 +336,8 @@ const PRESETS = {
 			'motion.collision.expire_on_contact': false,
 		},
 		paper: {
-			'motion.collision.enabled': true,
+			'motion.collision.toggle': true,
+			'motion.motion.mode': 'dynamic',
 			'motion.motion.linear_acceleration': ["math.sin(v.particle_age * 90)", -10, "math.cos(v.particle_age * 40)"],
 			'motion.motion.linear_drag_coefficient': 5,
 			'motion.collision.collision_radius': 0.2,
@@ -365,6 +381,8 @@ const SetupData = {
 	lighting: DEFAULTS.lighting,
 	random_rotation: DEFAULTS.random_rotation,
 	collision: DEFAULTS.collision,
+
+	show_sprite_license: false,
 };
 
 export default {
@@ -382,6 +400,7 @@ export default {
 		Magnet,
 		Bomb,
 		Timer,
+		CreativeCommons,
 	},
 	props: {
 		input: Object,
