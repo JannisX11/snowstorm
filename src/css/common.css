@@ -257,6 +257,29 @@
 		color: var(--color-highlight);
 	}
 
+/* Dialog */
+	.modal_dialog {
+		margin: auto;
+		border: 1px solid var(--color-bar);
+		background-color: var(--color-interface);
+		box-shadow: 0 1px 12px rgba(0, 0, 0, 0.4);
+		padding: 12px;
+		color: inherit;
+		border-radius: 4px;
+	}
+	.modal_dialog > .button_bar {
+		display: flex;
+		margin-top: 10px;
+		justify-content: end;
+		gap: 4px;
+	}
+	.modal_dialog > .form_bar {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		gap: 8px;
+	}
+
 /*Color Picker*/
 	
 	div.vc-chrome {

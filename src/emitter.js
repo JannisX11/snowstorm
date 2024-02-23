@@ -6,6 +6,10 @@ import { EventSubEffects } from './event_sub_effects';
 
 const Scene = new Wintersky.Scene({
 	fetchTexture(config) {
+		if (config != Config && EventSubEffects[config.identifier]) {
+			return EventSubEffects[config.identifier].texture;
+		}
+
 		if (Texture.internal_changes) {
 			return Texture.source;
 		}
@@ -29,9 +33,6 @@ const Scene = new Wintersky.Scene({
 				}
 				window.addEventListener('message', update, false);
 			})
-	
-		} else if (EventSubEffects[config.identifier]) {
-			return EventSubEffects[config.identifier].texture;
 
 		} else if (window.Data.texture.texture.inputs.image.image && window.Data.texture.texture.inputs.image.image.loaded) {
 	

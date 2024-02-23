@@ -1,5 +1,6 @@
 import { IO } from "./util";
 import vscode from "./vscode_extension";
+import Data from './input_structure'
 
 let line_start = null;
 
@@ -59,10 +60,11 @@ class TextureClass {
         this.img.src = this.source;
     }
     reset() {
-        console.log('RESET')
         this.source = '';
         this.internal_changes = false;
         line_start = null;
+        this.history = [];
+        this.history_index = 0;
         this.updateCanvasFromSource();
     }
     reload() {
@@ -73,6 +75,7 @@ class TextureClass {
     createEmpty(width = 16, height = 16) {
         this.canvas.width = width;
         this.canvas.height = height;
+        Data.texture.uv.inputs.size.value.splice(0, 2, width, height);
         this.canvasToDataURL();
         this.internal_changes = true;
         this.update();
@@ -251,13 +254,10 @@ class TextureClass {
         entry.data_after = this.source;
 
 		if (this.history.length > this.history_index) {
-            console.log('set', this.history.length, 'to', this.history_index)
 			this.history.length = this.history_index;
 		}
         this.history.push(entry);
         this.history_index = this.history.length;
-
-        console.log('finish', entry.id, entry);
 
         delete this.current_undo_entry;
     }
@@ -269,24 +269,21 @@ class TextureClass {
     undo() {
         let after = this.history[this.history_index-1];
         let before = this.history[this.history_index-2];
-        if (!before) return;
+        if (!after) return;
         this.history_index = Math.max(0, this.history_index-1);
         
         this.source = before ? before.data_after : after.data_before;
         if (this.source) {
             this.internal_changes = true;
-            this.updateCanvasFromSource();
         } else {
             this.internal_changes = false;
-            this.update();
         }
+        this.updateCanvasFromSource();
     }
     redo() {
         if (this.history_index >= this.history.length) return;
         let change = this.history[this.history_index];
         this.history_index += 1;
-
-        console.log('redoing', change.id);
         
         this.source = change.data_after;
         if (this.source) {
@@ -300,4 +297,30 @@ class TextureClass {
 }
 
 
+document.addEventListener('keydown', (event) => {
+    let input_focus = document.querySelector('input:focus, div[contenteditable="true"]:focus, textarea:focus');
+    if (input_focus) return;
+    let texture_editor = document.querySelector('.texture_input:hover');
+    if (!texture_editor) return;
+
+    let captured = false;
+    if (event.ctrlKey || event.metaKey) {
+        if (event.key == 'z') {
+            Texture.undo();
+            captured = true;
+        } else if (event.key == 'y') {
+            Texture.redo();
+            captured = true;
+        }
+    }
+    if (captured) {
+        event.preventDefault();
+    }
+})
+
+
 export const Texture = new TextureClass();
+
+window.getTextureForParentEffect = function() {
+    return Texture.source;
+}

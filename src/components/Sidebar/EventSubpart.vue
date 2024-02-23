@@ -47,9 +47,20 @@
 					placeholder="space:name"
 					@input="modifyEvent"
 				/>
+				<div class="highlighting_button" @click="$refs.new_particle_dialog.showModal()" v-if="!is_extension" title="Create New Particle"><FilePlus2 :size="22" /></div>
 				<div class="highlighting_button" @click="selectParticleFile()" v-if="!is_extension" title="Select File"><Upload :size="22" /></div>
 				<div class="highlighting_button" @click="selectParticleTexture()" v-if="!is_extension && canEditParticleFile()" title="Select Texture"><ImagePlus :size="22" /></div>
 				<div class="highlighting_button" @click="editParticleFile()" v-if="canEditParticleFile()" title="Edit Linked Particle Effect"><Pencil :size="22" /></div>
+
+				
+
+				<dialog id="new_particle_dialog" ref="new_particle_dialog" class="modal_dialog">
+					<div class="form_bar"><label>Identifier</label><input type="text" v-model="new_particle_identifier" placeholder="space:name"></div>
+					<div class="button_bar">
+						<button @click="createNewParticleFile(new_particle_identifier)">Confirm</button>
+						<button @click="$refs.new_particle_dialog.close()">Cancel</button>
+					</div>
+				</dialog>
 			</li>
 			<li class="input_wrapper">
 				<label>Type</label>
@@ -113,7 +124,7 @@
 
 import Vue from 'vue';
 import { guid } from '../../util';
-import { Plus, X, GripHorizontal, Upload, ImagePlus, Pencil } from 'lucide-vue'
+import { Plus, X, GripHorizontal, Upload, FilePlus2, ImagePlus, Pencil } from 'lucide-vue'
 import Prism from 'prismjs/components/prism-core';
 import {PrismEditor} from "root/packages/vue-prism-editor";
 import "prismjs/themes/prism-okaidia.css";
@@ -122,7 +133,7 @@ import vscode from '../../vscode_extension';
 import getAutocompleteData from '../../molang_autocomplete';
 import sort from '../../sort';
 import ListAddButton from '../Form/ListAddButton.vue';
-import { editEventSubEffect, EventSubEffects, loadEventSubEffect, loadEventSubEffectTexture } from '../../event_sub_effects';
+import { editEventSubEffect, EventSubEffects, loadEventSubEffect, loadEventSubEffectTexture, createEventSubEffect } from '../../event_sub_effects';
 
 const emitter_type_options = {
 	emitter: 'Emitter',
@@ -139,6 +150,7 @@ export default {
 		GripHorizontal,
 		PrismEditor,
 		Upload,
+		FilePlus2,
 		ImagePlus,
 		Pencil,
 		ListAddButton,
@@ -148,7 +160,8 @@ export default {
 	},
 	data() {return {
 		emitter_type_options,
-		is_extension: !!vscode
+		is_extension: !!vscode,
+		new_particle_identifier: ''
 	}},
 	methods: {
 		createSequenceSection() {
@@ -225,6 +238,16 @@ export default {
 		},
 		async selectParticleFile() {
 			let identifier = await loadEventSubEffect();
+			this.is_extension = !this.is_extension;
+			this.is_extension = !this.is_extension;
+			if (identifier && identifier != this.subpart.particle_effect.effect) {
+				this.subpart.particle_effect.effect = identifier;
+				this.modifyEvent();
+			}
+		},
+		async createNewParticleFile(identifier, edit) {
+			this.$refs.new_particle_dialog.close();
+			createEventSubEffect(identifier);
 			this.is_extension = !this.is_extension;
 			this.is_extension = !this.is_extension;
 			if (identifier && identifier != this.subpart.particle_effect.effect) {

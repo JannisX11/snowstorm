@@ -90,6 +90,15 @@
 				<Save />
 			</div>
 		</div>
+
+		<dialog id="new_texture_dialog" ref="new_texture_dialog" class="modal_dialog">
+			<div class="form-bar"><label>Width</label><input type="number" v-model.number="new_texture_size[0]"></div>
+			<div class="form-bar"><label>Height</label><input type="number" v-model.number="new_texture_size[1]"></div>
+			<div class="button_bar">
+				<button @click="newTextureConfirm()">Confirm</button>
+				<button @click="$refs.new_texture_dialog.close()">Cancel</button>
+			</div>
+		</dialog>
 	</div>
 </template>
 
@@ -165,6 +174,7 @@ export default {
 		tool: 'select',
 		color_picker_open: false,
 		log: '',
+		new_texture_size: [16, 16],
 		cursor_position: {
 			x: 0,
 			y: 0,
@@ -177,7 +187,12 @@ export default {
 	}},
 	methods: {
 		newTexture() {
-			Texture.createEmpty();
+			let dialog = this.$refs.new_texture_dialog;
+			dialog.showModal();
+		},
+		newTextureConfirm() {
+			this.$refs.new_texture_dialog.close();
+			Texture.createEmpty(this.new_texture_size[0], this.new_texture_size[1]);
 		},
 		saveTexture() {
 			if (!Texture.source) return;
