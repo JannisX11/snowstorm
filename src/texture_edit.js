@@ -239,6 +239,10 @@ class TextureClass {
         }
         this.ctx.putImageData(data, 0, 0);
 
+        this.canvasToDataURL();
+        this.internal_changes = true;
+        this.update();
+
         this.afterEdit();
     }
     beforeEdit() {

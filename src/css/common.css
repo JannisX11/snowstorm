@@ -278,6 +278,7 @@
 		justify-content: space-between;
 		align-items: center;
 		gap: 8px;
+		margin-top: 2px;
 	}
 
 /*Color Picker*/
@@ -319,6 +320,7 @@
 	font-size: 15px;
 	width: fit-content;
 	min-width: 100%;
+	scrollbar-color: var(--color-bar) var(--color-dark);
 }
 .prism-editor-wrapper .prism-editor__editor, .prism-editor-wrapper .prism-editor__textarea {
 	white-space: pre;

@@ -55,12 +55,13 @@
 						<div class="uv_preview_size_handle" @pointerdown.stop="dragUV($event, true)" v-if="tool == 'select'" />
 					</div>
 				</template>
+				<div v-if="cursor_position.active && ['brush', 'eraser', 'color_picker'].includes(tool)" id="brush_outline" :style="getBrushOutlineStyle()"></div>
 			</div>
 			<div v-if="!viewportIsCentered() && zoom > 1" class="viewport_scrollbar horizontal" @pointerdown="slideScrollBar(0, $event)" :style="{left: getScrollBarOffset(0), width: (30 / zoom) + '%'}"></div>
 			<div v-if="(zoom/ratio) > 1" class="viewport_scrollbar vertical" @pointerdown="slideScrollBar(1, $event)" :style="{top: getScrollBarOffset(1), height: (30 / (zoom/ratio)) + '%'}"></div>
 		</div>
 		<div class="texture_info_bar">
-			<div class="info">{{ log }} .{{ input.image_element.naturalWidth }} x {{ input.image_element.naturalHeight }} px</div>
+			<div class="info">{{ input.image_element.naturalWidth }} x {{ input.image_element.naturalHeight }} px</div>
 			<div class="info">{{ cursor_position.active ? (cursor_position.x + ' x ' + cursor_position.y) : '' }}</div>
 			<div class="info">{{ Math.round(zoom * 100) + '%' }}</div>
 			<template v-if="UVDefinitionMode() == 'animated'">
@@ -92,8 +93,8 @@
 		</div>
 
 		<dialog id="new_texture_dialog" ref="new_texture_dialog" class="modal_dialog">
-			<div class="form-bar"><label>Width</label><input type="number" v-model.number="new_texture_size[0]"></div>
-			<div class="form-bar"><label>Height</label><input type="number" v-model.number="new_texture_size[1]"></div>
+			<div class="form_bar"><label>Width</label><input type="number" v-model.number="new_texture_size[0]"></div>
+			<div class="form_bar"><label>Height</label><input type="number" v-model.number="new_texture_size[1]"></div>
 			<div class="button_bar">
 				<button @click="newTextureConfirm()">Confirm</button>
 				<button @click="$refs.new_texture_dialog.close()">Cancel</button>
@@ -503,6 +504,19 @@ export default {
 			step[1] *= (frame_height / uv_height) * steps;
 			this.offset.splice(0, 2, this.offset[0]-step[0], this.offset[1]-step[1]);
 		},
+		getBrushOutlineStyle() {
+			let frame_width = this.width;
+			let frame_height = this.height;
+			let img_width = this.input.image_element.naturalWidth || Texture.canvas.width;
+			let img_height = this.input.image_element.naturalHeight || Texture.canvas.height;
+
+			return {
+				left: (this.pixel_position.x * (frame_width / img_width)) + 'px',
+				top: (this.pixel_position.y * (frame_height / img_height)) + 'px',
+				width: (frame_width / img_width) + 'px',
+				height: (frame_height / img_height) + 'px',
+			}
+		},
 		UVDefinitionMode() {
 			return this.data.texture.uv.inputs.mode.value
 		}
@@ -707,6 +721,12 @@ export default {
 		position: absolute;
 		z-index: 4;
 		right: 0;
+	}
+	#brush_outline {
+		position: absolute;
+		border: 1px solid #fff;
+		outline: 1px solid var(--color-border);
+		mix-blend-mode: difference;
 	}
 </style>
 <style>

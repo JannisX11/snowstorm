@@ -154,7 +154,7 @@ import SpriteDust from '../../../assets/dust.png'
 import SpriteSparkle from '../../../assets/sparkle.png'
 import SpriteMagic from '../../../assets/magic.png'
 import { QuickSetup } from '../../emitter';
-//SpriteBall = `data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAw0lEQVQ4ja2RsQ3CMBREzxaioU+DaBkDRmAQKiTGoGUQJBaAKSKKuEBIVio3NDRQnfX9bSdIcJVj/3d3doAfZWoHu3P/5rprA077ZXE22yQ4X0wBAI/7K5oAyIyMhglSNKiZ2CG4ps3hFq9nhwZlek2W6WMw6wfnEZyPLaw8rCVKWGvybTL17Pv8CqXBrg3JXnA+gwHxG+XLarE6DWZNg8txZZIGclB+a7jagC3GAJmeGWgTXRtAAhcNqPX2mryJBv+mD2GrgcizxUizAAAAAElFTkSuQmCC`
+import registerEdit from '../../edits';
 
 const PRESETS = {
 	shape: {
@@ -440,6 +440,7 @@ export default {
 					}
 				}
 				input.set(value);
+				registerEdit('set quick setup option')
 			}
 		},
 		set(key, value) {
@@ -486,6 +487,7 @@ export default {
 				Texture.update();
 				Texture.updateCanvasFromSource();
 			}
+			registerEdit('select quick setup preset')
 		},
 		resetAll() {
 			this.shape = DEFAULTS.shape;
