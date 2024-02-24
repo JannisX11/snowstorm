@@ -93,7 +93,6 @@ Config.onTextureUpdate = function() {
 		} else {
 			Texture.source = Config.texture.image.src;
 		}
-		console.trace(Texture.source, Config.texture_source_category);
 		Texture.updateCanvasFromSource();
 	}
 	

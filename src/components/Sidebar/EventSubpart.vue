@@ -47,7 +47,7 @@
 					placeholder="space:name"
 					@input="modifyEvent"
 				/>
-				<div class="highlighting_button" @click="$refs.new_particle_dialog.showModal()" v-if="!is_extension" title="Create New Particle"><FilePlus2 :size="22" /></div>
+				<div class="highlighting_button" @click="$refs.new_particle_dialog.showModal(); new_particle_identifier = subpart.particle_effect.effect;" v-if="!is_extension && !canEditParticleFile()" title="Create New Particle"><FilePlus2 :size="22" /></div>
 				<div class="highlighting_button" @click="selectParticleFile()" v-if="!is_extension" title="Select File"><Upload :size="22" /></div>
 				<div class="highlighting_button" @click="selectParticleTexture()" v-if="!is_extension && canEditParticleFile()" title="Select Texture"><ImagePlus :size="22" /></div>
 				<div class="highlighting_button" @click="editParticleFile()" v-if="canEditParticleFile()" title="Edit Linked Particle Effect"><Pencil :size="22" /></div>

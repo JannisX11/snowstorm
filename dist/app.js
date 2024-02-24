@@ -2684,18 +2684,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/circle-slash.js");
-/* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/aperture.js");
-/* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/scroll.js");
-/* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/cloud.js");
-/* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/cuboid.js");
-/* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/loader.js");
-/* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/cloud-rain.js");
-/* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/torus.js");
-/* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/magnet.js");
-/* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/bomb.js");
-/* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/timer.js");
-/* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/creative-commons.js");
+/* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/circle-slash.js");
+/* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/aperture.js");
+/* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/scroll.js");
+/* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/cloud.js");
+/* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/cuboid.js");
+/* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/loader.js");
+/* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/cloud-rain.js");
+/* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/torus.js");
+/* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/magnet.js");
+/* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/bomb.js");
+/* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/timer.js");
+/* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/creative-commons.js");
 /* harmony import */ var _Form_Checkbox_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Form/Checkbox.vue */ "./src/components/Form/Checkbox.vue");
 /* harmony import */ var _texture_edit__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../texture_edit */ "./src/texture_edit.js");
 /* harmony import */ var _assets_ball_png__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../assets/ball.png */ "./assets/ball.png");
@@ -2706,6 +2706,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _assets_sparkle_png__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../../assets/sparkle.png */ "./assets/sparkle.png");
 /* harmony import */ var _assets_magic_png__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../../assets/magic.png */ "./assets/magic.png");
 /* harmony import */ var _emitter__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../emitter */ "./src/emitter.js");
+/* harmony import */ var _edits__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../../edits */ "./src/edits.js");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : String(i); }
@@ -2851,7 +2852,6 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
 
 
 
-//SpriteBall = `data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAw0lEQVQ4ja2RsQ3CMBREzxaioU+DaBkDRmAQKiTGoGUQJBaAKSKKuEBIVio3NDRQnfX9bSdIcJVj/3d3doAfZWoHu3P/5rprA077ZXE22yQ4X0wBAI/7K5oAyIyMhglSNKiZ2CG4ps3hFq9nhwZlek2W6WMw6wfnEZyPLaw8rCVKWGvybTL17Pv8CqXBrg3JXnA+gwHxG+XLarE6DWZNg8txZZIGclB+a7jagC3GAJmeGWgTXRtAAhcNqPX2mryJBv+mD2GrgcizxUizAAAAAElFTkSuQmCC`
 
 var PRESETS = {
   shape: {
@@ -3067,18 +3067,18 @@ var SetupData = {
   name: 'quick-setup',
   components: {
     Checkbox: _Form_Checkbox_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
-    CircleSlash: lucide_vue__WEBPACK_IMPORTED_MODULE_10__["default"],
-    Aperture: lucide_vue__WEBPACK_IMPORTED_MODULE_11__["default"],
-    Scroll: lucide_vue__WEBPACK_IMPORTED_MODULE_12__["default"],
-    Cloud: lucide_vue__WEBPACK_IMPORTED_MODULE_13__["default"],
-    Cuboid: lucide_vue__WEBPACK_IMPORTED_MODULE_14__["default"],
-    Loader: lucide_vue__WEBPACK_IMPORTED_MODULE_15__["default"],
-    CloudRain: lucide_vue__WEBPACK_IMPORTED_MODULE_16__["default"],
-    Torus: lucide_vue__WEBPACK_IMPORTED_MODULE_17__["default"],
-    Magnet: lucide_vue__WEBPACK_IMPORTED_MODULE_18__["default"],
-    Bomb: lucide_vue__WEBPACK_IMPORTED_MODULE_19__["default"],
-    Timer: lucide_vue__WEBPACK_IMPORTED_MODULE_20__["default"],
-    CreativeCommons: lucide_vue__WEBPACK_IMPORTED_MODULE_21__["default"]
+    CircleSlash: lucide_vue__WEBPACK_IMPORTED_MODULE_11__["default"],
+    Aperture: lucide_vue__WEBPACK_IMPORTED_MODULE_12__["default"],
+    Scroll: lucide_vue__WEBPACK_IMPORTED_MODULE_13__["default"],
+    Cloud: lucide_vue__WEBPACK_IMPORTED_MODULE_14__["default"],
+    Cuboid: lucide_vue__WEBPACK_IMPORTED_MODULE_15__["default"],
+    Loader: lucide_vue__WEBPACK_IMPORTED_MODULE_16__["default"],
+    CloudRain: lucide_vue__WEBPACK_IMPORTED_MODULE_17__["default"],
+    Torus: lucide_vue__WEBPACK_IMPORTED_MODULE_18__["default"],
+    Magnet: lucide_vue__WEBPACK_IMPORTED_MODULE_19__["default"],
+    Bomb: lucide_vue__WEBPACK_IMPORTED_MODULE_20__["default"],
+    Timer: lucide_vue__WEBPACK_IMPORTED_MODULE_21__["default"],
+    CreativeCommons: lucide_vue__WEBPACK_IMPORTED_MODULE_22__["default"]
   },
   props: {
     input: Object,
@@ -3120,6 +3120,7 @@ var SetupData = {
           }
         }
         input.set(value);
+        (0,_edits__WEBPACK_IMPORTED_MODULE_10__["default"])('set quick setup option');
       }
     },
     set: function set(key, value) {
@@ -3181,6 +3182,7 @@ var SetupData = {
         _texture_edit__WEBPACK_IMPORTED_MODULE_1__.Texture.update();
         _texture_edit__WEBPACK_IMPORTED_MODULE_1__.Texture.updateCanvasFromSource();
       }
+      (0,_edits__WEBPACK_IMPORTED_MODULE_10__["default"])('select quick setup preset');
     },
     resetAll: function resetAll() {
       this.shape = DEFAULTS.shape;
@@ -3243,6 +3245,8 @@ function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o =
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
 function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t["return"] && (u = t["return"](), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+//
+//
 //
 //
 //
@@ -3419,7 +3423,6 @@ var parser = new molangjs__WEBPACK_IMPORTED_MODULE_2__["default"]();
   methods: {
     newTexture: function newTexture() {
       var dialog = this.$refs.new_texture_dialog;
-      console.log(dialog);
       dialog.showModal();
     },
     newTextureConfirm: function newTextureConfirm() {
@@ -3443,46 +3446,51 @@ var parser = new molangjs__WEBPACK_IMPORTED_MODULE_2__["default"]();
     onMouseLeave: function onMouseLeave(event) {
       this.cursor_position.active = false;
     },
-    onMouseDown: function onMouseDown(event) {
+    onTouchStart: function onTouchStart(event) {
       var _this = this;
+      var initial_distance;
+      var initial_zoom = this.zoom;
+      var getDistance = function getDistance(touches) {
+        return Math.sqrt(Math.pow(touches[0].clientX - touches[1].clientX, 2) + Math.pow(touches[0].clientY - touches[1].clientY, 2));
+      };
+      var onMove = function onMove(e2) {
+        if (e2.touches.length != 2) return;
+        e2.preventDefault();
+        var distance = getDistance(e2.touches);
+        if (initial_distance == undefined) {
+          initial_distance = distance;
+        } else if (initial_distance != distance) {
+          _this.setZoom(initial_zoom * (distance / initial_distance), e2.touches[0]);
+        }
+      };
+      var onEnd = function onEnd(e2) {
+        document.removeEventListener('touchmove', onMove);
+        document.removeEventListener('touchend', onEnd);
+      };
+      document.addEventListener('touchmove', onMove);
+      document.addEventListener('touchend', onEnd);
+      return;
+    },
+    onMouseDown: function onMouseDown(event) {
+      var _this2 = this;
       if (event.target.classList.contains('viewport_scrollbar')) return;
 
-      /*pointer_cache.push(event);
-      if (pointer_cache.length > 1) {
-      	return;
-      }
-      let last_pointer_events = [];
-      let initial_distance;
-      let initial_zoom = this.zoom;*/
-
+      // Sync cursor position on touch screens
+      this.onMouseMove(event);
       if (event.button == 2 || event.button == 1 || this.tool == 'select' && event.pointerType == 'touch') {
         var initial_offset = this.offset.slice();
         event.preventDefault();
         var onMove = function onMove(e2) {
-          var _this$offset;
           e2.preventDefault();
           var offset = [initial_offset[0] + (e2.clientX - event.clientX), initial_offset[1] + (e2.clientY - event.clientY)];
-          (_this$offset = _this.offset).splice.apply(_this$offset, [0, 2].concat(offset));
-
-          /*
-          let index = pointer_cache.findIndex((cachedEv) => cachedEv.pointerId === e2.pointerId);
-          if (index >= 0) last_pointer_events[index] = e2;
-          if (index == 1) return;
-          if (pointer_cache.length == 2 && last_pointer_events[1]) {
-          	let e2_other = last_pointer_events[1];
-          	let distance = Math.sqrt(Math.pow(e2.clientX - e2_other.clientX, 2) + Math.pow(e2.clientY - e2_other.clientY, 2));
-          			if (!initial_distance) {
-          		initial_distance = distance;
-          	} else {
-          		this.setZoom(initial_zoom * (distance / initial_distance));
-          	}
-          };
-          */
+          if (!isNaN(offset[0])) {
+            var _this2$offset;
+            (_this2$offset = _this2.offset).splice.apply(_this2$offset, [0, 2].concat(offset));
+          }
         };
         var onEnd = function onEnd(e2) {
           document.removeEventListener('pointermove', onMove);
           document.removeEventListener('pointerup', onEnd);
-          //pointer_cache.splice(0);
         };
         document.addEventListener('pointermove', onMove);
         document.addEventListener('pointerup', onEnd);
@@ -3528,22 +3536,28 @@ var parser = new molangjs__WEBPACK_IMPORTED_MODULE_2__["default"]();
         } else {
           zoom = zoom * 1.1;
         }
-        this.setZoom(zoom);
+        this.setZoom(zoom, event);
       } else {
-        this.offset.splice(0, 2, this.offset[0], this.offset[1] - Math.sign(event.deltaY) * 50);
+        if (event.shiftKey) {
+          this.offset.splice(0, 1, this.offset[0] - Math.sign(event.deltaY) * 50);
+        } else {
+          this.offset.splice(1, 1, this.offset[1] - Math.sign(event.deltaY) * 50);
+        }
       }
     },
-    setZoom: function setZoom(zoom) {
+    setZoom: function setZoom(zoom, event) {
       var initial_zoom = this.zoom;
       if (zoom > 1 / 1.1 && zoom < 1.1) zoom = 1;
       zoom = Math.clamp(zoom, Math.min(0.5, this.ratio), 8);
       if (zoom != this.zoom) {
         this.zoom = zoom;
-        var rect = this.$refs.texture_wrapper.getBoundingClientRect();
-        var mouse_pos = [event.clientX - 1 - rect.left, event.clientY - 1 - rect.top];
-        var zoom_offset = 1 - this.zoom / initial_zoom;
-        var is_wider_than_viewport = this.$refs.texture_wrapper.clientWidth > this.$refs.texture_viewport.clientWidth;
-        this.offset.splice(0, 2, this.offset[0] + mouse_pos[0] * zoom_offset * (is_wider_than_viewport ? 1 : 0), this.offset[1] + mouse_pos[1] * zoom_offset);
+        if (event && event.clientX != undefined) {
+          var rect = this.$refs.texture_wrapper.getBoundingClientRect();
+          var mouse_pos = [event.clientX - 1 - rect.left, event.clientY - 1 - rect.top];
+          var zoom_offset = 1 - this.zoom / initial_zoom;
+          var is_wider_than_viewport = this.$refs.texture_wrapper.clientWidth > this.$refs.texture_viewport.clientWidth;
+          this.offset.splice(0, 2, this.offset[0] + mouse_pos[0] * zoom_offset * (is_wider_than_viewport ? 1 : 0), this.offset[1] + mouse_pos[1] * zoom_offset);
+        }
       }
     },
     viewportIsCentered: function viewportIsCentered() {
@@ -3576,13 +3590,13 @@ var parser = new molangjs__WEBPACK_IMPORTED_MODULE_2__["default"]();
       return position + 'px';
     },
     slideScrollBar: function slideScrollBar(axis, event) {
-      var _this2 = this;
+      var _this3 = this;
       var initial_offset = this.offset[axis];
       var pos_key = axis ? 'clientY' : 'clientX';
       var onMove = function onMove(e2) {
-        var factor = axis ? _this2.zoom / _this2.ratio : _this2.$refs.texture_wrapper.clientWidth / _this2.$refs.texture_viewport.clientWidth;
+        var factor = axis ? _this3.zoom / _this3.ratio : _this3.$refs.texture_wrapper.clientWidth / _this3.$refs.texture_viewport.clientWidth;
         var val = initial_offset - (e2[pos_key] - event[pos_key]) * factor;
-        _this2.offset.splice(axis, 1, val);
+        _this3.offset.splice(axis, 1, val);
       };
       var onEnd = function onEnd(e2) {
         document.removeEventListener('pointermove', onMove);
@@ -3624,7 +3638,7 @@ var parser = new molangjs__WEBPACK_IMPORTED_MODULE_2__["default"]();
       }
     },
     dragUV: function dragUV(e1, size) {
-      var _this3 = this;
+      var _this4 = this;
       if (e1.button == 1 || e1.button == 2) return;
       if (this.tool != 'select') return;
       var target_input = this.data.texture.uv.inputs[size ? 'uv_size' : 'uv'];
@@ -3638,10 +3652,10 @@ var parser = new molangjs__WEBPACK_IMPORTED_MODULE_2__["default"]();
         y: this.cursor_position.y
       };
       var onMove = function onMove(e2) {
-        var coords = _this3.cursor_position;
+        var coords = _this4.cursor_position;
         if (last_coords.x == coords.x && last_coords.y == coords.y) return;
         var offset = [coords.x - initial_coords.x, coords.y - initial_coords.y];
-        target_input.set([_this3.offsetUVValue(initial_value[0], offset[0]).toString(), _this3.offsetUVValue(initial_value[1], offset[1]).toString()]);
+        target_input.set([_this4.offsetUVValue(initial_value[0], offset[0]).toString(), _this4.offsetUVValue(initial_value[1], offset[1]).toString()]);
         last_coords.x = coords.x;
         last_coords.y = coords.y;
       };
@@ -3731,6 +3745,18 @@ var parser = new molangjs__WEBPACK_IMPORTED_MODULE_2__["default"]();
       step[1] *= frame_height / uv_height * steps;
       this.offset.splice(0, 2, this.offset[0] - step[0], this.offset[1] - step[1]);
     },
+    getBrushOutlineStyle: function getBrushOutlineStyle() {
+      var frame_width = this.width;
+      var frame_height = this.height;
+      var img_width = this.input.image_element.naturalWidth || _texture_edit__WEBPACK_IMPORTED_MODULE_3__.Texture.canvas.width;
+      var img_height = this.input.image_element.naturalHeight || _texture_edit__WEBPACK_IMPORTED_MODULE_3__.Texture.canvas.height;
+      return {
+        left: this.pixel_position.x * (frame_width / img_width) + 'px',
+        top: this.pixel_position.y * (frame_height / img_height) + 'px',
+        width: frame_width / img_width + 'px',
+        height: frame_height / img_height + 'px'
+      };
+    },
     UVDefinitionMode: function UVDefinitionMode() {
       return this.data.texture.uv.inputs.mode.value;
     }
@@ -3764,9 +3790,9 @@ var parser = new molangjs__WEBPACK_IMPORTED_MODULE_2__["default"]();
     }
   },
   mounted: function mounted() {
-    var _this4 = this;
+    var _this5 = this;
     document.addEventListener('click', function () {
-      if (_this4.color_picker_open) _this4.color_picker_open = false;
+      if (_this5.color_picker_open) _this5.color_picker_open = false;
     }, {
       passive: true
     });
@@ -4291,7 +4317,6 @@ Config.onTextureUpdate = function () {
     } else {
       _texture_edit__WEBPACK_IMPORTED_MODULE_0__.Texture.source = Config.texture.image.src;
     }
-    console.trace(_texture_edit__WEBPACK_IMPORTED_MODULE_0__.Texture.source, Config.texture_source_category);
     _texture_edit__WEBPACK_IMPORTED_MODULE_0__.Texture.updateCanvasFromSource();
   }
   window.Data.texture.texture.inputs.image.image.hidden = true;
@@ -4487,6 +4512,14 @@ var SubEffectEditor = /*#__PURE__*/function () {
       EventSubEffects[this.identifier].json = json;
       EventSubEffects[this.identifier].texture = texture;
       delete _emitter__WEBPACK_IMPORTED_MODULE_0__.Scene.child_configs[this.identifier];
+      var sub_data = this.editor_tab.getSubEffectDataForParentEffect();
+      for (var identifier in sub_data) {
+        if (SubEffectEditors[identifier]) continue;
+        if (!EventSubEffects[identifier]) EventSubEffects[identifier] = {};
+        EventSubEffects[identifier].json = JSON.parse(sub_data[identifier].json);
+        EventSubEffects[identifier].texture = sub_data[identifier].texture;
+        delete _emitter__WEBPACK_IMPORTED_MODULE_0__.Scene.child_configs[identifier];
+      }
     }
   }]);
   return SubEffectEditor;
@@ -4499,7 +4532,7 @@ function editEventSubEffect(identifier) {
     });
   } else {
     var editor = SubEffectEditors[identifier];
-    if (editor) {
+    if (editor && editor.closed == false) {
       editor.editor_tab.focus();
     } else {
       var _EventSubEffects$iden = EventSubEffects[identifier],
@@ -4514,6 +4547,21 @@ function editEventSubEffect(identifier) {
     }
   }
 }
+window.getSubEffectDataForParentEffect = function () {
+  var data = {};
+  for (var identifier in EventSubEffects) {
+    var _EventSubEffects$iden2 = EventSubEffects[identifier],
+      json = _EventSubEffects$iden2.json,
+      texture = _EventSubEffects$iden2.texture;
+    data[identifier] = {
+      json: JSON.stringify(json),
+      texture: texture
+    };
+  }
+  return data;
+};
+window.EventSubEffects = EventSubEffects;
+window.SubEffectEditors = SubEffectEditors;
 
 /***/ }),
 
@@ -7402,11 +7450,11 @@ var TextureClass = /*#__PURE__*/function () {
       };
       var onEnd = function onEnd(e2) {
         _this2.afterEdit();
-        document.removeEventListener('mousemove', onMove);
-        document.removeEventListener('mouseup', onEnd);
+        document.removeEventListener('pointermove', onMove);
+        document.removeEventListener('pointerup', onEnd);
       };
-      document.addEventListener('mousemove', onMove);
-      document.addEventListener('mouseup', onEnd);
+      document.addEventListener('pointermove', onMove);
+      document.addEventListener('pointerup', onEnd);
       onMove(e1);
     }
   }, {
@@ -7462,6 +7510,9 @@ var TextureClass = /*#__PURE__*/function () {
         }
       }
       this.ctx.putImageData(data, 0, 0);
+      this.canvasToDataURL();
+      this.internal_changes = true;
+      this.update();
       this.afterEdit();
     }
   }, {
@@ -8476,6 +8527,10 @@ var Config = /*#__PURE__*/function () {
               this.set('particle_texture_max_frame', uv.flipbook.max_frame);
               this.set('particle_texture_stretch_to_lifetime', uv.flipbook.stretch_to_lifetime);
               this.set('particle_texture_loop', uv.flipbook.loop);
+            } else if (uv.texture_width == 1 && uv.texture_height == 1 && uv.uv && !uv.uv[0] && !uv.uv[1] && uv.uv_size && uv.uv_size[0] == 1 && uv.uv_size[1] == 1) {
+              this.set('particle_texture_mode', 'full');
+              this.set('particle_texture_uv', uv.uv);
+              this.set('particle_texture_uv_size', uv.uv_size);
             } else {
               this.set('particle_texture_mode', 'static');
               this.set('particle_texture_uv', uv.uv);
@@ -9361,6 +9416,10 @@ var Particle = /*#__PURE__*/function () {
   }, {
     key: "setFrame",
     value: function setFrame(n) {
+      if (this.emitter.config.particle_texture_mode === 'full') {
+        this.setUV(0, 0, this.emitter.config.particle_texture_size[0], this.emitter.config.particle_texture_size[1]);
+        return;
+      }
       var params = this.params();
       var uv = this.emitter.calculate(this.emitter.config.particle_texture_uv, params);
       var size = this.emitter.calculate(this.emitter.config.particle_texture_uv_size, params);
@@ -9849,7 +9908,7 @@ var Emitter = /*#__PURE__*/function (_EventClass) {
         if (!this.enabled && this.calculate(this.config.emitter_lifetime_activation, params)) {
           this.start();
         }
-      } else if (this.loop_mode == 'looping' || this.loop_mode == 'auto' && this.config.emitter_lifetime_mode == 'looping') {
+      } else if (!this.parent_emitter && (this.loop_mode == 'looping' || this.loop_mode == 'auto' && this.config.emitter_lifetime_mode == 'looping')) {
         //Looping
         if (this.enabled && MathUtil.roundTo(this.age, 5) >= this.active_time) {
           this.stop();
@@ -9948,7 +10007,6 @@ var Emitter = /*#__PURE__*/function (_EventClass) {
       this.tick_interval = setInterval(function () {
         _this9.tick();
       }, 1000 / this.scene.global_options.tick_rate);
-      //this.child_emitters.forEach(e => e.playLoop());
       return this;
     }
   }, {
@@ -9958,20 +10016,14 @@ var Emitter = /*#__PURE__*/function (_EventClass) {
       if (this.paused) {
         clearInterval(this.tick_interval);
         delete this.tick_interval;
-        /*this.child_emitters.forEach(e => {
-        	clearInterval(e.tick_interval);
-        	delete e.tick_interval;
-        });*/
       } else {
         this.playLoop();
-        //this.child_emitters.forEach(e => e.playLoop());
       }
       return this;
     }
   }, {
     key: "stopLoop",
     value: function stopLoop() {
-      //this.child_emitters.forEach(e => e.stopLoop());
       clearInterval(this.tick_interval);
       delete this.tick_interval;
       this.stop(true);
@@ -10077,7 +10129,12 @@ var Emitter = /*#__PURE__*/function (_EventClass) {
             } else if (subpart.particle_effect.type == 'particle_with_velocity' && particle) {
               emitter.inherited_particle_speed = new three__WEBPACK_IMPORTED_MODULE_2__.Vector3().copy(particle.speed);
             }
-            var position = particle ? particle.position : _this10.getActiveSpace().position;
+            var position = new three__WEBPACK_IMPORTED_MODULE_2__.Vector3();
+            if (particle) {
+              particle.mesh.getWorldPosition(position);
+            } else {
+              _this10.getActiveSpace().getWorldPosition(position);
+            }
             emitter.getActiveSpace().position.copy(position);
             emitter.start();
           }
@@ -10198,7 +10255,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\ndiv#app[data-v-617ab0be] {\n\t\tdisplay: grid;\n\t\tgrid-template-rows: 74px calc(100% - 74px);\n\t\tgrid-template-columns: var(--sidebar) calc(100% - var(--sidebar));\n\t\tgrid-template-areas: \"sidebar header\" \"sidebar preview\";\n\t\theight: 100%;\n\t\twidth: 100%;\n\t\tposition: fixed;\n\t\tfont-weight: 400;\n}\nmain[data-v-617ab0be] {\n\t\tgrid-area: preview;\n}\nheader[data-v-617ab0be] {\n\t\tgrid-area: header;\n\t\tfont-size: 1.1em;\n\t\tposition: relative;\n}\ncontent[data-v-617ab0be] {\n\t\tgrid-area: sidebar;\n\t\tbackground-color: var(--color-interface);\n}\n\n\t/* Portrait View */\ndiv#app.portrait_view[data-v-617ab0be] {\n\t\tgrid-template-rows: 114px calc(100% - 152px) 38px;\n\t\tgrid-template-columns: 100%;\n\t\tgrid-template-areas: \"header\" \"main\" \"mode_selector\";\n}\nheader > svg[data-v-617ab0be] {\n\t\theight: 40px;\n\t\tpadding: 12px;\n\t\twidth: 100%;\n}\ndiv#app.portrait_view main[data-v-617ab0be] {\n\t\tgrid-area: main;\n}\ndiv#app.portrait_view content[data-v-617ab0be] {\n\t\tgrid-area: main;\n}\ndiv#app.portrait_view #portrait_mode_selector[data-v-617ab0be] {\n\t\tgrid-area: mode_selector;\n\t\tdisplay: flex;\n}\nli.mode_selector[data-v-617ab0be] {\n\t\tflex: 1 0 0;\n\t\ttext-align: center;\n\t\tpadding-top: 6px;\n\t\tborder-top: 1px solid var(--color-border);\n}\nli.mode_selector.selected[data-v-617ab0be] {\n\t\tbackground-color: var(--color-dark);\n}\ndiv#app.portrait_view dialog[data-v-617ab0be] {\n\t\tmargin: auto;\n\t\tpadding: 12px 12px;\n}\n#dialog_blackout[data-v-617ab0be] {\n\t\tposition: absolute;\n\t\tz-index: 49;\n\t\ttop: 0;\n\t\tbottom: 0;\n\t\tleft: 0;\n\t\tright: 0;\n\t\t-webkit-backdrop-filter: blur(5px);\n\t\t        backdrop-filter: blur(5px);\n\t\tbackground-color: #00000050;\n}\ndialog[data-v-617ab0be] {\n\t\tposition: absolute;\n\t\tmargin-left: calc(50% - 400px);\n        width: 800px;\n\t\tmax-width: 100%;\n\t\tmax-height: calc(100% - 40px);\n\t\ttop: 20px;\n\t\tbackground-color: var(--color-background);\n\t\tbox-shadow: 1px 1px 12px #00000070;\n        z-index: 50;\n        overflow: hidden;\n\t\tpadding: 20px 40px;\n\t\tbottom: 20px;\n        display: flex;\n\t\tflex-direction: column;\n\t\tcolor: inherit;\n\t\tborder: none;\n}\n\n/*Resize*/\n.resizer[data-v-617ab0be] {\n\t\ttop: 0;\n\t\tbottom: 0;\n\t\tposition: absolute;\n\t\twidth: 6px;\n\t\tmargin-left: -3px;\n\t\tcursor: ew-resize;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\ndiv#app[data-v-617ab0be] {\n\t\tdisplay: grid;\n\t\tgrid-template-rows: 74px calc(100% - 74px);\n\t\tgrid-template-columns: var(--sidebar) calc(100% - var(--sidebar));\n\t\tgrid-template-areas: \"sidebar header\" \"sidebar preview\";\n\t\theight: 100%;\n\t\twidth: 100%;\n\t\tposition: fixed;\n\t\tfont-weight: 400;\n}\nmain[data-v-617ab0be] {\n\t\tgrid-area: preview;\n}\nheader[data-v-617ab0be] {\n\t\tgrid-area: header;\n\t\tfont-size: 1.1em;\n\t\tposition: relative;\n}\ncontent[data-v-617ab0be] {\n\t\tgrid-area: sidebar;\n\t\tbackground-color: var(--color-interface);\n}\n\n\t/* Portrait View */\ndiv#app.portrait_view[data-v-617ab0be] {\n\t\tgrid-template-rows: 114px calc(100% - 152px) 38px;\n\t\tgrid-template-columns: 100%;\n\t\tgrid-template-areas: \"header\" \"main\" \"mode_selector\";\n}\nheader > svg[data-v-617ab0be] {\n\t\theight: 40px;\n\t\tpadding: 12px;\n\t\twidth: 100%;\n}\ndiv#app.portrait_view main[data-v-617ab0be] {\n\t\tgrid-area: main;\n}\ndiv#app.portrait_view content[data-v-617ab0be] {\n\t\tgrid-area: main;\n}\ndiv#app.portrait_view #portrait_mode_selector[data-v-617ab0be] {\n\t\tgrid-area: mode_selector;\n\t\tdisplay: flex;\n}\nli.mode_selector[data-v-617ab0be] {\n\t\tflex: 1 0 0;\n\t\ttext-align: center;\n\t\tpadding-top: 6px;\n\t\tborder-top: 1px solid var(--color-border);\n}\nli.mode_selector.selected[data-v-617ab0be] {\n\t\tbackground-color: var(--color-dark);\n}\ndiv#app.portrait_view dialog[data-v-617ab0be] {\n\t\tmargin: auto;\n\t\tpadding: 12px 12px;\n}\n#dialog_blackout[data-v-617ab0be] {\n\t\tposition: absolute;\n\t\tz-index: 49;\n\t\ttop: 0;\n\t\tbottom: 0;\n\t\tleft: 0;\n\t\tright: 0;\n\t\tbackground-color: #00000050;\n}\ndialog[data-v-617ab0be] {\n\t\tposition: absolute;\n\t\tmargin-left: calc(50% - 400px);\n        width: 800px;\n\t\tmax-width: 100%;\n\t\tmax-height: calc(100% - 40px);\n\t\ttop: 20px;\n\t\tbackground-color: var(--color-interface);\n        z-index: 50;\n        overflow: hidden;\n\t\tpadding: 20px 28px;\n\t\tbottom: 20px;\n        display: flex;\n\t\tflex-direction: column;\n\t\tcolor: inherit;\n\t\tborder: none;\n\t\tborder: 1px solid var(--color-bar);\n\t\tbox-shadow: 0 1px 12px rgba(0, 0, 0, 0.4);\n\t\tborder-radius: 4px;\n}\n\n/*Resize*/\n.resizer[data-v-617ab0be] {\n\t\ttop: 0;\n\t\tbottom: 0;\n\t\tposition: absolute;\n\t\twidth: 6px;\n\t\tmargin-left: -3px;\n\t\tcursor: ew-resize;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -10414,7 +10471,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.scrollable[data-v-5cc19428] {\n\t\toverflow-y: scroll;\n}\n#molang_sheet code[data-v-5cc19428] {\n\t\tpadding: 2px 8px;\n\t\tcolor: #50cca7;\n\t\tfont-size: 0.9em;\n\t\tbackground-color: var(--color-dark);\n\t\t-webkit-user-select: text;\n\t\t   -moz-user-select: text;\n\t\t        user-select: text;\n}\nli[data-v-5cc19428] {\n        text-indent: -20px;\n\t    padding-left: 20px;\n}\na[href][data-v-5cc19428] {\n        color: var(--color-accent);\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.scrollable[data-v-5cc19428] {\n\t\toverflow-y: scroll;\n}\n#molang_sheet code[data-v-5cc19428] {\n\t\tpadding: 2px 8px;\n\t\tcolor: #50cca7;\n\t\tfont-size: 0.92em;\n\t\tbackground-color: var(--color-dark);\n\t\t-webkit-user-select: text;\n\t\t   -moz-user-select: text;\n\t\t        user-select: text;\n        margin-right: 3px;\n        min-width: 208px;\n        display: inline-block;\n        text-indent: initial;\n}\nli[data-v-5cc19428] {\n        text-indent: -20px;\n\t    padding-left: 20px;\n        margin-bottom: 4px;\n}\na[href][data-v-5cc19428] {\n        color: var(--color-accent);\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -10702,7 +10759,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.texture_input[data-v-5a205692] {\n\twidth: 100%;\n\tposition: relative;\n\tmargin-top: 8px;\n}\ninput#image[data-v-5a205692] {\n\twidth: calc(100% - 40px);\n}\n.input_right.image[data-v-5a205692] {\n\tflex-direction: column;\n}\n.texture_viewport[data-v-5a205692] {\n\tdisplay: block;\n\t--size: 256px;\n\twidth: 100%;\n\toverflow: hidden;\n\theight: 258px;\n\tmargin-top: 8px;\n\tflex-shrink: 0;\n\tposition: relative;\n\ttouch-action: none;\n\tbackground-color: var(--color-dark);\n\tmargin-left: -12px;\n\twidth: auto;\n\tmargin-right: -6px;\n}\n.input_texture_wrapper[data-v-5a205692] {\n\theight: auto;\n\theight: -webkit-fill-available;\n\twidth: var(--size);\n\tmargin: auto;\n\tborder: 1px solid var(--color-border);\n\tbox-sizing: content-box;\n\tposition: relative;\n\toverflow: visible;\n\tcursor: crosshair;\n}\n.texture_input[tool=\"select\"] .input_texture_wrapper[data-v-5a205692] {\n\tcursor: default;\n}\n#canvas_wrapper[data-v-5a205692] {\n\theight: 100%;\n}\n.uv_preview[data-v-5a205692] {\n\tposition: absolute;\n\ttop: 0;\n\toutline: 1px solid var(--color-border);\n\ttouch-action: none;\n\tcursor: move;\n}\n.texture_input:not([tool=\"select\"]) .uv_preview[data-v-5a205692] {\n\tpointer-events: none;\n}\n.texture_input[tool=\"select\"] .uv_preview[data-v-5a205692]:hover {\n\toutline-color: var(--color-highlight);\n}\n.uv_sample_preview[data-v-5a205692] {\n\tborder: 1px solid var(--color-accent);\n}\n.uv_perimeter_preview[data-v-5a205692] {\n\tborder: 1px solid var(--color-text);\n}\n.uv_preview_size_handle[data-v-5a205692] {\n\tposition: absolute;\n\tbottom: -10px;\n\tright: -10px;\n\twidth: 10px;\n\theight: 10px;\n\toutline: 1px solid var(--color-border);\n\tbackground-color: var(--color-text);\n\tcursor: se-resize;\n\tdisplay: none;\n\ttouch-action: none;\n}\n.texture_viewport:hover .uv_preview_size_handle[data-v-5a205692] {\n\tdisplay: block;\n}\n.viewport_scrollbar[data-v-5a205692] {\n\tborder-radius: 8px;\n\theight: 12px;\n\twidth: 12px;\n\tposition: absolute;\n\tmargin: auto;\n\tbackground-color: var(--color-bar);\n\tborder: 1px solid var(--color-border);\n\ttouch-action: none;\n}\n.portrait_view .viewport_scrollbar[data-v-5a205692] {\n\theight: 16px;\n\twidth: 16px;\n}\n.viewport_scrollbar[data-v-5a205692]:hover, .viewport_scrollbar[data-v-5a205692]:active {\n\tbackground-color: var(--color-accent);\n}\n.viewport_scrollbar.horizontal[data-v-5a205692] {\n\tbottom: 4px;\n\tright: 0;\n\tleft: 0;\n\tmin-width: 25px;\n\tmax-width: 100px;\n}\n.viewport_scrollbar.vertical[data-v-5a205692] {\n\tright: 3px;\n\ttop: 0;\n\tbottom: 0;\n\tmin-height: 25px;\n\tmax-height: 100px;\n}\n.texture_info_bar[data-v-5a205692] {\n\tdisplay: flex;\n}\n.texture_info_bar > div.info[data-v-5a205692] {\n\tflex: 1 1 80px;\n\ttext-align: center;\n\tpadding-top: 5px;\n}\n.toolbar[data-v-5a205692] {\n\theight: 34px;\n\tdisplay: flex;\n\tmargin-top: 6px;\n\tdisplay: flex;\n\talign-items: center;\n}\n.tool[data-v-5a205692] {\n\tcursor: pointer;\n\tpadding: 4px 4px;\n\twidth: 40px;\n\ttext-align: center;\n\tborder-radius: 2px;\n}\n.tool.selected[data-v-5a205692] {\n\tbackground-color: var(--color-title);\n\tcolor: var(--color-highlight);\n}\n.tool[data-v-5a205692]:hover {\n\toutline-color: var(--color-highlight);\n}\n.undo_controls[data-v-5a205692] {\n\tmargin: auto;\n}\n.color_preview[data-v-5a205692] {\n\theight: 100%;\n\twidth: 34px;\n\theight: 34px;\n\tcursor: pointer;\n\tborder: 1px solid var(--color-border);\n\tborder-radius: 50%;\n\toverflow: hidden;\n\tmargin-left: auto;\n\tposition: relative;\n\tbackground-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAADBJREFUOE9jfPbs2X8GPEBSUhKfNAPjqAHDIgz+//+PNx08f/4cfzoYNYCBceiHAQC5flV5JzgrxQAAAABJRU5ErkJggg==');\n}\n.color_preview_color[data-v-5a205692] {\n\tposition: absolute;\n\ttop: 0;\n\tleft: 0;\n\tbottom: 0;\n\tright: 0;\n}\n#color_picker_overlay[data-v-5a205692] {\n\tposition: absolute;\n\tz-index: 4;\n\tright: 0;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.texture_input[data-v-5a205692] {\n\twidth: 100%;\n\tposition: relative;\n\tmargin-top: 8px;\n}\ninput#image[data-v-5a205692] {\n\twidth: calc(100% - 40px);\n}\n.input_right.image[data-v-5a205692] {\n\tflex-direction: column;\n}\n.texture_viewport[data-v-5a205692] {\n\tdisplay: block;\n\t--size: 256px;\n\twidth: 100%;\n\toverflow: hidden;\n\theight: 258px;\n\tmargin-top: 8px;\n\tflex-shrink: 0;\n\tposition: relative;\n\ttouch-action: none;\n\tbackground-color: var(--color-dark);\n\tmargin-left: -12px;\n\twidth: auto;\n\tmargin-right: -6px;\n}\n.input_texture_wrapper[data-v-5a205692] {\n\theight: auto;\n\theight: -webkit-fill-available;\n\twidth: var(--size);\n\tmargin: auto;\n\tborder: 1px solid var(--color-border);\n\tbox-sizing: content-box;\n\tposition: relative;\n\toverflow: visible;\n\tcursor: crosshair;\n}\n.texture_input[tool=\"select\"] .input_texture_wrapper[data-v-5a205692] {\n\tcursor: default;\n}\n#canvas_wrapper[data-v-5a205692] {\n\theight: 100%;\n}\n.uv_preview[data-v-5a205692] {\n\tposition: absolute;\n\ttop: 0;\n\toutline: 1px solid var(--color-border);\n\ttouch-action: none;\n\tcursor: move;\n}\n.texture_input:not([tool=\"select\"]) .uv_preview[data-v-5a205692] {\n\tpointer-events: none;\n}\n.texture_input[tool=\"select\"] .uv_preview[data-v-5a205692]:hover {\n\toutline-color: var(--color-highlight);\n}\n.uv_sample_preview[data-v-5a205692] {\n\tborder: 1px solid var(--color-accent);\n}\n.uv_perimeter_preview[data-v-5a205692] {\n\tborder: 1px solid var(--color-text);\n}\n.uv_preview_size_handle[data-v-5a205692] {\n\tposition: absolute;\n\tbottom: -10px;\n\tright: -10px;\n\twidth: 10px;\n\theight: 10px;\n\toutline: 1px solid var(--color-border);\n\tbackground-color: var(--color-text);\n\tcursor: se-resize;\n\tdisplay: none;\n\ttouch-action: none;\n}\n.texture_viewport:hover .uv_preview_size_handle[data-v-5a205692] {\n\tdisplay: block;\n}\n.viewport_scrollbar[data-v-5a205692] {\n\tborder-radius: 8px;\n\theight: 12px;\n\twidth: 12px;\n\tposition: absolute;\n\tmargin: auto;\n\tbackground-color: var(--color-bar);\n\tborder: 1px solid var(--color-border);\n\ttouch-action: none;\n}\n.portrait_view .viewport_scrollbar[data-v-5a205692] {\n\theight: 16px;\n\twidth: 16px;\n}\n.viewport_scrollbar[data-v-5a205692]:hover, .viewport_scrollbar[data-v-5a205692]:active {\n\tbackground-color: var(--color-accent);\n}\n.viewport_scrollbar.horizontal[data-v-5a205692] {\n\tbottom: 4px;\n\tright: 0;\n\tleft: 0;\n\tmin-width: 25px;\n\tmax-width: 100px;\n}\n.viewport_scrollbar.vertical[data-v-5a205692] {\n\tright: 3px;\n\ttop: 0;\n\tbottom: 0;\n\tmin-height: 25px;\n\tmax-height: 100px;\n}\n.texture_info_bar[data-v-5a205692] {\n\tdisplay: flex;\n}\n.texture_info_bar > div.info[data-v-5a205692] {\n\tflex: 1 1 80px;\n\ttext-align: center;\n\tpadding-top: 5px;\n}\n.toolbar[data-v-5a205692] {\n\theight: 34px;\n\tdisplay: flex;\n\tmargin-top: 6px;\n\tdisplay: flex;\n\talign-items: center;\n}\n.tool[data-v-5a205692] {\n\tcursor: pointer;\n\tpadding: 4px 4px;\n\twidth: 40px;\n\ttext-align: center;\n\tborder-radius: 2px;\n}\n.tool.selected[data-v-5a205692] {\n\tbackground-color: var(--color-title);\n\tcolor: var(--color-highlight);\n}\n.tool[data-v-5a205692]:hover {\n\toutline-color: var(--color-highlight);\n}\n.undo_controls[data-v-5a205692] {\n\tmargin: auto;\n}\n.color_preview[data-v-5a205692] {\n\theight: 100%;\n\twidth: 34px;\n\theight: 34px;\n\tcursor: pointer;\n\tborder: 1px solid var(--color-border);\n\tborder-radius: 50%;\n\toverflow: hidden;\n\tmargin-left: auto;\n\tposition: relative;\n\tbackground-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAADBJREFUOE9jfPbs2X8GPEBSUhKfNAPjqAHDIgz+//+PNx08f/4cfzoYNYCBceiHAQC5flV5JzgrxQAAAABJRU5ErkJggg==');\n}\n.color_preview_color[data-v-5a205692] {\n\tposition: absolute;\n\ttop: 0;\n\tleft: 0;\n\tbottom: 0;\n\tright: 0;\n}\n#color_picker_overlay[data-v-5a205692] {\n\tposition: absolute;\n\tz-index: 4;\n\tright: 0;\n}\n#brush_outline[data-v-5a205692] {\n\tposition: absolute;\n\tborder: 1px solid #fff;\n\toutline: 1px solid var(--color-border);\n\tmix-blend-mode: difference;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -10774,7 +10831,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\r\n\t/*Setup*/\r\n\r\n\t::-webkit-scrollbar {\r\n\t\twidth: 8px;\r\n\t\theight: 8px;\r\n\t}\r\n\t\r\n\t::-webkit-scrollbar-track {\r\n\t\tbackground: var(--color-interface);\r\n\t}\r\n\t::-webkit-scrollbar-corner {\r\n\t\tbackground: var(--color-interface);\r\n\t}\r\n\t\r\n\t::-webkit-scrollbar-thumb {\r\n\t\tbackground: var(--color-bar);\r\n\t}\r\n\t::-webkit-scrollbar-thumb:hover {\r\n\t\tbackground: var(--color-title);\r\n\t}\r\n\t::selection {\r\n\t\tbackground: var(--color-selection);\r\n\t}\r\n\t::placeholder {\r\n\t\topacity: 0.6;\r\n\t}\r\n\t* {\r\n\t\tscrollbar-width: thin;\r\n\t\tscrollbar-color: var(--color-bar) var(--color-background);\r\n\t}\r\n\r\n\tbody {\r\n\t\t--color-background: #29323a;\r\n\t\t--color-dark: #20272d;\r\n\t\t--color-border: #1a1c1f;\r\n\t\t--color-interface: #29323a;\r\n\t\t--color-bar: #34404a;\r\n\t\t--color-title: #4b5b69;\r\n\t\t--color-selection: rgba(110, 142, 191, 0.3);\r\n\t\t--color-highlight: #f7f9ff;\r\n\t\t--color-text: #bcc3ca;\r\n\t\t--color-text_grayed: #939aa3;\r\n\t\t--color-accent: #20ddff;\r\n\r\n\t\t--font-code: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;\r\n\t}\r\n\r\n\r\n\th1, h2, h3, h4, h5, h6 {\r\n\t\tmargin: 0;\r\n\t\tfont-weight: inherit;\r\n\t\tline-height: 1.2;\r\n    }\r\n\tul {\r\n\t\tlist-style: none;\r\n\t\tpadding-left: 0;\r\n\t\tmargin: 0;\r\n\t}\r\n\t* {\r\n\t\tmargin: 0;\r\n        padding: 0;\r\n        box-sizing: border-box;\r\n\t\tuser-select: none;\r\n\t}\r\n\t*, :after, :before {\r\n\t\tbox-sizing: border-box;\r\n\t}\r\n\timg, svg {\r\n\t\tvertical-align: middle;\r\n\t}\r\n\tbutton, input, optgroup, select, textarea {\r\n\t\tfont-family: inherit;\r\n\t\tfont-size: inherit;\r\n\t\tline-height: inherit;\r\n\t\tmargin: 0;\r\n\t}\r\n\tinput, select {\r\n\t\tfont-weight: inherit;\r\n\t\tbackground-color: var(--color-dark);\r\n\t\tborder: 1px solid var(--color-border);\r\n\t\tcolor: var(--color-text);\r\n\t\theight: 30px;\r\n\t\tpadding: 4px 1px;\r\n\t\toutline: none;\r\n\t}\r\n\tinput[type=text], input[type=number], input:not([type]) {\r\n\t\tfont-family: var(--font-code);\r\n\t\tpadding: 0 4px;\r\n\t}\r\n\tinput[type=checkbox].hidden {\r\n\t\tdisplay: none;\r\n\t}\r\n\tinput[type=file] {\r\n        padding: 1px;\r\n        border: none;\r\n        background-color: initial;\r\n\t}\r\n\tinput[type=range] {\r\n\t\t-webkit-appearance: none;\r\n\t\tappearance: none;\r\n\t\tborder: none;\r\n\t\tfont-size: 1em;\r\n\t\tfont-family: inherit;\r\n\t\toutline: none;\r\n\t\tbackground-color: transparent;\r\n\t\theight: 30px;\r\n\t\tposition: relative;\r\n\t\t--color-track: var(--color-bar);\r\n\t\t--color-thumb: var(--color-accent);\r\n\t\t--color-center: var(--color-interface);\r\n\t}\r\n\tinput[type=range]::-webkit-slider-thumb {\r\n\t\t-webkit-appearance: none;\r\n\t\t-moz-appearance: none;\r\n\t\tappearance: none;\r\n\t\theight: 20px;\r\n\t\twidth: 20px;\r\n\t\tmargin-top: -9px;\r\n\t\tborder: none;\r\n\t\tbackground-color: var(--color-center);\r\n\t\tborder: 2px solid var(--color-thumb);\r\n\t\tborder-radius: 50%;\r\n\t\tcursor: pointer;\r\n\t\tz-index: 3;\r\n\t}\r\n\tinput[type=range]::-moz-range-thumb {\r\n\t\t-webkit-appearance: none;\r\n\t\t-moz-appearance: none;\r\n\t\tappearance: none;\r\n\t\theight: 20px;\r\n\t\twidth: 20px;\r\n\t\tborder:none;\r\n\t\tbackground-color: var(--color-center);\r\n\t\tborder: 2px solid var(--color-thumb);\r\n\t\tborder-radius: 50%;\r\n\t\tcursor: pointer;\r\n\t\tz-index: 3;\r\n\t}\r\n\tinput[type=range]:not([disabled=disabled])::-webkit-slider-thumb:hover {\r\n\t\tbackground-color: var(--color-thumb);\r\n\t\tborder: none;\r\n\t}\r\n\tinput[type=range]:not([disabled=disabled])::-moz-range-thumb:hover {\r\n\t\tbackground-color: var(--color-thumb);\r\n\t\tborder: none;\r\n\t}\r\n\tinput[type=range][disabled=disabled]::-webkit-slider-thumb {\r\n\t\tbackground-color: var(--color-button);\r\n\t}\r\n\tinput[type=range][disabled=disabled]::-moz-range-thumb {\r\n\t\tbackground-color: var(--color-button);\r\n\t}\r\n\tinput[type=range]::-webkit-slider-runnable-track {\r\n\t\twidth: 100%;\r\n\t\theight: 4px;\r\n\t\tcursor: pointer;\r\n\t\tbackground: var(--color-track);\r\n\t}\r\n\tinput[type=range]::-moz-range-track {\r\n\t\twidth: 100%;\r\n\t\theight: 2px;\r\n\t\tcursor: pointer;\r\n\t\tbackground: var(--color-track);\r\n\t\tborder-radius: 3px;\r\n\t}\r\n\t::file-selector-button {\r\n\t\tborder: none;\r\n\t\tbackground-color: var(--color-bar);\r\n\t\tcolor: inherit;\r\n\t\tfont-size: inherit;\r\n\t\tpadding: 5px 12px;\r\n\t\tborder-radius: 1px;\r\n\t\tcursor: pointer;\r\n\t}\r\n\t::file-selector-button:hover {\r\n\t\tbackground-color: var(--color-title);\r\n\t}\r\n\tbutton {\r\n\t\tappearance: none;\r\n\t\tborder: none;\r\n\t\tbackground-color: var(--color-bar);\r\n\t\tcolor: inherit;\r\n\t\tfont-size: inherit;\r\n\t\tpadding: 8px 12px;\r\n\t\tborder-radius: 1px;\r\n\t\tcursor: pointer;\r\n\t}\r\n\tbutton:hover {\r\n\t\tbackground-color: var(--color-accent);\r\n\t\tcolor: black;\r\n\t}\r\n\tlabel {\r\n\t\tdisplay: inline-block;\r\n\t}\r\n\t.unicode_icon {\r\n\t\tfont-style: unset;\r\n\t\tdisplay: block;\r\n\t\twidth: 24px;\r\n\t\theight: 24px;\r\n\t\ttext-align: center;\r\n\t\tfont-size: 14pt;\r\n\t\tfont-family: sans-serif;\r\n\t}\r\n\t.unicode_icon.caret {\r\n\t\tfont-size: 25pt;\r\n\t\toverflow: hidden;\r\n\t\tdisplay: block;\r\n\t\tmargin-top: -4px;\r\n\t\twidth: 12px;\r\n\t}\r\n\t.unicode_icon.plus {\r\n\t\tfont-size: 18pt;\r\n\t\tmargin-top: -4px;\r\n\t}\r\n\t.unicode_icon.split {\r\n\t\tfont-size: 22pt;\r\n\t\tmargin-top: -12px;\r\n\t}\r\n\t.unicode_icon.warning {\r\n\t\tmargin-top: -1px;\r\n\t}\r\n\t.checkerboard {\r\n\t\t--color-checker_offset: var(--color-bar);\r\n\t\t--color-checkerboard: var(--color-interface);\r\n\t\tbackground-color: var(--color-checkerboard) !important;\r\n\t\tbackground-image: linear-gradient(45deg, var(--color-checkerboard) 25%, transparent 25%), linear-gradient(-45deg, var(--color-checkerboard) 25%, transparent 25%), linear-gradient(45deg, transparent 75%, var(--color-checkerboard) 75%), linear-gradient(-45deg, var(--color-checker_offset) 75%, var(--color-checkerboard) 75%);\r\n\t\tbackground-size: 16px 16px;\r\n\t\tbackground-position: 0 0, 0 8px, 8px -8px, -8px 0px;\r\n\t}\r\n\tselect {\r\n\t\theight: 30px;\r\n\t\t-webkit-appearance: none;\r\n\t\tappearance: auto;\r\n\t\tborder-radius: 0;\r\n\t}\r\n\tbody {\r\n\t\timage-rendering: pixelated;\r\n\t\tbackground-color: var(--color-background);\r\n\t\tuser-select: none;\r\n\t\t-moz-user-select: none;\r\n\t\tfont-family: 'Lato', -apple-system, \"Segoe UI\", sans-serif;\r\n\t\theight: 100%;\r\n        width: 100%;\r\n        margin: 0;\r\n        font-size: 11pt;\r\n        font-weight: 400;\r\n        line-height: 1.5;\r\n        color: var(--color-text);\r\n        text-align: left;\r\n\t}\r\n\r\n\t.highlighting_button {\r\n\t\tcursor: pointer;\r\n\t}\r\n\t.highlighting_button:hover {\r\n\t\tcolor: var(--color-highlight);\r\n\t}\r\n\r\n/* Dialog */\r\n\t.modal_dialog {\r\n\t\tmargin: auto;\r\n\t\tborder: 1px solid var(--color-bar);\r\n\t\tbackground-color: var(--color-interface);\r\n\t\tbox-shadow: 0 1px 12px rgba(0, 0, 0, 0.4);\r\n\t\tpadding: 12px;\r\n\t\tcolor: inherit;\r\n\t\tborder-radius: 4px;\r\n\t}\r\n\t.modal_dialog > .button_bar {\r\n\t\tdisplay: flex;\r\n\t\tmargin-top: 10px;\r\n\t\tjustify-content: end;\r\n\t\tgap: 4px;\r\n\t}\r\n\t.modal_dialog > .form_bar {\r\n\t\tdisplay: flex;\r\n\t\tjustify-content: space-between;\r\n\t\talign-items: center;\r\n\t\tgap: 8px;\r\n\t}\r\n\r\n/*Color Picker*/\r\n\t\r\n\tdiv.vc-chrome {\r\n\t\twidth: 310px;\r\n\t\tmargin: 2px 0;\r\n\t\tfont-family: inherit;\r\n\t}\r\n\tdiv.vc-chrome .vc-chrome-body {\r\n\t\tbackground-color: var(--color-interface);\r\n\t}\r\n\tdiv.vc-chrome .vc-chrome-fields .vc-input__input {\r\n\t\tcolor: var(--color-text);\r\n\t\tbox-shadow: none;\r\n\t\tfont-size: inherit;\r\n\t\tborder: 1px solid var(--color-border);\r\n\t\theight: 24px;\r\n\t}\r\n\tdiv.vc-chrome .vc-chrome-toggle-icon svg path {\r\n\t\tfill: var(--color-text);\r\n\t}\r\n\t.vc-chrome-saturation-wrap .vc-saturation-circle {\r\n\t\tmargin-top: -5px;\r\n\t\tmargin-left: -4px;\r\n\t}\r\n\r\n\r\n/* Prism Editor */\r\n\r\n.prism-editor-wrapper {\r\n\tbackground-color: var(--color-dark);\r\n\theight: auto;\r\n\tz-index: 3;\r\n\tfont-family: var(--font-code);\r\n\toutline: none;\r\n\tpadding: 4px;\r\n\tpadding-bottom: 2px;\r\n\tfont-size: 15px;\r\n\twidth: fit-content;\r\n\tmin-width: 100%;\r\n}\r\n.prism-editor-wrapper .prism-editor__editor, .prism-editor-wrapper .prism-editor__textarea {\r\n\twhite-space: pre;\r\n}\r\n.prism-editor-component {\r\n\tborder: 1px solid var(--color-border);\r\n\twidth: 100%;\r\n}\r\n.prism-editor-wrapper textarea {\r\n\toutline: none;\r\n}\r\n.prism-editor-wrapper pre {\r\n\tcolor: var(--color-text);\r\n}\r\n.prism-editor-wrapper .prism-editor-wrapper {\r\n\toverflow-y: hidden;\r\n}\r\n.prism-editor__autocomplete {\r\n\tbackground-color: var(--color-interface);\r\n\tborder: 1px solid var(--color-border);\r\n\tmax-height: 220px;\r\n\tpadding-bottom: 10px;\r\n}\r\n.prism-editor__autocomplete > li {\r\n\tpadding: 3px 8px;\r\n\tfont-family: var(--font-code);\r\n}\r\n.prism-editor__autocomplete > li:hover {\r\n\tcolor: var(--color-highlight);\r\n\tbackground-color: var(--color-bar);\r\n}\r\n.prism-editor__autocomplete > li.selected {\r\n\tcolor: var(--color-highlight);\r\n\tbackground-color: var(--color-bar);\r\n}\r\n\r\n.prism-editor-wrapper pre .token.punctuation {\r\n\tcolor: #5ba8c5\r\n}\r\n.prism-editor-wrapper pre .token.operator, .prism-editor-wrapper pre .token.keyword {\r\n\tcolor: #fc2f40\r\n}\r\n.prism-editor-wrapper pre .token.number, .prism-editor-wrapper pre .token.boolean, input[type=\"number\"] {\r\n\tcolor: #b99cff\r\n}\r\n.prism-editor-wrapper pre .token.function-name {\r\n\tcolor: #94e400\r\n}\r\n.prism-editor-wrapper pre .token.selector {\r\n\tcolor: #92dcff;\r\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\r\n\t/*Setup*/\r\n\r\n\t::-webkit-scrollbar {\r\n\t\twidth: 8px;\r\n\t\theight: 8px;\r\n\t}\r\n\t\r\n\t::-webkit-scrollbar-track {\r\n\t\tbackground: var(--color-interface);\r\n\t}\r\n\t::-webkit-scrollbar-corner {\r\n\t\tbackground: var(--color-interface);\r\n\t}\r\n\t\r\n\t::-webkit-scrollbar-thumb {\r\n\t\tbackground: var(--color-bar);\r\n\t}\r\n\t::-webkit-scrollbar-thumb:hover {\r\n\t\tbackground: var(--color-title);\r\n\t}\r\n\t::selection {\r\n\t\tbackground: var(--color-selection);\r\n\t}\r\n\t::placeholder {\r\n\t\topacity: 0.6;\r\n\t}\r\n\t* {\r\n\t\tscrollbar-width: thin;\r\n\t\tscrollbar-color: var(--color-bar) var(--color-background);\r\n\t}\r\n\r\n\tbody {\r\n\t\t--color-background: #29323a;\r\n\t\t--color-dark: #20272d;\r\n\t\t--color-border: #1a1c1f;\r\n\t\t--color-interface: #29323a;\r\n\t\t--color-bar: #34404a;\r\n\t\t--color-title: #4b5b69;\r\n\t\t--color-selection: rgba(110, 142, 191, 0.3);\r\n\t\t--color-highlight: #f7f9ff;\r\n\t\t--color-text: #bcc3ca;\r\n\t\t--color-text_grayed: #939aa3;\r\n\t\t--color-accent: #20ddff;\r\n\r\n\t\t--font-code: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;\r\n\t}\r\n\r\n\r\n\th1, h2, h3, h4, h5, h6 {\r\n\t\tmargin: 0;\r\n\t\tfont-weight: inherit;\r\n\t\tline-height: 1.2;\r\n    }\r\n\tul {\r\n\t\tlist-style: none;\r\n\t\tpadding-left: 0;\r\n\t\tmargin: 0;\r\n\t}\r\n\t* {\r\n\t\tmargin: 0;\r\n        padding: 0;\r\n        box-sizing: border-box;\r\n\t\tuser-select: none;\r\n\t}\r\n\t*, :after, :before {\r\n\t\tbox-sizing: border-box;\r\n\t}\r\n\timg, svg {\r\n\t\tvertical-align: middle;\r\n\t}\r\n\tbutton, input, optgroup, select, textarea {\r\n\t\tfont-family: inherit;\r\n\t\tfont-size: inherit;\r\n\t\tline-height: inherit;\r\n\t\tmargin: 0;\r\n\t}\r\n\tinput, select {\r\n\t\tfont-weight: inherit;\r\n\t\tbackground-color: var(--color-dark);\r\n\t\tborder: 1px solid var(--color-border);\r\n\t\tcolor: var(--color-text);\r\n\t\theight: 30px;\r\n\t\tpadding: 4px 1px;\r\n\t\toutline: none;\r\n\t}\r\n\tinput[type=text], input[type=number], input:not([type]) {\r\n\t\tfont-family: var(--font-code);\r\n\t\tpadding: 0 4px;\r\n\t}\r\n\tinput[type=checkbox].hidden {\r\n\t\tdisplay: none;\r\n\t}\r\n\tinput[type=file] {\r\n        padding: 1px;\r\n        border: none;\r\n        background-color: initial;\r\n\t}\r\n\tinput[type=range] {\r\n\t\t-webkit-appearance: none;\r\n\t\tappearance: none;\r\n\t\tborder: none;\r\n\t\tfont-size: 1em;\r\n\t\tfont-family: inherit;\r\n\t\toutline: none;\r\n\t\tbackground-color: transparent;\r\n\t\theight: 30px;\r\n\t\tposition: relative;\r\n\t\t--color-track: var(--color-bar);\r\n\t\t--color-thumb: var(--color-accent);\r\n\t\t--color-center: var(--color-interface);\r\n\t}\r\n\tinput[type=range]::-webkit-slider-thumb {\r\n\t\t-webkit-appearance: none;\r\n\t\t-moz-appearance: none;\r\n\t\tappearance: none;\r\n\t\theight: 20px;\r\n\t\twidth: 20px;\r\n\t\tmargin-top: -9px;\r\n\t\tborder: none;\r\n\t\tbackground-color: var(--color-center);\r\n\t\tborder: 2px solid var(--color-thumb);\r\n\t\tborder-radius: 50%;\r\n\t\tcursor: pointer;\r\n\t\tz-index: 3;\r\n\t}\r\n\tinput[type=range]::-moz-range-thumb {\r\n\t\t-webkit-appearance: none;\r\n\t\t-moz-appearance: none;\r\n\t\tappearance: none;\r\n\t\theight: 20px;\r\n\t\twidth: 20px;\r\n\t\tborder:none;\r\n\t\tbackground-color: var(--color-center);\r\n\t\tborder: 2px solid var(--color-thumb);\r\n\t\tborder-radius: 50%;\r\n\t\tcursor: pointer;\r\n\t\tz-index: 3;\r\n\t}\r\n\tinput[type=range]:not([disabled=disabled])::-webkit-slider-thumb:hover {\r\n\t\tbackground-color: var(--color-thumb);\r\n\t\tborder: none;\r\n\t}\r\n\tinput[type=range]:not([disabled=disabled])::-moz-range-thumb:hover {\r\n\t\tbackground-color: var(--color-thumb);\r\n\t\tborder: none;\r\n\t}\r\n\tinput[type=range][disabled=disabled]::-webkit-slider-thumb {\r\n\t\tbackground-color: var(--color-button);\r\n\t}\r\n\tinput[type=range][disabled=disabled]::-moz-range-thumb {\r\n\t\tbackground-color: var(--color-button);\r\n\t}\r\n\tinput[type=range]::-webkit-slider-runnable-track {\r\n\t\twidth: 100%;\r\n\t\theight: 4px;\r\n\t\tcursor: pointer;\r\n\t\tbackground: var(--color-track);\r\n\t}\r\n\tinput[type=range]::-moz-range-track {\r\n\t\twidth: 100%;\r\n\t\theight: 2px;\r\n\t\tcursor: pointer;\r\n\t\tbackground: var(--color-track);\r\n\t\tborder-radius: 3px;\r\n\t}\r\n\t::file-selector-button {\r\n\t\tborder: none;\r\n\t\tbackground-color: var(--color-bar);\r\n\t\tcolor: inherit;\r\n\t\tfont-size: inherit;\r\n\t\tpadding: 5px 12px;\r\n\t\tborder-radius: 1px;\r\n\t\tcursor: pointer;\r\n\t}\r\n\t::file-selector-button:hover {\r\n\t\tbackground-color: var(--color-title);\r\n\t}\r\n\tbutton {\r\n\t\tappearance: none;\r\n\t\tborder: none;\r\n\t\tbackground-color: var(--color-bar);\r\n\t\tcolor: inherit;\r\n\t\tfont-size: inherit;\r\n\t\tpadding: 8px 12px;\r\n\t\tborder-radius: 1px;\r\n\t\tcursor: pointer;\r\n\t}\r\n\tbutton:hover {\r\n\t\tbackground-color: var(--color-accent);\r\n\t\tcolor: black;\r\n\t}\r\n\tlabel {\r\n\t\tdisplay: inline-block;\r\n\t}\r\n\t.unicode_icon {\r\n\t\tfont-style: unset;\r\n\t\tdisplay: block;\r\n\t\twidth: 24px;\r\n\t\theight: 24px;\r\n\t\ttext-align: center;\r\n\t\tfont-size: 14pt;\r\n\t\tfont-family: sans-serif;\r\n\t}\r\n\t.unicode_icon.caret {\r\n\t\tfont-size: 25pt;\r\n\t\toverflow: hidden;\r\n\t\tdisplay: block;\r\n\t\tmargin-top: -4px;\r\n\t\twidth: 12px;\r\n\t}\r\n\t.unicode_icon.plus {\r\n\t\tfont-size: 18pt;\r\n\t\tmargin-top: -4px;\r\n\t}\r\n\t.unicode_icon.split {\r\n\t\tfont-size: 22pt;\r\n\t\tmargin-top: -12px;\r\n\t}\r\n\t.unicode_icon.warning {\r\n\t\tmargin-top: -1px;\r\n\t}\r\n\t.checkerboard {\r\n\t\t--color-checker_offset: var(--color-bar);\r\n\t\t--color-checkerboard: var(--color-interface);\r\n\t\tbackground-color: var(--color-checkerboard) !important;\r\n\t\tbackground-image: linear-gradient(45deg, var(--color-checkerboard) 25%, transparent 25%), linear-gradient(-45deg, var(--color-checkerboard) 25%, transparent 25%), linear-gradient(45deg, transparent 75%, var(--color-checkerboard) 75%), linear-gradient(-45deg, var(--color-checker_offset) 75%, var(--color-checkerboard) 75%);\r\n\t\tbackground-size: 16px 16px;\r\n\t\tbackground-position: 0 0, 0 8px, 8px -8px, -8px 0px;\r\n\t}\r\n\tselect {\r\n\t\theight: 30px;\r\n\t\t-webkit-appearance: none;\r\n\t\tappearance: auto;\r\n\t\tborder-radius: 0;\r\n\t}\r\n\tbody {\r\n\t\timage-rendering: pixelated;\r\n\t\tbackground-color: var(--color-background);\r\n\t\tuser-select: none;\r\n\t\t-moz-user-select: none;\r\n\t\tfont-family: 'Lato', -apple-system, \"Segoe UI\", sans-serif;\r\n\t\theight: 100%;\r\n        width: 100%;\r\n        margin: 0;\r\n        font-size: 11pt;\r\n        font-weight: 400;\r\n        line-height: 1.5;\r\n        color: var(--color-text);\r\n        text-align: left;\r\n\t}\r\n\r\n\t.highlighting_button {\r\n\t\tcursor: pointer;\r\n\t}\r\n\t.highlighting_button:hover {\r\n\t\tcolor: var(--color-highlight);\r\n\t}\r\n\r\n/* Dialog */\r\n\t.modal_dialog {\r\n\t\tmargin: auto;\r\n\t\tborder: 1px solid var(--color-bar);\r\n\t\tbackground-color: var(--color-interface);\r\n\t\tbox-shadow: 0 1px 12px rgba(0, 0, 0, 0.4);\r\n\t\tpadding: 12px;\r\n\t\tcolor: inherit;\r\n\t\tborder-radius: 4px;\r\n\t}\r\n\t.modal_dialog > .button_bar {\r\n\t\tdisplay: flex;\r\n\t\tmargin-top: 10px;\r\n\t\tjustify-content: end;\r\n\t\tgap: 4px;\r\n\t}\r\n\t.modal_dialog > .form_bar {\r\n\t\tdisplay: flex;\r\n\t\tjustify-content: space-between;\r\n\t\talign-items: center;\r\n\t\tgap: 8px;\r\n\t\tmargin-top: 2px;\r\n\t}\r\n\r\n/*Color Picker*/\r\n\t\r\n\tdiv.vc-chrome {\r\n\t\twidth: 310px;\r\n\t\tmargin: 2px 0;\r\n\t\tfont-family: inherit;\r\n\t}\r\n\tdiv.vc-chrome .vc-chrome-body {\r\n\t\tbackground-color: var(--color-interface);\r\n\t}\r\n\tdiv.vc-chrome .vc-chrome-fields .vc-input__input {\r\n\t\tcolor: var(--color-text);\r\n\t\tbox-shadow: none;\r\n\t\tfont-size: inherit;\r\n\t\tborder: 1px solid var(--color-border);\r\n\t\theight: 24px;\r\n\t}\r\n\tdiv.vc-chrome .vc-chrome-toggle-icon svg path {\r\n\t\tfill: var(--color-text);\r\n\t}\r\n\t.vc-chrome-saturation-wrap .vc-saturation-circle {\r\n\t\tmargin-top: -5px;\r\n\t\tmargin-left: -4px;\r\n\t}\r\n\r\n\r\n/* Prism Editor */\r\n\r\n.prism-editor-wrapper {\r\n\tbackground-color: var(--color-dark);\r\n\theight: auto;\r\n\tz-index: 3;\r\n\tfont-family: var(--font-code);\r\n\toutline: none;\r\n\tpadding: 4px;\r\n\tpadding-bottom: 2px;\r\n\tfont-size: 15px;\r\n\twidth: fit-content;\r\n\tmin-width: 100%;\r\n\tscrollbar-color: var(--color-bar) var(--color-dark);\r\n}\r\n.prism-editor-wrapper .prism-editor__editor, .prism-editor-wrapper .prism-editor__textarea {\r\n\twhite-space: pre;\r\n}\r\n.prism-editor-component {\r\n\tborder: 1px solid var(--color-border);\r\n\twidth: 100%;\r\n}\r\n.prism-editor-wrapper textarea {\r\n\toutline: none;\r\n}\r\n.prism-editor-wrapper pre {\r\n\tcolor: var(--color-text);\r\n}\r\n.prism-editor-wrapper .prism-editor-wrapper {\r\n\toverflow-y: hidden;\r\n}\r\n.prism-editor__autocomplete {\r\n\tbackground-color: var(--color-interface);\r\n\tborder: 1px solid var(--color-border);\r\n\tmax-height: 220px;\r\n\tpadding-bottom: 10px;\r\n}\r\n.prism-editor__autocomplete > li {\r\n\tpadding: 3px 8px;\r\n\tfont-family: var(--font-code);\r\n}\r\n.prism-editor__autocomplete > li:hover {\r\n\tcolor: var(--color-highlight);\r\n\tbackground-color: var(--color-bar);\r\n}\r\n.prism-editor__autocomplete > li.selected {\r\n\tcolor: var(--color-highlight);\r\n\tbackground-color: var(--color-bar);\r\n}\r\n\r\n.prism-editor-wrapper pre .token.punctuation {\r\n\tcolor: #5ba8c5\r\n}\r\n.prism-editor-wrapper pre .token.operator, .prism-editor-wrapper pre .token.keyword {\r\n\tcolor: #fc2f40\r\n}\r\n.prism-editor-wrapper pre .token.number, .prism-editor-wrapper pre .token.boolean, input[type=\"number\"] {\r\n\tcolor: #b99cff\r\n}\r\n.prism-editor-wrapper pre .token.function-name {\r\n\tcolor: #94e400\r\n}\r\n.prism-editor-wrapper pre .token.selector {\r\n\tcolor: #92dcff;\r\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -75459,7 +75516,7 @@ var render = function () {
                 },
               }),
               _vm._v(" "),
-              !_vm.is_extension
+              !_vm.is_extension && !_vm.canEditParticleFile()
                 ? _c(
                     "div",
                     {
@@ -75467,7 +75524,9 @@ var render = function () {
                       attrs: { title: "Create New Particle" },
                       on: {
                         click: function ($event) {
-                          return _vm.$refs.new_particle_dialog.showModal()
+                          _vm.$refs.new_particle_dialog.showModal()
+                          _vm.new_particle_identifier =
+                            _vm.subpart.particle_effect.effect
                         },
                       },
                     },
@@ -77705,6 +77764,9 @@ var render = function () {
             pointerdown: function ($event) {
               return _vm.onMouseDown($event)
             },
+            touchstart: function ($event) {
+              return _vm.onTouchStart($event)
+            },
             contextmenu: function ($event) {
               $event.preventDefault()
             },
@@ -77772,6 +77834,14 @@ var render = function () {
                     ),
                   ]
                 : _vm._e(),
+              _vm._v(" "),
+              _vm.cursor_position.active &&
+              ["brush", "eraser", "color_picker"].includes(_vm.tool)
+                ? _c("div", {
+                    style: _vm.getBrushOutlineStyle(),
+                    attrs: { id: "brush_outline" },
+                  })
+                : _vm._e(),
             ],
             2
           ),
@@ -77815,7 +77885,9 @@ var render = function () {
           _c("div", { staticClass: "info" }, [
             _vm._v(
               _vm._s(_vm.log) +
-                " ." +
+                "  " +
+                _vm._s(_vm.offset[0]) +
+                "  " +
                 _vm._s(_vm.input.image_element.naturalWidth) +
                 " x " +
                 _vm._s(_vm.input.image_element.naturalHeight) +
@@ -77996,7 +78068,7 @@ var render = function () {
           attrs: { id: "new_texture_dialog" },
         },
         [
-          _c("div", { staticClass: "form-bar" }, [
+          _c("div", { staticClass: "form_bar" }, [
             _c("label", [_vm._v("Width")]),
             _c("input", {
               directives: [
@@ -78024,7 +78096,7 @@ var render = function () {
             }),
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "form-bar" }, [
+          _c("div", { staticClass: "form_bar" }, [
             _c("label", [_vm._v("Height")]),
             _c("input", {
               directives: [
@@ -92176,7 +92248,7 @@ module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf
 /***/ ((module) => {
 
 "use strict";
-module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABA0lEQVQ4ja2SMWrDQBBFn4RBYBXLYh0hqd2pTqMy4CPYR/AhXPsqBh0ioBsIpTLGRbxm2UIGV0o1y1pGSiLyK6HdNzNvJAC2q7xbF8uOCYl3m6ID0GnCdpX/uUhsrMO2dzKtsO19yhCwLpaTFaKxQ1HKtMJYx/5QPd2Px+BMKwCMdYNNBgtIZDdD+/lRQcCru2FcS6ZSyqrx3GgByXv+2i3UHJ0mfJ4txrV81OcIYBZe3G2KTnzDhQks02Qq9cwshOW57yuwThPq48V39wrhxpvTlx81dBUV4OG9/wrxyxvGOg+HgKSsmqhf9KnDQs2pjxfv2gf6efgPyqqJru72a/hf8g2kDH4uzNDAwQAAAABJRU5ErkJggg==";
+module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABDElEQVQ4ja2SMWrDQBBFn4RBYBXLYh0hqd2pTqMyoCPYR1Dt2nWOkCsEVOYAAd1AKJUJLmyZZQsZXG2qWWQ5thORX4nVvNl5IwFQ5KlbZHPHiITrZeYAdBxR5Omfm4StsZjuRKIVpjuNGQIW2Xy0QnDrpSglWrF6ff+x9mqDIk9dohWtsf7s5a26qA/vjSi7ubafuwoCHuyR1nYkKqasGs/dbCB5Th/dTE3RccTn1tDajo96GwBM+oXrZebEue8rsEyTqNgzkz4sz0NfgXUcUW/2/navIBsHaL52ftS+q6gAZ+f+K4QPT7TGergPSMqqCYZNL26YqSn1Zu9dh8AwZ/9BWTXBwR5/Df9LvgFiUX03ExzqpAAAAABJRU5ErkJggg==";
 
 /***/ }),
 

@@ -222,7 +222,6 @@ export default {
 		bottom: 0;
 		left: 0;
 		right: 0;
-		backdrop-filter: blur(5px);
 		background-color: #00000050;
 	}
 	dialog {
@@ -232,16 +231,18 @@ export default {
 		max-width: 100%;
 		max-height: calc(100% - 40px);
 		top: 20px;
-		background-color: var(--color-background);
-		box-shadow: 1px 1px 12px #00000070;
+		background-color: var(--color-interface);
         z-index: 50;
         overflow: hidden;
-		padding: 20px 40px;
+		padding: 20px 28px;
 		bottom: 20px;
         display: flex;
 		flex-direction: column;
 		color: inherit;
 		border: none;
+		border: 1px solid var(--color-bar);
+		box-shadow: 0 1px 12px rgba(0, 0, 0, 0.4);
+		border-radius: 4px;
 	}
 
 /*Resize*/

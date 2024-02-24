@@ -185,11 +185,11 @@ class TextureClass {
         }
         let onEnd = (e2) => {
             this.afterEdit();
-            document.removeEventListener('mousemove', onMove);
-            document.removeEventListener('mouseup', onEnd);
+            document.removeEventListener('pointermove', onMove);
+            document.removeEventListener('pointerup', onEnd);
         }
-        document.addEventListener('mousemove', onMove);
-        document.addEventListener('mouseup', onEnd);
+        document.addEventListener('pointermove', onMove);
+        document.addEventListener('pointerup', onEnd);
         onMove(e1);
     }
     useFillTool(event, context) {

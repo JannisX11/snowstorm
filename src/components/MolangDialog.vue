@@ -67,13 +67,18 @@ export default {
 	#molang_sheet code {
 		padding: 2px 8px;
 		color: #50cca7;
-		font-size: 0.9em;
+		font-size: 0.92em;
 		background-color: var(--color-dark);
 		user-select: text;
+        margin-right: 3px;
+        min-width: 208px;
+        display: inline-block;
+        text-indent: initial;
     }
     li {
         text-indent: -20px;
 	    padding-left: 20px;
+        margin-bottom: 4px;
     }
     a[href] {
         color: var(--color-accent);

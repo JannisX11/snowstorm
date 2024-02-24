@@ -40,6 +40,7 @@
 			@pointermove="onMouseMove($event)"
 			@pointerleave="onMouseLeave($event)"
 			@pointerdown="onMouseDown($event)"
+			@touchstart="onTouchStart($event)"
 			@contextmenu.prevent
 			:style="{'--zoom': zoom, '--size': size+'px', '--height': height+'px', '--offset-x': offset[0]+'px', '--offset-y': offset[1]+'px'}"
 			@mousewheel="onMouseWheel($event)"
@@ -61,7 +62,7 @@
 			<div v-if="(zoom/ratio) > 1" class="viewport_scrollbar vertical" @pointerdown="slideScrollBar(1, $event)" :style="{top: getScrollBarOffset(1), height: (30 / (zoom/ratio)) + '%'}"></div>
 		</div>
 		<div class="texture_info_bar">
-			<div class="info">{{ input.image_element.naturalWidth }} x {{ input.image_element.naturalHeight }} px</div>
+			<div class="info">{{ log }}  {{offset[0]}}  {{ input.image_element.naturalWidth }} x {{ input.image_element.naturalHeight }} px</div>
 			<div class="info">{{ cursor_position.active ? (cursor_position.x + ' x ' + cursor_position.y) : '' }}</div>
 			<div class="info">{{ Math.round(zoom * 100) + '%' }}</div>
 			<template v-if="UVDefinitionMode() == 'animated'">
@@ -212,19 +213,40 @@ export default {
 		onMouseLeave(event) {
 			this.cursor_position.active = false;
 		},
+		onTouchStart(event) {
+			let initial_distance;
+			let initial_zoom = this.zoom;
+
+			let getDistance = touches => {
+				return Math.sqrt(Math.pow(touches[0].clientX - touches[1].clientX, 2) + Math.pow(touches[0].clientY - touches[1].clientY, 2));
+			}
+			let onMove = (e2) => {
+				if (e2.touches.length != 2) return;
+				e2.preventDefault();
+
+				let distance = getDistance(e2.touches);
+				if (initial_distance == undefined) {
+					initial_distance = distance;
+				} else if (initial_distance != distance) {
+					this.setZoom(initial_zoom * (distance / initial_distance), e2.touches[0]);
+				}
+			}
+			let onEnd = (e2) => {
+				document.removeEventListener('touchmove', onMove);
+				document.removeEventListener('touchend', onEnd);
+			}
+			document.addEventListener('touchmove', onMove);
+			document.addEventListener('touchend', onEnd);
+			return;
+		},
 		onMouseDown(event) {
 			if (event.target.classList.contains('viewport_scrollbar')) return;
 
-			/*pointer_cache.push(event);
-			if (pointer_cache.length > 1) {
-				return;
-			}
-			let last_pointer_events = [];
-			let initial_distance;
-			let initial_zoom = this.zoom;*/
+			// Sync cursor position on touch screens
+			this.onMouseMove(event);
 
 			if (event.button == 2 || event.button == 1 || (this.tool == 'select' && event.pointerType == 'touch')) {
-
+				
 				let initial_offset = this.offset.slice();
 				event.preventDefault();
 				let onMove = (e2) => {
@@ -234,29 +256,13 @@ export default {
 						initial_offset[0] + (e2.clientX - event.clientX),
 						initial_offset[1] + (e2.clientY - event.clientY),
 					];
-					this.offset.splice(0, 2, ...offset);
-
-					/*
-					let index = pointer_cache.findIndex((cachedEv) => cachedEv.pointerId === e2.pointerId);
-					if (index >= 0) last_pointer_events[index] = e2;
-					if (index == 1) return;
-					if (pointer_cache.length == 2 && last_pointer_events[1]) {
-						let e2_other = last_pointer_events[1];
-						let distance = Math.sqrt(Math.pow(e2.clientX - e2_other.clientX, 2) + Math.pow(e2.clientY - e2_other.clientY, 2));
-
-						if (!initial_distance) {
-							initial_distance = distance;
-						} else {
-							this.setZoom(initial_zoom * (distance / initial_distance));
-						}
-					};
-					*/
-
+					if (!isNaN(offset[0])) {
+						this.offset.splice(0, 2, ...offset);
+					}
 				}
 				let onEnd = (e2) => {
 					document.removeEventListener('pointermove', onMove);
 					document.removeEventListener('pointerup', onEnd);
-					//pointer_cache.splice(0);
 				}
 				document.addEventListener('pointermove', onMove);
 				document.addEventListener('pointerup', onEnd);
@@ -303,31 +309,37 @@ export default {
 				} else {
 					zoom = zoom * 1.1;
 				}
-				this.setZoom(zoom);
+				this.setZoom(zoom, event);
 
 			} else {
-
-				this.offset.splice(0, 2, this.offset[0], this.offset[1] - Math.sign(event.deltaY) * 50);
+				if (event.shiftKey) {
+					this.offset.splice(0, 1, this.offset[0] - Math.sign(event.deltaY) * 50);
+				} else {
+					this.offset.splice(1, 1, this.offset[1] - Math.sign(event.deltaY) * 50);
+				}
 			}
 		},
-		setZoom(zoom) {
+		setZoom(zoom, event) {
 			let initial_zoom = this.zoom;
 			if (zoom > 1 / 1.1 && zoom < 1.1) zoom = 1;
 			zoom = Math.clamp(zoom, Math.min(0.5, this.ratio), 8);
 
 			if (zoom != this.zoom) {
 				this.zoom = zoom;
-				let rect = this.$refs.texture_wrapper.getBoundingClientRect();
-				let mouse_pos = [
-					(event.clientX-1-rect.left),
-					(event.clientY-1-rect.top),
-				];
-				let zoom_offset = 1 - (this.zoom / initial_zoom);
-				let is_wider_than_viewport = this.$refs.texture_wrapper.clientWidth > this.$refs.texture_viewport.clientWidth;
-				this.offset.splice(0, 2, 
-					this.offset[0] + mouse_pos[0] * zoom_offset * (is_wider_than_viewport ? 1 : 0),
-					this.offset[1] + mouse_pos[1] * zoom_offset,
-				)
+
+				if (event && event.clientX != undefined) {
+					let rect = this.$refs.texture_wrapper.getBoundingClientRect();
+					let mouse_pos = [
+						(event.clientX-1-rect.left),
+						(event.clientY-1-rect.top),
+					];
+					let zoom_offset = 1 - (this.zoom / initial_zoom);
+					let is_wider_than_viewport = this.$refs.texture_wrapper.clientWidth > this.$refs.texture_viewport.clientWidth;
+					this.offset.splice(0, 2, 
+						this.offset[0] + mouse_pos[0] * zoom_offset * (is_wider_than_viewport ? 1 : 0),
+						this.offset[1] + mouse_pos[1] * zoom_offset,
+					)
+				}
 			}
 		},
 		viewportIsCentered() {

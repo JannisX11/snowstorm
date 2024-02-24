@@ -77,6 +77,16 @@ class SubEffectEditor {
         EventSubEffects[this.identifier].json = json;
         EventSubEffects[this.identifier].texture = texture;
         delete Scene.child_configs[this.identifier];
+
+        let sub_data = this.editor_tab.getSubEffectDataForParentEffect();
+        for (let identifier in sub_data) {
+            if (SubEffectEditors[identifier]) continue;
+
+            if (!EventSubEffects[identifier]) EventSubEffects[identifier] = {};
+            EventSubEffects[identifier].json = JSON.parse(sub_data[identifier].json);
+            EventSubEffects[identifier].texture = sub_data[identifier].texture;
+            delete Scene.child_configs[identifier];
+        }
     }
 }
 
@@ -88,7 +98,7 @@ export function editEventSubEffect(identifier) {
         });
     } else {
         let editor = SubEffectEditors[identifier];
-        if (editor) {
+        if (editor && editor.closed == false) {
             editor.editor_tab.focus();
         } else {
             let {json, texture} = EventSubEffects[identifier];
@@ -101,3 +111,18 @@ export function editEventSubEffect(identifier) {
         }
     }
 }
+
+window.getSubEffectDataForParentEffect = function() {
+	let data = {};
+    for (let identifier in EventSubEffects) {
+        let {json, texture} = EventSubEffects[identifier];
+        data[identifier] = {
+            json: JSON.stringify(json),
+            texture
+        }
+    }
+    return data;
+}
+
+window.EventSubEffects = EventSubEffects;
+window.SubEffectEditors = SubEffectEditors;
