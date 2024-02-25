@@ -57,7 +57,12 @@ export async function loadEventSubEffectTexture(identifier) {
             }
         })
     });
+    if (!EventSubEffects[identifier]) EventSubEffects[identifier] = {};
     EventSubEffects[identifier].texture = image_url;
+    
+    if (Scene.child_configs[identifier]) {
+        Scene.child_configs[identifier].updateTexture();
+    }
 }
 
 window.addEventListener('focus', (e) => {

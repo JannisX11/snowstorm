@@ -35,7 +35,7 @@ function updateInputsFromConfig() {
 			let lineify = string => {
 				if (typeof string == 'string' && string && string.includes(';')) {
 					input.expanded = true;
-					return string.replace(/;/g, ';\n').replace(/\n+$/, '');
+					return string.replace(/;\s*/g, ';\n').replace(/\n+$/, '');
 				} else {
 					return string;
 				}

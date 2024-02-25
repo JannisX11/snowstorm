@@ -3,28 +3,31 @@ import vscode from './vscode_extension'
 import Wintersky from 'wintersky'
 import {View} from './components/Preview'
 import { EventSubEffects } from './event_sub_effects';
+import { bbuid } from './util';
 
 const Scene = new Wintersky.Scene({
 	fetchTexture(config) {
-		if (config != Config && EventSubEffects[config.identifier]) {
+		let is_main_effect = config == Config;
+		if (!is_main_effect && EventSubEffects[config.identifier] && EventSubEffects[config.identifier].texture) {
 			return EventSubEffects[config.identifier].texture;
 		}
-
-		if (Texture.internal_changes) {
+		if (is_main_effect && Texture.internal_changes) {
 			return Texture.source;
 		}
 		if (!window.Data) return;
 		var path = config.particle_texture_path;
 	
 		if (vscode && path) {
-	
+			
+			let request_id = bbuid(4);
 			vscode.postMessage({
 				type: 'request_texture',
+				request_id,
 				path
 			});
 			return new Promise((resolve, reject) => {
 				function update(event) {
-					if (event.data.type == 'provide_texture') {
+					if (event.data.type == 'provide_texture' && event.data.request_id == request_id) {
 						let uri = (event.data.url && event.data.url + '?'+Math.floor(Math.random()*1000));
 						window.removeEventListener('message', update);
 
@@ -34,7 +37,7 @@ const Scene = new Wintersky.Scene({
 				window.addEventListener('message', update, false);
 			})
 
-		} else if (window.Data.texture.texture.inputs.image.image && window.Data.texture.texture.inputs.image.image.loaded) {
+		} else if (is_main_effect && window.Data.texture.texture.inputs.image.image && window.Data.texture.texture.inputs.image.image.loaded) {
 	
 			return window.Data.texture.texture.inputs.image.image.data;
 	
@@ -44,13 +47,15 @@ const Scene = new Wintersky.Scene({
 		if (!identifier) return;
 		if (vscode) {
 	
+			let request_id = bbuid(4);
 			vscode.postMessage({
 				type: 'request_particle_file',
+				request_id,
 				identifier
 			});
 			return new Promise((resolve, reject) => {
 				function update(event) {
-					if (event.data.type == 'provide_particle_file') {
+					if (event.data.type == 'provide_particle_file' && event.data.request_id == request_id) {
 						window.removeEventListener('message', update);
 						let json = event.data.content ? JSON.parse(event.data.content) : null;
 						EventSubEffects[identifier] = {json}

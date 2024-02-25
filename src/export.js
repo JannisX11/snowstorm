@@ -132,8 +132,14 @@ function generateFile() {
 				}
 			}
 			if (subpart.particle_effect) {
-				if (!subpart.particle_effect.pre_effect_expression) {
-					delete subpart.particle_effect.pre_effect_expression;
+				let {particle_effect} = subpart;
+				if (!particle_effect.pre_effect_expression) {
+					delete particle_effect.pre_effect_expression;
+				} else if (typeof particle_effect.pre_effect_expression == 'string') {
+					particle_effect.pre_effect_expression = particle_effect.pre_effect_expression.trim();
+					if (!particle_effect.pre_effect_expression.endsWith(';')) {
+						particle_effect.pre_effect_expression = particle_effect.pre_effect_expression + ';';
+					}
 				}
 			}
 			return subpart;
@@ -403,28 +409,25 @@ function generateFile() {
 			tex_comp.direction.custom_direction = getValue('particle_appearance_direction');
 		}
 	}
-	tex_comp.uv = {
-		texture_width: parseInt(Config.particle_texture_size[0]) || 0,
-		texture_height: parseInt(Config.particle_texture_size[1]) || 0,
-	}
-	if (getValue('particle_texture_mode') === 'static') {
-		tex_comp.uv.uv = getValue('particle_texture_uv')||[0, 0];
-		tex_comp.uv.uv_size = getValue('particle_texture_uv_size')||[tex_comp.uv.texture_width, tex_comp.uv.texture_height];
+	if (getValue('particle_texture_mode') !== 'full') {
+		tex_comp.uv = {
+			texture_width: parseInt(Config.particle_texture_size[0]) || 0,
+			texture_height: parseInt(Config.particle_texture_size[1]) || 0,
+		}
+		if (getValue('particle_texture_mode') === 'static') {
+			tex_comp.uv.uv = getValue('particle_texture_uv')||[0, 0];
+			tex_comp.uv.uv_size = getValue('particle_texture_uv_size')||[tex_comp.uv.texture_width, tex_comp.uv.texture_height];
 
-	} else if (getValue('particle_texture_mode') === 'full') {
-		tex_comp.uv.uv = [0, 0];
-		tex_comp.uv.texture_width = tex_comp.uv.texture_height = 1;
-		tex_comp.uv.uv_size = [tex_comp.uv.texture_width, tex_comp.uv.texture_height];
-
-	} else {
-		tex_comp.uv.flipbook = {
-			base_UV: getValue('particle_texture_uv', true),
-			size_UV: getValue('particle_texture_uv_size', true),
-			step_UV: getValue('particle_texture_uv_step', true),
-			frames_per_second: getValue('particle_texture_frames_per_second'),
-			max_frame: getValue('particle_texture_max_frame'),
-			stretch_to_lifetime: getValue('particle_texture_stretch_to_lifetime'),
-			loop: getValue('particle_texture_loop'),
+		} else {
+			tex_comp.uv.flipbook = {
+				base_UV: getValue('particle_texture_uv', true),
+				size_UV: getValue('particle_texture_uv_size', true),
+				step_UV: getValue('particle_texture_uv_step', true),
+				frames_per_second: getValue('particle_texture_frames_per_second'),
+				max_frame: getValue('particle_texture_max_frame'),
+				stretch_to_lifetime: getValue('particle_texture_stretch_to_lifetime'),
+				loop: getValue('particle_texture_loop'),
+			}
 		}
 	}
 	//Collision

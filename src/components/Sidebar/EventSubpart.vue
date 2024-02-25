@@ -256,7 +256,8 @@ export default {
 			}
 		},
 		async selectParticleTexture() {
-			await loadEventSubEffectTexture();
+			let identifier = this.subpart.particle_effect.effect;
+			await loadEventSubEffectTexture(identifier);
 		},
 		editParticleFile() {
 			editEventSubEffect(this.subpart.particle_effect.effect);

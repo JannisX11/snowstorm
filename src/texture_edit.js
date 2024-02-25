@@ -17,6 +17,8 @@ function getIdentifier() {
     return String.fromCharCode(65 + Math.random() * 26) + String.fromCharCode(65 + Math.random() * 26);
 }
 
+let main_config, main_emitter;
+
 class TextureClass {
     constructor() {
         this.canvas = document.createElement('canvas');
@@ -32,7 +34,8 @@ class TextureClass {
     linkEmitter(emitter, config) {
         this.texture = config.texture;
         this.img = this.texture.image;
-        this.config = config;
+        main_config = config;
+        main_emitter = emitter;
     }
     canvasToDataURL() {
         this.source = this.canvas.toDataURL();
@@ -56,7 +59,6 @@ class TextureClass {
         })
     }
     update() {
-        //this.config.updateTexture();
         this.img.src = this.source;
     }
     reset() {
@@ -69,7 +71,7 @@ class TextureClass {
     }
     reload() {
         this.internal_changes = false;
-        this.config.updateTexture();
+        main_config.updateTexture();
         this.updateCanvasFromSource();
     }
     createEmpty(width = 16, height = 16) {
@@ -86,7 +88,7 @@ class TextureClass {
             let content = this.source;
             vscode.postMessage({
                 type: 'save_texture',
-                path: this.config.particle_texture_path,
+                path: main_config.particle_texture_path,
                 content,
             });
         } else {

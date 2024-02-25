@@ -2167,13 +2167,16 @@ var emitter_type_options = {
       }))();
     },
     selectParticleTexture: function selectParticleTexture() {
+      var _this3 = this;
       return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3() {
+        var identifier;
         return _regeneratorRuntime().wrap(function _callee3$(_context3) {
           while (1) switch (_context3.prev = _context3.next) {
             case 0:
-              _context3.next = 2;
-              return (0,_event_sub_effects__WEBPACK_IMPORTED_MODULE_9__.loadEventSubEffectTexture)();
-            case 2:
+              identifier = _this3.subpart.particle_effect.effect;
+              _context3.next = 3;
+              return (0,_event_sub_effects__WEBPACK_IMPORTED_MODULE_9__.loadEventSubEffectTexture)(identifier);
+            case 3:
             case "end":
               return _context3.stop();
           }
@@ -4232,6 +4235,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var wintersky__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! wintersky */ "../wintersky/dist/wintersky.esm.js");
 /* harmony import */ var _components_Preview__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/Preview */ "./src/components/Preview.vue");
 /* harmony import */ var _event_sub_effects__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./event_sub_effects */ "./src/event_sub_effects.js");
+/* harmony import */ var _util__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./util */ "./src/util.js");
+
 
 
 
@@ -4239,22 +4244,25 @@ __webpack_require__.r(__webpack_exports__);
 
 var Scene = new wintersky__WEBPACK_IMPORTED_MODULE_2__["default"].Scene({
   fetchTexture: function fetchTexture(config) {
-    if (config != Config && _event_sub_effects__WEBPACK_IMPORTED_MODULE_4__.EventSubEffects[config.identifier]) {
+    var is_main_effect = config == Config;
+    if (!is_main_effect && _event_sub_effects__WEBPACK_IMPORTED_MODULE_4__.EventSubEffects[config.identifier] && _event_sub_effects__WEBPACK_IMPORTED_MODULE_4__.EventSubEffects[config.identifier].texture) {
       return _event_sub_effects__WEBPACK_IMPORTED_MODULE_4__.EventSubEffects[config.identifier].texture;
     }
-    if (_texture_edit__WEBPACK_IMPORTED_MODULE_0__.Texture.internal_changes) {
+    if (is_main_effect && _texture_edit__WEBPACK_IMPORTED_MODULE_0__.Texture.internal_changes) {
       return _texture_edit__WEBPACK_IMPORTED_MODULE_0__.Texture.source;
     }
     if (!window.Data) return;
     var path = config.particle_texture_path;
     if (_vscode_extension__WEBPACK_IMPORTED_MODULE_1__["default"] && path) {
+      var request_id = (0,_util__WEBPACK_IMPORTED_MODULE_5__.bbuid)(4);
       _vscode_extension__WEBPACK_IMPORTED_MODULE_1__["default"].postMessage({
         type: 'request_texture',
+        request_id: request_id,
         path: path
       });
       return new Promise(function (resolve, reject) {
         function update(event) {
-          if (event.data.type == 'provide_texture') {
+          if (event.data.type == 'provide_texture' && event.data.request_id == request_id) {
             var uri = event.data.url && event.data.url + '?' + Math.floor(Math.random() * 1000);
             window.removeEventListener('message', update);
             resolve(uri);
@@ -4262,20 +4270,22 @@ var Scene = new wintersky__WEBPACK_IMPORTED_MODULE_2__["default"].Scene({
         }
         window.addEventListener('message', update, false);
       });
-    } else if (window.Data.texture.texture.inputs.image.image && window.Data.texture.texture.inputs.image.image.loaded) {
+    } else if (is_main_effect && window.Data.texture.texture.inputs.image.image && window.Data.texture.texture.inputs.image.image.loaded) {
       return window.Data.texture.texture.inputs.image.image.data;
     }
   },
   fetchParticleFile: function fetchParticleFile(identifier) {
     if (!identifier) return;
     if (_vscode_extension__WEBPACK_IMPORTED_MODULE_1__["default"]) {
+      var request_id = (0,_util__WEBPACK_IMPORTED_MODULE_5__.bbuid)(4);
       _vscode_extension__WEBPACK_IMPORTED_MODULE_1__["default"].postMessage({
         type: 'request_particle_file',
+        request_id: request_id,
         identifier: identifier
       });
       return new Promise(function (resolve, reject) {
         function update(event) {
-          if (event.data.type == 'provide_particle_file') {
+          if (event.data.type == 'provide_particle_file' && event.data.request_id == request_id) {
             window.removeEventListener('message', update);
             var json = event.data.content ? JSON.parse(event.data.content) : null;
             _event_sub_effects__WEBPACK_IMPORTED_MODULE_4__.EventSubEffects[identifier] = {
@@ -4484,8 +4494,12 @@ function _loadEventSubEffectTexture() {
           });
         case 2:
           image_url = _context3.sent;
+          if (!EventSubEffects[identifier]) EventSubEffects[identifier] = {};
           EventSubEffects[identifier].texture = image_url;
-        case 4:
+          if (_emitter__WEBPACK_IMPORTED_MODULE_0__.Scene.child_configs[identifier]) {
+            _emitter__WEBPACK_IMPORTED_MODULE_0__.Scene.child_configs[identifier].updateTexture();
+          }
+        case 6:
         case "end":
           return _context3.stop();
       }
@@ -4760,8 +4774,14 @@ function generateFile() {
         }
       }
       if (subpart.particle_effect) {
-        if (!subpart.particle_effect.pre_effect_expression) {
-          delete subpart.particle_effect.pre_effect_expression;
+        var particle_effect = subpart.particle_effect;
+        if (!particle_effect.pre_effect_expression) {
+          delete particle_effect.pre_effect_expression;
+        } else if (typeof particle_effect.pre_effect_expression == 'string') {
+          particle_effect.pre_effect_expression = particle_effect.pre_effect_expression.trim();
+          if (!particle_effect.pre_effect_expression.endsWith(';')) {
+            particle_effect.pre_effect_expression = particle_effect.pre_effect_expression + ';';
+          }
         }
       }
       return subpart;
@@ -5040,27 +5060,25 @@ function generateFile() {
       tex_comp.direction.custom_direction = getValue('particle_appearance_direction');
     }
   }
-  tex_comp.uv = {
-    texture_width: parseInt(_emitter__WEBPACK_IMPORTED_MODULE_2__.Config.particle_texture_size[0]) || 0,
-    texture_height: parseInt(_emitter__WEBPACK_IMPORTED_MODULE_2__.Config.particle_texture_size[1]) || 0
-  };
-  if (getValue('particle_texture_mode') === 'static') {
-    tex_comp.uv.uv = getValue('particle_texture_uv') || [0, 0];
-    tex_comp.uv.uv_size = getValue('particle_texture_uv_size') || [tex_comp.uv.texture_width, tex_comp.uv.texture_height];
-  } else if (getValue('particle_texture_mode') === 'full') {
-    tex_comp.uv.uv = [0, 0];
-    tex_comp.uv.texture_width = tex_comp.uv.texture_height = 1;
-    tex_comp.uv.uv_size = [tex_comp.uv.texture_width, tex_comp.uv.texture_height];
-  } else {
-    tex_comp.uv.flipbook = {
-      base_UV: getValue('particle_texture_uv', true),
-      size_UV: getValue('particle_texture_uv_size', true),
-      step_UV: getValue('particle_texture_uv_step', true),
-      frames_per_second: getValue('particle_texture_frames_per_second'),
-      max_frame: getValue('particle_texture_max_frame'),
-      stretch_to_lifetime: getValue('particle_texture_stretch_to_lifetime'),
-      loop: getValue('particle_texture_loop')
+  if (getValue('particle_texture_mode') !== 'full') {
+    tex_comp.uv = {
+      texture_width: parseInt(_emitter__WEBPACK_IMPORTED_MODULE_2__.Config.particle_texture_size[0]) || 0,
+      texture_height: parseInt(_emitter__WEBPACK_IMPORTED_MODULE_2__.Config.particle_texture_size[1]) || 0
     };
+    if (getValue('particle_texture_mode') === 'static') {
+      tex_comp.uv.uv = getValue('particle_texture_uv') || [0, 0];
+      tex_comp.uv.uv_size = getValue('particle_texture_uv_size') || [tex_comp.uv.texture_width, tex_comp.uv.texture_height];
+    } else {
+      tex_comp.uv.flipbook = {
+        base_UV: getValue('particle_texture_uv', true),
+        size_UV: getValue('particle_texture_uv_size', true),
+        step_UV: getValue('particle_texture_uv_step', true),
+        frames_per_second: getValue('particle_texture_frames_per_second'),
+        max_frame: getValue('particle_texture_max_frame'),
+        stretch_to_lifetime: getValue('particle_texture_stretch_to_lifetime'),
+        loop: getValue('particle_texture_loop')
+      };
+    }
   }
   //Collision
   if (getValue('particle_collision_toggle')) {
@@ -5334,7 +5352,7 @@ function updateInputsFromConfig() {
       var lineify = function lineify(string) {
         if (typeof string == 'string' && string && string.includes(';')) {
           input.expanded = true;
-          return string.replace(/;/g, ';\n').replace(/\n+$/, '');
+          return string.replace(/;\s*/g, ';\n').replace(/\n+$/, '');
         } else {
           return string;
         }
@@ -7250,6 +7268,7 @@ function textureHexToArray(hex) {
 function getIdentifier() {
   return String.fromCharCode(65 + Math.random() * 26) + String.fromCharCode(65 + Math.random() * 26);
 }
+var main_config, main_emitter;
 var TextureClass = /*#__PURE__*/function () {
   function TextureClass() {
     _classCallCheck(this, TextureClass);
@@ -7267,7 +7286,8 @@ var TextureClass = /*#__PURE__*/function () {
     value: function linkEmitter(emitter, config) {
       this.texture = config.texture;
       this.img = this.texture.image;
-      this.config = config;
+      main_config = config;
+      main_emitter = emitter;
     }
   }, {
     key: "canvasToDataURL",
@@ -7317,7 +7337,6 @@ var TextureClass = /*#__PURE__*/function () {
   }, {
     key: "update",
     value: function update() {
-      //this.config.updateTexture();
       this.img.src = this.source;
     }
   }, {
@@ -7334,7 +7353,7 @@ var TextureClass = /*#__PURE__*/function () {
     key: "reload",
     value: function reload() {
       this.internal_changes = false;
-      this.config.updateTexture();
+      main_config.updateTexture();
       this.updateCanvasFromSource();
     }
   }, {
@@ -7357,7 +7376,7 @@ var TextureClass = /*#__PURE__*/function () {
         var content = this.source;
         _vscode_extension__WEBPACK_IMPORTED_MODULE_1__["default"].postMessage({
           type: 'save_texture',
-          path: this.config.particle_texture_path,
+          path: main_config.particle_texture_path,
           content: content
         });
       } else {
@@ -8536,6 +8555,8 @@ var Config = /*#__PURE__*/function () {
               this.set('particle_texture_uv', uv.uv);
               this.set('particle_texture_uv_size', uv.uv_size);
             }
+          } else {
+            this.set('particle_texture_mode', 'full');
           }
         }
         if (comp('particle_appearance_lighting')) {
@@ -9606,6 +9627,7 @@ var Emitter = /*#__PURE__*/function (_EventClass) {
     _this4.parent_mode = options.parent_mode || scene.global_options.parent_mode;
     _this4.ground_collision = typeof options.ground_collision == 'boolean' ? options.ground_collision : scene.global_options.ground_collision;
     _this4.inherited_particle_speed = null;
+    _this4.pre_effect_expression = null;
     _this4.random_vars = [Math.random(), Math.random(), Math.random(), Math.random()];
     _this4.tick_values = {};
     _this4.creation_values = {};
@@ -9787,12 +9809,15 @@ var Emitter = /*#__PURE__*/function (_EventClass) {
       try {
         for (_iterator6.s(); !(_step6 = _iterator6.n()).done;) {
           var line = _step6.value;
-          this.Molang.parse(line);
+          this.Molang.parse(line, params);
         }
       } catch (err) {
         _iterator6.e(err);
       } finally {
         _iterator6.f();
+      }
+      if (typeof this.pre_effect_expression == 'string') {
+        this.Molang.parse(this.pre_effect_expression, params);
       }
       this.dispatchEvent('start', {
         params: params
@@ -9832,7 +9857,7 @@ var Emitter = /*#__PURE__*/function (_EventClass) {
       try {
         for (_iterator8.s(); !(_step8 = _iterator8.n()).done;) {
           var line = _step8.value;
-          this.Molang.parse(line);
+          this.Molang.parse(line, params);
         }
       } catch (err) {
         _iterator8.e(err);
@@ -10123,6 +10148,7 @@ var Emitter = /*#__PURE__*/function (_EventClass) {
             emitter = new Emitter(_this10.scene, config, {});
             emitter.creation_time = _this10.age;
             emitter.parent_emitter = _this10;
+            emitter.pre_effect_expression = subpart.particle_effect.pre_effect_expression;
             _this10.child_emitters.push(emitter);
             if (subpart.particle_effect.type == 'emitter_bound') {
               emitter.parent_mode = _this10.parent_mode;
