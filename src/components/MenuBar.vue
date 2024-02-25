@@ -185,6 +185,10 @@ export default {
 	ul#menu_bar > li:hover > ul {
 		display: block;
 	}
+	ul.menu_dropdown > li a {
+		height: 34px;
+		padding-top: 5px;
+	}
 	ul#menu_bar > li:hover > a {
 		background-color: var(--color-bar);
 	}

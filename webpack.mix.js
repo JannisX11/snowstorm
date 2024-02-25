@@ -2,6 +2,7 @@ let mix = require('laravel-mix');
 let path = require('path');
 let fs = require('fs');
 let {WebpackBundleSizeAnalyzerPlugin} = require('webpack-bundle-size-analyzer');
+const {DefinePlugin} = require('webpack')
 
 process.argv.push('--https')
 
@@ -36,6 +37,9 @@ mix.webpackConfig({
 		alias
 	},
 	plugins: [
+        new DefinePlugin({
+            VERSION: `"${require('./package.json').version}"`
+        }),
 		new WebpackBundleSizeAnalyzerPlugin('./plain-report.txt')
 	],
 	devServer: {

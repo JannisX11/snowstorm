@@ -175,12 +175,14 @@ module.exports.SnowstormEditorProvider = class SnowstormEditorProvider {
 						const tex_url = webviewPanel.webview.asWebviewUri(vscode.Uri.file(filePath));
 						webviewPanel.webview.postMessage({
 							type: 'provide_texture',
+							request_id: e.request_id,
 							url: tex_url.toString(),
 							fromExtension: true
 						});
 					} else {
 						webviewPanel.webview.postMessage({
 							type: 'provide_texture',
+							request_id: e.request_id,
 							url: null,
 							fromExtension: true
 						});
@@ -192,12 +194,14 @@ module.exports.SnowstormEditorProvider = class SnowstormEditorProvider {
 					if (match_content) {
 						webviewPanel.webview.postMessage({
 							type: 'provide_particle_file',
+							request_id: e.request_id,
 							content: JSON.stringify(match_content),
 							fromExtension: true
 						});
 					} else {
 						webviewPanel.webview.postMessage({
 							type: 'provide_particle_file',
+							request_id: e.request_id,
 							content: null,
 							fromExtension: true
 						});
