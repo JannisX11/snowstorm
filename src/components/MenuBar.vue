@@ -77,7 +77,7 @@ const Menu = [
 			}},
 			{label: 'Reference Block', click: () => {
 				View.minecraft_block.visible = !View.minecraft_block.visible;
-				setOption('minecraft_block_visible', View.grid.visible);
+				setOption('minecraft_block_visible', View.minecraft_block.visible);
 			}},
 			{label: 'Axis Helper', click: () => {
 				View.helper.visible = !View.helper.visible;
