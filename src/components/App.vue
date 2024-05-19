@@ -149,6 +149,7 @@ export default {
 				this.$refs.preview.updateSize();
 				this.$refs.sidebar.updateSize();
 			});
+			localStorage.setItem('snowstorm_is_sidebar_open', this.is_sidebar_open);
 		}
 	}
 }
