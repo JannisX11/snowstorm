@@ -70,10 +70,18 @@ function getInitialSidebarWidth() {
 
 	if (portrait_view) {
 		return body_width;
-	} else if (!vscode && localStorage.getItem('snowstorm_sidebar_width')) {
+	} else if (localStorage.getItem('snowstorm_sidebar_width')) {
 		return Math.clamp(parseInt(localStorage.getItem('snowstorm_sidebar_width')), 100, body_width - 200);
 	} else {
 		return Math.clamp(body_width/2, 160, Math.clamp(180 + body_width * 0.2, 160, 660));
+	}
+}
+
+function getInitialIsSidebarOpen() {
+	if (localStorage.getItem('snowstorm_is_sidebar_open')) {
+		return localStorage.getItem('snowstorm_is_sidebar_open') == 'true';
+	} else {
+		return true;
 	}
 }
 
@@ -88,7 +96,7 @@ export default {
 		tab: portrait_view ? 'config' : 'preview',
 		dialog: null,
 		sidebar_width: getInitialSidebarWidth(),
-		is_sidebar_open: true,
+		is_sidebar_open: getInitialIsSidebarOpen(),
 		portrait_view,
 	}},
 	methods: {
@@ -116,6 +124,7 @@ export default {
 			this.$refs.preview.updateSize()
 			this.$refs.sidebar.updateSize()
 			localStorage.setItem('snowstorm_sidebar_width', this.sidebar_width);
+			localStorage.setItem('snowstorm_is_sidebar_open', this.is_sidebar_open);
 		},
 		resizeSidebarStart(start_event) {
 			let original_width = this.sidebar_width;
