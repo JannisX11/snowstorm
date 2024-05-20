@@ -1,5 +1,5 @@
 <template>
-    <div id="app" :class="{portrait_view}" :style="{'--sidebar': sidebar_width+'px'}">
+	<div id="app" :class="{portrait_view}" :style="{'--sidebar': getEffectiveSidebarWidth()+'px'}">
 
 		<div id="dialog_blackout" v-if="dialog" @click="closeDialog"></div>
 		<molang-dialog v-if="dialog == 'molang_sheet'" @close="closeDialog"></molang-dialog>
@@ -11,10 +11,18 @@
 			<expression-bar></expression-bar>
         </header>
 
-		<preview v-show="tab == 'preview'" ref="preview" @opendialog="openDialog"></preview>
+		<preview v-show="tab == 'preview'" ref="preview" @opendialog="openDialog">
+		</preview>
 		<code-viewer v-if="tab == 'code'"></code-viewer>
 
-		<div class="resizer" :style="{left: sidebar_width+'px'}" ref="sidebar_resizer" @mousedown="resizeSidebarStart($event)"></div>
+
+		<div class="resizer"
+			:style="{ left: getEffectiveSidebarWidth() +'px', cursor: is_sidebar_open ? 'ew-resize' : 'default'}"
+			ref="sidebar_resizer" @mousedown="is_sidebar_open && resizeSidebarStart($event)">
+			<button class="resizer_toggle_button" v-show="!is_sidebar_open" @click="toggleSidebar" @mousedown.stop="">
+				<PanelLeftOpen/>
+			</button>
+		</div>
 
 		<sidebar ref="sidebar" v-show="!portrait_view || tab == 'config'" :portrait_view="portrait_view"></sidebar>
 
@@ -40,6 +48,7 @@ import InfoBox from './InfoBox'
 import vscode from '../vscode_extension';
 import {SlidersHorizontal, FileJson, Move3D} from 'lucide-vue'
 import Logo from './Sidebar/Logo.vue';
+import {PanelLeftOpen} from "lucide-vue";
 
 if (!vscode) {
 	var startup_count = localStorage.getItem('snowstorm_startup_count') || 0;
@@ -61,10 +70,18 @@ function getInitialSidebarWidth() {
 
 	if (portrait_view) {
 		return body_width;
-	} else if (!vscode && localStorage.getItem('snowstorm_sidebar_width')) {
+	} else if (localStorage.getItem('snowstorm_sidebar_width')) {
 		return Math.clamp(parseInt(localStorage.getItem('snowstorm_sidebar_width')), 100, body_width - 200);
 	} else {
 		return Math.clamp(body_width/2, 160, Math.clamp(180 + body_width * 0.2, 160, 660));
+	}
+}
+
+function getInitialIsSidebarOpen() {
+	if (localStorage.getItem('snowstorm_is_sidebar_open')) {
+		return localStorage.getItem('snowstorm_is_sidebar_open') == 'true';
+	} else {
+		return true;
 	}
 }
 
@@ -72,13 +89,14 @@ export default {
 	name: 'app',
 	components: {
 		Preview, CodeViewer, MenuBar, Sidebar, MolangDialog, WarningDialog, ExpressionBar, InfoBox,
-		SlidersHorizontal, FileJson, Move3D, Logo
+		SlidersHorizontal, FileJson, Move3D, Logo, PanelLeftOpen
 	},
 	data() {return {
 		code: '',
 		tab: portrait_view ? 'config' : 'preview',
 		dialog: null,
 		sidebar_width: getInitialSidebarWidth(),
+		is_sidebar_open: getInitialIsSidebarOpen(),
 		portrait_view,
 	}},
 	methods: {
@@ -94,16 +112,26 @@ export default {
 		closeDialog() {
 			this.dialog = null;
 		},
-		setSidebarSize(size) {
-			this.sidebar_width = Math.clamp(size, 240, document.body.clientWidth - 200)
+		setSidebarSize(size, original_size) {
+			if (size > 80) {
+				this.sidebar_width = Math.clamp(size, 240, document.body.clientWidth - 200)
+				this.is_sidebar_open = true;
+			} else {
+				// Hide gesture remembers the original size
+				this.sidebar_width = original_size;
+				this.is_sidebar_open = false;
+			}
 			this.$refs.preview.updateSize()
 			this.$refs.sidebar.updateSize()
 			localStorage.setItem('snowstorm_sidebar_width', this.sidebar_width);
+			localStorage.setItem('snowstorm_is_sidebar_open', this.is_sidebar_open);
 		},
 		resizeSidebarStart(start_event) {
 			let original_width = this.sidebar_width;
 			let move = (move_event) => {
-				this.setSidebarSize(original_width + move_event.clientX - start_event.clientX)
+				this.setSidebarSize(
+					original_width + move_event.clientX - start_event.clientX,
+					original_width)
 			}
 			let stop = () => {
 				document.removeEventListener('mousemove', move)
@@ -111,6 +139,17 @@ export default {
 			}
 			document.addEventListener('mousemove', move, false)
 			document.addEventListener('mouseup', stop, false)
+		},
+		getEffectiveSidebarWidth() {
+			return this.is_sidebar_open * this.sidebar_width;
+		},
+		toggleSidebar() {
+			this.is_sidebar_open = !this.is_sidebar_open;
+			Vue.nextTick(() => {
+				this.$refs.preview.updateSize();
+				this.$refs.sidebar.updateSize();
+			});
+			localStorage.setItem('snowstorm_is_sidebar_open', this.is_sidebar_open);
 		}
 	}
 }
@@ -152,7 +191,19 @@ export default {
 	.resizer.disabled {
 		pointer-events: none;
 	}
-
+	.resizer_toggle_button {
+		position: absolute;
+		left: 50%;
+		top: 120px;
+		transform: translateX(-50%);
+		width: 30px;
+		height: 30px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding: 0;
+		border-radius: 10%;
+	}
 </style>
 
 
