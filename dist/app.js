@@ -881,6 +881,14 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -1041,7 +1049,8 @@ View.frames_this_second = 0;
       collision: true,
       placeholder_keys: [],
       placeholder_values: {},
-      show_placeholder_bar: false
+      show_placeholder_bar: false,
+      bake_placeholder_key: null
     };
   },
   components: {
@@ -1080,11 +1089,14 @@ View.frames_this_second = 0;
         _iterator.f();
       }
     },
+    bakePlaceholderVariableConfirm: function bakePlaceholderVariableConfirm() {
+      this.$refs.bake_placeholder_confirm_dialog.close();
+      var key = this.bake_placeholder_key;
+      (0,_variable_placeholders__WEBPACK_IMPORTED_MODULE_6__.bakePlaceholderVariable)(key, this.placeholder_values[key] || 0);
+    },
     bakePlaceholderVariable: function bakePlaceholderVariable(key) {
-      var confirm_message = "Do you want to replace all occurrences of the variable '".concat(key, "' with this value?");
-      if (confirm(confirm_message)) {
-        (0,_variable_placeholders__WEBPACK_IMPORTED_MODULE_6__.bakePlaceholderVariable)(key, this.placeholder_values[key] || 0);
-      }
+      this.bake_placeholder_key = key;
+      this.$refs.bake_placeholder_confirm_dialog.showModal();
     },
     changeLoopMode: function changeLoopMode() {
       _emitter__WEBPACK_IMPORTED_MODULE_1__.Emitter.loop_mode = this.loop_mode.toLowerCase();
@@ -74832,6 +74844,53 @@ var render = function () {
         _vm._v(_vm._s(_vm.fps) + " FPS"),
       ]),
     ]),
+    _vm._v(" "),
+    _c(
+      "dialog",
+      {
+        ref: "bake_placeholder_confirm_dialog",
+        staticClass: "modal_dialog",
+        staticStyle: { "max-width": "308px" },
+        attrs: { id: "bake_placeholder_confirm_dialog" },
+      },
+      [
+        _c("div", { staticClass: "form_bar" }, [
+          _vm._v(
+            "Do you want to replace all occurrences of '" +
+              _vm._s(_vm.bake_placeholder_key) +
+              "' with the value '" +
+              _vm._s(_vm.placeholder_values[_vm.bake_placeholder_key]) +
+              "'?"
+          ),
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "button_bar" }, [
+          _c(
+            "button",
+            {
+              on: {
+                click: function ($event) {
+                  return _vm.bakePlaceholderVariableConfirm()
+                },
+              },
+            },
+            [_vm._v("Confirm")]
+          ),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
+              on: {
+                click: function ($event) {
+                  return _vm.$refs.bake_placeholder_confirm_dialog.close()
+                },
+              },
+            },
+            [_vm._v("Cancel")]
+          ),
+        ]),
+      ]
+    ),
   ])
 }
 var staticRenderFns = []
@@ -78283,36 +78342,36 @@ var render = function () {
         ),
       ]),
       _vm._v(" "),
-      _vm.color_picker_open
-        ? _c(
-            "div",
+      _c(
+        "div",
+        {
+          directives: [
             {
-              attrs: { id: "color_picker_overlay" },
-              on: {
-                click: function ($event) {
-                  $event.stopPropagation()
-                },
+              name: "show",
+              rawName: "v-show",
+              value: _vm.color_picker_open,
+              expression: "color_picker_open",
+            },
+          ],
+          attrs: { id: "color_picker_overlay" },
+          on: {
+            click: function ($event) {
+              $event.stopPropagation()
+            },
+          },
+        },
+        [
+          _c("color-picker", {
+            attrs: { value: _vm.paint_color.hex8 },
+            on: {
+              change: function ($event) {
+                _vm.paint_color = $event
               },
             },
-            [
-              _c("color-picker", {
-                on: {
-                  change: function ($event) {
-                    _vm.paint_color = $event
-                  },
-                },
-                model: {
-                  value: _vm.paint_color,
-                  callback: function ($$v) {
-                    _vm.paint_color = $$v
-                  },
-                  expression: "paint_color",
-                },
-              }),
-            ],
-            1
-          )
-        : _vm._e(),
+          }),
+        ],
+        1
+      ),
       _vm._v(" "),
       _c(
         "div",

@@ -54,6 +54,14 @@
             <div class="stat">{{particle_counter}} P</div>
             <div class="stat" style="width: 66px;">{{fps}} FPS</div>
         </footer>
+
+        <dialog id="bake_placeholder_confirm_dialog" ref="bake_placeholder_confirm_dialog" class="modal_dialog" style="max-width: 308px;">
+            <div class="form_bar">Do you want to replace all occurrences of '{{ bake_placeholder_key }}' with the value '{{ placeholder_values[bake_placeholder_key] }}'?</div>
+            <div class="button_bar">
+                <button @click="bakePlaceholderVariableConfirm()">Confirm</button>
+                <button @click="$refs.bake_placeholder_confirm_dialog.close()">Cancel</button>
+            </div>
+        </dialog>
     </main>
 </template>
 
@@ -262,7 +270,8 @@
             collision: true,
             placeholder_keys: [],
             placeholder_values: {},
-            show_placeholder_bar: false
+            show_placeholder_bar: false,
+            bake_placeholder_key: null
         }},
         components: {
             FlipVertical2,
@@ -291,11 +300,14 @@
                     View.placeholder_variables[key] = this.placeholder_values[key];
                 }
             },
+            bakePlaceholderVariableConfirm() {
+                this.$refs.bake_placeholder_confirm_dialog.close();
+                let key = this.bake_placeholder_key;
+                bakePlaceholderVariable(key, this.placeholder_values[key] || 0);
+            },
             bakePlaceholderVariable(key) {
-                let confirm_message = `Do you want to replace all occurrences of the variable '${key}' with this value?`;
-                if (confirm(confirm_message)) {
-                    bakePlaceholderVariable(key, this.placeholder_values[key] || 0);
-                }
+                this.bake_placeholder_key = key;
+                this.$refs.bake_placeholder_confirm_dialog.showModal();
             },
             changeLoopMode() {
                 Emitter.loop_mode = this.loop_mode.toLowerCase();
