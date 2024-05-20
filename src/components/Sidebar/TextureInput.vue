@@ -30,8 +30,8 @@
 				<div class="color_preview_color" :style="{backgroundColor: paint_color.hex8}"></div>
 			</div>
 		</div>
-		<div id="color_picker_overlay" v-if="color_picker_open" @click.stop>
-			<color-picker v-model="paint_color" @change="paint_color = $event" />
+		<div id="color_picker_overlay" v-show="color_picker_open" @click.stop>
+			<color-picker :value="paint_color.hex8" @change="paint_color = $event" />
 		</div>
 
 		<div class="texture_viewport"
