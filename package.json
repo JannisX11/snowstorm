@@ -39,7 +39,7 @@
 		"bootstrap": "^4.6.2",
 		"fflate": "^0.7.3",
 		"lucide-vue": "^0.298.0",
-		"molangjs": "^1.6.3",
+		"molangjs": "^1.6.4",
 		"prismjs": "^1.28.0",
 		"root": "github:JannisX11/vue-prism-editor",
 		"three": "^0.134.0",

@@ -3,6 +3,22 @@
         <div id="canvas_wrapper">
             <div id="overlay_timestamp">{{ timestamp }}</div>
             <canvas id="canvas" @click="blur()" ref="canvas"></canvas>
+            <div class="placeholder_bar" v-if="show_placeholder_bar">
+                <ul>
+                    <li v-for="(key) in placeholder_keys" :key="key">
+                        <label :for="'placeholder_'+key">{{ key.replace(key.substring(1, key.indexOf('.')), '') }}</label>
+                        <input type="number" :id="'placeholder_'+key" :value="placeholder_values[key] || 0" @input="updatePlaceholderValue(key, $event)">
+                        <div class="tool" @click="bakePlaceholderVariable(key)">
+                            <CheckCheck :size="20" />
+                        </div>
+                    </li>
+                    <li v-if="placeholder_keys.length == 0"><label>No undefined variables found</label></li>
+                </ul>
+
+                <div class="tool" @click="show_placeholder_bar = false" title="Hide Placeholder Bar">
+                    <X :size="22" />
+                </div>
+            </div>
         </div>
         <footer>
             <select id="loop_mode" v-model="loop_mode" @change="changeLoopMode()">
@@ -15,9 +31,12 @@
                 <option id="entity">Entity</option>
                 <option id="locator">Locator</option>
             </select>
-            <div class="tool ground_collision" :class="{disabled: !collision}" @click="toggleCollision()" title="Preview Collisions">
+            <div class="tool ground_collision" :class="{toggle_enabled: collision}" @click="toggleCollision()" title="Preview Collisions">
                 <FlipVertical2 :size="20" v-if="collision" />
                 <Minus :size="20" v-else />
+            </div>
+            <div class="tool" :class="{toggle_enabled: show_placeholder_bar}" @click="show_placeholder_bar ? show_placeholder_bar = false : showPlaceholderBar()" title="Show Placeholder Bar">
+                <Hash :size="22" />
             </div>
 
             <div class="spacing" />
@@ -55,7 +74,14 @@
         Minus,
         Play,
         Pause,
+        Hash,
+        X,
+        CheckCheck
     } from 'lucide-vue'
+
+    import {EditListeners} from '../edits'
+
+    import {updateVariablePlaceholderList, bakePlaceholderVariable} from './../variable_placeholders'
 
     const View = {}
 
@@ -221,7 +247,7 @@
         }
     })
 
-
+    View.placeholder_variables = {};
 	View.frames_this_second = 0;
 
     export default {
@@ -233,17 +259,43 @@
             parent_mode: 'World',
             warning_count: 0,
             stats,
-            collision: true
+            collision: true,
+            placeholder_keys: [],
+            placeholder_values: {},
+            show_placeholder_bar: false
         }},
         components: {
             FlipVertical2,
             Minus,
             Play,
             Pause,
+            Hash,
+            X,
+            CheckCheck,
         },
         methods: {
             updateSize() {
                 resizeCanvas()
+            },
+            showPlaceholderBar() {
+                this.show_placeholder_bar = true;
+                updateVariablePlaceholderList(this.placeholder_keys);
+            },
+            updatePlaceholderValue(key, event) {
+                this.placeholder_values[key] = parseFloat(event.target.value) || 0;
+                for (let key in View.placeholder_variables) {
+                    delete View.placeholder_variables[key];
+                }
+                for (let key of this.placeholder_keys) {
+                    if (!this.placeholder_values[key]) this.placeholder_values[key] = 0;
+                    View.placeholder_variables[key] = this.placeholder_values[key];
+                }
+            },
+            bakePlaceholderVariable(key) {
+                let confirm_message = `Do you want to replace all occurrences of the variable '${key}' with this value?`;
+                if (confirm(confirm_message)) {
+                    bakePlaceholderVariable(key, this.placeholder_values[key] || 0);
+                }
             },
             changeLoopMode() {
                 Emitter.loop_mode = this.loop_mode.toLowerCase();
@@ -292,6 +344,11 @@
                     this.warning_count = validate().length;
                 }
             }, 500)
+            EditListeners['placeholder_bar'] = () => {
+                if (this.show_placeholder_bar) {
+                    updateVariablePlaceholderList(this.placeholder_keys);
+                }
+            };
         }
     }
     export {View}
@@ -320,6 +377,41 @@
         font-size: 1.1em;
         font-family: Consolas, monospace;
         pointer-events: none;
+    }
+    .placeholder_bar {
+        position: absolute;
+        bottom: 34px;
+        min-height: 35px;
+        width: 100%;
+        display: flex;
+        background-color: color-mix(in srgb, var(--color-background) 90%, transparent);
+        border-top: 1px solid var(--color-border);
+        backdrop-filter: blur(4px);
+    }
+    .placeholder_bar > ul {
+        display: flex;
+        padding: 2px 10px;
+        gap: 2px 12px;
+        flex-grow: 1;
+        flex-wrap: wrap;
+    }
+    .placeholder_bar > ul > li {
+        display: flex;
+        gap: 5px;
+        align-items: center;
+    }
+    .placeholder_bar > .tool {
+        padding-top: 4px;
+    }
+    .placeholder_bar input {
+        width: 70px;
+    }
+    .placeholder_bar label {
+        color: var(--color-text_grayed);
+    }
+    .placeholder_bar li > .tool {
+        width: 24px;
+	    padding: 2px;
     }
 	footer {
 		width: 100%;
@@ -386,14 +478,8 @@
         height: 23px;
         overflow: hidden;
 	}
-    .ground_collision.disabled {
-        opacity: 0.5;
+    .tool.toggle_enabled {
+        background-color: var(--color-background);
     }
-    .ground_collision i {
-        font-size: 22pt;
-        transform: rotate(180deg);
-        margin-top: 13px;
-        margin-left: -2px;
-        font-weight: bold;
-    }
+    
 </style>

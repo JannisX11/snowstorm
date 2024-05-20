@@ -134,5 +134,13 @@ Emitter.Molang.global_variables = {
 	}
 }
 
+let original_variable_handler = Emitter.Molang.variableHandler;
+Emitter.Molang.variableHandler = (key, params) => {
+	let computed_value = original_variable_handler(key, params);
+	if (computed_value != undefined) return computed_value;
+	return View.placeholder_variables[key];
+
+}
+
 export {Emitter, Config, initParticles, Scene, QuickSetup}
 

@@ -9,17 +9,15 @@ let last_edit_id = '';
 
 function processEdit(id) {
     if (vscode) {
-        
         let content = compileJSON(generateFile())
         vscode.postMessage({
             type: 'save',
             content
         });
-    } else {
-        for (var key in EditListeners) {
-            let handler = EditListeners[key];
-            handler(id)
-        }
+    }
+    for (var key in EditListeners) {
+        let handler = EditListeners[key];
+        handler(id)
     }
 }
 
