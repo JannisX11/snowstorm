@@ -12,7 +12,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
 /* harmony import */ var _MenuBar__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./MenuBar */ "./src/components/MenuBar.vue");
 /* harmony import */ var _Sidebar__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Sidebar */ "./src/components/Sidebar.vue");
 /* harmony import */ var _Preview__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Preview */ "./src/components/Preview.vue");
@@ -26,6 +26,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/file-json.js");
 /* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/move-3d.js");
 /* harmony import */ var _Sidebar_Logo_vue__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./Sidebar/Logo.vue */ "./src/components/Sidebar/Logo.vue");
+/* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/panel-left-open.js");
 //
 //
 //
@@ -55,6 +56,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 
 
@@ -85,10 +95,17 @@ function getInitialSidebarWidth() {
   if (body_width < 100) body_width = 1280;
   if (portrait_view) {
     return body_width;
-  } else if (!_vscode_extension__WEBPACK_IMPORTED_MODULE_8__["default"] && localStorage.getItem('snowstorm_sidebar_width')) {
+  } else if (localStorage.getItem('snowstorm_sidebar_width')) {
     return Math.clamp(parseInt(localStorage.getItem('snowstorm_sidebar_width')), 100, body_width - 200);
   } else {
     return Math.clamp(body_width / 2, 160, Math.clamp(180 + body_width * 0.2, 160, 660));
+  }
+}
+function getInitialIsSidebarOpen() {
+  if (localStorage.getItem('snowstorm_is_sidebar_open')) {
+    return localStorage.getItem('snowstorm_is_sidebar_open') == 'true';
+  } else {
+    return true;
   }
 }
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -105,7 +122,8 @@ function getInitialSidebarWidth() {
     SlidersHorizontal: lucide_vue__WEBPACK_IMPORTED_MODULE_10__["default"],
     FileJson: lucide_vue__WEBPACK_IMPORTED_MODULE_11__["default"],
     Move3D: lucide_vue__WEBPACK_IMPORTED_MODULE_12__["default"],
-    Logo: _Sidebar_Logo_vue__WEBPACK_IMPORTED_MODULE_9__["default"]
+    Logo: _Sidebar_Logo_vue__WEBPACK_IMPORTED_MODULE_9__["default"],
+    PanelLeftOpen: lucide_vue__WEBPACK_IMPORTED_MODULE_13__["default"]
   },
   data: function data() {
     return {
@@ -113,6 +131,7 @@ function getInitialSidebarWidth() {
       tab: portrait_view ? 'config' : 'preview',
       dialog: null,
       sidebar_width: getInitialSidebarWidth(),
+      is_sidebar_open: getInitialIsSidebarOpen(),
       portrait_view: portrait_view
     };
   },
@@ -120,7 +139,7 @@ function getInitialSidebarWidth() {
     setTab: function setTab(tab) {
       var _this = this;
       this.tab = tab;
-      vue__WEBPACK_IMPORTED_MODULE_13__["default"].nextTick(function () {
+      vue__WEBPACK_IMPORTED_MODULE_14__["default"].nextTick(function () {
         _this.$refs.preview.updateSize();
       });
     },
@@ -130,17 +149,25 @@ function getInitialSidebarWidth() {
     closeDialog: function closeDialog() {
       this.dialog = null;
     },
-    setSidebarSize: function setSidebarSize(size) {
-      this.sidebar_width = Math.clamp(size, 240, document.body.clientWidth - 200);
+    setSidebarSize: function setSidebarSize(size, original_size) {
+      if (size > 80) {
+        this.sidebar_width = Math.clamp(size, 240, document.body.clientWidth - 200);
+        this.is_sidebar_open = true;
+      } else {
+        // Hide gesture remembers the original size
+        this.sidebar_width = original_size;
+        this.is_sidebar_open = false;
+      }
       this.$refs.preview.updateSize();
       this.$refs.sidebar.updateSize();
       localStorage.setItem('snowstorm_sidebar_width', this.sidebar_width);
+      localStorage.setItem('snowstorm_is_sidebar_open', this.is_sidebar_open);
     },
     resizeSidebarStart: function resizeSidebarStart(start_event) {
       var _this2 = this;
       var original_width = this.sidebar_width;
       var move = function move(move_event) {
-        _this2.setSidebarSize(original_width + move_event.clientX - start_event.clientX);
+        _this2.setSidebarSize(original_width + move_event.clientX - start_event.clientX, original_width);
       };
       var stop = function stop() {
         document.removeEventListener('mousemove', move);
@@ -148,6 +175,18 @@ function getInitialSidebarWidth() {
       };
       document.addEventListener('mousemove', move, false);
       document.addEventListener('mouseup', stop, false);
+    },
+    getEffectiveSidebarWidth: function getEffectiveSidebarWidth() {
+      return this.is_sidebar_open * this.sidebar_width;
+    },
+    toggleSidebar: function toggleSidebar() {
+      var _this3 = this;
+      this.is_sidebar_open = !this.is_sidebar_open;
+      vue__WEBPACK_IMPORTED_MODULE_14__["default"].nextTick(function () {
+        _this3.$refs.preview.updateSize();
+        _this3.$refs.sidebar.updateSize();
+      });
+      localStorage.setItem('snowstorm_is_sidebar_open', this.is_sidebar_open);
     }
   }
 });
@@ -4915,7 +4954,7 @@ function generateFile() {
   var mode = getValue('emitter_rate_mode');
   if (mode === 'instant') {
     comps['minecraft:emitter_rate_instant'] = {
-      num_particles: getValue('emitter_rate_amount')
+      num_particles: getValue('emitter_rate_amount', true)
     };
   } else if (mode === 'steady') {
     comps['minecraft:emitter_rate_steady'] = {
@@ -8140,6 +8179,9 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 
 
 
+function getShortKey(key) {
+  return key.replace(/^variable\./g, 'v.').replace(/^context\./g, 'c.').replace(/^query\./g, 'q.');
+}
 function updateVariablePlaceholderList(list) {
   list.splice(0, Infinity);
   var molang_strings = [];
@@ -8168,15 +8210,15 @@ function updateVariablePlaceholderList(list) {
     var string = _molang_strings[_i];
     if (typeof string != 'string') continue;
     var string_lower_case = string.toLowerCase();
-    var matches = string_lower_case.match(/(v|variable|c|context)\.[\w.]+\b/g);
+    var matches = string_lower_case.match(/(v|variable|c|context|q|query)\.[\w.]+\b/g);
     if (!matches) continue;
     var _iterator2 = _createForOfIteratorHelper(matches),
       _step2;
     try {
       for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
         var match = _step2.value;
-        var key = match.replace(/^v\./, 'variable.').replace(/^c\./, 'context.');
-        var key_short = key.replace(/^variable\./g, 'v.').replace(/^context\./g, 'c.');
+        var key = match.replace(/^v\./, 'variable.').replace(/^c\./, 'context.').replace(/^q\./, 'query.');
+        var key_short = getShortKey(key);
         variable_ids.add(key);
         var assign_regex = new RegExp("(".concat(key.replace('.', '\\.'), "|").concat(key_short.replace('.', '\\.'), ")\\s*=[^=]"), 'g');
         if (string.match(assign_regex)) {
@@ -8199,7 +8241,7 @@ function updateVariablePlaceholderList(list) {
         }) || _molang_data__WEBPACK_IMPORTED_MODULE_2__.DefaultContext.find(function (v) {
           return 'context.' + v == id;
         })) return 0; // continue
-        var key_short = id.replace(/^variable\./g, 'v.').replace(/^context\./g, 'c.');
+        var key_short = getShortKey(id);
         if (_emitter__WEBPACK_IMPORTED_MODULE_1__.Emitter.config.curves[id] || _emitter__WEBPACK_IMPORTED_MODULE_1__.Emitter.config.curves[key_short]) return 0; // continue
         if (predefined.has(id)) return 0; // continue
         list.push(id);
@@ -8216,7 +8258,7 @@ function updateVariablePlaceholderList(list) {
   }
 }
 function bakePlaceholderVariable(key, value) {
-  var key_short = key.replace(/^variable\./g, 'v.').replace(/^context\./g, 'c.');
+  var key_short = getShortKey(key);
   var regex = new RegExp("\\b(".concat(key.replace('.', '\\.'), "|").concat(key_short.replace('.', '\\.'), ")\\b"), 'g');
   function update(string) {
     if (typeof string != 'string') return string;
@@ -10540,7 +10582,7 @@ __webpack_require__.r(__webpack_exports__);
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 ___CSS_LOADER_EXPORT___.i(_node_modules_css_loader_dist_cjs_js_clonedRuleSet_8_0_rules_0_use_1_css_common_css__WEBPACK_IMPORTED_MODULE_1__["default"]);
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.tool {\n\tdisplay: inline-block;\n\tpadding: 2px 8px; \n\tpadding-top: 1px;\n\twidth: 35px;\n\theight: 100%;\n\tmax-height: 32px;\n\tcursor: pointer;\n}\n.tool:hover {\n\tcolor: var(--color-highlight);\n}\n.tool > i {\n\tpointer-events: none;\n}\n.resizer {\n\tposition: absolute !important;\n\tz-index: 12;\n}\n.resizer.vertical { /*\t|\t*/\n\tcursor: ew-resize;\n\twidth: 6px;\n}\n.resizer.horizontal { /*\t__\t*/\n\tcursor: ns-resize;\n\theight: 6px;\n}\n.resizer.disabled {\n\tpointer-events: none;\n}\n\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.tool {\n\tdisplay: inline-block;\n\tpadding: 2px 8px; \n\tpadding-top: 1px;\n\twidth: 35px;\n\theight: 100%;\n\tmax-height: 32px;\n\tcursor: pointer;\n}\n.tool:hover {\n\tcolor: var(--color-highlight);\n}\n.tool > i {\n\tpointer-events: none;\n}\n.resizer {\n\tposition: absolute !important;\n\tz-index: 12;\n}\n.resizer.vertical { /*\t|\t*/\n\tcursor: ew-resize;\n\twidth: 6px;\n}\n.resizer.horizontal { /*\t__\t*/\n\tcursor: ns-resize;\n\theight: 6px;\n}\n.resizer.disabled {\n\tpointer-events: none;\n}\n.resizer_toggle_button {\n\tposition: absolute;\n\tleft: 50%;\n\ttop: 120px;\n\ttransform: translateX(-50%);\n\twidth: 30px;\n\theight: 30px;\n\tdisplay: flex;\n\talign-items: center;\n\tjustify-content: center;\n\tpadding: 0;\n\tborder-radius: 10%;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -15132,6 +15174,39 @@ const PaintBucket = (0,_createVueComponent_js__WEBPACK_IMPORTED_MODULE_0__["defa
 
 
 //# sourceMappingURL=paint-bucket.js.map
+
+
+/***/ }),
+
+/***/ "./node_modules/lucide-vue/dist/esm/icons/panel-left-open.js":
+/*!*******************************************************************!*\
+  !*** ./node_modules/lucide-vue/dist/esm/icons/panel-left-open.js ***!
+  \*******************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ PanelLeftOpen)
+/* harmony export */ });
+/* harmony import */ var _createVueComponent_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../createVueComponent.js */ "./node_modules/lucide-vue/dist/esm/createVueComponent.js");
+/**
+ * @license lucide-vue v0.298.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+
+
+
+const PanelLeftOpen = (0,_createVueComponent_js__WEBPACK_IMPORTED_MODULE_0__["default"])("PanelLeftOpenIcon", [
+  ["rect", { width: "18", height: "18", x: "3", y: "3", rx: "2", ry: "2", key: "1m3agn" }],
+  ["path", { d: "M9 3v18", key: "fh3hqa" }],
+  ["path", { d: "m14 9 3 3-3 3", key: "8010ee" }]
+]);
+
+
+//# sourceMappingURL=panel-left-open.js.map
 
 
 /***/ }),
@@ -73652,7 +73727,7 @@ var render = function () {
     "div",
     {
       class: { portrait_view: _vm.portrait_view },
-      style: { "--sidebar": _vm.sidebar_width + "px" },
+      style: { "--sidebar": _vm.getEffectiveSidebarWidth() + "px" },
       attrs: { id: "app" },
     },
     [
@@ -73701,16 +73776,46 @@ var render = function () {
       _vm._v(" "),
       _vm.tab == "code" ? _c("code-viewer") : _vm._e(),
       _vm._v(" "),
-      _c("div", {
-        ref: "sidebar_resizer",
-        staticClass: "resizer",
-        style: { left: _vm.sidebar_width + "px" },
-        on: {
-          mousedown: function ($event) {
-            return _vm.resizeSidebarStart($event)
+      _c(
+        "div",
+        {
+          ref: "sidebar_resizer",
+          staticClass: "resizer",
+          style: {
+            left: _vm.getEffectiveSidebarWidth() + "px",
+            cursor: _vm.is_sidebar_open ? "ew-resize" : "default",
+          },
+          on: {
+            mousedown: function ($event) {
+              _vm.is_sidebar_open && _vm.resizeSidebarStart($event)
+            },
           },
         },
-      }),
+        [
+          _c(
+            "button",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: !_vm.is_sidebar_open,
+                  expression: "!is_sidebar_open",
+                },
+              ],
+              staticClass: "resizer_toggle_button",
+              on: {
+                click: _vm.toggleSidebar,
+                mousedown: function ($event) {
+                  $event.stopPropagation()
+                },
+              },
+            },
+            [_c("PanelLeftOpen")],
+            1
+          ),
+        ]
+      ),
       _vm._v(" "),
       _c("sidebar", {
         directives: [
@@ -74495,19 +74600,24 @@ var render = function () {
                       },
                     }),
                     _vm._v(" "),
-                    _c(
-                      "div",
-                      {
-                        staticClass: "tool",
-                        on: {
-                          click: function ($event) {
-                            return _vm.bakePlaceholderVariable(key)
+                    key.startsWith("variable")
+                      ? _c(
+                          "div",
+                          {
+                            staticClass: "tool",
+                            attrs: {
+                              title: "Bake variable value into all expressions",
+                            },
+                            on: {
+                              click: function ($event) {
+                                return _vm.bakePlaceholderVariable(key)
+                              },
+                            },
                           },
-                        },
-                      },
-                      [_c("CheckCheck", { attrs: { size: 20 } })],
-                      1
-                    ),
+                          [_c("CheckCheck", { attrs: { size: 20 } })],
+                          1
+                        )
+                      : _vm._e(),
                   ])
                 }),
                 _vm._v(" "),

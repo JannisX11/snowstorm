@@ -8,7 +8,7 @@
                     <li v-for="(key) in placeholder_keys" :key="key">
                         <label :for="'placeholder_'+key">{{ key.replace(key.substring(1, key.indexOf('.')), '') }}</label>
                         <input type="number" :id="'placeholder_'+key" :value="placeholder_values[key] || 0" @input="updatePlaceholderValue(key, $event)">
-                        <div class="tool" @click="bakePlaceholderVariable(key)">
+                        <div class="tool" v-if="key.startsWith('variable')" @click="bakePlaceholderVariable(key)" title="Bake variable value into all expressions">
                             <CheckCheck :size="20" />
                         </div>
                     </li>

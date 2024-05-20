@@ -7,6 +7,9 @@ import {
 } from './molang_data'
 import { forEachInput } from './input_structure';
 
+function getShortKey(key) {
+    return key.replace(/^variable\./g, 'v.').replace(/^context\./g, 'c.').replace(/^query\./g, 'q.');
+}
 
 export function updateVariablePlaceholderList(list) {
     list.splice(0, Infinity);
@@ -28,11 +31,11 @@ export function updateVariablePlaceholderList(list) {
     for (let string of molang_strings) {
         if (typeof string != 'string') continue;
         let string_lower_case = string.toLowerCase();
-        let matches = string_lower_case.match(/(v|variable|c|context)\.[\w.]+\b/g);
+        let matches = string_lower_case.match(/(v|variable|c|context|q|query)\.[\w.]+\b/g);
         if (!matches) continue;
         for (let match of matches) {
-            let key = match.replace(/^v\./, 'variable.').replace(/^c\./, 'context.');
-            let key_short = key.replace(/^variable\./g, 'v.').replace(/^context\./g, 'c.');
+            let key = match.replace(/^v\./, 'variable.').replace(/^c\./, 'context.').replace(/^q\./, 'query.');
+            let key_short = getShortKey(key);
             variable_ids.add(key);
             let assign_regex = new RegExp(`(${key.replace('.', '\\.')}|${key_short.replace('.', '\\.')})\\s*=[^=]`, 'g');
             if (string.match(assign_regex)) {
@@ -42,14 +45,14 @@ export function updateVariablePlaceholderList(list) {
     }
     for (let id of variable_ids) {
         if (DefaultVariables.find(v => ('variable.'+v) == id) || DefaultContext.find(v => ('context.'+v) == id)) continue;
-        let key_short = id.replace(/^variable\./g, 'v.').replace(/^context\./g, 'c.');
+        let key_short = getShortKey(id);
         if (Emitter.config.curves[id] || Emitter.config.curves[key_short]) continue;
         if (predefined.has(id)) continue;
         list.push(id);
     }
 }
 export function bakePlaceholderVariable(key, value) {
-    let key_short = key.replace(/^variable\./g, 'v.').replace(/^context\./g, 'c.');
+    let key_short = getShortKey(key);
     let regex = new RegExp(`\\b(${key.replace('.', '\\.')}|${key_short.replace('.', '\\.')})\\b`, 'g');
     function update(string) {
         if (typeof string != 'string') return string;
