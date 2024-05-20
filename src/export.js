@@ -182,7 +182,7 @@ function generateFile() {
 	var mode = getValue('emitter_rate_mode')
 	if (mode === 'instant') {
 		comps['minecraft:emitter_rate_instant'] = {
-			num_particles: getValue('emitter_rate_amount'),
+			num_particles: getValue('emitter_rate_amount', true),
 		}
 	} else if (mode === 'steady') {
 		comps['minecraft:emitter_rate_steady'] = {
