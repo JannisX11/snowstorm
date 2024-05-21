@@ -82,9 +82,9 @@
 				<div class="tool" v-on:click="Texture.reset()"><X /></div>
 				<input id="particle-texture-image" type="file" accept=".png" v-on:change="input.change($event)">
 			</template>
-			<template v-if="!input.allow_upload">
-				<div class="tool" style="width: auto;" v-on:click="reloadTexture()" title="Reload"><i class="unicode_icon" style="display: inline;">⟳</i> Reload</div>
-			</template>
+			<div class="tool" v-if="!input.allow_upload" @click="reloadTexture()" title="New Texture">
+				<RefreshCcw />
+			</div>
 			<div class="tool" @click="newTexture()" title="New Texture">
 				<PlusSquare />
 			</div>
@@ -114,6 +114,7 @@ import {
 	PaintBucket,
 	Pipette,
 	PlusSquare,
+	RefreshCcw,
 	Save,
 	Maximize,
 	ArrowBigLeft,
@@ -132,7 +133,7 @@ let parser = new Molang();
 
 /*
 	New
-	Import
+	Importo
 	Save
 	Tools
 		Select
@@ -153,6 +154,7 @@ export default {
 		PaintBucket,
 		Pipette,
 		PlusSquare,
+		RefreshCcw,
 		Save,
 		Maximize,
 		ArrowBigLeft,

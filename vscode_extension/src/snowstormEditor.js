@@ -134,10 +134,19 @@ module.exports.SnowstormEditorProvider = class SnowstormEditorProvider {
 			}
 			return true;
 		})
+		const savedDocumentSubscription = vscode.workspace.onDidSaveTextDocument(e => {
+			if (e.uri.toString() === document.uri.toString()) {
+				webviewPanel.webview.postMessage({
+					type: 'request_save_texture',
+					fromExtension: true
+				});
+			}
+		})
 
 		webviewPanel.onDidDispose(() => {
 			changeDocumentSubscription.dispose();
 			saveDocumentSubscription.dispose();
+			savedDocumentSubscription.dispose();
 		});
 
 		webviewPanel.webview.onDidReceiveMessage(e => {
@@ -152,6 +161,11 @@ module.exports.SnowstormEditorProvider = class SnowstormEditorProvider {
 					let particle_index = path_arr.indexOf('particles')
 					path_arr.splice(particle_index)
 					let filePath = Path.join(path_arr.join(Path.sep), e.path.replace(/\.png$/, '')+'.png')
+					
+					let dirname = Path.dirname(filePath);
+					if (!fs.existsSync(dirname)) {
+						fs.mkdirSync(dirname, {recursive: true});
+					}
 
 					fs.writeFileSync(filePath, e.content.split(',')[1], {encoding: 'base64'});
 					break;

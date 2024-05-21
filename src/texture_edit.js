@@ -327,6 +327,15 @@ document.addEventListener('keydown', (event) => {
 
 export const Texture = new TextureClass();
 
+window.addEventListener('message', event => {
+    const message = event.data;
+    if (message.type == 'request_save_texture') {
+        if (Texture.source) {
+            Texture.save();
+        }
+    }
+});
+
 window.getTextureForParentEffect = function() {
     return Texture.source;
 }

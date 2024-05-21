@@ -3359,13 +3359,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/paint-bucket.js");
 /* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/pipette.js");
 /* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/plus-square.js");
-/* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/save.js");
-/* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/maximize.js");
-/* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/arrow-big-left.js");
-/* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/arrow-big-right.js");
-/* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/x.js");
-/* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/undo.js");
-/* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/redo.js");
+/* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/refresh-ccw.js");
+/* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/save.js");
+/* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/maximize.js");
+/* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/arrow-big-left.js");
+/* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/arrow-big-right.js");
+/* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/x.js");
+/* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/undo.js");
+/* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/redo.js");
 /* harmony import */ var _input__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../input */ "./src/input.js");
 /* harmony import */ var molangjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! molangjs */ "./node_modules/molangjs/dist/molang.esm.js");
 /* harmony import */ var _texture_edit__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../texture_edit */ "./src/texture_edit.js");
@@ -3495,7 +3496,7 @@ var parser = new molangjs__WEBPACK_IMPORTED_MODULE_2__["default"]();
 
 /*
 	New
-	Import
+	Importo
 	Save
 	Tools
 		Select
@@ -3516,13 +3517,14 @@ var parser = new molangjs__WEBPACK_IMPORTED_MODULE_2__["default"]();
     PaintBucket: lucide_vue__WEBPACK_IMPORTED_MODULE_9__["default"],
     Pipette: lucide_vue__WEBPACK_IMPORTED_MODULE_10__["default"],
     PlusSquare: lucide_vue__WEBPACK_IMPORTED_MODULE_11__["default"],
-    Save: lucide_vue__WEBPACK_IMPORTED_MODULE_12__["default"],
-    Maximize: lucide_vue__WEBPACK_IMPORTED_MODULE_13__["default"],
-    ArrowBigLeft: lucide_vue__WEBPACK_IMPORTED_MODULE_14__["default"],
-    ArrowBigRight: lucide_vue__WEBPACK_IMPORTED_MODULE_15__["default"],
-    X: lucide_vue__WEBPACK_IMPORTED_MODULE_16__["default"],
-    Undo: lucide_vue__WEBPACK_IMPORTED_MODULE_17__["default"],
-    Redo: lucide_vue__WEBPACK_IMPORTED_MODULE_18__["default"]
+    RefreshCcw: lucide_vue__WEBPACK_IMPORTED_MODULE_12__["default"],
+    Save: lucide_vue__WEBPACK_IMPORTED_MODULE_13__["default"],
+    Maximize: lucide_vue__WEBPACK_IMPORTED_MODULE_14__["default"],
+    ArrowBigLeft: lucide_vue__WEBPACK_IMPORTED_MODULE_15__["default"],
+    ArrowBigRight: lucide_vue__WEBPACK_IMPORTED_MODULE_16__["default"],
+    X: lucide_vue__WEBPACK_IMPORTED_MODULE_17__["default"],
+    Undo: lucide_vue__WEBPACK_IMPORTED_MODULE_18__["default"],
+    Redo: lucide_vue__WEBPACK_IMPORTED_MODULE_19__["default"]
   },
   props: {
     input: _input__WEBPACK_IMPORTED_MODULE_1__["default"],
@@ -7772,6 +7774,14 @@ document.addEventListener('keydown', function (event) {
   }
 });
 var Texture = new TextureClass();
+window.addEventListener('message', function (event) {
+  var message = event.data;
+  if (message.type == 'request_save_texture') {
+    if (Texture.source) {
+      Texture.save();
+    }
+  }
+});
 window.getTextureForParentEffect = function () {
   return Texture.source;
 };
@@ -15507,6 +15517,40 @@ const Redo = (0,_createVueComponent_js__WEBPACK_IMPORTED_MODULE_0__["default"])(
 
 
 //# sourceMappingURL=redo.js.map
+
+
+/***/ }),
+
+/***/ "./node_modules/lucide-vue/dist/esm/icons/refresh-ccw.js":
+/*!***************************************************************!*\
+  !*** ./node_modules/lucide-vue/dist/esm/icons/refresh-ccw.js ***!
+  \***************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ RefreshCcw)
+/* harmony export */ });
+/* harmony import */ var _createVueComponent_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../createVueComponent.js */ "./node_modules/lucide-vue/dist/esm/createVueComponent.js");
+/**
+ * @license lucide-vue v0.298.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+
+
+
+const RefreshCcw = (0,_createVueComponent_js__WEBPACK_IMPORTED_MODULE_0__["default"])("RefreshCcwIcon", [
+  ["path", { d: "M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8", key: "14sxne" }],
+  ["path", { d: "M3 3v5h5", key: "1xhq8a" }],
+  ["path", { d: "M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16", key: "1hlbsb" }],
+  ["path", { d: "M16 16h5v5", key: "ccwih5" }]
+]);
+
+
+//# sourceMappingURL=refresh-ccw.js.map
 
 
 /***/ }),
@@ -78631,32 +78675,20 @@ var render = function () {
             : _vm._e(),
           _vm._v(" "),
           !_vm.input.allow_upload
-            ? [
-                _c(
-                  "div",
-                  {
-                    staticClass: "tool",
-                    staticStyle: { width: "auto" },
-                    attrs: { title: "Reload" },
-                    on: {
-                      click: function ($event) {
-                        return _vm.reloadTexture()
-                      },
+            ? _c(
+                "div",
+                {
+                  staticClass: "tool",
+                  attrs: { title: "New Texture" },
+                  on: {
+                    click: function ($event) {
+                      return _vm.reloadTexture()
                     },
                   },
-                  [
-                    _c(
-                      "i",
-                      {
-                        staticClass: "unicode_icon",
-                        staticStyle: { display: "inline" },
-                      },
-                      [_vm._v("⟳")]
-                    ),
-                    _vm._v(" Reload"),
-                  ]
-                ),
-              ]
+                },
+                [_c("RefreshCcw")],
+                1
+              )
             : _vm._e(),
           _vm._v(" "),
           _c(
