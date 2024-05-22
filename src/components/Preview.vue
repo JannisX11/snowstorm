@@ -15,7 +15,7 @@
                     <li v-if="placeholder_keys.length == 0"><label>No undefined variables found</label></li>
                 </ul>
 
-                <div class="tool" @click="show_placeholder_bar = false" title="Hide Placeholder Bar">
+                <div class="tool" @click="hidePlaceholderBar()" title="Hide Placeholder Bar">
                     <X :size="22" />
                 </div>
             </div>
@@ -35,7 +35,7 @@
                 <FlipVertical2 :size="20" v-if="collision" />
                 <Minus :size="20" v-else />
             </div>
-            <div class="tool" :class="{toggle_enabled: show_placeholder_bar}" @click="show_placeholder_bar ? show_placeholder_bar = false : showPlaceholderBar()" title="Show Placeholder Bar">
+            <div class="tool" :class="{toggle_enabled: show_placeholder_bar}" @click="show_placeholder_bar ? hidePlaceholderBar() : showPlaceholderBar()" title="Show Placeholder Bar">
                 <Hash :size="22" />
             </div>
 
@@ -270,7 +270,7 @@
             collision: true,
             placeholder_keys: [],
             placeholder_values: {},
-            show_placeholder_bar: false,
+            show_placeholder_bar: localStorage.getItem('snowstorm_show_placeholder_bar') == 'true',
             bake_placeholder_key: null
         }},
         components: {
@@ -289,6 +289,11 @@
             showPlaceholderBar() {
                 this.show_placeholder_bar = true;
                 updateVariablePlaceholderList(this.placeholder_keys);
+                localStorage.setItem('snowstorm_show_placeholder_bar', 'true');
+            },
+            hidePlaceholderBar() {
+                this.show_placeholder_bar = false;
+                localStorage.setItem('snowstorm_show_placeholder_bar', 'false');
             },
             updatePlaceholderValue(key, event) {
                 this.placeholder_values[key] = parseFloat(event.target.value) || 0;

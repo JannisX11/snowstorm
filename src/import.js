@@ -124,6 +124,7 @@ function startNewProject(force) {
 		Texture.reset();
 		QuickSetup.resetAll();
 		updateInputsFromConfig();
+		registerEdit('new file')
 		return true;
 	}
 }

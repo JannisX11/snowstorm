@@ -82,7 +82,7 @@
 				<div class="tool" v-on:click="Texture.reset()"><X /></div>
 				<input id="particle-texture-image" type="file" accept=".png" v-on:change="input.change($event)">
 			</template>
-			<div class="tool" v-if="!input.allow_upload" @click="reloadTexture()" title="New Texture">
+			<div class="tool" v-if="!input.allow_upload" @click="reloadTexture()" title="Reload Texture">
 				<RefreshCcw />
 			</div>
 			<div class="tool" @click="newTexture()" title="New Texture">
