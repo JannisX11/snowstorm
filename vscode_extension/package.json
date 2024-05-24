@@ -39,8 +39,13 @@
 			"supported": true
 		}
 	},
-	"dependencies": {},
-	"devDependencies": {},
+	"devDependencies": {
+		"@vscode/vsce": "^2.26.1"
+	},
+	"scripts": {
+		"package": "vsce package",
+		"publish": "vsce publish"
+	},
 	"keywords": [
 		"snowstorm",
 		"minecraft",

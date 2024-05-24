@@ -729,7 +729,7 @@ const Data = {
 				timeline: new Input({
 					id: 'emitter_events_timeline',
 					label: 'Timeline',
-					info: 'Events to fire when the emitter stops to exist',
+					info: 'Fire events at specific times during the lifetime of the emitter',
 					type: 'event_timeline',
 				}),
 			}
@@ -753,7 +753,7 @@ const Data = {
 				timeline: new Input({
 					id: 'particle_events_timeline',
 					label: 'Timeline',
-					info: 'Events to fire when the particle stops to exist',
+					info: 'Fire events at specific times during the lifetime of the particle',
 					type: 'event_timeline',
 				}),
 			}
