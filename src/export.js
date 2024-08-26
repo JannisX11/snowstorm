@@ -393,7 +393,7 @@ function generateFile() {
 	//Texture
 	let facing_camera_mode = getValue('particle_appearance_facing_camera_mode');
 	var tex_comp = comps['minecraft:particle_appearance_billboard'] = {
-		size: getValue('particle_appearance_size'),
+		size: getValue('particle_appearance_size', true),
 		facing_camera_mode: facing_camera_mode,
 		
 	}
