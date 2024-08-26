@@ -62,7 +62,7 @@
 			<div v-if="(zoom/ratio) > 1" class="viewport_scrollbar vertical" @pointerdown="slideScrollBar(1, $event)" :style="{top: getScrollBarOffset(1), height: (30 / (zoom/ratio)) + '%'}"></div>
 		</div>
 		<div class="texture_info_bar">
-			<div class="info">{{ log }}  {{offset[0]}}  {{ input.image_element.naturalWidth }} x {{ input.image_element.naturalHeight }} px</div>
+			<div class="info">{{offset[0]}}  {{ input.image_element.naturalWidth }} x {{ input.image_element.naturalHeight }} px</div>
 			<div class="info">{{ cursor_position.active ? (cursor_position.x + ' x ' + cursor_position.y) : '' }}</div>
 			<div class="info">{{ Math.round(zoom * 100) + '%' }}</div>
 			<template v-if="UVDefinitionMode() == 'animated'">
@@ -177,7 +177,6 @@ export default {
 		offset: [0, 0],
 		tool: 'select',
 		color_picker_open: false,
-		log: '',
 		new_texture_size: [16, 16],
 		cursor_position: {
 			x: 0,
