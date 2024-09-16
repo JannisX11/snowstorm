@@ -7,13 +7,23 @@
 
         <header>
 			<logo v-if="portrait_view" />
-			<menu-bar @changetab="setTab" :selected_tab="tab" :portrait_view="portrait_view" @opendialog="openDialog"></menu-bar>
+			<menu-bar
+				:selected_tab="tab"
+				:portrait_view="portrait_view"
+				:is_help_panel_open="is_help_panel_open"
+				@changetab="setTab"
+				@opendialog="openDialog"
+				@toggle_help_panel="is_help_panel_open = !is_help_panel_open"
+			></menu-bar>
 			<expression-bar></expression-bar>
         </header>
 
 		<preview v-show="tab == 'preview'" ref="preview" @opendialog="openDialog">
 		</preview>
 		<code-viewer v-if="tab == 'code'"></code-viewer>
+
+
+		<help-panel v-if="is_help_panel_open || tab == 'help'" :portrait_view="portrait_view" @close="is_help_panel_open = false;"></help-panel>
 
 
 		<div class="resizer"
@@ -29,6 +39,7 @@
 		<ul v-if="portrait_view" id="portrait_mode_selector">
         	<li class="mode_selector config" :class="{selected: tab == 'config'}" @click="setTab('config')"><SlidersHorizontal :size="22" /></li>
         	<li class="mode_selector code" :class="{selected: tab == 'code'}" @click="setTab('code')"><FileJson :size="22" /></li>
+        	<li class="mode_selector help" :class="{selected: tab == 'help'}" @click="setTab('help')"><HelpCircle :size="22" /></li>
         	<li class="mode_selector preview" :class="{selected: tab == 'preview'}" @click="setTab('preview')"><Move3D :size="22" /></li>
 		</ul>
 
@@ -39,6 +50,7 @@
 import Vue from 'vue';
 import MenuBar from './MenuBar';
 import Sidebar from './Sidebar';
+import HelpPanel from './HelpPanel';
 import Preview from './Preview';
 import CodeViewer from './CodeViewer';
 import MolangDialog from './MolangDialog'
@@ -46,7 +58,7 @@ import WarningDialog from './WarningDialog'
 import ExpressionBar from './ExpressionBar'
 import InfoBox from './InfoBox'
 import vscode from '../vscode_extension';
-import {SlidersHorizontal, FileJson, Move3D} from 'lucide-vue'
+import {SlidersHorizontal, FileJson, Move3D, HelpCircle} from 'lucide-vue'
 import Logo from './Sidebar/Logo.vue';
 import {PanelLeftOpen} from "lucide-vue";
 
@@ -88,8 +100,8 @@ function getInitialIsSidebarOpen() {
 export default {
 	name: 'app',
 	components: {
-		Preview, CodeViewer, MenuBar, Sidebar, MolangDialog, WarningDialog, ExpressionBar, InfoBox,
-		SlidersHorizontal, FileJson, Move3D, Logo, PanelLeftOpen
+		Preview, CodeViewer, MenuBar, Sidebar, HelpPanel, MolangDialog, WarningDialog, ExpressionBar, InfoBox,
+		SlidersHorizontal, FileJson, Move3D, Logo, PanelLeftOpen, HelpCircle
 	},
 	data() {return {
 		code: '',
@@ -97,6 +109,7 @@ export default {
 		dialog: null,
 		sidebar_width: getInitialSidebarWidth(),
 		is_sidebar_open: getInitialIsSidebarOpen(),
+		is_help_panel_open: false,
 		portrait_view,
 	}},
 	methods: {

@@ -18,7 +18,10 @@
         	<li class="mode_selector preview" :class="{selected: selected_tab == 'preview'}" @click="$emit('changetab', 'preview')">Preview</li>
 		</template>
 
-		<div v-if="canShare" @click="onShareParticle" class="mode_selector" title="Share">
+		<div @click="openHelpPanel" class="mode_selector highlighting_button" :class="{selected: is_help_panel_open}" title="Help">
+			<HelpCircle :size="20" />
+		</div>
+		<div v-if="canShare" @click="onShareParticle" class="mode_selector highlighting_button" title="Share">
 			<Share2 :size="20" />
 		</div>
     </ul>
@@ -30,7 +33,7 @@ import {importFile,	loadPreset,	startNewProject} from '../import'
 import {View} from './Preview'
 
 import vscode from '../vscode_extension'
-import { Share2 } from 'lucide-vue'
+import { Share2, HelpCircle } from 'lucide-vue'
 import { shareParticle } from '../share'
 import { generateFile } from '../export'
 import { Texture } from '../texture_edit'
@@ -89,6 +92,7 @@ const Menu = [
 	{
 		label: 'Help',
 		children: [
+			{label: 'Open Guide', click: (vm) => { vm.openHelpPanel() }},
 			{label: 'Snowstorm Tutorial', click: () => { openLink('https://docs.microsoft.com/en-us/minecraft/creator/documents/particleeffects') }},
 			{label: 'Tutorial Video', click: () => { openLink('https://youtu.be/J1Ub1tbO9gg') }},
 			{label: 'Format Documentation', click: () => { openLink('https://docs.microsoft.com/en-us/minecraft/creator/reference/content/particlesreference/') }},
@@ -111,10 +115,11 @@ if (!isVSCExtension) {
 
 export default {
     name: 'menu-bar',
-	components: { Share2 },
+	components: { Share2, HelpCircle },
     props: {
         selected_tab: String,
-        portrait_view: Boolean
+        portrait_view: Boolean,
+		is_help_panel_open: Boolean
     },
     methods: {
         changeTab() {
@@ -130,6 +135,9 @@ export default {
 		},
 		getVM() {
 			return this;
+		},
+		openHelpPanel() {
+			this.$emit('toggle_help_panel');
 		},
 		onShareParticle() {
 			let rawImg = null
@@ -198,6 +206,7 @@ export default {
 		padding: 2px 8px;
 		padding-top: 3px;
 		cursor: pointer;
+		margin-right: 2px;
 	}
 	.mode_selector:hover {
 		background-color: var(--color-interface);
