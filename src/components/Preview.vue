@@ -91,7 +91,29 @@
 
     import {updateVariablePlaceholderList, bakePlaceholderVariable} from './../variable_placeholders'
 
-    const View = {}
+    const View = {
+        PlaybackController: {
+            start() {
+                if (!Emitter.initialized || Emitter.age == 0) {
+                    Emitter.start();
+                }
+                Emitter.paused = false;
+                return View.PlaybackController;
+            },
+            toggle() {
+                Emitter.paused = !Emitter.paused;
+                if (!Emitter.paused) {
+                    View.PlaybackController.start();
+                }
+                return View.PlaybackController;
+            },
+            stop() {
+                Emitter.stop(true);
+                Emitter.paused = true;
+                return View.PlaybackController;
+            }
+        }
+    }
 
     const stats = {
         time: 0
@@ -140,10 +162,10 @@
 
     
     function startAnimation() {
-        Emitter.stopLoop().playLoop();
+        View.PlaybackController.stop().start();
     }
     function togglePause() {
-        Emitter.toggleLoop();
+        View.PlaybackController.toggle();
     }
 
 
@@ -218,8 +240,18 @@
         animate()
 
     }
+    let last_frame_time = performance.now();
     function animate() {
-        requestAnimationFrame(animate)
+        requestAnimationFrame(animate);
+
+        let timestamp = performance.now();
+        if (timestamp - last_frame_time > 32) {
+            last_frame_time = timestamp;
+            if (!Emitter.paused) {
+                Emitter.tick();
+            }
+        }
+
         if (View.canvas.offsetParent && (!Emitter.paused || !document.hasFocus || document.hasFocus())) {
             View.controls.update()
             Scene.updateFacingRotation(View.camera);

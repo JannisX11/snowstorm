@@ -91,7 +91,8 @@ function loadFile(data, confirmNewProject=true) {
 		Texture.reset();
 		QuickSetup.resetAll();
 		updateConfig(data);
-		Emitter.stop(true).playLoop();
+		Emitter.stop(true);
+		View.PlaybackController.start();
 		registerEdit('load file')
 	}
 }
@@ -130,7 +131,8 @@ function startNewProject(force) {
 }
 
 document.addEventListener('readystatechange', () => {
-	Emitter.start().playLoop();
+	Emitter.start();
+	View.PlaybackController.start();
 });
 
 function loadPreset(id) {
@@ -186,7 +188,7 @@ if (vscode) {
 				reader.onloadend = function() {
 	
 					loadFile(JSON.parse(reader.result))
-					Emitter.playLoop();
+					View.PlaybackController.start();
 				}
 				reader.readAsText(file)
 				event.preventDefault()
