@@ -109,7 +109,7 @@
 							<label>{{ event_id }}</label>
 							<X :size="18" class="highlighting_button" @click="input.value.remove(event_id); input.change($event);" />
 						</li>
-						<event-picker :blacklist="input.value" @select="($event, event) => {input.value.push($event); input.change(event);}" />
+						<event-picker  @select="($event, event) => {input.value.push($event); input.change(event);}" />
 					</ul>
 				</template>
 
@@ -129,7 +129,7 @@
 								<input type="number" v-model.number="event_obj.min_speed" min="0">
 							</div>
 						</li>
-						<event-picker :blacklist="input.value.map(o => o.event)" @select="($event, event) => {input.value.push({event: $event, min_speed: 0}); input.change(event);}" />
+						<event-picker @select="($event, event) => {input.value.push({event: $event, min_speed: 0}); input.change(event);}" />
 					</ul>
 				</template>
 
@@ -159,7 +159,7 @@
 								<label>{{ event_id }}</label>
 								<X :size="18" class="highlighting_button" @click="entry.event.remove(event_id); input.change($event);" />
 							</li>
-							<event-picker :blacklist="entry.event" @select="($event, event) => {entry.event.push($event); input.change(event);}" />
+							<event-picker @select="($event, event) => {entry.event.push($event); input.change(event);}" />
 						</ul>
 						<X :size="18" class="highlighting_button timeline_remove_button" @click="input.timeline.remove(entry); input.change($event);" />
 					</li>

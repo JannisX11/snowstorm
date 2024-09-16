@@ -77337,7 +77337,6 @@ var render = function () {
                             }),
                             _vm._v(" "),
                             _c("event-picker", {
-                              attrs: { blacklist: input.value },
                               on: {
                                 select: function ($event, event) {
                                   input.value.push($event)
@@ -77434,11 +77433,6 @@ var render = function () {
                             }),
                             _vm._v(" "),
                             _c("event-picker", {
-                              attrs: {
-                                blacklist: input.value.map(function (o) {
-                                  return o.event
-                                }),
-                              },
                               on: {
                                 select: function ($event, event) {
                                   input.value.push({
@@ -77574,7 +77568,6 @@ var render = function () {
                             }),
                             _vm._v(" "),
                             _c("event-picker", {
-                              attrs: { blacklist: entry.event },
                               on: {
                                 select: function ($event, event) {
                                   entry.event.push($event)
