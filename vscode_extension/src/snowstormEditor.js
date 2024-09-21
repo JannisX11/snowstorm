@@ -181,19 +181,36 @@ module.exports.SnowstormEditorProvider = class SnowstormEditorProvider {
 				}
 				case 'request_texture': {
 					let path_arr = document.fileName.split(Path.sep);
+					let path_arr_full = path_arr.slice(0, -1);
 					let particle_index = path_arr.indexOf('particles')
 					path_arr.splice(particle_index)
-					let filePath = Path.join(path_arr.join(Path.sep), e.path.replace(/\.png$/, '')+'.png')
 
-					if (fs.existsSync(filePath)) {
-						const tex_url = webviewPanel.webview.asWebviewUri(vscode.Uri.file(filePath));
-						webviewPanel.webview.postMessage({
-							type: 'provide_texture',
-							request_id: e.request_id,
-							url: tex_url.toString(),
-							fromExtension: true
-						});
-					} else {
+					const filePathCandidates = [
+						// Path relative to the 'particles' ancestor folder of this document
+						Path.join(path_arr.join(Path.sep), e.path.replace(/\.png$/, '')+'.png'),
+
+						// Path relative to this document's folder
+						Path.join(path_arr_full.join(Path.sep), e.path.replace(/\.png$/, '')+'.png'),
+
+						// Texture file in the same folder as the document
+						Path.join(path_arr_full.join(Path.sep), Path.basename(e.path).replace(/\.png$/, '')+'.png')
+						
+					];
+					let fileFound = false;
+					for (const filePath of filePathCandidates) {
+						if (fs.existsSync(filePath)) {
+							const tex_url = webviewPanel.webview.asWebviewUri(vscode.Uri.file(filePath));
+							webviewPanel.webview.postMessage({
+								type: 'provide_texture',
+								request_id: e.request_id,
+								url: tex_url.toString(),
+								fromExtension: true,
+							});
+							fileFound = true;
+							break;
+						}
+					}
+					if (!fileFound) {
 						webviewPanel.webview.postMessage({
 							type: 'provide_texture',
 							request_id: e.request_id,
