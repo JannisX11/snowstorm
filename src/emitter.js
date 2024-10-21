@@ -72,7 +72,7 @@ const Scene = new Wintersky.Scene({
 });
 const Config = new Wintersky.Config(Scene);
 const Emitter = new Wintersky.Emitter(Scene, Config, {
-	loop_mode: 'looping',
+	loop_mode: 'auto',
 	parent_mode: 'world'
 });
 const QuickSetup = {
