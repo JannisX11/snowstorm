@@ -204,7 +204,7 @@
 						let right = event.target.classList.contains('right_handle');
 						var slope = start_slope + (start - e2.clientY) * 0.05 * (right ? 1 : -1);
 						//snap
-						if (slope > -threshold && slope < threshold) slope = 0;
+						slope = Math.snapToValues(slope, [0], threshold);
 						
 						if (synced_slope || !right) curve.nodes[index].left_slope = Math.roundTo(slope, 2);
 						if (synced_slope || right) curve.nodes[index].right_slope = Math.roundTo(slope, 2);
@@ -213,8 +213,7 @@
 					} else {
 						var value = start_value + (start - e2.clientY) / scope.height * (curve.max - curve.min);
 						//snap
-						if (value > (1-threshold) && value < (1+threshold)) value = 1;
-						if (value > -threshold && value < threshold) value = 0;
+						value = Math.snapToValues(value, [1, 0, -1], threshold);
 
 						if (curve.config.mode == 'bezier_chain') {
 							var time = start_time - (start_x - e2.clientX) / (scope.getWidth()-16);
@@ -334,7 +333,8 @@
 
 				var ground = (this.height+5) - (-curve.min / (curve.max-curve.min)) * this.height;
 				var ceiling = (this.height+5) - ((1-curve.min) / (curve.max-curve.min)) * this.height;
-				curve.horizontal_line_data = `M${0} ${ground} L${2000} ${ground} M${0} ${ceiling} L${2000} ${ceiling}`;
+				var negative = (this.height+5) - ((-1-curve.min) / (curve.max-curve.min)) * this.height;
+				curve.horizontal_line_data = `M${0} ${ground} L${2000} ${ground} M${0} ${ceiling} L${2000} ${ceiling} M${0} ${negative} L${2000} ${negative}`;
 
 				curve.svg_data += `M${getPoint(0)}`;
 

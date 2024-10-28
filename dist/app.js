@@ -1599,15 +1599,14 @@ function toCatmullRomBezier(points) {
           var right = event.target.classList.contains('right_handle');
           var slope = start_slope + (start - e2.clientY) * 0.05 * (right ? 1 : -1);
           //snap
-          if (slope > -threshold && slope < threshold) slope = 0;
+          slope = Math.snapToValues(slope, [0], threshold);
           if (synced_slope || !right) curve.nodes[index].left_slope = Math.roundTo(slope, 2);
           if (synced_slope || right) curve.nodes[index].right_slope = Math.roundTo(slope, 2);
           scope.updateSVG();
         } else {
           var value = start_value + (start - e2.clientY) / scope.height * (curve.max - curve.min);
           //snap
-          if (value > 1 - threshold && value < 1 + threshold) value = 1;
-          if (value > -threshold && value < threshold) value = 0;
+          value = Math.snapToValues(value, [1, 0, -1], threshold);
           if (curve.config.mode == 'bezier_chain') {
             var time = start_time - (start_x - e2.clientX) / (scope.getWidth() - 16);
             curve.nodes[index].time = Math.clamp(Math.roundTo(time, 3), 0, 1);
@@ -1731,7 +1730,8 @@ function toCatmullRomBezier(points) {
       }
       var ground = this.height + 5 - -curve.min / (curve.max - curve.min) * this.height;
       var ceiling = this.height + 5 - (1 - curve.min) / (curve.max - curve.min) * this.height;
-      curve.horizontal_line_data = "M".concat(0, " ", ground, " L", 2000, " ").concat(ground, " M", 0, " ").concat(ceiling, " L", 2000, " ").concat(ceiling);
+      var negative = this.height + 5 - (-1 - curve.min) / (curve.max - curve.min) * this.height;
+      curve.horizontal_line_data = "M".concat(0, " ", ground, " L", 2000, " ").concat(ground, " M", 0, " ").concat(ceiling, " L", 2000, " ").concat(ceiling, " M", 0, " ").concat(negative, " L", 2000, " ").concat(negative);
       curve.svg_data += "M".concat(getPoint(0));
       if (curve.inputs.mode.value == 'linear') {
         for (var i = 1; i < curve.nodes.length; i++) {
@@ -4468,7 +4468,7 @@ var Scene = new wintersky__WEBPACK_IMPORTED_MODULE_2__["default"].Scene({
 });
 var Config = new wintersky__WEBPACK_IMPORTED_MODULE_2__["default"].Config(Scene);
 var Emitter = new wintersky__WEBPACK_IMPORTED_MODULE_2__["default"].Emitter(Scene, Config, {
-  loop_mode: 'looping',
+  loop_mode: 'auto',
   parent_mode: 'world'
 });
 var QuickSetup = {
@@ -7894,6 +7894,17 @@ Math.trimDeg = function (a) {
 };
 Math.isPowerOfTwo = function (x) {
   return x > 1 && (x & x - 1) == 0;
+};
+Math.snapToValues = function (val, snap_points) {
+  var epsilon = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 12;
+  var snaps = snap_points.slice().sort(function (a, b) {
+    return Math.abs(val - a) - Math.abs(val - b);
+  });
+  if (Math.abs(snaps[0] - val) < epsilon) {
+    return snaps[0];
+  } else {
+    return val;
+  }
 };
 Array.prototype.safePush = function () {
   var included = false;

@@ -53,6 +53,16 @@ Math.trimDeg = function(a) {
 Math.isPowerOfTwo = function(x) {
 	return (x > 1) && ((x & (x - 1)) == 0);
 }
+Math.snapToValues = function(val, snap_points, epsilon = 12) {
+	let snaps = snap_points.slice().sort((a, b) => {
+		return Math.abs(val-a) - Math.abs(val-b)
+	})
+	if (Math.abs(snaps[0] - val) < epsilon) {
+		return snaps[0]
+	} else {
+		return val
+	}
+}
 
 Array.prototype.safePush = function(...items) {
 	let included = false;
