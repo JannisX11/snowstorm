@@ -3,6 +3,7 @@ import {Config, QuickSetup, Emitter} from './emitter'
 import vscode from './vscode_extension'
 import {ExpandedInput} from './components/ExpressionBar'
 import Data, {forEachInput} from './input_structure'
+import {View} from './components/Preview'
 
 import FireSample from '../examples/fire.particle.json'
 import LoadingSample from '../examples/loading.particle.json'

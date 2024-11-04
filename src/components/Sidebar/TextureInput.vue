@@ -31,7 +31,7 @@
 			</div>
 		</div>
 		<div id="color_picker_overlay" v-show="color_picker_open" @click.stop>
-			<color-picker :value="paint_color.hex8" @change="paint_color = $event" />
+			<color-picker :value="paint_color.hex8" @change="setPaintColor($event)" @input="setPaintColor($event)" />
 		</div>
 
 		<div class="texture_viewport"
@@ -189,6 +189,9 @@ export default {
 		}
 	}},
 	methods: {
+		setPaintColor(color) {
+			this.paint_color = color;
+		},
 		newTexture() {
 			let dialog = this.$refs.new_texture_dialog;
 			dialog.showModal();
