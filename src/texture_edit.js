@@ -85,12 +85,14 @@ class TextureClass {
     save() {
         if (!this.source) return;
         if (vscode) {
-            let content = this.source;
-            vscode.postMessage({
-                type: 'save_texture',
-                path: main_config.particle_texture_path,
-                content,
-            });
+            if (this.internal_changes) {
+                let content = this.source;
+                vscode.postMessage({
+                    type: 'save_texture',
+                    path: main_config.particle_texture_path,
+                    content,
+                });
+            }
         } else {
             IO.export({
                 name: this.name || 'Texture',

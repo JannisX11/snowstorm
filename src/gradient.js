@@ -18,6 +18,13 @@ export default class Gradient extends Input {
         if (!is_sliding) registerEdit('change gradient')
         return this;
     }
+    update(Data) {
+        if (this.selected) {
+            let selected_index = this.value.findIndex(point => (point.percent == this.selected.percent));
+            super.update();
+            this.selected = this.value[Math.clamp(selected_index, 0, this.value.length-1)];
+        }
+    }
     reset() {
         this.value.splice(0, Infinity, ...this.default_value)
         this.selected = this.value[0];

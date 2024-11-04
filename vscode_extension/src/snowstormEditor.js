@@ -157,6 +157,7 @@ module.exports.SnowstormEditorProvider = class SnowstormEditorProvider {
 					break;
 				}
 				case 'save_texture': {
+					if (typeof e.content != 'string' || !e.content.startsWith('data:')) return;
 					let path_arr = document.fileName.split(Path.sep);
 					let particle_index = path_arr.indexOf('particles')
 					path_arr.splice(particle_index)
@@ -167,7 +168,10 @@ module.exports.SnowstormEditorProvider = class SnowstormEditorProvider {
 						fs.mkdirSync(dirname, {recursive: true});
 					}
 
-					fs.writeFileSync(filePath, e.content.split(',')[1], {encoding: 'base64'});
+					let content = e.content.split(',')[1];
+					if (content) {
+						fs.writeFileSync(filePath, content, {encoding: 'base64'});
+					}
 					break;
 				}
 				case 'view_code': {

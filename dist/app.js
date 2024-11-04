@@ -5352,6 +5352,8 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
 function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : String(i); }
 function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+function _get() { if (typeof Reflect !== "undefined" && Reflect.get) { _get = Reflect.get.bind(); } else { _get = function _get(target, property, receiver) { var base = _superPropBase(target, property); if (!base) return; var desc = Object.getOwnPropertyDescriptor(base, property); if (desc.get) { return desc.get.call(arguments.length < 3 ? target : receiver); } return desc.value; }; } return _get.apply(this, arguments); }
+function _superPropBase(object, property) { while (!Object.prototype.hasOwnProperty.call(object, property)) { object = _getPrototypeOf(object); if (object === null) break; } return object; }
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); Object.defineProperty(subClass, "prototype", { writable: false }); if (superClass) _setPrototypeOf(subClass, superClass); }
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
@@ -5393,6 +5395,18 @@ var Gradient = /*#__PURE__*/function (_Input) {
       var is_sliding = node && node.parentNode.querySelector(':active');
       if (!is_sliding) (0,_edits__WEBPACK_IMPORTED_MODULE_2__["default"])('change gradient');
       return this;
+    }
+  }, {
+    key: "update",
+    value: function update(Data) {
+      var _this2 = this;
+      if (this.selected) {
+        var selected_index = this.value.findIndex(function (point) {
+          return point.percent == _this2.selected.percent;
+        });
+        _get(_getPrototypeOf(Gradient.prototype), "update", this).call(this);
+        this.selected = this.value[Math.clamp(selected_index, 0, this.value.length - 1)];
+      }
     }
   }, {
     key: "reset",
@@ -7573,12 +7587,14 @@ var TextureClass = /*#__PURE__*/function () {
     value: function save() {
       if (!this.source) return;
       if (_vscode_extension__WEBPACK_IMPORTED_MODULE_1__["default"]) {
-        var content = this.source;
-        _vscode_extension__WEBPACK_IMPORTED_MODULE_1__["default"].postMessage({
-          type: 'save_texture',
-          path: main_config.particle_texture_path,
-          content: content
-        });
+        if (this.internal_changes) {
+          var content = this.source;
+          _vscode_extension__WEBPACK_IMPORTED_MODULE_1__["default"].postMessage({
+            type: 'save_texture',
+            path: main_config.particle_texture_path,
+            content: content
+          });
+        }
       } else {
         _util__WEBPACK_IMPORTED_MODULE_0__.IO["export"]({
           name: this.name || 'Texture',
