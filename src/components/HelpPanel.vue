@@ -12,12 +12,38 @@ const HelpData = {
 	},
 	setup: {
 		title: 'File',
-	},
-	effect: {
-		title: 'Particle Effect',
+		inputs: {
+			identifier: {
+				description: [
+					'Set an identifier for the particle effect.',
+					'An identifier consists of two parts: The project namespace, and the particle name. The namespace is always separated by a colon',
+					'The identifier should be all in lower-case letters and use underscores to separate words. Letters from a-z, numbers, points and underscores are allowed, other characters may cause issues.',
+					'Example: `snowstorm:fire`'
+				]
+			},
+			local_space: {
+				description: [
+					'When enabled, the particle will always move in local space relative to the emitter. When attached to an entity, this means that all particles will move along with the entity.',
+					'When disabled, particles are emitted relative to the emitter, then simulate independently from the emitter in the world',
+					'Enabling this will prevent collisions with the world from working.',
+				]
+			},
+			local_rotation: {
+				description: [
+					'Rotate the local space along with the entity that it is attached to. See #setup.local_space',
+					'Local position needs to be enabled for local rotation to work',
+				]
+			},
+			local_velocity: {
+				description: 'When enabled, the velocity of the emitter will be added to the particles velocity.'
+			}
+		}
 	},
 	emitter: {
 		title: 'Emitter',
+		pages: {
+			
+		}
 	},
 	appearance: {
 		title: 'Appearance',

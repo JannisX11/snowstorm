@@ -23,7 +23,10 @@
 
 			<h3>{{ selected_subject.label }}</h3>
 			<div class="input_group" v-for="(group, group_key) in input_groups" :key="group_key">
-				<h4 @click="fold(group)">{{ group.label }}</h4>
+				<h4 @click="fold(group)">
+					{{ group.label }}
+					<HelpCircle class="highlighting_button help_button" @click="openHelp(tab_key, group_key)" />
+				</h4>
 				<template v-if="!group._folded">
 					<ul v-if="group.type == 'curves'">
 						<curve
@@ -77,6 +80,7 @@ import {
 	Tangent,
 	Zap,
 	Plus,
+	HelpCircle,
 } from 'lucide-vue'
 import EventList from './Sidebar/EventList.vue';
 import ListAddButton from './Form/ListAddButton.vue';
@@ -133,6 +137,9 @@ export default {
 			if (group.curves && !group._folded) {
 				updateCurvesPanel();
 			}
+		},
+		openHelp(tab_key, group_key) {
+
 		},
 		updateSize(e) {
 			updateCurvesPanel()
@@ -263,6 +270,9 @@ export default {
 	}
 	.input_group h4:hover {
 		filter: brightness(1.1);;
+	}
+	.help_button {
+		float: right;
 	}
 	.input_group > ul {
 		padding: 8px;
