@@ -2,7 +2,6 @@
 	<div id="app" :class="{portrait_view}" :style="{'--sidebar': getEffectiveSidebarWidth()+'px'}">
 
 		<div id="dialog_blackout" v-if="dialog" @click="closeDialog"></div>
-		<molang-dialog v-if="dialog == 'molang_sheet'" @close="closeDialog"></molang-dialog>
 		<warning-dialog v-if="dialog == 'warnings'" @close="closeDialog"></warning-dialog>
 
         <header>
@@ -13,7 +12,7 @@
 				:is_help_panel_open="is_help_panel_open"
 				@changetab="setTab"
 				@opendialog="openDialog"
-				@toggle_help_panel="is_help_panel_open = !is_help_panel_open"
+				@open_help_page="openHelpPage"
 			></menu-bar>
 			<expression-bar></expression-bar>
         </header>
@@ -23,7 +22,7 @@
 		<code-viewer v-if="tab == 'code'"></code-viewer>
 
 
-		<help-panel v-if="is_help_panel_open || tab == 'help'" :portrait_view="portrait_view" @close="is_help_panel_open = false;"></help-panel>
+		<help-panel v-if="is_help_panel_open || tab == 'help'" ref="help_panel" :portrait_view="portrait_view" @close="is_help_panel_open = false;"></help-panel>
 
 
 		<div class="resizer"
@@ -34,7 +33,7 @@
 			</button>
 		</div>
 
-		<sidebar ref="sidebar" v-show="!portrait_view || tab == 'config'" :portrait_view="portrait_view"></sidebar>
+		<sidebar ref="sidebar" v-show="!portrait_view || tab == 'config'" :portrait_view="portrait_view" @open_help_page="openHelpPage"></sidebar>
 
 		<ul v-if="portrait_view" id="portrait_mode_selector">
         	<li class="mode_selector config" :class="{selected: tab == 'config'}" @click="setTab('config')"><SlidersHorizontal :size="22" /></li>
@@ -53,7 +52,6 @@ import Sidebar from './Sidebar';
 import HelpPanel from './HelpPanel';
 import Preview from './Preview';
 import CodeViewer from './CodeViewer';
-import MolangDialog from './MolangDialog'
 import WarningDialog from './WarningDialog'
 import ExpressionBar from './ExpressionBar'
 import InfoBox from './InfoBox'
@@ -100,7 +98,7 @@ function getInitialIsSidebarOpen() {
 export default {
 	name: 'app',
 	components: {
-		Preview, CodeViewer, MenuBar, Sidebar, HelpPanel, MolangDialog, WarningDialog, ExpressionBar, InfoBox,
+		Preview, CodeViewer, MenuBar, Sidebar, HelpPanel, WarningDialog, ExpressionBar, InfoBox,
 		SlidersHorizontal, FileJson, Move3D, Logo, PanelLeftOpen, HelpCircle
 	},
 	data() {return {
@@ -124,6 +122,11 @@ export default {
 		},
 		closeDialog() {
 			this.dialog = null;
+		},
+		async openHelpPage(tab_key, group_key) {
+			this.is_help_panel_open = true;
+			await Vue.nextTick();
+			this.$refs.help_panel.openPage(tab_key, group_key);
 		},
 		setSidebarSize(size, original_size) {
 			if (size > 80) {

@@ -231,6 +231,15 @@ export default class Input {
 		ExpandedInput.updateText(val, this.type == 'molang' ? 'molang' : 'generic', focusing);
 		return this;
 	}
+	isVisible(group) {
+		if (typeof this.condition == 'function') {
+			return this.condition(group)
+		} else {
+			return !this.enabled_modes
+				|| group._selected_mode === null
+				|| this.enabled_modes.includes(group._selected_mode);
+		}
+	}
 	focus(axis) {
 		ExpandedInput.input = this;
 		if (axis !== undefined) ExpandedInput.axis = axis;

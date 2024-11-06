@@ -25,7 +25,7 @@
 			<div class="input_group" v-for="(group, group_key) in input_groups" :key="group_key">
 				<h4 @click="fold(group)">
 					{{ group.label }}
-					<HelpCircle class="highlighting_button help_button" @click="openHelp(tab_key, group_key)" />
+					<div class="highlighting_button help_button" @click.stop="openHelp(selected_subject_key, group_key)">?</div>
 				</h4>
 				<template v-if="!group._folded">
 					<ul v-if="group.type == 'curves'">
@@ -111,6 +111,7 @@ export default {
 		Zap,
 		Plus,
 		ListAddButton,
+		HelpCircle
 	},
 	props: {
 		portrait_view: Boolean
@@ -139,7 +140,7 @@ export default {
 			}
 		},
 		openHelp(tab_key, group_key) {
-
+			this.$emit('open_help_page', tab_key, group_key);
 		},
 		updateSize(e) {
 			updateCurvesPanel()
@@ -213,6 +214,14 @@ export default {
 	.sidebar_tab:last-of-type > .sidebar_tab_tooltip {
 		right: 0;
 		left: unset;
+	}
+	.help_button {
+		width: 30px;
+		text-align: center;
+		height: 32px;
+		margin: -5px -9px;
+		padding-top: 4px;
+		font-family: arial, sans-serif;
 	}
 	#test_quick_setup_button {
 		display: block;
