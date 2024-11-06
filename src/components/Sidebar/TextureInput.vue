@@ -42,7 +42,7 @@
 			@pointerdown="onMouseDown($event)"
 			@touchstart="onTouchStart($event)"
 			@contextmenu.prevent
-			:style="{'--zoom': zoom, '--size': size+'px', '--height': height+'px', '--offset-x': offset[0]+'px', '--offset-y': offset[1]+'px'}"
+			:style="{'--zoom': zoom, '--size': size+'px', '--height': height+'px', '--outer-height': viewport_size+'px', '--offset-x': offset[0]+'px', '--offset-y': offset[1]+'px'}"
 			@mousewheel="onMouseWheel($event)"
 		>
 			<div class="input_texture_wrapper checkerboard"
@@ -77,6 +77,7 @@
 				<Maximize :size="20" />
 			</div>
 		</div>
+		<div class="resize_line" @mousedown="slideEditorHeight($event)" @touchstart="slideEditorHeight($event)"></div>
 		<div class="meta toolbar">
 			<template v-if="input.allow_upload">
 				<div class="tool" v-on:click="Texture.reset()"><X /></div>
@@ -127,7 +128,7 @@ import {
 import Input from '../../input'
 import Molang from 'molangjs'
 import { Texture } from '../../texture_edit';
-import { trimFloatNumber } from '../../util'
+import { convertTouchEvent, trimFloatNumber } from '../../util'
 import registerEdit from '../../edits'
 let parser = new Molang();
 
@@ -535,6 +536,27 @@ export default {
 		},
 		UVDefinitionMode() {
 			return this.data.texture.uv.inputs.mode.value
+		},
+		slideEditorHeight(event) {
+			convertTouchEvent(event);
+
+			let scope = this;
+			let original_height = this.viewport_size;
+
+			function slide(e2) {
+				convertTouchEvent(event);
+				scope.viewport_size = Math.clamp(original_height + e2.clientY - event.clientY, 64, window.innerHeight-120);
+			}
+			function stopSlide() {
+				document.removeEventListener('mousemove', slide);
+				document.removeEventListener('mouseup', stopSlide);
+				document.removeEventListener('touchmove', slide);
+				document.removeEventListener('touchend', stopSlide);
+			}
+			document.addEventListener('mousemove', slide, {passive: false});
+			document.addEventListener('mouseup', stopSlide, {passive: false});
+			document.addEventListener('touchmove', slide, {passive: false});
+			document.addEventListener('touchend', stopSlide, {passive: false});
 		}
 	},
 	computed: {
@@ -590,7 +612,7 @@ export default {
 		--size: 256px;
 		width: 100%;
 		overflow: hidden;
-		height: 258px;
+		height: calc(var(--outer-height) + 2px);
 		margin-top: 8px;
 		flex-shrink: 0;
 		position: relative;
@@ -743,6 +765,24 @@ export default {
 		border: 1px solid #fff;
 		outline: 1px solid var(--color-border);
 		mix-blend-mode: difference;
+	}
+	.resize_line {
+		cursor: ns-resize;
+		height: 12px;
+		position: relative;
+	}
+	.resize_line::after {
+		content: "";
+		pointer-events: none;
+		position: absolute;
+		width: 100%;
+		height: 2px;
+		top: 5px;
+		display: block;
+		background-color: var(--color-bar);
+	}
+	.resize_line:hover::after {
+		background-color: var(--color-selection);
 	}
 </style>
 <style>
