@@ -3,7 +3,6 @@
 	"displayName": "Snowstorm",
 	"description": "Minecraft Bedrock Edition particle editor",
 	"version": "3.2.0",
-	"enabledApiProposals": [],
 	"publisher": "JannisX11",
 	"engines": {
 		"vscode": "^1.44.0"
