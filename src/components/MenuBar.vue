@@ -18,7 +18,7 @@
         	<li class="mode_selector preview" :class="{selected: selected_tab == 'preview'}" @click="$emit('changetab', 'preview')">Preview</li>
 		</template>
 
-		<div @click="openHelpPanel()" class="mode_selector highlighting_button" :class="{selected: is_help_panel_open}" title="Help">
+		<div @click="openHelpPanel()" class="mode_selector highlighting_button" :class="{selected: is_help_panel_open}" title="Documentation">
 			<HelpCircle :size="20" />
 		</div>
 		<div v-if="canShare" @click="onShareParticle" class="mode_selector highlighting_button" title="Share">
@@ -92,12 +92,12 @@ const Menu = [
 	{
 		label: 'Help',
 		children: [
-			{label: 'Open Guide', click: (vm) => { vm.openHelpPanel('', '') }},
-			{label: 'MoLang Reference', click: (vm) => { vm.openHelpPanel('general', 'molang') }},
+			{label: 'Open Documentation', click: (vm) => { vm.openHelpPanel('', '') }},
+			{label: 'Molang Reference', click: (vm) => { vm.openHelpPanel('general', 'molang') }},
 			{label: 'Snowstorm Tutorial', click: () => { openLink('https://docs.microsoft.com/en-us/minecraft/creator/documents/particleeffects') }},
 			{label: 'Tutorial Video', click: () => { openLink('https://youtu.be/J1Ub1tbO9gg') }},
 			{label: 'Format Documentation', click: () => { openLink('https://docs.microsoft.com/en-us/minecraft/creator/reference/content/particlesreference/') }},
-			{label: 'MoLang Grapher', click: () => { openLink('https://jannisx11.github.io/molang-grapher/') }},
+			{label: 'Molang Grapher', click: () => { openLink('https://jannisx11.github.io/molang-grapher/') }},
 			{label: 'Report a Bug', click: () => { openLink('https://github.com/JannisX11/snowstorm/issues') }},
 			{label: 'Discord Server', click: () => { openLink('https://discord.gg/W9d78Z8AvM') }},
 		]

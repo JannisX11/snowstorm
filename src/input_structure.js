@@ -56,7 +56,7 @@ const Data = {
 				local_velocity: new Input({
 					id: 'space_local_velocity',
 					label: 'Local Velocity',
-					info: 'When enabled and the effect is attached to an entity, the particle velocity will simulate in entity space.',
+					info: 'When enabled, the emitter\'s velocity will be added to the initial particle velocity.',
 					type: 'checkbox'
 				})
 			}
@@ -83,7 +83,7 @@ const Data = {
 				rate: new Input({
 					id: 'emitter_rate_rate',
 					label: 'Rate',
-					info: 'How often a particle is emitted, in particles/sec. Evaluated once per particle emitted.',
+					info: 'How often a particle is emitted, in particles/second.',
 					enabled_modes: ['steady'],
 					required: true,
 					value: 4,
@@ -98,7 +98,7 @@ const Data = {
 				maximum: new Input({
 					id: 'emitter_rate_maximum',
 					label: 'Maximum',
-					info: '',
+					info: 'Maximum amount of particles that can be active before the emitter stops spawning new ones.',
 					enabled_modes: ['steady', 'manual'],
 					required: true,
 					value: 100,
@@ -125,7 +125,7 @@ const Data = {
 				active_time: new Input({
 					id: 'emitter_lifetime_active_time',
 					label: 'Active Time',
-					info: '',
+					info: 'How long the emitter will be active for',
 					enabled_modes: ['looping', 'once'],
 					required: true,
 					value: 1,
@@ -134,14 +134,14 @@ const Data = {
 				sleep_time: new Input({
 					id: 'emitter_lifetime_sleep_time',
 					label: 'Sleep Time',
-					info: 'emitter will pause emitting particles for this time per loop',
+					info: 'How long the emitter will pause and not emit particles, when used in looping mode.',
 					enabled_modes: ['looping'],
 					//updatePreview: (v) => {Emitter.sleep_time = v}
 				}),
 				activation: new Input({
 					id: 'emitter_lifetime_activation',
 					label: 'Activation',
-					info: 'When the expression is non-zero, the emitter will emit particles',
+					info: 'When the expression is non-zero, the emitter will start emitting particles',
 					required: true,
 					enabled_modes: ['expression']
 				}),
@@ -266,8 +266,8 @@ const Data = {
 				}),
 				linear_drag_coefficient: new Input({
 					id: 'particle_motion_linear_drag_coefficient',
-					label: 'Air Drag',
-					info: 'Think of this as air-drag.  The higher the value, the more drag evaluated every frame.',
+					label: 'Linear Drag',
+					info: 'Think of this as air-drag.  The higher the value, the more drag.',
 					enabled_modes: ['dynamic']
 				}),
 				relative_position: new Input({
@@ -320,7 +320,7 @@ const Data = {
 				}),
 				rotation_drag_coefficient: new Input({
 					id: 'particle_rotation_rotation_drag_coefficient',
-					label: 'Air Drag',
+					label: 'Linear Drag',
 					info: 'Rotation resistance. Higher numbers will retard the rotation over time.',
 					enabled_modes: ['dynamic']
 				}),
@@ -339,14 +339,14 @@ const Data = {
 				toggle: new Input({
 					id: 'particle_collision_toggle',
 					label: 'Collide',
-					info: 'Make the particle collide with the world',
+					info: 'Enable collision of the particle with the world',
 					type: 'checkbox',
 					mode_groups: ['motion', 'collision'],
 				}),
 				collision_radius: new Input({
 					id: 'particle_collision_collision_radius',
 					label: 'Radius',
-					info: 'Used to minimize interpenetration of particles with the environment',
+					info: 'The radius of the particle, as used for collision.',
 					min: 0.0,
 					max: 0.5,
 					step: 0.05,
@@ -365,7 +365,7 @@ const Data = {
 				coefficient_of_restitution: new Input({
 					id: 'particle_collision_coefficient_of_restitution',
 					label: 'Bounciness',
-					info: 'Set to 0.0 to not bounce, 1.0 to bounce back up to original hight',
+					info: 'The amount of momentum that is maintained on bounce. Set to 0.0 to not bounce, 1.0 to bounce back up to original height',
 					type: 'number',
 					step: 0.1,
 					enabled_modes: [true]
@@ -476,6 +476,7 @@ const Data = {
 					id: 'particle_color_light',
 					label: 'Environment Lighting',
 					type: 'checkbox',
+					info: 'If enabled, the particle gets darker at night and in darker areas. Otherwise the particle always displays at full brightness.'
 				}),
 			}
 		},
@@ -509,18 +510,18 @@ const Data = {
 					label: 'Color',
 					type: 'color',
 					enabled_modes: ['static'],
-					info: 'Set a static color for all emitted particles. Transparency is supported when the material is "Blend".'
+					info: 'Set a static color for all emitted particles. Transparency is supported if the material supports blending.'
 				}),
 				interpolant: new Input({
 					id: 'particle_color_interpolant',
 					label: 'Interpolant',
-					info: 'Color Gradient Interpolant. Hint: use a curve here!',
+					info: 'Interpolant for the gradient value. A color for each particle will be picked from the gradient using the result of this expression, between 0 and "Range".',
 					enabled_modes: ['gradient']
 				}),
 				range: new Input({
 					id: 'particle_color_range',
 					label: 'Range',
-					info: 'Color Gradient Range',
+					info: 'The range of the color gradient. By default, gradients range from 0 to 1.',
 					type: 'number',
 					value: 1,
 					enabled_modes: ['gradient']
@@ -528,14 +529,14 @@ const Data = {
 				gradient: new Gradient({
 					id: 'particle_color_gradient',
 					label: 'Gradient',
-					info: 'Gradient',
+					info: 'Create a gradient by setting, arranging, and recoloring individual color points.',
 					type: 'gradient',
 					enabled_modes: ['gradient']
 				}),
 				expression: new Input({
 					id: 'particle_color_expression',
 					label: 'Color',
-					info: 'Set the color per particle using MoLang expressions in RGBA channels between 0 and 1. Alpha channel display is only supported with "Blend" material.',
+					info: 'Set the color per particle using Molang expressions in RGBA channels between 0 and 1. Alpha channel is supported if the material supports blending.',
 					axis_count: 4,
 					enabled_modes: ['expression']
 				}),
@@ -634,12 +635,14 @@ const Data = {
 				stretch_to_lifetime: new Input({
 					id: 'particle_texture_stretch_to_lifetime',
 					label: 'Stretch To Lifetime',
+					info: 'Enable to stretch the frames in the animation to the expected lifetime of the particle',
 					type: 'checkbox',
 					enabled_modes: ['animated']
 				}),
 				loop: new Input({
 					id: 'particle_texture_loop',
 					label: 'Loop',
+					info: 'Loop the texture animation',
 					type: 'checkbox',
 					enabled_modes: ['animated']
 				}),
@@ -768,7 +771,7 @@ const Data = {
 				creation_vars: new Input({
 					id: 'variables_creation_vars',
 					label: 'Start Variables',
-					info: 'Set up MoLang Variables when the emitter starts',
+					info: 'Set up Molang variables when the emitter starts',
 					placeholder: 'variable.name = value;',
 					type: 'molang',
 					axis_count: -1,
@@ -787,7 +790,7 @@ const Data = {
 				tick_vars: new Input({
 					id: 'variables_tick_vars',
 					label: 'Tick Variables',
-					info: 'MoLang Variables that get processed for every Emitter update',
+					info: 'Molang variables that get processed for every emitter update',
 					placeholder: 'variable.name = value;',
 					type: 'molang',
 					axis_count: -1,
