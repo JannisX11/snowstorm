@@ -18,7 +18,7 @@
         	<li class="mode_selector preview" :class="{selected: selected_tab == 'preview'}" @click="$emit('changetab', 'preview')">Preview</li>
 		</template>
 
-		<div @click="openHelpPanel()" class="mode_selector highlighting_button" :class="{selected: is_help_panel_open}" title="Documentation">
+		<div v-if="!portrait_view" @click="openHelpPanel()" class="mode_selector highlighting_button" :class="{selected: is_help_panel_open}" title="Documentation">
 			<HelpCircle :size="20" />
 		</div>
 		<div v-if="canShare" @click="onShareParticle" class="mode_selector highlighting_button" title="Share">

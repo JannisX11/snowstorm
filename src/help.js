@@ -94,6 +94,7 @@ export default {
 				title: 'Space',
 				inputs: {
 					local_position: {
+						type: 'toggle',
 						display_input_info: false,
 						text: [
 							'When enabled, the particle will always move in local space relative to the emitter. When attached to an entity, this means that all particles will move along with the entity.',
@@ -102,6 +103,7 @@ export default {
 						]
 					},
 					local_rotation: {
+						type: 'toggle',
 						display_input_info: false,
 						text: [
 							'Rotate the local space along with the entity that it is attached to. See Local Position',
@@ -109,6 +111,7 @@ export default {
 						]
 					},
 					local_velocity: {
+						type: 'toggle',
 					}
 				}
 			}
@@ -357,6 +360,7 @@ export default {
 						evaluation: 'per_tick'
 					},
 					events: {
+						type: 'event_trigger'
 					},
 					expire_on_contact: {
 						type: 'toggle',
@@ -609,44 +613,77 @@ export default {
 
 					{type: 'h2', text: 'Particle'},
 					'Trigger a new particle effect at the location where the event was fired.',
+					{
+						type: 'input_list',
+						inputs: {
+							identifier: {
+								type: 'text',
+								label: 'Identifier',
+								text: [
+									'Enter the identifier of the particle effect to trigger.',
+								]
+							},
+							type: {
+								type: 'select',
+								label: 'Type',
+								text: 'Select how the particle effect is played.',
+								text: [
+									{type: 'h3', text: 'Emitter'},
+									'Create an emitter of the specified particle effect at the event\'s world location.',
+									{type: 'h3', text: 'Emitter Bound'},
+									'Create an emitter of the specified particle effect at the event\'s location. If the firing emitter is bound to an entity or locator, the new emitter will be bound to the same entity or locator.',
+									{type: 'h3', text: 'Particle'},
+									'Manually emit a particle on an emitter of the specified type at the event location, creating the emitter if it doesn\'t already exist.',
+									'Make sure to use the Spawn Amount mode "Manual" on the child particle effect.',
+									{type: 'h3', text: 'Particle with Velocity'},
+									'The same as "Particle" except the new particle will inherit the spawning particle\'s velocity.',
+								]
+							},
+							expression: {
+								label: 'Expression',
+								type: 'molang',
+								context: 'spawned_emitter',
+								evaluation: 'once',
+								text: [
+									'A Molang expression to run on the newly spawned emitter. Note that you do not have access to the variable scope of the event firing emitter.'
+								]
+							}
+						}
+					},
+
 					{type: 'h2', text: 'Sound'},
-					'Play a sound effect at the location where the event was fired. Only vanilla sound identifiers are supported due to a Minecraft bug.',
+					'Play a sound effect at the location where the event was fired.',
+					{
+						type: 'input_list',
+						inputs: {
+							identifier: {
+								type: 'text',
+								label: 'Sound Event',
+								text: [
+									'Enter the identifier of the sound effect to trigger. Only vanilla sound events are supported due to a Minecraft bug.',
+								]
+							}
+						}
+					},
+
 					{type: 'h2', text: 'Expression'},
 					'Run a molang expression on the emitter that fired the event. This can be used to change the value or variables.',
+					{
+						type: 'input_list',
+						inputs: {
+							expression: {
+								label: 'Expression',
+								type: 'molang',
+								context: 'emitter',
+								evaluation: 'once',
+								text: [
+									'A Molang expression to run on the firing emitter.'
+								]
+							}
+						}
+					},
 				],
 				inputs: {
-					identifier: {
-						type: 'text',
-						label: 'Identifier',
-						text: [
-							'Enter the identifier of the particle effect to trigger.',
-						]
-					},
-					type: {
-						type: 'select',
-						label: 'Type',
-						text: 'Select how the particle effect is played.',
-						text: [
-							{type: 'h3', text: 'Emitter'},
-							'Create an emitter of the specified particle effect at the event\'s world location.',
-							{type: 'h3', text: 'Emitter Bound'},
-							'Create an emitter of the specified particle effect at the event\'s location. If the firing emitter is bound to an entity or locator, the new emitter will be bound to the same entity or locator.',
-							{type: 'h3', text: 'Particle'},
-							'Manually emit a particle on an emitter of the specified type at the event location, creating the emitter if it doesn\'t already exist.',
-							'Make sure to use the Spawn Amount mode "Manual" on the child particle effect.',
-							{type: 'h3', text: 'Particle with Velocity'},
-							'The same as "Particle" except the new particle will inherit the spawning particle\'s velocity.',
-						]
-					},
-					expression: {
-						label: 'Expression',
-						type: 'molang',
-						context: 'spawned_emitter',
-						evaluation: 'once',
-						text: [
-							'A Molang expression to run on the newly spawned emitter. Note that you do not have access to the variable scope of the event firing emitter.'
-						]
-					}
 				}
 			},
 			emitter_events: {

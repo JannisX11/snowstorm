@@ -145,6 +145,7 @@ function getInitialIsSidebarOpen() {
     return {
       code: '',
       tab: portrait_view ? 'config' : 'preview',
+      previous_tab: 'config',
       dialog: null,
       sidebar_width: getInitialSidebarWidth(),
       is_sidebar_open: getInitialIsSidebarOpen(),
@@ -155,6 +156,7 @@ function getInitialIsSidebarOpen() {
   methods: {
     setTab: function setTab(tab) {
       var _this = this;
+      this.previous_tab = this.tab;
       this.tab = tab;
       vue__WEBPACK_IMPORTED_MODULE_15__["default"].nextTick(function () {
         _this.$refs.preview.updateSize();
@@ -173,11 +175,12 @@ function getInitialIsSidebarOpen() {
           while (1) switch (_context.prev = _context.next) {
             case 0:
               _this2.is_help_panel_open = true;
-              _context.next = 3;
+              _this2.setTab('help');
+              _context.next = 4;
               return vue__WEBPACK_IMPORTED_MODULE_15__["default"].nextTick();
-            case 3:
-              _this2.$refs.help_panel.openPage(tab_key, group_key);
             case 4:
+              _this2.$refs.help_panel.openPage(tab_key, group_key);
+            case 5:
             case "end":
               return _context.stop();
           }
@@ -497,18 +500,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _help__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./../help */ "./src/help.js");
-/* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/x.js");
-/* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/chevron-left.js");
-/* harmony import */ var _HelpText_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./HelpText.vue */ "./src/components/HelpText.vue");
-/* harmony import */ var _input_structure__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./../input_structure */ "./src/input_structure.js");
-//
-//
-//
-//
-//
-//
-//
-//
+/* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/x.js");
+/* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/chevron-left.js");
+/* harmony import */ var _HelpPanel_HelpText_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./HelpPanel/HelpText.vue */ "./src/components/HelpPanel/HelpText.vue");
+/* harmony import */ var _HelpPanel_HelpInputList_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./HelpPanel/HelpInputList.vue */ "./src/components/HelpPanel/HelpInputList.vue");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
 //
 //
 //
@@ -538,44 +534,29 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
-/**
-General
-	Documentation
-	Molang
-File
-	File
-	Space
-Emitter
-Motion
-Appearance
- */
 
 
 
 
 
+
+// Manually register globally to avoid circular reference
+vue__WEBPACK_IMPORTED_MODULE_3__["default"].component('HelpInputList', _HelpPanel_HelpInputList_vue__WEBPACK_IMPORTED_MODULE_2__["default"]);
+vue__WEBPACK_IMPORTED_MODULE_3__["default"].component('HelpText', _HelpPanel_HelpText_vue__WEBPACK_IMPORTED_MODULE_1__["default"]);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: 'help-panel',
   data: function data() {
     return {
       category_key: '',
       page_key: '',
-      HelpData: _help__WEBPACK_IMPORTED_MODULE_0__["default"],
-      labels: {
-        text: 'Text',
-        number: 'Number',
-        molang: 'MoLang',
-        toggle: 'Toggle',
-        evaluation_once: 'Evaluated once',
-        evaluation_per_tick: 'Evaluated each tick',
-        evaluation_per_particle: 'Evaluated once per particle emitted'
-      }
+      HelpData: _help__WEBPACK_IMPORTED_MODULE_0__["default"]
     };
   },
   components: {
-    X: lucide_vue__WEBPACK_IMPORTED_MODULE_3__["default"],
-    ChevronLeft: lucide_vue__WEBPACK_IMPORTED_MODULE_4__["default"],
-    HelpText: _HelpText_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
+    HelpText: _HelpPanel_HelpText_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
+    HelpInputList: _HelpPanel_HelpInputList_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
+    X: lucide_vue__WEBPACK_IMPORTED_MODULE_4__["default"],
+    ChevronLeft: lucide_vue__WEBPACK_IMPORTED_MODULE_5__["default"]
   },
   props: {
     portrait_view: Boolean
@@ -590,28 +571,16 @@ Appearance
     openPage: function openPage(category_key, page_key) {
       this.category_key = category_key;
       this.page_key = page_key;
-    },
-    getInput: function getInput(input_key) {
-      var _Data$this$category_k;
-      var input = (_Data$this$category_k = _input_structure__WEBPACK_IMPORTED_MODULE_2__["default"][this.category_key]) === null || _Data$this$category_k === void 0 || (_Data$this$category_k = _Data$this$category_k[this.page_key]) === null || _Data$this$category_k === void 0 ? void 0 : _Data$this$category_k.inputs[input_key];
-      return input !== null && input !== void 0 ? input : 0;
-    },
-    isInputVisible: function isInputVisible(input_key) {
-      var _Data$this$category_k2;
-      var input = this.getInput(input_key);
-      if (!input) return true;
-      var group = (_Data$this$category_k2 = _input_structure__WEBPACK_IMPORTED_MODULE_2__["default"][this.category_key]) === null || _Data$this$category_k2 === void 0 ? void 0 : _Data$this$category_k2[this.page_key];
-      return input.isVisible(group);
     }
   }
 });
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/components/HelpText.vue?vue&type=script&lang=js&":
-/*!******************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/components/HelpText.vue?vue&type=script&lang=js& ***!
-  \******************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/components/HelpPanel/HelpInputList.vue?vue&type=script&lang=js&":
+/*!*********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/components/HelpPanel/HelpInputList.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************************************************************************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -619,6 +588,118 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/brackets.js");
+/* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/whole-word.js");
+/* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/check-square.js");
+/* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/menu.js");
+/* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/gauge.js");
+/* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/palette.js");
+/* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/zap.js");
+/* harmony import */ var _input_structure__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../input_structure */ "./src/input_structure.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  name: 'help-input-list',
+  components: {
+    Brackets: lucide_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
+    WholeWord: lucide_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
+    CheckSquare: lucide_vue__WEBPACK_IMPORTED_MODULE_3__["default"],
+    Menu: lucide_vue__WEBPACK_IMPORTED_MODULE_4__["default"],
+    Gauge: lucide_vue__WEBPACK_IMPORTED_MODULE_5__["default"],
+    Palette: lucide_vue__WEBPACK_IMPORTED_MODULE_6__["default"],
+    Zap: lucide_vue__WEBPACK_IMPORTED_MODULE_7__["default"]
+  },
+  props: {
+    inputs: Object,
+    category_key: String,
+    page_key: String
+  },
+  data: function data() {
+    return {
+      labels: {
+        text: 'Text',
+        number: 'Number',
+        molang: 'Molang',
+        toggle: 'Toggle',
+        emitter: 'Per Emitter',
+        particle: 'Per Particle',
+        curve: 'Per Curve',
+        spawned_emitter: 'Spawned Emitter Context',
+        evaluation_once: 'Evaluated once',
+        evaluation_per_tick: 'Evaluated each tick',
+        evaluation_per_loop: 'Evaluated each loop',
+        evaluation_per_use: 'Evaluated each time',
+        evaluation_per_render: 'Evaluated each render',
+        evaluation_per_particle: 'Evaluated on particle spawn'
+      },
+      input_context_color: {
+        emitter: '#e98989',
+        particle: '#f9da88',
+        spawned_emitter: '#db57ae'
+      }
+    };
+  },
+  methods: {
+    getInput: function getInput(input_key) {
+      var _Data$this$category_k;
+      var input = (_Data$this$category_k = _input_structure__WEBPACK_IMPORTED_MODULE_0__["default"][this.category_key]) === null || _Data$this$category_k === void 0 || (_Data$this$category_k = _Data$this$category_k[this.page_key]) === null || _Data$this$category_k === void 0 || (_Data$this$category_k = _Data$this$category_k.inputs) === null || _Data$this$category_k === void 0 ? void 0 : _Data$this$category_k[input_key];
+      return input !== null && input !== void 0 ? input : 0;
+    },
+    isInputVisible: function isInputVisible(input_key) {
+      var _Data$this$category_k2;
+      var input = this.getInput(input_key);
+      if (!input) return true;
+      var group = (_Data$this$category_k2 = _input_structure__WEBPACK_IMPORTED_MODULE_0__["default"][this.category_key]) === null || _Data$this$category_k2 === void 0 ? void 0 : _Data$this$category_k2[this.page_key];
+      return input.isVisible(group);
+    },
+    consistentPuncuation: function consistentPuncuation(input) {
+      if (!input) return '';
+      if (input.endsWith('.') || input.endsWith('!')) return input;
+      return input + '.';
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/components/HelpPanel/HelpText.vue?vue&type=script&lang=js&":
+/*!****************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/components/HelpPanel/HelpText.vue?vue&type=script&lang=js& ***!
+  \****************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+//
+//
 //
 //
 //
@@ -825,12 +906,12 @@ var Menu = [{
 }, {
   label: 'Help',
   children: [{
-    label: 'Open Guide',
+    label: 'Open Documentation',
     click: function click(vm) {
       vm.openHelpPanel('', '');
     }
   }, {
-    label: 'MoLang Reference',
+    label: 'Molang Reference',
     click: function click(vm) {
       vm.openHelpPanel('general', 'molang');
     }
@@ -850,7 +931,7 @@ var Menu = [{
       openLink('https://docs.microsoft.com/en-us/minecraft/creator/reference/content/particlesreference/');
     }
   }, {
-    label: 'MoLang Grapher',
+    label: 'Molang Grapher',
     click: function click() {
       openLink('https://jannisx11.github.io/molang-grapher/');
     }
@@ -4249,7 +4330,7 @@ var Curve = /*#__PURE__*/function () {
     this.inputs = {
       id: new _input__WEBPACK_IMPORTED_MODULE_2__["default"]({
         label: 'Name',
-        info: 'The MoLang variable to be used later in MoLang expressions. Must begin with "variable."',
+        info: 'The Molang variable to be used later in Molang expressions. Must begin with "variable."',
         placeholder: 'variable.curve1',
         type: 'text',
         value: data ? '' : 'variable.',
@@ -5584,17 +5665,50 @@ function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == 
 function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : String(i); }
 function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_defineProperty({
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   general: {
     title: 'General',
     pages: {
       overview: {
         title: 'Introduction',
-        text: []
+        text: ['Snowstorm is a tool to visually create and edit particles for Minecraft: Bedrock Edition.', {
+          type: 'h2',
+          text: 'Documentation'
+        }, {
+          type: 'link',
+          text: 'Introduction to Particles',
+          href: 'https://learn.microsoft.com/en-us/minecraft/creator/reference/content/particlesreference/particlesintroduction'
+        }, {
+          type: 'link',
+          text: 'Introduction to Snowstorm',
+          href: 'https://learn.microsoft.com/en-us/minecraft/creator/documents/particleeffects'
+        }, {
+          type: 'link',
+          text: 'Particle Component List',
+          href: 'https://learn.microsoft.com/en-us/minecraft/creator/reference/content/particlesreference/particlecomponentlist'
+        }, {
+          type: 'h2',
+          text: 'Tutorials'
+        }, {
+          type: 'link',
+          text: '"How to use Snowstorm to create particle effects" by McHorse',
+          href: 'https://youtu.be/J1Ub1tbO9gg'
+        }, {
+          type: 'h2',
+          text: 'Links'
+        }, {
+          type: 'link',
+          text: 'Snowstorm Discord Server',
+          href: 'https://discord.gg/W9d78Z8AvM'
+        }]
       },
       molang: {
-        title: 'MoLang Reference',
-        text: [{
+        title: 'Molang Reference',
+        text: ['Molang is a C-like scripting value that can be used to dynamically calculate values for particle attributes. It is supported for most numeric values in Snowstorm.', {
+          type: 'link',
+          href: 'https://docs.microsoft.com/en-us/minecraft/creator/reference/content/molangreference/examples/molangconcepts/molangintroduction',
+          text: 'Full Molang Documentation'
+        }, 'This page acts as a reference sheet and lists all built-in variables and math functions.', 'Note that Molang calculates all angles in degrees.', {
           type: 'h2',
           text: 'Variables'
         }, {
@@ -5760,9 +5874,6 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
           type: 'code',
           code: 'math.ln(value)',
           text: 'Natural logarithm of value'
-        }, {
-          type: 'html',
-          content: '<a href="https://docs.microsoft.com/en-us/minecraft/creator/reference/content/molangreference/examples/molangconcepts/molangintroduction" target="_blank" style="margin-top: 12px; display: block;">Full MoLang Documentation</a>'
         }]
       }
     }
@@ -5782,14 +5893,18 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
       space: {
         title: 'Space',
         inputs: {
-          local_space: {
+          local_position: {
+            type: 'toggle',
+            display_input_info: false,
             text: ['When enabled, the particle will always move in local space relative to the emitter. When attached to an entity, this means that all particles will move along with the entity.', 'When disabled, particles are emitted relative to the emitter, then simulate independently from the emitter in the world', 'Enabling this will prevent collisions with the world from working.']
           },
           local_rotation: {
-            text: ['Rotate the local space along with the entity that it is attached to. See #setup.local_space', 'Local position needs to be enabled for local rotation to work']
+            type: 'toggle',
+            display_input_info: false,
+            text: ['Rotate the local space along with the entity that it is attached to. See Local Position', 'Local position needs to be enabled for local rotation to work']
           },
           local_velocity: {
-            text: 'When enabled, the velocity of the emitter will be added to the particles velocity.'
+            type: 'toggle'
           }
         }
       }
@@ -5803,6 +5918,7 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
         text: [],
         inputs: {
           mode: {
+            type: 'select',
             text: [{
               type: 'h3',
               text: 'Steady'
@@ -5832,14 +5948,16 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
         title: 'Emitter Lifetime',
         text: 'Control how long the emitter lasts and whether it should loop.',
         inputs: {
-          mode: {},
+          mode: {
+            type: 'select'
+          },
           active_time: {
             type: 'molang',
-            evaluation: 'per_tick'
+            evaluation: 'per_loop'
           },
           sleep_time: {
             type: 'molang',
-            evaluation: 'per_tick'
+            evaluation: 'per_loop'
           },
           activation: {
             type: 'molang',
@@ -5855,21 +5973,44 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
         title: 'Spawn Shape',
         text: 'Control at which position and in which shape particles are spawned.',
         inputs: {
+          mode: {
+            type: 'select',
+            text: [{
+              type: 'h3',
+              text: 'Point'
+            }, 'Emit particles at a single point at the position of the emitter.', {
+              type: 'h3',
+              text: 'Sphere'
+            }, 'Emit particle in a spherical shape.', {
+              type: 'h3',
+              text: 'Box'
+            }, 'Emit particles in a box shape', {
+              type: 'h3',
+              text: 'Disc'
+            }, 'Emit particles in a disc shape.', {
+              type: 'h3',
+              text: 'Entity Bounding Box'
+            }, 'Emit particles in a box which size adapts to the collision box of the entity that the particle is played on. Only works on particles that are played client-side.']
+          },
           offset: {
             type: 'molang',
-            evaluation: 'per_particle'
+            evaluation: 'once',
+            context: 'particle'
           },
           radius: {
             type: 'molang',
-            evaluation: 'per_particle'
+            evaluation: 'once',
+            context: 'particle'
           },
           half_dimensions: {
             type: 'molang',
-            evaluation: 'per_particle'
+            evaluation: 'once',
+            context: 'particle'
           },
           plane_normal: {
             type: 'molang',
-            evaluation: 'per_particle'
+            evaluation: 'once',
+            context: 'particle'
           },
           surface_only: {
             type: 'toggle'
@@ -5886,36 +6027,61 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
         title: 'Motion',
         inputs: {
           mode: {
-            type: 'molang',
-            evaluation: 'per_particle'
+            type: 'select',
+            text: [{
+              type: 'h3',
+              text: 'Dynamic'
+            }, 'The particle moves dynamically, based on initial speed, acceleration, and drag.', {
+              type: 'h3',
+              text: 'Parametric'
+            }, 'The particle position is calculated each tick using the offset vector. Note: This only works in local space and does not support collisions and block tests.', {
+              type: 'h3',
+              text: 'Static'
+            }, 'The particle does not move.']
           },
           direction_mode: {
-            type: 'molang',
-            evaluation: 'per_particle'
+            type: 'select',
+            text: [{
+              type: 'h3',
+              text: 'Outwards'
+            }, 'Particle direction is set to move away from the emitter', {
+              type: 'h3',
+              text: 'Inwards'
+            }, 'Particle direction is set to move towards the emitter', {
+              type: 'h3',
+              text: 'Custom'
+            }, 'Set a custom direction vector in the direction field']
           },
           direction: {
             type: 'molang',
-            evaluation: 'per_particle'
+            context: 'particle',
+            evaluation: 'once'
           },
           linear_speed: {
             type: 'molang',
-            evaluation: 'per_particle'
+            context: 'particle',
+            evaluation: 'once'
           },
           linear_acceleration: {
             type: 'molang',
-            evaluation: 'per_particle'
+            context: 'particle',
+            evaluation: 'per_tick'
           },
           linear_drag_coefficient: {
             type: 'molang',
-            evaluation: 'per_particle'
+            context: 'particle',
+            evaluation: 'per_tick',
+            text: ['Drag slows the particle down over time. You can also use negative values to accelerate the particle over time.']
           },
           relative_position: {
             type: 'molang',
-            evaluation: 'per_particle'
+            context: 'particle',
+            evaluation: 'per_tick'
           },
           relative_direction: {
             type: 'molang',
-            evaluation: 'per_particle'
+            context: 'particle',
+            evaluation: 'per_tick'
           }
         }
       },
@@ -5923,60 +6089,71 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
         title: 'Rotation',
         inputs: {
           mode: {
-            type: 'molang',
-            evaluation: 'per_particle'
+            type: 'select',
+            text: [{
+              type: 'h3',
+              text: 'Dynamic'
+            }, 'The particle rotates dynamically, based on initial speed, acceleration, and drag.', {
+              type: 'h3',
+              text: 'Parametric'
+            }, 'The particle rotation is calculated each tick from a Molang expression.']
           },
           initial_rotation: {
             type: 'molang',
-            evaluation: 'per_particle'
+            context: 'particle',
+            evaluation: 'once'
           },
           rotation_rate: {
             type: 'molang',
-            evaluation: 'per_particle'
+            context: 'particle',
+            evaluation: 'once'
           },
           rotation_acceleration: {
             type: 'molang',
-            evaluation: 'per_particle'
+            context: 'particle',
+            evaluation: 'per_tick'
           },
           rotation_drag_coefficient: {
             type: 'molang',
-            evaluation: 'per_particle'
+            context: 'particle',
+            evaluation: 'per_tick'
           },
           rotation: {
             type: 'molang',
-            evaluation: 'per_particle'
+            context: 'particle',
+            evaluation: 'per_tick',
+            text: 'This is used for parametric rotation.'
           }
         }
       },
       collision: {
         title: 'Collision',
+        text: ['Enable collision to allow particles to collide with blocks in your world.', 'Collision only works if the particles are moving in world space and are using dynamic motion.', 'On collision, particles can be set to bounce back, or to expire on contact. It is also possible to execute events.', 'For preview inside Snowstorm, particles collide with the ground plane that is visualized by the grid. This can be turned on or off using the Preview Collisions button in the toolbar below the viewport.'],
         inputs: {
           toggle: {
             type: 'toggle'
           },
           collision_radius: {
-            type: 'molang',
-            evaluation: 'per_particle'
+            type: 'number'
           },
           collision_drag: {
-            type: 'molang',
-            evaluation: 'per_particle'
+            type: 'number',
+            text: ['Useful for emulating friction/drag when colliding, e.g a particle that hits the ground would slow to a stop.', 'The particle is slowed down by the drag amount in blocks/sec.']
           },
           coefficient_of_restitution: {
-            type: 'molang',
-            evaluation: 'per_particle'
+            type: 'number',
+            text: ['Also known as the coefficient of restitution.']
           },
           condition: {
             type: 'molang',
-            evaluation: 'per_particle'
+            context: 'particle',
+            evaluation: 'per_tick'
           },
           events: {
-            type: 'molang',
-            evaluation: 'per_particle'
+            type: 'event_trigger'
           },
           expire_on_contact: {
-            type: 'molang',
-            evaluation: 'per_particle'
+            type: 'toggle'
           }
         }
       }
@@ -5987,11 +6164,131 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
     pages: {
       appearance: {
         title: 'Appearance',
-        inputs: {}
+        inputs: {
+          size: {
+            type: 'molang',
+            context: 'particle',
+            evaluation: 'per_tick'
+          },
+          material: {
+            type: 'select',
+            text: [{
+              type: 'h3',
+              text: 'Alpha Test'
+            }, 'Alpha test materials allow opaque and transparent pixels, but no in-between.', {
+              type: 'h3',
+              text: 'Blend'
+            }, 'Blend supports partial transparency in pixels. Note that with this material, particles of different colors, even from different effect, can cause visual flickering in-game when viewed behind each other.', {
+              type: 'h3',
+              text: 'Additive'
+            }, 'Partial transparency is supported. Particles are stacked on top of each other using additive blending. This is ideal for creating light effects.', {
+              type: 'h3',
+              text: 'Opaque'
+            }, 'The particle is fully opaque, no transparent pixels are supported.', {
+              type: 'h3',
+              text: 'Custom:'
+            }, 'Enter a custom material identifier.']
+          },
+          facing_camera_mode: {
+            type: 'select',
+            text: [{
+              type: 'h3',
+              text: 'Rotate XYZ'
+            }, 'Rotate the particle to be parallel with the camera on all axes.', {
+              type: 'h3',
+              text: 'Rotate Y'
+            }, 'Rotate the particle to be parallel with the camera on all the Y axis.', {
+              type: 'h3',
+              text: 'Look at XYZ'
+            }, 'Rotate the particle to point at the camera on all axes.', {
+              type: 'h3',
+              text: 'Look at Y'
+            }, 'Rotate the particle to point at the camera on the Y axis.', {
+              type: 'h3',
+              text: 'Look at Direction'
+            }, 'Rotate the particle to point at the camera around the axis of its own direction vector.', {
+              type: 'h3',
+              text: 'Direction X'
+            }, 'Rotate the particle to face towards the X direction of its own direction vector.', {
+              type: 'h3',
+              text: 'Direction Y'
+            }, 'Rotate the particle to face towards the Y direction of its own direction vector.', {
+              type: 'h3',
+              text: 'Direction Z'
+            }, 'Rotate the particle to face towards the Z direction of its own direction vector.', {
+              type: 'h3',
+              text: 'Emitter XY-Plane'
+            }, 'Rotate the particle along the XY-plane of the emitter', {
+              type: 'h3',
+              text: 'Emitter XZ-Plane'
+            }, 'Rotate the particle along the XZ-plane of the emitter', {
+              type: 'h3',
+              text: 'Emitter YZ-Plane'
+            }, 'Rotate the particle along the YZ-plane of the emitter']
+          },
+          direction_mode: {
+            type: 'select',
+            text: [{
+              type: 'h3',
+              text: 'From Motion'
+            }, 'Derive the direction of the particle from its motion vector if the speed of the particle is above a custom threshold.', {
+              type: 'h3',
+              text: 'Custom'
+            }, 'Set a custom direction vector.']
+          },
+          speed_threshold: {
+            type: 'molang',
+            context: 'particle',
+            evaluation: 'per_tick'
+          },
+          direction: {
+            type: 'molang',
+            context: 'particle',
+            evaluation: 'per_tick'
+          },
+          light: {
+            type: 'toggle'
+          }
+        }
       },
       color: {
         title: 'Color',
-        inputs: {}
+        text: ['Tint the particles using specific colors. Transparency is supported if the material supports blending.', 'Colors are applied via multiplication, which means a white texture is the ideal base for tinting.'],
+        inputs: {
+          mode: {
+            type: 'select',
+            text: [{
+              type: 'h3',
+              text: 'Static'
+            }, 'Set a static color to tint the particle.', {
+              type: 'h3',
+              text: 'Gradient'
+            }, 'Determine the color of the particle using a gradient.', {
+              type: 'h3',
+              text: 'Expression'
+            }, 'Calculate the tint color using an expression for each RGBA color channel.']
+          },
+          picker: {
+            type: 'color'
+          },
+          interpolant: {
+            type: 'molang',
+            context: 'particle',
+            evaluation: 'per_tick',
+            text: ['Example: At a range of 1, the expression "variable.particle_age / variable.particle_lifetime" will map the gradient along the lifetime of the particle.']
+          },
+          range: {
+            type: 'number'
+          },
+          gradient: {
+            type: 'color'
+          },
+          expression: {
+            type: 'molang',
+            context: 'particle',
+            evaluation: 'per_tick'
+          }
+        }
       }
     }
   },
@@ -6000,11 +6297,69 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
     pages: {
       texture: {
         title: 'Texture',
-        inputs: {}
+        inputs: {
+          path: {
+            type: 'text',
+            text: ['The path should always use forward slashes, and should not include the file extension.']
+          },
+          image: {
+            type: 'image',
+            label: 'Image',
+            text: ['In VS Code, the image gets loaded from the provided texture path automatically. To use this, ensure that you open the entire texture pack folder as a project in VSCode, rather than just the individual particle file.', 'In the web app, you need to upload your PNG file to preview it, unless you are using one of the included vanilla particle files.', 'Painting on the texture is supported using the provided editing tools.']
+          }
+        }
       },
       uv: {
         title: 'UV',
-        inputs: {}
+        text: 'UV mapping determines which part of the texture gets mapped onto the particle billboard. UV mapping is also responsible for creating animated textures.',
+        inputs: {
+          mode: {
+            type: 'select',
+            text: [{
+              type: 'h3',
+              text: 'Static'
+            }, 'Set a static UV map, optionally with Molang expressions.', {
+              type: 'h3',
+              text: 'Full Size'
+            }, 'Set the UV map to the full size of the texture.', {
+              type: 'h3',
+              text: 'Animated'
+            }, 'Create a UV map with flipbook texture animations.']
+          },
+          size: {
+            type: 'number',
+            text: 'This size is used to set a base size for the UV map. This does not have to match the actual texture resolution, but the aspect ratio should be the same.'
+          },
+          uv: {
+            type: 'number',
+            context: 'particle',
+            evaluation: 'per_tick'
+          },
+          uv_size: {
+            type: 'molang',
+            context: 'particle',
+            evaluation: 'per_tick'
+          },
+          uv_step: {
+            type: 'molang',
+            context: 'particle',
+            evaluation: 'per_tick'
+          },
+          frames_per_second: {
+            type: 'number'
+          },
+          max_frame: {
+            type: 'molang',
+            context: 'particle',
+            evaluation: 'per_tick'
+          },
+          stretch_to_lifetime: {
+            type: 'toggle'
+          },
+          loop: {
+            type: 'toggle'
+          }
+        }
       }
     }
   },
@@ -6013,44 +6368,219 @@ function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e 
     pages: {
       lifetime: {
         title: 'Particle Lifetime',
-        inputs: {}
+        inputs: {
+          max_lifetime: {
+            type: 'molang',
+            context: 'particle',
+            evaluation: 'once',
+            text: ['This will set the particle_lifetime variable on the particle, and once the particle_age reaches the lifetime, the particle will expire.']
+          },
+          expiration_expression: {
+            type: 'molang',
+            context: 'particle',
+            evaluation: 'per_tick'
+          },
+          kill_plane: {
+            type: 'number'
+          },
+          expire_in: {
+            type: 'list'
+          },
+          expire_outside: {
+            type: 'list'
+          }
+        }
       }
     }
-  },
-  variables: {
-    title: 'Variables',
-    pages: {}
   },
   events: {
     title: 'Events',
     pages: {
       events: {
         title: 'Events',
+        text: ['Create events that can be triggered from the emitter or a particle. Events can be used to trigger additional particle effects, play sounds, or run Molang expressions.', 'Events can be created with event subparts, which can be randomized or played in sequence. Subparts can be nested.', {
+          type: 'h2',
+          text: 'Sequence'
+        }, 'A sequence can be used to trigger multiple event subparts after one another.', {
+          type: 'h2',
+          text: 'Randomize'
+        }, 'Randomly picks one of the subparts of the randomized list. Subparts can be weighted using the Weight field. The higher the weight, the more likely it is that the option will be selected.', 'You can leave a random subpart empty to add a chance that nothing happens.', {
+          type: 'h2',
+          text: 'Particle'
+        }, 'Trigger a new particle effect at the location where the event was fired.', {
+          type: 'input_list',
+          inputs: {
+            identifier: {
+              type: 'text',
+              label: 'Identifier',
+              text: ['Enter the identifier of the particle effect to trigger.']
+            },
+            type: _defineProperty({
+              type: 'select',
+              label: 'Type',
+              text: 'Select how the particle effect is played.'
+            }, "text", [{
+              type: 'h3',
+              text: 'Emitter'
+            }, 'Create an emitter of the specified particle effect at the event\'s world location.', {
+              type: 'h3',
+              text: 'Emitter Bound'
+            }, 'Create an emitter of the specified particle effect at the event\'s location. If the firing emitter is bound to an entity or locator, the new emitter will be bound to the same entity or locator.', {
+              type: 'h3',
+              text: 'Particle'
+            }, 'Manually emit a particle on an emitter of the specified type at the event location, creating the emitter if it doesn\'t already exist.', 'Make sure to use the Spawn Amount mode "Manual" on the child particle effect.', {
+              type: 'h3',
+              text: 'Particle with Velocity'
+            }, 'The same as "Particle" except the new particle will inherit the spawning particle\'s velocity.']),
+            expression: {
+              label: 'Expression',
+              type: 'molang',
+              context: 'spawned_emitter',
+              evaluation: 'once',
+              text: ['A Molang expression to run on the newly spawned emitter. Note that you do not have access to the variable scope of the event firing emitter.']
+            }
+          }
+        }, {
+          type: 'h2',
+          text: 'Sound'
+        }, 'Play a sound effect at the location where the event was fired.', {
+          type: 'input_list',
+          inputs: {
+            identifier: {
+              type: 'text',
+              label: 'Sound Event',
+              text: ['Enter the identifier of the sound effect to trigger. Only vanilla sound events are supported due to a Minecraft bug.']
+            }
+          }
+        }, {
+          type: 'h2',
+          text: 'Expression'
+        }, 'Run a molang expression on the emitter that fired the event. This can be used to change the value or variables.', {
+          type: 'input_list',
+          inputs: {
+            expression: {
+              label: 'Expression',
+              type: 'molang',
+              context: 'emitter',
+              evaluation: 'once',
+              text: ['A Molang expression to run on the firing emitter.']
+            }
+          }
+        }],
         inputs: {}
       },
       emitter_events: {
         title: 'Emitter Event Triggers',
-        inputs: {}
+        text: ['Fire events on the emitter at certain points during its lifetime.'],
+        inputs: {
+          creation: {
+            type: 'event_trigger'
+          },
+          expiration: {
+            type: 'event_trigger'
+          },
+          travel_distance: {
+            type: 'event_trigger'
+          },
+          looping_travel_distance: {
+            type: 'event_trigger'
+          },
+          timeline: {
+            type: 'event_trigger'
+          }
+        }
       },
       particle_events: {
         title: 'Particle Event Triggers',
-        inputs: {}
+        text: ['Fire events on particles at certain points during their lifetime.'],
+        inputs: {
+          creation: {
+            type: 'event_trigger'
+          },
+          expiration: {
+            type: 'event_trigger'
+          },
+          timeline: {
+            type: 'event_trigger'
+          }
+        }
+      }
+    }
+  },
+  variables: {
+    title: 'Variables & Curves',
+    pages: {
+      variables: {
+        title: 'Variables',
+        inputs: {
+          creation_vars: {
+            type: 'molang',
+            context: 'emitter',
+            evaluation: 'once'
+          },
+          tick_vars: {
+            type: 'molang',
+            context: 'emitter',
+            evaluation: 'per_tick'
+          },
+          particle_update: {
+            type: 'molang',
+            context: 'particle',
+            evaluation: 'per_tick'
+          },
+          particle_render: {
+            type: 'molang',
+            context: 'particle',
+            evaluation: 'per_render'
+          }
+        }
+      },
+      curves: {
+        title: 'Curves',
+        text: ['Curves are a method of mapping an output to a value using a curve.', 'For example, you can create a curve that is mapped to the lifetime of a particle. You can then reference the curve in the particle size fields to animate the size of the particle using the curve.', 'Curves can be accessed multiple times and can be used both in the emitter and particle context, as long as the variables used in Input and Range are available.'],
+        inputs: {
+          id: {
+            label: 'Name',
+            type: 'text',
+            text: 'The Molang variable to be used later in Molang expressions. Must begin with "variable.".'
+          },
+          mode: {
+            type: 'select',
+            label: 'Mode',
+            info: 'Curve interpolation type',
+            text: [{
+              type: 'h3',
+              text: 'Catmull Rom'
+            }, 'A smooth curve along 4 or more control points. The first and last point are just for controlling, and are not part of the curve.', {
+              type: 'h3',
+              text: 'Linear'
+            }, 'A linear curve along 3 or more control points.', {
+              type: 'h3',
+              text: 'Bézier'
+            }, 'A single bezier curve, using a start and end point and two control points.', {
+              type: 'h3',
+              text: 'Bézier Chain'
+            }, 'A chain of individual bezier curves to make up a larger curve.']
+          },
+          input: {
+            type: 'molang',
+            context: 'curve',
+            evaluation: 'per_use',
+            label: 'Input',
+            text: ['Horizontal input']
+          },
+          range: {
+            type: 'molang',
+            context: 'curve',
+            evaluation: 'per_use',
+            label: 'Range',
+            text: ['Horizontal range that the input is mapped to']
+          }
+        }
       }
     }
   }
-}, "variables", {
-  title: 'Variables & Curves',
-  pages: {
-    variables: {
-      title: 'Variables',
-      inputs: {}
-    },
-    curves: {
-      title: 'Curves',
-      inputs: {}
-    }
-  }
-}));
+});
 
 /***/ }),
 
@@ -6687,7 +7217,7 @@ var Data = {
         local_velocity: new _input__WEBPACK_IMPORTED_MODULE_0__["default"]({
           id: 'space_local_velocity',
           label: 'Local Velocity',
-          info: 'When enabled and the effect is attached to an entity, the particle velocity will simulate in entity space.',
+          info: 'When enabled, the emitter\'s velocity will be added to the initial particle velocity.',
           type: 'checkbox'
         })
       }
@@ -6714,7 +7244,7 @@ var Data = {
         rate: new _input__WEBPACK_IMPORTED_MODULE_0__["default"]({
           id: 'emitter_rate_rate',
           label: 'Rate',
-          info: 'How often a particle is emitted, in particles/sec. Evaluated once per particle emitted.',
+          info: 'How often a particle is emitted, in particles/second.',
           enabled_modes: ['steady'],
           required: true,
           value: 4
@@ -6729,7 +7259,7 @@ var Data = {
         maximum: new _input__WEBPACK_IMPORTED_MODULE_0__["default"]({
           id: 'emitter_rate_maximum',
           label: 'Maximum',
-          info: '',
+          info: 'Maximum amount of particles that can be active before the emitter stops spawning new ones.',
           enabled_modes: ['steady', 'manual'],
           required: true,
           value: 100
@@ -6756,7 +7286,7 @@ var Data = {
         active_time: new _input__WEBPACK_IMPORTED_MODULE_0__["default"]({
           id: 'emitter_lifetime_active_time',
           label: 'Active Time',
-          info: '',
+          info: 'How long the emitter will be active for',
           enabled_modes: ['looping', 'once'],
           required: true,
           value: 1
@@ -6765,14 +7295,14 @@ var Data = {
         sleep_time: new _input__WEBPACK_IMPORTED_MODULE_0__["default"]({
           id: 'emitter_lifetime_sleep_time',
           label: 'Sleep Time',
-          info: 'emitter will pause emitting particles for this time per loop',
+          info: 'How long the emitter will pause and not emit particles, when used in looping mode.',
           enabled_modes: ['looping']
           //updatePreview: (v) => {Emitter.sleep_time = v}
         }),
         activation: new _input__WEBPACK_IMPORTED_MODULE_0__["default"]({
           id: 'emitter_lifetime_activation',
           label: 'Activation',
-          info: 'When the expression is non-zero, the emitter will emit particles',
+          info: 'When the expression is non-zero, the emitter will start emitting particles',
           required: true,
           enabled_modes: ['expression']
         }),
@@ -6896,8 +7426,8 @@ var Data = {
         }),
         linear_drag_coefficient: new _input__WEBPACK_IMPORTED_MODULE_0__["default"]({
           id: 'particle_motion_linear_drag_coefficient',
-          label: 'Air Drag',
-          info: 'Think of this as air-drag.  The higher the value, the more drag evaluated every frame.',
+          label: 'Linear Drag',
+          info: 'Think of this as air-drag.  The higher the value, the more drag.',
           enabled_modes: ['dynamic']
         }),
         relative_position: new _input__WEBPACK_IMPORTED_MODULE_0__["default"]({
@@ -6950,7 +7480,7 @@ var Data = {
         }),
         rotation_drag_coefficient: new _input__WEBPACK_IMPORTED_MODULE_0__["default"]({
           id: 'particle_rotation_rotation_drag_coefficient',
-          label: 'Air Drag',
+          label: 'Linear Drag',
           info: 'Rotation resistance. Higher numbers will retard the rotation over time.',
           enabled_modes: ['dynamic']
         }),
@@ -6969,14 +7499,14 @@ var Data = {
         toggle: new _input__WEBPACK_IMPORTED_MODULE_0__["default"]({
           id: 'particle_collision_toggle',
           label: 'Collide',
-          info: 'Make the particle collide with the world',
+          info: 'Enable collision of the particle with the world',
           type: 'checkbox',
           mode_groups: ['motion', 'collision']
         }),
         collision_radius: new _input__WEBPACK_IMPORTED_MODULE_0__["default"]({
           id: 'particle_collision_collision_radius',
           label: 'Radius',
-          info: 'Used to minimize interpenetration of particles with the environment',
+          info: 'The radius of the particle, as used for collision.',
           min: 0.0,
           max: 0.5,
           step: 0.05,
@@ -6995,7 +7525,7 @@ var Data = {
         coefficient_of_restitution: new _input__WEBPACK_IMPORTED_MODULE_0__["default"]({
           id: 'particle_collision_coefficient_of_restitution',
           label: 'Bounciness',
-          info: 'Set to 0.0 to not bounce, 1.0 to bounce back up to original hight',
+          info: 'The amount of momentum that is maintained on bounce. Set to 0.0 to not bounce, 1.0 to bounce back up to original height',
           type: 'number',
           step: 0.1,
           enabled_modes: [true]
@@ -7103,7 +7633,8 @@ var Data = {
         light: new _input__WEBPACK_IMPORTED_MODULE_0__["default"]({
           id: 'particle_color_light',
           label: 'Environment Lighting',
-          type: 'checkbox'
+          type: 'checkbox',
+          info: 'If enabled, the particle gets darker at night and in darker areas. Otherwise the particle always displays at full brightness.'
         })
       }
     },
@@ -7137,18 +7668,18 @@ var Data = {
           label: 'Color',
           type: 'color',
           enabled_modes: ['static'],
-          info: 'Set a static color for all emitted particles. Transparency is supported when the material is "Blend".'
+          info: 'Set a static color for all emitted particles. Transparency is supported if the material supports blending.'
         }),
         interpolant: new _input__WEBPACK_IMPORTED_MODULE_0__["default"]({
           id: 'particle_color_interpolant',
           label: 'Interpolant',
-          info: 'Color Gradient Interpolant. Hint: use a curve here!',
+          info: 'Interpolant for the gradient value. A color for each particle will be picked from the gradient using the result of this expression, between 0 and "Range".',
           enabled_modes: ['gradient']
         }),
         range: new _input__WEBPACK_IMPORTED_MODULE_0__["default"]({
           id: 'particle_color_range',
           label: 'Range',
-          info: 'Color Gradient Range',
+          info: 'The range of the color gradient. By default, gradients range from 0 to 1.',
           type: 'number',
           value: 1,
           enabled_modes: ['gradient']
@@ -7156,14 +7687,14 @@ var Data = {
         gradient: new _gradient__WEBPACK_IMPORTED_MODULE_1__["default"]({
           id: 'particle_color_gradient',
           label: 'Gradient',
-          info: 'Gradient',
+          info: 'Create a gradient by setting, arranging, and recoloring individual color points.',
           type: 'gradient',
           enabled_modes: ['gradient']
         }),
         expression: new _input__WEBPACK_IMPORTED_MODULE_0__["default"]({
           id: 'particle_color_expression',
           label: 'Color',
-          info: 'Set the color per particle using MoLang expressions in RGBA channels between 0 and 1. Alpha channel display is only supported with "Blend" material.',
+          info: 'Set the color per particle using Molang expressions in RGBA channels between 0 and 1. Alpha channel is supported if the material supports blending.',
           axis_count: 4,
           enabled_modes: ['expression']
         })
@@ -7262,12 +7793,14 @@ var Data = {
         stretch_to_lifetime: new _input__WEBPACK_IMPORTED_MODULE_0__["default"]({
           id: 'particle_texture_stretch_to_lifetime',
           label: 'Stretch To Lifetime',
+          info: 'Enable to stretch the frames in the animation to the expected lifetime of the particle',
           type: 'checkbox',
           enabled_modes: ['animated']
         }),
         loop: new _input__WEBPACK_IMPORTED_MODULE_0__["default"]({
           id: 'particle_texture_loop',
           label: 'Loop',
+          info: 'Loop the texture animation',
           type: 'checkbox',
           enabled_modes: ['animated']
         })
@@ -7396,7 +7929,7 @@ var Data = {
         creation_vars: new _input__WEBPACK_IMPORTED_MODULE_0__["default"]({
           id: 'variables_creation_vars',
           label: 'Start Variables',
-          info: 'Set up MoLang Variables when the emitter starts',
+          info: 'Set up Molang variables when the emitter starts',
           placeholder: 'variable.name = value;',
           type: 'molang',
           axis_count: -1,
@@ -7415,7 +7948,7 @@ var Data = {
         tick_vars: new _input__WEBPACK_IMPORTED_MODULE_0__["default"]({
           id: 'variables_tick_vars',
           label: 'Tick Variables',
-          info: 'MoLang Variables that get processed for every Emitter update',
+          info: 'Molang variables that get processed for every emitter update',
           placeholder: 'variable.name = value;',
           type: 'molang',
           axis_count: -1,
@@ -10457,7 +10990,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\ndiv#app[data-v-617ab0be] {\n\t\tdisplay: grid;\n\t\tgrid-template-rows: 74px calc(100% - 74px);\n\t\tgrid-template-columns: var(--sidebar) calc(100% - var(--sidebar));\n\t\tgrid-template-areas: \"sidebar header\" \"sidebar preview\";\n\t\theight: 100%;\n\t\twidth: 100%;\n\t\tposition: fixed;\n\t\tfont-weight: 400;\n}\nmain[data-v-617ab0be] {\n\t\tgrid-area: preview;\n}\nheader[data-v-617ab0be] {\n\t\tgrid-area: header;\n\t\tfont-size: 1.1em;\n\t\tposition: relative;\n}\ncontent[data-v-617ab0be] {\n\t\tgrid-area: sidebar;\n\t\tbackground-color: var(--color-interface);\n}\n\n\t/* Portrait View */\ndiv#app.portrait_view[data-v-617ab0be] {\n\t\tgrid-template-rows: 114px calc(100% - 152px) 38px;\n\t\tgrid-template-columns: 100%;\n\t\tgrid-template-areas: \"header\" \"main\" \"mode_selector\";\n}\nheader > svg[data-v-617ab0be] {\n\t\theight: 40px;\n\t\tpadding: 12px;\n\t\twidth: 100%;\n}\ndiv#app.portrait_view main[data-v-617ab0be] {\n\t\tgrid-area: main;\n}\ndiv#app.portrait_view content[data-v-617ab0be] {\n\t\tgrid-area: main;\n}\ndiv#app.portrait_view #portrait_mode_selector[data-v-617ab0be] {\n\t\tgrid-area: mode_selector;\n\t\tdisplay: flex;\n}\nli.mode_selector[data-v-617ab0be] {\n\t\tflex: 1 0 0;\n\t\ttext-align: center;\n\t\tpadding-top: 6px;\n\t\tborder-top: 1px solid var(--color-border);\n}\nli.mode_selector.selected[data-v-617ab0be] {\n\t\tbackground-color: var(--color-dark);\n}\ndiv#app.portrait_view dialog[data-v-617ab0be] {\n\t\tmargin: auto;\n\t\tpadding: 12px 12px;\n}\n#dialog_blackout[data-v-617ab0be] {\n\t\tposition: absolute;\n\t\tz-index: 49;\n\t\ttop: 0;\n\t\tbottom: 0;\n\t\tleft: 0;\n\t\tright: 0;\n\t\tbackground-color: #00000050;\n}\ndialog[data-v-617ab0be] {\n\t\tposition: absolute;\n\t\tmargin-left: calc(50% - 400px);\n        width: 800px;\n\t\tmax-width: 100%;\n\t\tmax-height: calc(100% - 40px);\n\t\ttop: 20px;\n\t\tbackground-color: var(--color-interface);\n        z-index: 50;\n        overflow: hidden;\n\t\tpadding: 20px 28px;\n\t\tbottom: 20px;\n        display: flex;\n\t\tflex-direction: column;\n\t\tcolor: inherit;\n\t\tborder: none;\n\t\tborder: 1px solid var(--color-bar);\n\t\tbox-shadow: 0 1px 12px rgba(0, 0, 0, 0.4);\n\t\tborder-radius: 4px;\n}\n\n/*Resize*/\n.resizer[data-v-617ab0be] {\n\t\ttop: 0;\n\t\tbottom: 0;\n\t\tposition: absolute;\n\t\twidth: 6px;\n\t\tmargin-left: -3px;\n\t\tcursor: ew-resize;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\ndiv#app[data-v-617ab0be] {\n\t\tdisplay: grid;\n\t\tgrid-template-rows: 74px calc(100% - 74px);\n\t\tgrid-template-columns: var(--sidebar) calc(100% - var(--sidebar));\n\t\tgrid-template-areas: \"sidebar header\" \"sidebar preview\";\n\t\theight: 100%;\n\t\twidth: 100%;\n\t\tposition: fixed;\n\t\tfont-weight: 400;\n}\nmain[data-v-617ab0be] {\n\t\tgrid-area: preview;\n}\nheader[data-v-617ab0be] {\n\t\tgrid-area: header;\n\t\tfont-size: 1.1em;\n\t\tposition: relative;\n}\ncontent[data-v-617ab0be] {\n\t\tgrid-area: sidebar;\n\t\tbackground-color: var(--color-interface);\n}\n\n\t/* Portrait View */\ndiv#app.portrait_view[data-v-617ab0be] {\n\t\tgrid-template-rows: 124px calc(100% - 162px) 38px;\n\t\tgrid-template-columns: 100%;\n\t\tgrid-template-areas: \"header\" \"main\" \"mode_selector\";\n}\nheader > svg[data-v-617ab0be] {\n\t\theight: 40px;\n\t\tpadding: 12px;\n\t\twidth: 100%;\n}\ndiv#app.portrait_view main[data-v-617ab0be] {\n\t\tgrid-area: main;\n}\ndiv#app.portrait_view content[data-v-617ab0be] {\n\t\tgrid-area: main;\n}\ndiv#app.portrait_view #portrait_mode_selector[data-v-617ab0be] {\n\t\tgrid-area: mode_selector;\n\t\tdisplay: flex;\n}\nli.mode_selector[data-v-617ab0be] {\n\t\tflex: 1 0 0;\n\t\ttext-align: center;\n\t\tpadding-top: 6px;\n\t\tborder-top: 1px solid var(--color-border);\n}\nli.mode_selector.selected[data-v-617ab0be] {\n\t\tbackground-color: var(--color-dark);\n}\ndiv#app.portrait_view dialog[data-v-617ab0be] {\n\t\tmargin: auto;\n\t\tpadding: 12px 12px;\n}\n#dialog_blackout[data-v-617ab0be] {\n\t\tposition: absolute;\n\t\tz-index: 49;\n\t\ttop: 0;\n\t\tbottom: 0;\n\t\tleft: 0;\n\t\tright: 0;\n\t\tbackground-color: #00000050;\n}\ndialog[data-v-617ab0be] {\n\t\tposition: absolute;\n\t\tmargin-left: calc(50% - 400px);\n        width: 800px;\n\t\tmax-width: 100%;\n\t\tmax-height: calc(100% - 40px);\n\t\ttop: 20px;\n\t\tbackground-color: var(--color-interface);\n        z-index: 50;\n        overflow: hidden;\n\t\tpadding: 20px 28px;\n\t\tbottom: 20px;\n        display: flex;\n\t\tflex-direction: column;\n\t\tcolor: inherit;\n\t\tborder: none;\n\t\tborder: 1px solid var(--color-bar);\n\t\tbox-shadow: 0 1px 12px rgba(0, 0, 0, 0.4);\n\t\tborder-radius: 4px;\n}\n\n/*Resize*/\n.resizer[data-v-617ab0be] {\n\t\ttop: 0;\n\t\tbottom: 0;\n\t\tposition: absolute;\n\t\twidth: 6px;\n\t\tmargin-left: -3px;\n\t\tcursor: ew-resize;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -10577,7 +11110,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.custom_checkbox[data-v-32aeddce] {\n\tpadding: 2px;\n}\ninput[data-v-32aeddce] {\n\t-webkit-appearance: none;\n\t   -moz-appearance: none;\n\t        appearance: none;\n\twidth: 0;\n\theight: 0;\n\tborder: none;\n\tdisplay: inline;\n}\nsvg path[data-v-32aeddce]:first-child {\n\tcolor: var(--color-accent);\n\tstroke-width: 3px;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.custom_checkbox[data-v-32aeddce] {\n\tpadding: 2px;\n}\ninput[data-v-32aeddce] {\n\t-webkit-appearance: none;\n\t   -moz-appearance: none;\n\t        appearance: none;\n\twidth: 0;\n\theight: 0;\n\topacity: 0;\n\tborder: none;\n\tdisplay: inline;\n}\nsvg path[data-v-32aeddce]:first-child {\n\tcolor: var(--color-accent);\n\tstroke-width: 3px;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -10625,17 +11158,17 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n#help_panel[data-v-db836c7a] {\n\t\twidth: 482px;\n\t\tmax-width: 100%;\n\t\tbackground-color: var(--color-interface);\n\t\tright: 0;\n\t\ttop: 32px;\n\t\tbottom: 33px;\n\t\tposition: absolute;\n\t\tz-index: 5;\n\t\tleft: auto;\n\t\tgrid-area: none;\n\t\tborder: 1px solid var(--color-border);\n}\n#help_panel > content[data-v-db836c7a] {\n\t\toverflow-y: auto;\n\t\theight: calc(100% - 30px);\n\t\tdisplay: block;\n\t\tpadding: 14px;\n}\n.close_button[data-v-db836c7a] {\n\t\tmargin: 4px 4px;\n}\n.back_button[data-v-db836c7a] {\n\t\tcursor: pointer;\n\t\theight: 29px;\n\t\tpadding: 2px;\n\t\tpadding-right: 8px;\n\t\tdisplay: inline-block;\n\t\tvertical-align: bottom;\n}\n.back_button[data-v-db836c7a]:hover {\n\t\tcolor: var(--color-highlight);\n}\n.back_button svg[data-v-db836c7a] {\n\t\tmargin-top: -2px;\n}\nul li[data-v-db836c7a] {\n\t\tpadding: 3px 7px;\n}\nul > li > ul[data-v-db836c7a] {\n\t\tpadding-left: 4px;\n\t\tlist-style: inside disc;\n}\n.category_title[data-v-db836c7a] {\n\t\tcolor: var(--color-text_grayed);\n\t\ttext-transform: uppercase;\n}\nli.clickable[data-v-db836c7a] {\n\t\tcursor: pointer;\n}\nli.clickable[data-v-db836c7a]:hover {\n\t\tcolor: var(--color-highlight);\n    \tbackground: var(--color-bar);\n}\n.input_help[data-v-db836c7a]:not(.visible) {\n\t\topacity: 0.4;\n}\n.input_type_label[data-v-db836c7a] {\n\t\tpadding: 0px 8px;\n\t\tborder-radius: 4px;\n\t\tcolor: var(--color-border);\n\t\tbackground-color: var(--color-accent);\n}\n.input_evaluation[data-v-db836c7a] {\n\t\tpadding: 0px 8px;\n\t\tborder-radius: 4px;\n\t\tcolor: var(--color-highlight);\n\t\tcolor: color-mix(in srgb, var(--color-text) 50%, var(--color-highlight) 50%);\n\t\tbackground-color: var(--color-selection);\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n#help_panel[data-v-db836c7a] {\n\t\tdisplay: flex;\n\t\tflex-direction: column;\n}\n#help_panel[data-v-db836c7a]:not(.portrait_view) {\n\t\twidth: 482px;\n\t\tmax-width: 100%;\n\t\tbackground-color: var(--color-interface);\n\t\tright: 0;\n\t\ttop: 32px;\n\t\tbottom: 33px;\n\t\tposition: absolute;\n\t\tz-index: 5;\n\t\tleft: auto;\n\t\tgrid-area: none;\n\t\tborder: 1px solid var(--color-border);\n}\n#help_panel.portrait_view[data-v-db836c7a] {\n\t\twidth: 100%;\n\t\tmax-width: 100%;\n\t\tbackground-color: var(--color-interface);\n}\n.help_header[data-v-db836c7a] {\n\t\tflex-shrink: 0;\n}\n#help_panel > content[data-v-db836c7a] {\n\t\toverflow-y: auto;\n\t\tdisplay: block;\n\t\tpadding: 14px;\n}\n.close_button[data-v-db836c7a] {\n\t\tmargin: 4px 4px;\n}\n.back_button[data-v-db836c7a] {\n\t\tcursor: pointer;\n\t\theight: 29px;\n\t\tpadding: 2px;\n\t\tpadding-right: 8px;\n\t\tdisplay: inline-block;\n\t\tvertical-align: bottom;\n}\n#help_panel.portrait_view .back_button[data-v-db836c7a] {\n\t\theight: 43px;\n\t\tpadding: 10px;\n}\n.back_button[data-v-db836c7a]:hover {\n\t\tcolor: var(--color-highlight);\n}\n.back_button svg[data-v-db836c7a] {\n\t\tmargin-top: -2px;\n}\nul li[data-v-db836c7a] {\n\t\tpadding: 3px 7px;\n}\n#help_panel.portrait_view ul li[data-v-db836c7a] {\n\t\tpadding-top: 5px;\n\t\tpadding-bottom: 5px;\n}\nul > li > ul[data-v-db836c7a] {\n\t\tpadding-left: 2px;\n}\nli > ul > li[data-v-db836c7a] {\n\t\tpadding-left: 25px;\n\t\tmargin-left: -2px;\n}\n.category_title[data-v-db836c7a] {\n\t\tcolor: var(--color-text_grayed);\n\t\ttext-transform: uppercase;\n}\nli.clickable[data-v-db836c7a] {\n\t\tcursor: pointer;\n}\nli.clickable[data-v-db836c7a]:hover {\n\t\tcolor: var(--color-highlight);\n    \tbackground: var(--color-bar);\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
 
 /***/ }),
 
-/***/ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/components/HelpText.vue?vue&type=style&index=0&id=89ab2d84&scoped=true&lang=css&":
-/*!**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/css-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/components/HelpText.vue?vue&type=style&index=0&id=89ab2d84&scoped=true&lang=css& ***!
-  \**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/components/HelpPanel/HelpInputList.vue?vue&type=style&index=0&id=3b17c84a&scoped=true&lang=css&":
+/*!*****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/components/HelpPanel/HelpInputList.vue?vue&type=style&index=0&id=3b17c84a&scoped=true&lang=css& ***!
+  \*****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -10643,23 +11176,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
 /* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__);
 // Imports
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n#help_panel p.code_line[data-v-89ab2d84] {\n\t\tdisplay: flex;\n\t\tmargin-bottom: 2px;\n\t\tline-height: inherit;\n}\ncode[data-v-89ab2d84] {\n\t\tpadding: 4px 8px;\n\t\tcolor: #50cca7;\n\t\tfont-size: 0.92em;\n\t\tbackground-color: var(--color-dark);\n\t\t-webkit-user-select: text;\n\t\t   -moz-user-select: text;\n\t\t        user-select: text;\n        margin-right: 8px;\n\t\theight: -moz-fit-content;\n\t\theight: fit-content;\n        display: inline-block;\n        text-indent: initial;\n        width: 208px;\n\t\tflex-shrink: 0;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/*.input_help:not(.visible) {\n\topacity: 0.8;\n}*/\nh2 > svg[data-v-3b17c84a] {\n\theight: 22px;\n\tmargin-top: -5px;\n\tbackground-color: var(--color-bar);\n\tborder: 1px solid var(--color-dark);\n\tborder-radius: 3px;\n}\n.input_info_bar[data-v-3b17c84a] {\n\tbackground-color: var(--color-dark);\n\theight: 24px;\n\tborder-radius: 4px;\n\tmargin-bottom: 3px;\n}\n.input_type_label[data-v-3b17c84a] {\n\tpadding: 1px 8px;\n\theight: 100%;\n\tdisplay: inline-block;\n\tborder-radius: 4px;\n\tcolor: var(--color-border);\n\tbackground-color: var(--color-accent);\n}\n.input_context_label[data-v-3b17c84a] {\n\tpadding: 1px 8px;\n\theight: 100%;\n\tdisplay: inline-block;\n\tborder-radius: 4px;\n\tcolor: var(--color-border);\n\tbackground-color: var(--color-text);\n}\n.select_description[data-v-3b17c84a] {\n\tpadding-left: 30px;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
 
 /***/ }),
 
-/***/ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/components/HelpText.vue?vue&type=style&index=1&lang=css&":
-/*!**************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/css-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/components/HelpText.vue?vue&type=style&index=1&lang=css& ***!
-  \**************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/components/HelpPanel/HelpText.vue?vue&type=style&index=0&id=aa2a6aac&scoped=true&lang=css&":
+/*!************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/components/HelpPanel/HelpText.vue?vue&type=style&index=0&id=aa2a6aac&scoped=true&lang=css& ***!
+  \************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -10667,13 +11200,37 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
 /* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__);
 // Imports
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n#help_panel p {\n\tmargin-bottom: 12px;\n\tline-height: normal;\n}\n#help_panel h2 {\n\tmargin-top: 22px;\n\tmargin-bottom: 6px;\n}\n#help_panel h3 {\n\tmargin-top: 15px;\n\tmargin-bottom: 5px;\n\tfont-weight: 600;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n#help_panel p.code_line[data-v-aa2a6aac] {\n\t\tdisplay: flex;\n\t\tmargin-bottom: 2px;\n\t\tline-height: inherit;\n}\ncode[data-v-aa2a6aac] {\n\t\tpadding: 4px 8px;\n\t\tcolor: #50cca7;\n\t\tfont-size: 0.92em;\n\t\tbackground-color: var(--color-dark);\n\t\t-webkit-user-select: text;\n\t\t   -moz-user-select: text;\n\t\t        user-select: text;\n        margin-right: 8px;\n\t\theight: -moz-fit-content;\n\t\theight: fit-content;\n        display: inline-block;\n        text-indent: initial;\n        width: 208px;\n\t\tflex-shrink: 0;\n}\n", ""]);
+// Exports
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/components/HelpPanel/HelpText.vue?vue&type=style&index=1&lang=css&":
+/*!************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/components/HelpPanel/HelpText.vue?vue&type=style&index=1&lang=css& ***!
+  \************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__);
+// Imports
+
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, "\n#help_panel p {\n\tmargin-bottom: 12px;\n\tline-height: normal;\n}\n#help_panel h1 {\n\tmargin-bottom: 12px;\n\tpadding-bottom: 2px;\n\tborder-bottom: 2px solid var(--color-selection);\n}\n#help_panel h2 {\n\tmargin-top: 22px;\n\tmargin-bottom: 6px;\n}\n#help_panel h3 {\n\tmargin-top: 15px;\n\tmargin-bottom: 5px;\n\tfont-weight: 600;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -14037,6 +14594,38 @@ const Bomb = (0,_createVueComponent_js__WEBPACK_IMPORTED_MODULE_0__["default"])(
 
 /***/ }),
 
+/***/ "./node_modules/lucide-vue/dist/esm/icons/brackets.js":
+/*!************************************************************!*\
+  !*** ./node_modules/lucide-vue/dist/esm/icons/brackets.js ***!
+  \************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ Brackets)
+/* harmony export */ });
+/* harmony import */ var _createVueComponent_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../createVueComponent.js */ "./node_modules/lucide-vue/dist/esm/createVueComponent.js");
+/**
+ * @license lucide-vue v0.298.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+
+
+
+const Brackets = (0,_createVueComponent_js__WEBPACK_IMPORTED_MODULE_0__["default"])("BracketsIcon", [
+  ["path", { d: "M16 3h3v18h-3", key: "1yor1f" }],
+  ["path", { d: "M8 21H5V3h3", key: "1qrfwo" }]
+]);
+
+
+//# sourceMappingURL=brackets.js.map
+
+
+/***/ }),
+
 /***/ "./node_modules/lucide-vue/dist/esm/icons/brush.js":
 /*!*********************************************************!*\
   !*** ./node_modules/lucide-vue/dist/esm/icons/brush.js ***!
@@ -14691,6 +15280,38 @@ const FlipVertical2 = (0,_createVueComponent_js__WEBPACK_IMPORTED_MODULE_0__["de
 
 /***/ }),
 
+/***/ "./node_modules/lucide-vue/dist/esm/icons/gauge.js":
+/*!*********************************************************!*\
+  !*** ./node_modules/lucide-vue/dist/esm/icons/gauge.js ***!
+  \*********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ Gauge)
+/* harmony export */ });
+/* harmony import */ var _createVueComponent_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../createVueComponent.js */ "./node_modules/lucide-vue/dist/esm/createVueComponent.js");
+/**
+ * @license lucide-vue v0.298.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+
+
+
+const Gauge = (0,_createVueComponent_js__WEBPACK_IMPORTED_MODULE_0__["default"])("GaugeIcon", [
+  ["path", { d: "m12 14 4-4", key: "9kzdfg" }],
+  ["path", { d: "M3.34 19a10 10 0 1 1 17.32 0", key: "19p75a" }]
+]);
+
+
+//# sourceMappingURL=gauge.js.map
+
+
+/***/ }),
+
 /***/ "./node_modules/lucide-vue/dist/esm/icons/grip-horizontal.js":
 /*!*******************************************************************!*\
   !*** ./node_modules/lucide-vue/dist/esm/icons/grip-horizontal.js ***!
@@ -15009,6 +15630,39 @@ const Maximize = (0,_createVueComponent_js__WEBPACK_IMPORTED_MODULE_0__["default
 
 /***/ }),
 
+/***/ "./node_modules/lucide-vue/dist/esm/icons/menu.js":
+/*!********************************************************!*\
+  !*** ./node_modules/lucide-vue/dist/esm/icons/menu.js ***!
+  \********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ Menu)
+/* harmony export */ });
+/* harmony import */ var _createVueComponent_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../createVueComponent.js */ "./node_modules/lucide-vue/dist/esm/createVueComponent.js");
+/**
+ * @license lucide-vue v0.298.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+
+
+
+const Menu = (0,_createVueComponent_js__WEBPACK_IMPORTED_MODULE_0__["default"])("MenuIcon", [
+  ["line", { x1: "4", x2: "20", y1: "12", y2: "12", key: "1e0a9i" }],
+  ["line", { x1: "4", x2: "20", y1: "6", y2: "6", key: "1owob3" }],
+  ["line", { x1: "4", x2: "20", y1: "18", y2: "18", key: "yk5zj1" }]
+]);
+
+
+//# sourceMappingURL=menu.js.map
+
+
+/***/ }),
+
 /***/ "./node_modules/lucide-vue/dist/esm/icons/minus.js":
 /*!*********************************************************!*\
   !*** ./node_modules/lucide-vue/dist/esm/icons/minus.js ***!
@@ -15137,6 +15791,47 @@ const PaintBucket = (0,_createVueComponent_js__WEBPACK_IMPORTED_MODULE_0__["defa
 
 
 //# sourceMappingURL=paint-bucket.js.map
+
+
+/***/ }),
+
+/***/ "./node_modules/lucide-vue/dist/esm/icons/palette.js":
+/*!***********************************************************!*\
+  !*** ./node_modules/lucide-vue/dist/esm/icons/palette.js ***!
+  \***********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ Palette)
+/* harmony export */ });
+/* harmony import */ var _createVueComponent_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../createVueComponent.js */ "./node_modules/lucide-vue/dist/esm/createVueComponent.js");
+/**
+ * @license lucide-vue v0.298.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+
+
+
+const Palette = (0,_createVueComponent_js__WEBPACK_IMPORTED_MODULE_0__["default"])("PaletteIcon", [
+  ["circle", { cx: "13.5", cy: "6.5", r: ".5", key: "1xcu5" }],
+  ["circle", { cx: "17.5", cy: "10.5", r: ".5", key: "736e4u" }],
+  ["circle", { cx: "8.5", cy: "7.5", r: ".5", key: "clrty" }],
+  ["circle", { cx: "6.5", cy: "12.5", r: ".5", key: "1s4xz9" }],
+  [
+    "path",
+    {
+      d: "M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z",
+      key: "12rzf8"
+    }
+  ]
+]);
+
+
+//# sourceMappingURL=palette.js.map
 
 
 /***/ }),
@@ -15909,6 +16604,41 @@ const Wand = (0,_createVueComponent_js__WEBPACK_IMPORTED_MODULE_0__["default"])(
 
 
 //# sourceMappingURL=wand.js.map
+
+
+/***/ }),
+
+/***/ "./node_modules/lucide-vue/dist/esm/icons/whole-word.js":
+/*!**************************************************************!*\
+  !*** ./node_modules/lucide-vue/dist/esm/icons/whole-word.js ***!
+  \**************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ WholeWord)
+/* harmony export */ });
+/* harmony import */ var _createVueComponent_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../createVueComponent.js */ "./node_modules/lucide-vue/dist/esm/createVueComponent.js");
+/**
+ * @license lucide-vue v0.298.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+
+
+
+const WholeWord = (0,_createVueComponent_js__WEBPACK_IMPORTED_MODULE_0__["default"])("WholeWordIcon", [
+  ["circle", { cx: "7", cy: "12", r: "3", key: "12clwm" }],
+  ["path", { d: "M10 9v6", key: "17i7lo" }],
+  ["circle", { cx: "17", cy: "12", r: "3", key: "gl7c2s" }],
+  ["path", { d: "M14 7v8", key: "dl84cr" }],
+  ["path", { d: "M22 17v1c0 .5-.5 1-1 1H3c-.5 0-1-.5-1-1v-1", key: "lt2kga" }]
+]);
+
+
+//# sourceMappingURL=whole-word.js.map
 
 
 /***/ }),
@@ -20910,10 +21640,10 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 
 /***/ }),
 
-/***/ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/components/HelpText.vue?vue&type=style&index=0&id=89ab2d84&scoped=true&lang=css&":
-/*!******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/components/HelpText.vue?vue&type=style&index=0&id=89ab2d84&scoped=true&lang=css& ***!
-  \******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/components/HelpPanel/HelpInputList.vue?vue&type=style&index=0&id=3b17c84a&scoped=true&lang=css&":
+/*!*********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/components/HelpPanel/HelpInputList.vue?vue&type=style&index=0&id=3b17c84a&scoped=true&lang=css& ***!
+  \*********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -20921,9 +21651,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
 /* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _node_modules_css_loader_dist_cjs_js_clonedRuleSet_8_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_8_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_HelpText_vue_vue_type_style_index_0_id_89ab2d84_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !!../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[1]!../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[2]!../../node_modules/vue-loader/lib/index.js??vue-loader-options!./HelpText.vue?vue&type=style&index=0&id=89ab2d84&scoped=true&lang=css& */ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/components/HelpText.vue?vue&type=style&index=0&id=89ab2d84&scoped=true&lang=css&");
+/* harmony import */ var _node_modules_css_loader_dist_cjs_js_clonedRuleSet_8_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_8_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_HelpInputList_vue_vue_type_style_index_0_id_3b17c84a_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !!../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[1]!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[2]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./HelpInputList.vue?vue&type=style&index=0&id=3b17c84a&scoped=true&lang=css& */ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/components/HelpPanel/HelpInputList.vue?vue&type=style&index=0&id=3b17c84a&scoped=true&lang=css&");
 
             
 
@@ -20932,18 +21662,18 @@ var options = {};
 options.insert = "head";
 options.singleton = false;
 
-var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_clonedRuleSet_8_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_8_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_HelpText_vue_vue_type_style_index_0_id_89ab2d84_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_1__["default"], options);
+var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_clonedRuleSet_8_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_8_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_HelpInputList_vue_vue_type_style_index_0_id_3b17c84a_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_1__["default"], options);
 
 
 
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_clonedRuleSet_8_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_8_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_HelpText_vue_vue_type_style_index_0_id_89ab2d84_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_1__["default"].locals || {});
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_clonedRuleSet_8_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_8_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_HelpInputList_vue_vue_type_style_index_0_id_3b17c84a_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_1__["default"].locals || {});
 
 /***/ }),
 
-/***/ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/components/HelpText.vue?vue&type=style&index=1&lang=css&":
-/*!******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/components/HelpText.vue?vue&type=style&index=1&lang=css& ***!
-  \******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/components/HelpPanel/HelpText.vue?vue&type=style&index=0&id=aa2a6aac&scoped=true&lang=css&":
+/*!****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/components/HelpPanel/HelpText.vue?vue&type=style&index=0&id=aa2a6aac&scoped=true&lang=css& ***!
+  \****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -20951,9 +21681,39 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
 /* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _node_modules_css_loader_dist_cjs_js_clonedRuleSet_8_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_8_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_HelpText_vue_vue_type_style_index_1_lang_css___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !!../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[1]!../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[2]!../../node_modules/vue-loader/lib/index.js??vue-loader-options!./HelpText.vue?vue&type=style&index=1&lang=css& */ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/components/HelpText.vue?vue&type=style&index=1&lang=css&");
+/* harmony import */ var _node_modules_css_loader_dist_cjs_js_clonedRuleSet_8_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_8_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_HelpText_vue_vue_type_style_index_0_id_aa2a6aac_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !!../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[1]!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[2]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./HelpText.vue?vue&type=style&index=0&id=aa2a6aac&scoped=true&lang=css& */ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/components/HelpPanel/HelpText.vue?vue&type=style&index=0&id=aa2a6aac&scoped=true&lang=css&");
+
+            
+
+var options = {};
+
+options.insert = "head";
+options.singleton = false;
+
+var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_clonedRuleSet_8_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_8_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_HelpText_vue_vue_type_style_index_0_id_aa2a6aac_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_1__["default"], options);
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_clonedRuleSet_8_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_8_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_HelpText_vue_vue_type_style_index_0_id_aa2a6aac_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_1__["default"].locals || {});
+
+/***/ }),
+
+/***/ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/components/HelpPanel/HelpText.vue?vue&type=style&index=1&lang=css&":
+/*!****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/components/HelpPanel/HelpText.vue?vue&type=style&index=1&lang=css& ***!
+  \****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_loader_dist_cjs_js_clonedRuleSet_8_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_8_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_HelpText_vue_vue_type_style_index_1_lang_css___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !!../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[1]!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[2]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./HelpText.vue?vue&type=style&index=1&lang=css& */ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/components/HelpPanel/HelpText.vue?vue&type=style&index=1&lang=css&");
 
             
 
@@ -72196,10 +72956,10 @@ component.options.__file = "src/components/HelpPanel.vue"
 
 /***/ }),
 
-/***/ "./src/components/HelpText.vue":
-/*!*************************************!*\
-  !*** ./src/components/HelpText.vue ***!
-  \*************************************/
+/***/ "./src/components/HelpPanel/HelpInputList.vue":
+/*!****************************************************!*\
+  !*** ./src/components/HelpPanel/HelpInputList.vue ***!
+  \****************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -72207,11 +72967,52 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _HelpText_vue_vue_type_template_id_89ab2d84_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./HelpText.vue?vue&type=template&id=89ab2d84&scoped=true& */ "./src/components/HelpText.vue?vue&type=template&id=89ab2d84&scoped=true&");
-/* harmony import */ var _HelpText_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./HelpText.vue?vue&type=script&lang=js& */ "./src/components/HelpText.vue?vue&type=script&lang=js&");
-/* harmony import */ var _HelpText_vue_vue_type_style_index_0_id_89ab2d84_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./HelpText.vue?vue&type=style&index=0&id=89ab2d84&scoped=true&lang=css& */ "./src/components/HelpText.vue?vue&type=style&index=0&id=89ab2d84&scoped=true&lang=css&");
-/* harmony import */ var _HelpText_vue_vue_type_style_index_1_lang_css___WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./HelpText.vue?vue&type=style&index=1&lang=css& */ "./src/components/HelpText.vue?vue&type=style&index=1&lang=css&");
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! !../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* harmony import */ var _HelpInputList_vue_vue_type_template_id_3b17c84a_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./HelpInputList.vue?vue&type=template&id=3b17c84a&scoped=true& */ "./src/components/HelpPanel/HelpInputList.vue?vue&type=template&id=3b17c84a&scoped=true&");
+/* harmony import */ var _HelpInputList_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./HelpInputList.vue?vue&type=script&lang=js& */ "./src/components/HelpPanel/HelpInputList.vue?vue&type=script&lang=js&");
+/* harmony import */ var _HelpInputList_vue_vue_type_style_index_0_id_3b17c84a_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./HelpInputList.vue?vue&type=style&index=0&id=3b17c84a&scoped=true&lang=css& */ "./src/components/HelpPanel/HelpInputList.vue?vue&type=style&index=0&id=3b17c84a&scoped=true&lang=css&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! !../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+;
+
+
+/* normalize component */
+
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
+  _HelpInputList_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _HelpInputList_vue_vue_type_template_id_3b17c84a_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render,
+  _HelpInputList_vue_vue_type_template_id_3b17c84a_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  "3b17c84a",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "src/components/HelpPanel/HelpInputList.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
+/***/ "./src/components/HelpPanel/HelpText.vue":
+/*!***********************************************!*\
+  !*** ./src/components/HelpPanel/HelpText.vue ***!
+  \***********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _HelpText_vue_vue_type_template_id_aa2a6aac_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./HelpText.vue?vue&type=template&id=aa2a6aac&scoped=true& */ "./src/components/HelpPanel/HelpText.vue?vue&type=template&id=aa2a6aac&scoped=true&");
+/* harmony import */ var _HelpText_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./HelpText.vue?vue&type=script&lang=js& */ "./src/components/HelpPanel/HelpText.vue?vue&type=script&lang=js&");
+/* harmony import */ var _HelpText_vue_vue_type_style_index_0_id_aa2a6aac_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./HelpText.vue?vue&type=style&index=0&id=aa2a6aac&scoped=true&lang=css& */ "./src/components/HelpPanel/HelpText.vue?vue&type=style&index=0&id=aa2a6aac&scoped=true&lang=css&");
+/* harmony import */ var _HelpText_vue_vue_type_style_index_1_lang_css___WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./HelpText.vue?vue&type=style&index=1&lang=css& */ "./src/components/HelpPanel/HelpText.vue?vue&type=style&index=1&lang=css&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! !../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
@@ -72223,18 +73024,18 @@ __webpack_require__.r(__webpack_exports__);
 
 var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_4__["default"])(
   _HelpText_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _HelpText_vue_vue_type_template_id_89ab2d84_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render,
-  _HelpText_vue_vue_type_template_id_89ab2d84_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  _HelpText_vue_vue_type_template_id_aa2a6aac_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render,
+  _HelpText_vue_vue_type_template_id_aa2a6aac_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
   false,
   null,
-  "89ab2d84",
+  "aa2a6aac",
   null
   
 )
 
 /* hot reload */
 if (false) { var api; }
-component.options.__file = "src/components/HelpText.vue"
+component.options.__file = "src/components/HelpPanel/HelpText.vue"
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
 
 /***/ }),
@@ -72916,10 +73717,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./src/components/HelpText.vue?vue&type=script&lang=js&":
-/*!**************************************************************!*\
-  !*** ./src/components/HelpText.vue?vue&type=script&lang=js& ***!
-  \**************************************************************/
+/***/ "./src/components/HelpPanel/HelpInputList.vue?vue&type=script&lang=js&":
+/*!*****************************************************************************!*\
+  !*** ./src/components/HelpPanel/HelpInputList.vue?vue&type=script&lang=js& ***!
+  \*****************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -72927,7 +73728,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_HelpText_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../node_modules/vue-loader/lib/index.js??vue-loader-options!./HelpText.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/components/HelpText.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_HelpInputList_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./HelpInputList.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/components/HelpPanel/HelpInputList.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_HelpInputList_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./src/components/HelpPanel/HelpText.vue?vue&type=script&lang=js&":
+/*!************************************************************************!*\
+  !*** ./src/components/HelpPanel/HelpText.vue?vue&type=script&lang=js& ***!
+  \************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_HelpText_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./HelpText.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/components/HelpPanel/HelpText.vue?vue&type=script&lang=js&");
  /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_HelpText_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
@@ -73275,28 +74092,41 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./src/components/HelpText.vue?vue&type=style&index=0&id=89ab2d84&scoped=true&lang=css&":
-/*!**********************************************************************************************!*\
-  !*** ./src/components/HelpText.vue?vue&type=style&index=0&id=89ab2d84&scoped=true&lang=css& ***!
-  \**********************************************************************************************/
+/***/ "./src/components/HelpPanel/HelpInputList.vue?vue&type=style&index=0&id=3b17c84a&scoped=true&lang=css&":
+/*!*************************************************************************************************************!*\
+  !*** ./src/components/HelpPanel/HelpInputList.vue?vue&type=style&index=0&id=3b17c84a&scoped=true&lang=css& ***!
+  \*************************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_clonedRuleSet_8_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_8_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_HelpText_vue_vue_type_style_index_0_id_89ab2d84_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../node_modules/style-loader/dist/cjs.js!../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[1]!../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[2]!../../node_modules/vue-loader/lib/index.js??vue-loader-options!./HelpText.vue?vue&type=style&index=0&id=89ab2d84&scoped=true&lang=css& */ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/components/HelpText.vue?vue&type=style&index=0&id=89ab2d84&scoped=true&lang=css&");
+/* harmony import */ var _node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_clonedRuleSet_8_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_8_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_HelpInputList_vue_vue_type_style_index_0_id_3b17c84a_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/style-loader/dist/cjs.js!../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[1]!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[2]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./HelpInputList.vue?vue&type=style&index=0&id=3b17c84a&scoped=true&lang=css& */ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/components/HelpPanel/HelpInputList.vue?vue&type=style&index=0&id=3b17c84a&scoped=true&lang=css&");
 
 
 /***/ }),
 
-/***/ "./src/components/HelpText.vue?vue&type=style&index=1&lang=css&":
-/*!**********************************************************************!*\
-  !*** ./src/components/HelpText.vue?vue&type=style&index=1&lang=css& ***!
-  \**********************************************************************/
+/***/ "./src/components/HelpPanel/HelpText.vue?vue&type=style&index=0&id=aa2a6aac&scoped=true&lang=css&":
+/*!********************************************************************************************************!*\
+  !*** ./src/components/HelpPanel/HelpText.vue?vue&type=style&index=0&id=aa2a6aac&scoped=true&lang=css& ***!
+  \********************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_clonedRuleSet_8_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_8_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_HelpText_vue_vue_type_style_index_1_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../node_modules/style-loader/dist/cjs.js!../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[1]!../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[2]!../../node_modules/vue-loader/lib/index.js??vue-loader-options!./HelpText.vue?vue&type=style&index=1&lang=css& */ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/components/HelpText.vue?vue&type=style&index=1&lang=css&");
+/* harmony import */ var _node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_clonedRuleSet_8_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_8_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_HelpText_vue_vue_type_style_index_0_id_aa2a6aac_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/style-loader/dist/cjs.js!../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[1]!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[2]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./HelpText.vue?vue&type=style&index=0&id=aa2a6aac&scoped=true&lang=css& */ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/components/HelpPanel/HelpText.vue?vue&type=style&index=0&id=aa2a6aac&scoped=true&lang=css&");
+
+
+/***/ }),
+
+/***/ "./src/components/HelpPanel/HelpText.vue?vue&type=style&index=1&lang=css&":
+/*!********************************************************************************!*\
+  !*** ./src/components/HelpPanel/HelpText.vue?vue&type=style&index=1&lang=css& ***!
+  \********************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_clonedRuleSet_8_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_8_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_HelpText_vue_vue_type_style_index_1_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/style-loader/dist/cjs.js!../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[1]!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[2]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./HelpText.vue?vue&type=style&index=1&lang=css& */ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-8[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/components/HelpPanel/HelpText.vue?vue&type=style&index=1&lang=css&");
 
 
 /***/ }),
@@ -73611,19 +74441,36 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./src/components/HelpText.vue?vue&type=template&id=89ab2d84&scoped=true&":
-/*!********************************************************************************!*\
-  !*** ./src/components/HelpText.vue?vue&type=template&id=89ab2d84&scoped=true& ***!
-  \********************************************************************************/
+/***/ "./src/components/HelpPanel/HelpInputList.vue?vue&type=template&id=3b17c84a&scoped=true&":
+/*!***********************************************************************************************!*\
+  !*** ./src/components/HelpPanel/HelpInputList.vue?vue&type=template&id=3b17c84a&scoped=true& ***!
+  \***********************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   render: () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_HelpText_vue_vue_type_template_id_89ab2d84_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render),
-/* harmony export */   staticRenderFns: () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_HelpText_vue_vue_type_template_id_89ab2d84_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */   render: () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_HelpInputList_vue_vue_type_template_id_3b17c84a_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   staticRenderFns: () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_HelpInputList_vue_vue_type_template_id_3b17c84a_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_HelpText_vue_vue_type_template_id_89ab2d84_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../node_modules/vue-loader/lib/index.js??vue-loader-options!./HelpText.vue?vue&type=template&id=89ab2d84&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/components/HelpText.vue?vue&type=template&id=89ab2d84&scoped=true&");
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_HelpInputList_vue_vue_type_template_id_3b17c84a_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./HelpInputList.vue?vue&type=template&id=3b17c84a&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/components/HelpPanel/HelpInputList.vue?vue&type=template&id=3b17c84a&scoped=true&");
+
+
+/***/ }),
+
+/***/ "./src/components/HelpPanel/HelpText.vue?vue&type=template&id=aa2a6aac&scoped=true&":
+/*!******************************************************************************************!*\
+  !*** ./src/components/HelpPanel/HelpText.vue?vue&type=template&id=aa2a6aac&scoped=true& ***!
+  \******************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   render: () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_HelpText_vue_vue_type_template_id_aa2a6aac_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   staticRenderFns: () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_HelpText_vue_vue_type_template_id_aa2a6aac_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_HelpText_vue_vue_type_template_id_aa2a6aac_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./HelpText.vue?vue&type=template&id=aa2a6aac&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/components/HelpPanel/HelpText.vue?vue&type=template&id=aa2a6aac&scoped=true&");
 
 
 /***/ }),
@@ -73910,7 +74757,9 @@ var render = function () {
             attrs: {
               selected_tab: _vm.tab,
               portrait_view: _vm.portrait_view,
-              is_help_panel_open: _vm.is_help_panel_open,
+              is_help_panel_open: _vm.portrait_view
+                ? _vm.tab == "help"
+                : _vm.is_help_panel_open,
             },
             on: {
               changetab: _vm.setTab,
@@ -73946,6 +74795,7 @@ var render = function () {
             on: {
               close: function ($event) {
                 _vm.is_help_panel_open = false
+                _vm.setTab(_vm.previous_tab)
               },
             },
           })
@@ -74291,39 +75141,53 @@ var render = function () {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { attrs: { id: "help_panel" } },
+    {
+      class: { portrait_view: _vm.portrait_view },
+      attrs: { id: "help_panel" },
+    },
     [
-      _c("X", {
-        staticClass: "close_button highlighting_button",
-        attrs: { size: 22 },
-        on: {
-          click: function ($event) {
-            return _vm.$emit("close")
-          },
-        },
-      }),
-      _vm._v(" "),
-      _vm.category_key
-        ? _c(
-            "a",
-            {
-              staticClass: "back_button",
-              on: {
-                click: function ($event) {
-                  return _vm.openPage("", "")
+      _c(
+        "div",
+        { staticClass: "help_header" },
+        [
+          !_vm.portrait_view
+            ? _c("X", {
+                staticClass: "close_button highlighting_button",
+                attrs: { size: 22 },
+                on: {
+                  click: function ($event) {
+                    return _vm.$emit("close")
+                  },
                 },
-              },
-            },
-            [
-              _c("ChevronLeft", { attrs: { size: 20 } }),
-              _vm._v(" Back to overview"),
-            ],
-            1
-          )
-        : _vm._e(),
+              })
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.category_key
+            ? _c(
+                "a",
+                {
+                  staticClass: "back_button",
+                  on: {
+                    click: function ($event) {
+                      return _vm.openPage("", "")
+                    },
+                  },
+                },
+                [
+                  _c("ChevronLeft", { attrs: { size: 20 } }),
+                  _vm._v(" Back to overview"),
+                ],
+                1
+              )
+            : _vm._e(),
+        ],
+        1
+      ),
       _vm._v(" "),
       !_vm.category_key
         ? _c("content", [
+            _c("h1", [_vm._v("Documentation")]),
+            _vm._v(" "),
             _c(
               "ul",
               _vm._l(_vm.HelpData, function (cat, cat_key) {
@@ -74366,67 +75230,19 @@ var render = function () {
                 : _vm._e(),
               _vm._v(" "),
               _vm.page.inputs
-                ? _vm._l(_vm.page.inputs, function (input, inp_key) {
-                    return _c(
-                      "div",
-                      {
-                        class: {
-                          input_help: true,
-                          visible: _vm.isInputVisible(inp_key),
-                        },
-                        attrs: { Y: "" },
-                      },
-                      [
-                        _c("h2", [
-                          _vm._v(
-                            _vm._s(input.name || _vm.getInput(inp_key).label)
-                          ),
-                        ]),
-                        _vm._v(" "),
-                        _vm.labels[input.type]
-                          ? _c("div", [
-                              _c("span", { staticClass: "input_type_label" }, [
-                                _vm._v(_vm._s(_vm.labels[input.type])),
-                              ]),
-                              _vm._v(" "),
-                              input.evaluation
-                                ? _c(
-                                    "span",
-                                    { staticClass: "input_evaluation" },
-                                    [
-                                      _vm._v(
-                                        _vm._s(
-                                          _vm.labels[
-                                            "evaluation_" + input.evaluation
-                                          ]
-                                        )
-                                      ),
-                                    ]
-                                  )
-                                : _vm._e(),
-                            ])
-                          : _vm._e(),
-                        _vm._v(" "),
-                        _c("p", [
-                          _vm._v(
-                            _vm._s(input.info || _vm.getInput(inp_key).info)
-                          ),
-                        ]),
-                        _vm._v(" "),
-                        input.text
-                          ? _c("HelpText", { attrs: { text: input.text } })
-                          : _vm._e(),
-                      ],
-                      1
-                    )
+                ? _c("HelpInputList", {
+                    attrs: {
+                      inputs: _vm.page.inputs,
+                      category_key: _vm.category_key,
+                      page_key: _vm.page_key,
+                    },
                   })
                 : _vm._e(),
             ],
-            2
+            1
           )
         : _vm._e(),
-    ],
-    1
+    ]
   )
 }
 var staticRenderFns = []
@@ -74436,10 +75252,121 @@ render._withStripped = true
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/components/HelpText.vue?vue&type=template&id=89ab2d84&scoped=true&":
-/*!***********************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/components/HelpText.vue?vue&type=template&id=89ab2d84&scoped=true& ***!
-  \***********************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/components/HelpPanel/HelpInputList.vue?vue&type=template&id=3b17c84a&scoped=true&":
+/*!**************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/components/HelpPanel/HelpInputList.vue?vue&type=template&id=3b17c84a&scoped=true& ***!
+  \**************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   render: () => (/* binding */ render),
+/* harmony export */   staticRenderFns: () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function () {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "section",
+    _vm._l(_vm.inputs, function (input, inp_key) {
+      return _c(
+        "div",
+        { class: { input_help: true, visible: _vm.isInputVisible(inp_key) } },
+        [
+          _c(
+            "h2",
+            [
+              input.type == "molang"
+                ? _c("Brackets", { attrs: { title: "Molang" } })
+                : input.type == "text"
+                ? _c("WholeWord", { attrs: { title: "Text" } })
+                : input.type == "toggle"
+                ? _c("CheckSquare", { attrs: { title: "Toggle" } })
+                : input.type == "select"
+                ? _c("Menu", { attrs: { title: "Select" } })
+                : input.type == "number"
+                ? _c("Gauge", { attrs: { title: "Number" } })
+                : input.type == "color"
+                ? _c("Palette", { attrs: { title: "Color" } })
+                : input.type == "event_trigger"
+                ? _c("Zap", { attrs: { title: "Event Trigger" } })
+                : _vm._e(),
+              _vm._v(
+                "\n\t\t\t" +
+                  _vm._s(input.label || _vm.getInput(inp_key).label) +
+                  "\n\t\t"
+              ),
+            ],
+            1
+          ),
+          _vm._v(" "),
+          input.type == "molang"
+            ? _c("div", { staticClass: "input_info_bar" }, [
+                _c("span", { staticClass: "input_type_label" }, [
+                  _vm._v(_vm._s(_vm.labels[input.type])),
+                ]),
+                _vm._v(" "),
+                input.type == "molang"
+                  ? _c(
+                      "span",
+                      {
+                        staticClass: "input_context_label",
+                        style: {
+                          backgroundColor:
+                            _vm.input_context_color[input.context || "emitter"],
+                        },
+                      },
+                      [_vm._v(_vm._s(_vm.labels[input.context || "emitter"]))]
+                    )
+                  : _vm._e(),
+                _vm._v(" "),
+                input.evaluation
+                  ? _c("span", { staticClass: "input_evaluation" }, [
+                      _vm._v(
+                        _vm._s(_vm.labels["evaluation_" + input.evaluation])
+                      ),
+                    ])
+                  : _vm._e(),
+              ])
+            : _vm._e(),
+          _vm._v(" "),
+          input.display_input_info != false
+            ? _c("p", [
+                _vm._v(
+                  _vm._s(
+                    input.info ||
+                      _vm.consistentPuncuation(_vm.getInput(inp_key).info)
+                  )
+                ),
+              ])
+            : _vm._e(),
+          _vm._v(" "),
+          input.text
+            ? _c("HelpText", {
+                class: { select_description: input.type == "select" },
+                attrs: { text: input.text },
+              })
+            : _vm._e(),
+        ],
+        1
+      )
+    }),
+    0
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/components/HelpPanel/HelpText.vue?vue&type=template&id=aa2a6aac&scoped=true&":
+/*!*********************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/components/HelpPanel/HelpText.vue?vue&type=template&id=aa2a6aac&scoped=true& ***!
+  \*********************************************************************************************************************************************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -74464,7 +75391,7 @@ var render = function () {
                 _c("code", [_vm._v(_vm._s(line.code))]),
                 _vm._v(_vm._s(line.text)),
               ])
-            : line.type == "help"
+            : line.type == "html"
             ? _c("p", { domProps: { innerHTML: _vm._s(line.content) } })
             : line.type == "h2"
             ? _c("h2", [_vm._v(_vm._s(line.text))])
@@ -74472,6 +75399,22 @@ var render = function () {
             ? _c("h3", [_vm._v(_vm._s(line.text))])
             : line.type == "h4"
             ? _c("h4", [_vm._v(_vm._s(line.text))])
+            : line.type == "link"
+            ? _c("p", [
+                _c(
+                  "a",
+                  {
+                    attrs: {
+                      href: line.href,
+                      target: "_blank",
+                      rel: "noopener",
+                    },
+                  },
+                  [_vm._v(_vm._s(line.text))]
+                ),
+              ])
+            : line.type == "input_list"
+            ? _c("HelpInputList", { attrs: { inputs: line.inputs } })
             : _vm._e(),
         ]
       }),
@@ -74643,21 +75586,23 @@ var render = function () {
           ]
         : _vm._e(),
       _vm._v(" "),
-      _c(
-        "div",
-        {
-          staticClass: "mode_selector highlighting_button",
-          class: { selected: _vm.is_help_panel_open },
-          attrs: { title: "Help" },
-          on: {
-            click: function ($event) {
-              return _vm.openHelpPanel()
+      !_vm.portrait_view
+        ? _c(
+            "div",
+            {
+              staticClass: "mode_selector highlighting_button",
+              class: { selected: _vm.is_help_panel_open },
+              attrs: { title: "Documentation" },
+              on: {
+                click: function ($event) {
+                  return _vm.openHelpPanel()
+                },
+              },
             },
-          },
-        },
-        [_c("HelpCircle", { attrs: { size: 20 } })],
-        1
-      ),
+            [_c("HelpCircle", { attrs: { size: 20 } })],
+            1
+          )
+        : _vm._e(),
       _vm._v(" "),
       _vm.canShare
         ? _c(
@@ -78759,6 +79704,7 @@ var render = function () {
                 ),
                 _vm._v(" "),
                 _c("input", {
+                  staticStyle: { "margin-top": "5px" },
                   attrs: {
                     id: "particle-texture-image",
                     type: "file",

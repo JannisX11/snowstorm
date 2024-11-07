@@ -3,15 +3,18 @@
 		<template v-for="line in lines">
 			<p v-if="typeof line == 'string'">{{ line }}</p>
 			<p class="code_line" v-else-if="line.type == 'code'"><code>{{ line.code }}</code>{{ line.text }}</p>
-			<p v-else-if="line.type == 'help'" v-html="line.content"></p>
+			<p v-else-if="line.type == 'html'" v-html="line.content"></p>
 			<h2 v-else-if="line.type == 'h2'">{{ line.text }}</h2>
 			<h3 v-else-if="line.type == 'h3'">{{ line.text }}</h3>
 			<h4 v-else-if="line.type == 'h4'">{{ line.text }}</h4>
+			<p v-else-if="line.type == 'link'"><a :href="line.href" target="_blank" rel="noopener">{{ line.text }}</a></p>
+			<HelpInputList v-else-if="line.type == 'input_list'" :inputs="line.inputs"></HelpInputList>
 		</template>
 	</section>
 </template>
 
 <script>
+
 
 
 export default {
@@ -54,6 +57,11 @@ export default {
 	#help_panel p {
 		margin-bottom: 12px;
 		line-height: normal;
+	}
+	#help_panel h1 {
+		margin-bottom: 12px;
+		padding-bottom: 2px;
+		border-bottom: 2px solid var(--color-selection);
 	}
 	#help_panel h2 {
 		margin-top: 22px;

@@ -9,7 +9,7 @@
 			<menu-bar
 				:selected_tab="tab"
 				:portrait_view="portrait_view"
-				:is_help_panel_open="is_help_panel_open"
+				:is_help_panel_open="portrait_view ? tab == 'help' : is_help_panel_open"
 				@changetab="setTab"
 				@opendialog="openDialog"
 				@open_help_page="openHelpPage"
@@ -22,7 +22,7 @@
 		<code-viewer v-if="tab == 'code'"></code-viewer>
 
 
-		<help-panel v-if="is_help_panel_open || tab == 'help'" ref="help_panel" :portrait_view="portrait_view" @close="is_help_panel_open = false;"></help-panel>
+		<help-panel v-if="is_help_panel_open || tab == 'help'" ref="help_panel" :portrait_view="portrait_view" @close="is_help_panel_open = false; setTab(previous_tab)"></help-panel>
 
 
 		<div class="resizer"
@@ -104,6 +104,7 @@ export default {
 	data() {return {
 		code: '',
 		tab: portrait_view ? 'config' : 'preview',
+		previous_tab: 'config',
 		dialog: null,
 		sidebar_width: getInitialSidebarWidth(),
 		is_sidebar_open: getInitialIsSidebarOpen(),
@@ -112,6 +113,7 @@ export default {
 	}},
 	methods: {
 		setTab(tab) {
+			this.previous_tab = this.tab;
 			this.tab = tab
 			Vue.nextTick(() => {
 				this.$refs.preview.updateSize();
@@ -125,6 +127,7 @@ export default {
 		},
 		async openHelpPage(tab_key, group_key) {
 			this.is_help_panel_open = true;
+			this.setTab('help');
 			await Vue.nextTick();
 			this.$refs.help_panel.openPage(tab_key, group_key);
 		},
@@ -249,7 +252,7 @@ export default {
 
 	/* Portrait View */
 	div#app.portrait_view {
-		grid-template-rows: 114px calc(100% - 152px) 38px;
+		grid-template-rows: 124px calc(100% - 162px) 38px;
 		grid-template-columns: 100%;
 		grid-template-areas: "header" "main" "mode_selector";
 	}
