@@ -1,13 +1,13 @@
 # Snowstorm
 
 Custom editor for Minecraft Bedrock Edition particle files. Available as a web app and VSCode Extension:
-* **Web App:** [github.com/JannisX11/snowstorm](https://jannisx11.github.io/snowstorm/)
+* **Web App:** [snowstorm.app](https://snowstorm.app/)
 * **VSCode Extension:** [Snowstorm - Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=JannisX11.snowstorm)
 
 
 ## Interface
 
-![Image](https://i.imgur.com/6QIlzcq.png)
+![Snowstorm interface screenshot](https://snowstorm.app/content/interface.png)
 
 
 ## Development

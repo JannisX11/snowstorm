@@ -22,14 +22,14 @@
         </div>
         <footer>
             <select id="loop_mode" v-model="loop_mode" @change="changeLoopMode()">
-                <option id="auto">Auto</option>
-                <option id="looping">Looping</option>
-                <option id="once">Once</option>
+                <option value="auto">Auto</option>
+                <option value="looping">Looping</option>
+                <option value="once">Once</option>
             </select>
             <select id="parent_mode" v-model="parent_mode" @change="changeParentMode()">
-                <option id="world">World</option>
-                <option id="entity">Entity</option>
-                <option id="locator">Locator</option>
+                <option value="world">World</option>
+                <option value="entity">Entity</option>
+                <option value="locator">Locator</option>
             </select>
             <div class="tool ground_collision" :class="{toggle_enabled: collision}" @click="toggleCollision()" title="Preview Collisions">
                 <FlipVertical2 :size="20" v-if="collision" />
@@ -295,8 +295,8 @@
         data() {return {
             fps: 0,
             particles: 0,
-            loop_mode: 'Looping',
-            parent_mode: 'World',
+            loop_mode: 'auto',
+            parent_mode: 'world',
             warning_count: 0,
             stats,
             collision: true,
@@ -347,10 +347,10 @@
                 this.$refs.bake_placeholder_confirm_dialog.showModal();
             },
             changeLoopMode() {
-                Emitter.loop_mode = this.loop_mode.toLowerCase();
+                Emitter.loop_mode = this.loop_mode;
             },
             changeParentMode() {
-                Emitter.parent_mode = this.parent_mode.toLowerCase();
+                Emitter.parent_mode = this.parent_mode;
             },
             toggleCollision() {
                 Emitter.ground_collision = !Emitter.ground_collision;

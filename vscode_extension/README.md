@@ -7,4 +7,4 @@ Snowstorm Repository: [github.com/JannisX11/snowstorm](https://github.com/Jannis
 
 ## Interface
 
-![Image](https://i.imgur.com/6QIlzcq.png)
+![Snowstorm interface screenshot](https://snowstorm.app/content/interface.png)
