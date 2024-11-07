@@ -23,7 +23,10 @@
 
 			<h3>{{ selected_subject.label }}</h3>
 			<div class="input_group" v-for="(group, group_key) in input_groups" :key="group_key">
-				<h4 @click="fold(group)">{{ group.label }}</h4>
+				<h4 @click="fold(group)">
+					{{ group.label }}
+					<div class="highlighting_button help_button" @click.stop="openHelp(selected_subject_key, group_key)">?</div>
+				</h4>
 				<template v-if="!group._folded">
 					<ul v-if="group.type == 'curves'">
 						<curve
@@ -77,6 +80,7 @@ import {
 	Tangent,
 	Zap,
 	Plus,
+	HelpCircle,
 } from 'lucide-vue'
 import EventList from './Sidebar/EventList.vue';
 import ListAddButton from './Form/ListAddButton.vue';
@@ -107,6 +111,7 @@ export default {
 		Zap,
 		Plus,
 		ListAddButton,
+		HelpCircle
 	},
 	props: {
 		portrait_view: Boolean
@@ -133,6 +138,9 @@ export default {
 			if (group.curves && !group._folded) {
 				updateCurvesPanel();
 			}
+		},
+		openHelp(tab_key, group_key) {
+			this.$emit('open_help_page', tab_key, group_key);
 		},
 		updateSize(e) {
 			updateCurvesPanel()
@@ -207,6 +215,14 @@ export default {
 		right: 0;
 		left: unset;
 	}
+	.help_button {
+		width: 30px;
+		text-align: center;
+		height: 32px;
+		margin: -5px -9px;
+		padding-top: 4px;
+		font-family: arial, sans-serif;
+	}
 	#test_quick_setup_button {
 		display: block;
 		margin: auto;
@@ -263,6 +279,9 @@ export default {
 	}
 	.input_group h4:hover {
 		filter: brightness(1.1);;
+	}
+	.help_button {
+		float: right;
 	}
 	.input_group > ul {
 		padding: 8px;

@@ -14,7 +14,7 @@ class Curve {
 		this.inputs = {
 			id: new Input({
 				label: 'Name',
-				info: 'The MoLang variable to be used later in MoLang expressions. Must begin with "variable."',
+				info: 'The Molang variable to be used later in Molang expressions. Must begin with "variable."',
 				placeholder: 'variable.curve1',
 				type: 'text',
 				value: data ? '' : 'variable.',

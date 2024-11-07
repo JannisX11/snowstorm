@@ -220,13 +220,7 @@ export default {
 	},
 	methods: {
 		isInputVisible(input, group) {
-			if (typeof input.condition == 'function') {
-				return input.condition(group)
-			} else {
-				return !input.enabled_modes
-					|| group._selected_mode === null
-					|| input.enabled_modes.includes(group._selected_mode);
-			}
+			return input.isVisible(group);
 		},
 		highlightMolang(code) {
 			return Prism.highlight(code, Languages.molang)

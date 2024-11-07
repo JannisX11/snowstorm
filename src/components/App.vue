@@ -2,18 +2,27 @@
 	<div id="app" :class="{portrait_view}" :style="{'--sidebar': getEffectiveSidebarWidth()+'px'}">
 
 		<div id="dialog_blackout" v-if="dialog" @click="closeDialog"></div>
-		<molang-dialog v-if="dialog == 'molang_sheet'" @close="closeDialog"></molang-dialog>
 		<warning-dialog v-if="dialog == 'warnings'" @close="closeDialog"></warning-dialog>
 
         <header>
 			<logo v-if="portrait_view" />
-			<menu-bar @changetab="setTab" :selected_tab="tab" :portrait_view="portrait_view" @opendialog="openDialog"></menu-bar>
+			<menu-bar
+				:selected_tab="tab"
+				:portrait_view="portrait_view"
+				:is_help_panel_open="portrait_view ? tab == 'help' : is_help_panel_open"
+				@changetab="setTab"
+				@opendialog="openDialog"
+				@open_help_page="openHelpPage"
+			></menu-bar>
 			<expression-bar></expression-bar>
         </header>
 
 		<preview v-show="tab == 'preview'" ref="preview" @opendialog="openDialog">
 		</preview>
 		<code-viewer v-if="tab == 'code'"></code-viewer>
+
+
+		<help-panel v-if="is_help_panel_open || tab == 'help'" ref="help_panel" :portrait_view="portrait_view" @close="is_help_panel_open = false; setTab(previous_tab)"></help-panel>
 
 
 		<div class="resizer"
@@ -24,11 +33,12 @@
 			</button>
 		</div>
 
-		<sidebar ref="sidebar" v-show="!portrait_view || tab == 'config'" :portrait_view="portrait_view"></sidebar>
+		<sidebar ref="sidebar" v-show="!portrait_view || tab == 'config'" :portrait_view="portrait_view" @open_help_page="openHelpPage"></sidebar>
 
 		<ul v-if="portrait_view" id="portrait_mode_selector">
         	<li class="mode_selector config" :class="{selected: tab == 'config'}" @click="setTab('config')"><SlidersHorizontal :size="22" /></li>
         	<li class="mode_selector code" :class="{selected: tab == 'code'}" @click="setTab('code')"><FileJson :size="22" /></li>
+        	<li class="mode_selector help" :class="{selected: tab == 'help'}" @click="setTab('help')"><HelpCircle :size="22" /></li>
         	<li class="mode_selector preview" :class="{selected: tab == 'preview'}" @click="setTab('preview')"><Move3D :size="22" /></li>
 		</ul>
 
@@ -39,14 +49,14 @@
 import Vue from 'vue';
 import MenuBar from './MenuBar';
 import Sidebar from './Sidebar';
+import HelpPanel from './HelpPanel';
 import Preview from './Preview';
 import CodeViewer from './CodeViewer';
-import MolangDialog from './MolangDialog'
 import WarningDialog from './WarningDialog'
 import ExpressionBar from './ExpressionBar'
 import InfoBox from './InfoBox'
 import vscode from '../vscode_extension';
-import {SlidersHorizontal, FileJson, Move3D} from 'lucide-vue'
+import {SlidersHorizontal, FileJson, Move3D, HelpCircle} from 'lucide-vue'
 import Logo from './Sidebar/Logo.vue';
 import {PanelLeftOpen} from "lucide-vue";
 
@@ -88,19 +98,22 @@ function getInitialIsSidebarOpen() {
 export default {
 	name: 'app',
 	components: {
-		Preview, CodeViewer, MenuBar, Sidebar, MolangDialog, WarningDialog, ExpressionBar, InfoBox,
-		SlidersHorizontal, FileJson, Move3D, Logo, PanelLeftOpen
+		Preview, CodeViewer, MenuBar, Sidebar, HelpPanel, WarningDialog, ExpressionBar, InfoBox,
+		SlidersHorizontal, FileJson, Move3D, Logo, PanelLeftOpen, HelpCircle
 	},
 	data() {return {
 		code: '',
 		tab: portrait_view ? 'config' : 'preview',
+		previous_tab: 'config',
 		dialog: null,
 		sidebar_width: getInitialSidebarWidth(),
 		is_sidebar_open: getInitialIsSidebarOpen(),
+		is_help_panel_open: false,
 		portrait_view,
 	}},
 	methods: {
 		setTab(tab) {
+			this.previous_tab = this.tab;
 			this.tab = tab
 			Vue.nextTick(() => {
 				this.$refs.preview.updateSize();
@@ -111,6 +124,12 @@ export default {
 		},
 		closeDialog() {
 			this.dialog = null;
+		},
+		async openHelpPage(tab_key, group_key) {
+			this.is_help_panel_open = true;
+			this.setTab('help');
+			await Vue.nextTick();
+			this.$refs.help_panel.openPage(tab_key, group_key);
 		},
 		setSidebarSize(size, original_size) {
 			if (size > 80) {
@@ -233,7 +252,7 @@ export default {
 
 	/* Portrait View */
 	div#app.portrait_view {
-		grid-template-rows: 114px calc(100% - 152px) 38px;
+		grid-template-rows: 124px calc(100% - 162px) 38px;
 		grid-template-columns: 100%;
 		grid-template-areas: "header" "main" "mode_selector";
 	}

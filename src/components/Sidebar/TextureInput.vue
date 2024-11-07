@@ -81,7 +81,7 @@
 		<div class="meta toolbar">
 			<template v-if="input.allow_upload">
 				<div class="tool" v-on:click="Texture.reset()"><X /></div>
-				<input id="particle-texture-image" type="file" accept=".png" v-on:change="input.change($event)">
+				<input id="particle-texture-image" type="file" style="margin-top: 5px;" accept=".png" v-on:change="input.change($event)">
 			</template>
 			<div class="tool" v-if="!input.allow_upload" @click="reloadTexture()" title="Reload Texture">
 				<RefreshCcw />
