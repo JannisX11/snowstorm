@@ -84,7 +84,7 @@ export default {
 						text: [
 							'An identifier consists of two parts: The project namespace, and the particle name. The namespace is always separated by a colon',
 							'The identifier should be all in lower-case letters and use underscores to separate words. Letters from a-z, numbers, points and underscores are allowed, other characters may cause issues.',
-							'Example: `snowstorm:fire`',
+							'Example: snowstorm:fire',
 							'The identifier can be used in-game to reference the particle effect, for example in particle commands, scripts, or entities.'
 						]
 					},
@@ -128,7 +128,7 @@ export default {
 						type: 'select',
 						text: [
 							{type: 'h3', text: 'Steady'},
-							'Particles are spawned steadily over the lifetime of the emitter',
+							'Particles are spawned steadily during the lifetime of the emitter',
 							{type: 'h3', text: 'Instant'},
 							'All particles are spawned instantly at the start of the emitter\'s lifetime',
 							{type: 'h3', text: 'Manual'},
@@ -155,6 +155,14 @@ export default {
 				inputs: {
 					mode: {
 						type: 'select',
+						text: [
+							{type: 'h3', text: 'Looping'},
+							'Emitter will loop until it is removed.',
+							{type: 'h3', text: 'Once'},
+							'Emitter will execute once, and once the lifetime ends or the number of particles allowed to emit have emitted, the emitter expires.',
+							{type: 'h3', text: 'Expression'},
+							'Emitter will turn "on" when the activation expression is non-zero, and will turn "off" when it\'s zero. This is useful for situations like driving an entity-attached emitter from an entity variable.'
+						]
 					},
 					active_time: {
 						type: 'molang',
@@ -388,7 +396,7 @@ export default {
 							{type: 'h3', text: 'Blend'},
 							'Blend supports partial transparency in pixels. Note that with this material, particles of different colors, even from different effect, can cause visual flickering in-game when viewed behind each other.',
 							{type: 'h3', text: 'Additive'},
-							'Partial transparency is supported. Particles are stacked on top of each other using additive blending. This is ideal for creating light effects.',
+							'Partial transparency is supported. Particles are rendered additive blending. This is ideal for creating light effects.',
 							{type: 'h3', text: 'Opaque'},
 							'The particle is fully opaque, no transparent pixels are supported.',
 							{type: 'h3', text: 'Custom:'},
@@ -482,6 +490,7 @@ export default {
 						type: 'color',
 					},
 					expression: {
+						label: 'Color Expression',
 						type: 'molang',
 						context: 'particle',
 						evaluation: 'per_tick',
@@ -506,7 +515,7 @@ export default {
 						type: 'image',
 						label: 'Image',
 						text: [
-							'In VS Code, the image gets loaded from the provided texture path automatically. To use this, ensure that you open the entire texture pack folder as a project in VSCode, rather than just the individual particle file.',
+							'In VS Code, the image gets loaded from the provided texture path automatically. To use this, ensure that you open the entire texture pack folder as a project in VSCode, not just the individual particle file.',
 							'In the web app, you need to upload your PNG file to preview it, unless you are using one of the included vanilla particle files.',
 							'Painting on the texture is supported using the provided editing tools.'
 						]
@@ -530,7 +539,7 @@ export default {
 					},
 					size: {
 						type: 'number',
-						text: 'This size is used to set a base size for the UV map. This does not have to match the actual texture resolution, but the aspect ratio should be the same.'
+						text: 'This size is used to set a base size for the UV map. This does not have to be identical to the actual texture resolution, but the aspect ratio should match.'
 					},
 					uv: {
 						type: 'number',

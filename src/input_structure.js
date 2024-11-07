@@ -629,7 +629,7 @@ const Data = {
 				max_frame: new Input({
 					id: 'particle_texture_max_frame',
 					label: 'Max Frame',
-					info: 'Maximum amount of frames to draw from the flipbook',
+					info: 'Maximum amount of animation frames to draw from the flipbook',
 					enabled_modes: ['animated']
 				}),
 				stretch_to_lifetime: new Input({
@@ -677,7 +677,7 @@ const Data = {
 				expire_in: new Input({
 					id: 'particle_lifetime_expire_in',
 					label: 'Kill in Blocks',
-					info: 'List of blocks to that let the particle expire on contact. Block IDs have a namespace and are separated by a space character.',
+					info: 'List of blocks that let the particle expire on contact. Enter the block IDs including the namespace.',
 					placeholder: 'minecraft:stone',
 					axis_count: -1,
 					type: 'text'
@@ -685,7 +685,7 @@ const Data = {
 				expire_outside: new Input({
 					id: 'particle_lifetime_expire_outside',
 					label: 'Only in Blocks',
-					info: 'List of blocks outside of which the particle expires. Block IDs have a namespace and are separated by a space character.',
+					info: 'List of blocks outside of which the particle expires. Enter the block IDs including the namespace.',
 					placeholder: 'minecraft:air',
 					axis_count: -1,
 					type: 'text'

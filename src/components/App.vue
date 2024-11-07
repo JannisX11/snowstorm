@@ -22,7 +22,7 @@
 		<code-viewer v-if="tab == 'code'"></code-viewer>
 
 
-		<help-panel v-if="is_help_panel_open || tab == 'help'" ref="help_panel" :portrait_view="portrait_view" @close="is_help_panel_open = false; setTab(previous_tab)"></help-panel>
+		<help-panel v-if="is_help_panel_open || tab == 'help'" ref="help_panel" :portrait_view="portrait_view" @close="is_help_panel_open = false; portrait_view && setTab(previous_tab);"></help-panel>
 
 
 		<div class="resizer"
@@ -127,7 +127,7 @@ export default {
 		},
 		async openHelpPage(tab_key, group_key) {
 			this.is_help_panel_open = true;
-			this.setTab('help');
+			if (portrait_view) this.setTab('help');
 			await Vue.nextTick();
 			this.$refs.help_panel.openPage(tab_key, group_key);
 		},

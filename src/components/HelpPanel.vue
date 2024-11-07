@@ -5,30 +5,32 @@
 			<a class="back_button" v-if="category_key" @click="openPage('', '')"><ChevronLeft :size="20" /> Back to overview</a>
 		</div>
 
-		<content v-if="!category_key">
-			<h1>Documentation</h1>
-			<ul>
-				<li v-for="(cat, cat_key) in HelpData">
-					<span class="category_title">{{ cat.title }}</span>
-					<ul>
-						<li v-for="(pg, pg_key) in HelpData[cat_key].pages" class="clickable" @click="openPage(cat_key, pg_key)">{{ pg.title }}</li>
-					</ul>
-				</li>
-			</ul>
-		</content>
-		<content v-else-if="page">
+		<content ref="content">
+			<template v-if="!category_key">
+				<h1>Documentation</h1>
+				<ul>
+					<li v-for="(cat, cat_key) in HelpData">
+						<span class="category_title">{{ cat.title }}</span>
+						<ul>
+							<li v-for="(pg, pg_key) in HelpData[cat_key].pages" class="clickable" @click="openPage(cat_key, pg_key)">{{ pg.title }}</li>
+						</ul>
+					</li>
+				</ul>
+			</template>
+			<template v-else-if="page">
 
-			<h1>{{ page.title }}</h1>
-			<HelpText v-if="page.text" :text="page.text"></HelpText>
+				<h1>{{ page.title }}</h1>
+				<HelpText v-if="page.text" :text="page.text"></HelpText>
 
-			<HelpInputList v-if="page.inputs" :inputs="page.inputs" :category_key="category_key" :page_key="page_key" />
+				<HelpInputList v-if="page.inputs" :inputs="page.inputs" :category_key="category_key" :page_key="page_key" />
+			</template>
 		</content>
 	</div>
 </template>
 
 <script>
 import HelpData from './../help'
-import { X, ChevronLeft } from 'lucide-vue'
+import { X, ChevronLeft, Watch } from 'lucide-vue'
 import HelpText from './HelpPanel/HelpText.vue';
 import HelpInputList from './HelpPanel/HelpInputList.vue';
 import Vue from 'vue';
@@ -52,6 +54,11 @@ export default {
 	},
 	props: {
 		portrait_view: Boolean
+	},
+	watch: {
+		page_key() {
+			this.$refs.content.scrollTop = 0;
+		}
 	},
 	computed: {
 		page() {

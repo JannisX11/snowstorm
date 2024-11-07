@@ -25,7 +25,13 @@ function getValue(key, required) {
 	if (type.array) {
 		var result = [];
 		for (var num of value) {
-			result.push(processValue(num, type));
+			let value = processValue(num, type);
+			if (type.type == 'string' && typeof value == 'string' && value.includes('\n')) {
+				let lines = value.split(/\s*\n+\s*/g).filter(line => line.length);
+				result.push(...lines);
+			} else {
+				result.push(value);
+			}
 		}
 		if (!result.find(v => v) && !required) result = undefined;
 	} else {
