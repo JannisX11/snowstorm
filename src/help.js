@@ -141,7 +141,7 @@ export default {
 					},
 					amount: {
 						type: 'molang',
-						evaluation: 'per_tick'
+						evaluation: 'once'
 					},
 					maximum: {
 						type: 'molang',
