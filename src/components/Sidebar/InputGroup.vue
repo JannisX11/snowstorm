@@ -126,7 +126,7 @@
 							<X :size="18" class="highlighting_button" @click="input.value.remove(event_obj); input.change($event);" />
 							<div class="event_min_speed">
 								<label>Min Speed</label>
-								<input type="number" v-model.number="event_obj.min_speed" min="0">
+								<input type="number" v-model.number="event_obj.min_speed" @change=" input.change($event);" min="0">
 							</div>
 						</li>
 						<event-picker @select="($event, event) => {input.value.push({event: $event, min_speed: 0}); input.change(event);}" />
