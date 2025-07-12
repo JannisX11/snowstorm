@@ -57,6 +57,7 @@ export default {
             		{type: 'code', code: 'math.pi', text: 'Returns the float representation of the constant pi.'},
             		{type: 'code', code: 'math.max(A, B)', text: 'Return highest value of A or B'},
             		{type: 'code', code: 'math.min(A, B)', text: 'Return lowest value of A or B'},
+            		{type: 'code', code: 'math.min_angle(value)', text: 'Minimize angle magnitude in degrees into the range [-180, 180]'},
             		{type: 'code', code: 'math.asin(value)', text: 'Arcsin of value'},
             		{type: 'code', code: 'math.acos(value)', text: 'Arccos of value'},
             		{type: 'code', code: 'math.atan(value)', text: 'Arctan of value'},

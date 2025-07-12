@@ -306,6 +306,7 @@ export let MathFunctions = [
     'trunc()',
     'floor()',
     'mod()',
+    'min_angle()',
     'min()',
     'max()',
     'exp()',
