@@ -91,6 +91,8 @@
 
     import {updateVariablePlaceholderList, bakePlaceholderVariable} from './../variable_placeholders'
 
+    let BACKGROUND_COLOR = 0x29323a;
+ 
     const View = {
         updateVariablePlaceholderList() {},
         PlaybackController: {
@@ -149,9 +151,14 @@
     CustomAxesHelper.prototype = Object.create( THREE.LineSegments.prototype );
 
     View.screenshot = function() {
+        // Set clear background
+        let color = new THREE.Color(BACKGROUND_COLOR);
+        View.renderer.setClearColor(color, 0);
+        View.renderer.render(View.scene, View.camera);
         let dataurl = View.canvas.toDataURL()
-        let is_ff = navigator.userAgent.toLowerCase().indexOf('firefox') > -1
+        View.renderer.setClearColor(color);
 
+        let is_ff = navigator.userAgent.toLowerCase().indexOf('firefox') > -1
         let download = document.createElement('a');
         download.href = dataurl
         download.download = `snowstorm_screenshot.png`;
@@ -181,6 +188,7 @@
             alpha: true,
             preserveDrawingBuffer: true,
         })
+        View.renderer.setClearColor(new THREE.Color(BACKGROUND_COLOR));
 
         View.controls = new OrbitControls(View.camera, View.canvas);
         View.controls.target.set(0, 0.8, 0)
