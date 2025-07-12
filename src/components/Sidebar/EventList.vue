@@ -83,8 +83,8 @@ export default {
 		startSortingList(event) {
 			sort(event, this.group.events)
 		},
-		modifyEvent(event) {
-			registerEdit('edit event', event);
+		modifyEvent(event, type) {
+			registerEdit('edit event', event, type == 'text');
 		}
 	}
 }

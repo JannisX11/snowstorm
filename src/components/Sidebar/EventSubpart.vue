@@ -45,7 +45,7 @@
 				<prism-editor :highlight="highlightGeneric" language="" :line-numbers="false"
 					v-model="subpart.particle_effect.effect"
 					placeholder="space:name"
-					@input="modifyEvent"
+					@input="modifyEvent($event, 'text')"
 				/>
 				<div class="highlighting_button" @click="$refs.new_particle_dialog.showModal(); new_particle_identifier = subpart.particle_effect.effect;" v-if="!is_extension && !canEditParticleFile()" title="Create New Particle"><FilePlus2 :size="22" /></div>
 				<div class="highlighting_button" @click="selectParticleFile()" v-if="!is_extension" title="Select File"><Upload :size="22" /></div>
@@ -74,7 +74,7 @@
 					v-model="subpart.particle_effect.pre_effect_expression"
 					placeholder=""
 					:autocomplete="autocomplete"
-					@input="modifyEvent"
+					@input="modifyEvent($event, 'text')"
 				/>
 			</li>
 		</ul>
@@ -88,7 +88,7 @@
 				<prism-editor :highlight="highlightGeneric" language="" :line-numbers="false"
 					v-model="subpart.sound_effect.event_name"
 					placeholder="block.bamboo.hit"
-					@input="modifyEvent"
+					@input="modifyEvent($event, 'text')"
 				/>
 			</li>
 		</ul>
@@ -102,7 +102,7 @@
 					v-model="subpart.expression"
 					placeholder=""
 					:autocomplete="autocomplete"
-					@input="modifyEvent"
+					@input="modifyEvent($event, 'text')"
 				/>
 			</li>
 		</ul>
@@ -269,8 +269,8 @@ export default {
 		sortList(list, event) {
 			sort(event, list);
 		},
-		modifyEvent(event) {
-			this.$emit('modify_event', event);
+		modifyEvent(event, type) {
+			this.$emit('modify_event', event, type);
 		},
 		highlightMolang(code) {
 			return Prism.highlight(code, Languages.molang)

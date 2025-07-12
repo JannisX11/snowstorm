@@ -44,7 +44,7 @@
 		"root": "github:JannisX11/vue-prism-editor",
 		"three": "^0.134.0",
 		"vue": "^2.6.12",
-		"vue-color": "^2.8.0",
+		"vue-color": "^2.8.2",
 		"vue-prism-component": "^1.2.0",
 		"wintersky": "^1.3.2"
 	}

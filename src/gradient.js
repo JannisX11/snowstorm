@@ -12,10 +12,10 @@ export default class Gradient extends Input {
         if (!this.value.length) this.value.splice(0, 0, ...this.default_value)
         this.selected = this.value[0];
     }
-    change(e, node) {
+    change(e, node, test) {
 		this.selected.color = e.hex8;
         let is_sliding = node && node.parentNode.querySelector(':active')
-        if (!is_sliding) registerEdit('change gradient')
+        registerEdit('change gradient', e, !!is_sliding);
         return this;
     }
     update(Data) {
