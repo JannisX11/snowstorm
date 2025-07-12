@@ -5,7 +5,7 @@ import {
     DefaultContext,
     DefaultVariables,
 } from './molang_data'
-import { forEachInput } from './input_structure';
+import { forEachInput, Data } from './input_structure';
 
 function getShortKey(key) {
     return key.replace(/^variable\./g, 'v.').replace(/^context\./g, 'c.').replace(/^query\./g, 'q.');
@@ -14,6 +14,7 @@ function getShortKey(key) {
 export function updateVariablePlaceholderList(list) {
     list.splice(0, Infinity);
 
+    // Collect molang strings
     let molang_strings = [];
     forEachInput((input) => {
         if (input.type != 'molang') return;
@@ -26,6 +27,23 @@ export function updateVariablePlaceholderList(list) {
             molang_strings.push(input.value);
         }
     })
+    let handleEventSubpart = (event) => {
+        if (event.expression) molang_strings.push(event.expression);
+        if (event.particle_effect?.pre_effect_expression) {
+            molang_strings.push(event.particle_effect.pre_effect_expression);
+        }
+        if (event.sequence) {
+            event.sequence.forEach(handleEventSubpart);
+        }
+        if (event.randomize) {
+            event.randomize.forEach(handleEventSubpart);
+        }
+    }
+    for (let entry of Data.events.events.events) {
+        handleEventSubpart(entry.event);
+    }
+
+    // Process data
     let variable_ids = new Set();
     let predefined = new Set();
     for (let string of molang_strings) {

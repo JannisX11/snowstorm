@@ -398,6 +398,11 @@
                     updateVariablePlaceholderList(this.placeholder_keys);
                 }
             };
+            setTimeout(() => {
+                if (this.show_placeholder_bar) {
+                    updateVariablePlaceholderList(this.placeholder_keys);
+                }
+            })
         }
     }
     export {View}

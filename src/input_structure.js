@@ -855,4 +855,4 @@ forEachInput(input => {
 
 window.Data = Data;
 export default Data
-export {forEachInput}
+export {forEachInput, Data}
