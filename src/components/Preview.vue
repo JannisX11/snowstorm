@@ -92,6 +92,7 @@
     import {updateVariablePlaceholderList, bakePlaceholderVariable} from './../variable_placeholders'
 
     const View = {
+        updateVariablePlaceholderList() {},
         PlaybackController: {
             start() {
                 if (!Emitter.initialized || Emitter.age == 0) {
@@ -398,11 +399,9 @@
                     updateVariablePlaceholderList(this.placeholder_keys);
                 }
             };
-            setTimeout(() => {
-                if (this.show_placeholder_bar) {
-                    updateVariablePlaceholderList(this.placeholder_keys);
-                }
-            })
+            View.updateVariablePlaceholderList = () => {
+                updateVariablePlaceholderList(this.placeholder_keys);
+            }
         }
     }
     export {View}
