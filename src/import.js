@@ -70,6 +70,8 @@ function updateInputsFromConfig() {
 	}
 
 	Data.effect.meta.inputs.identifier.onchange();
+
+	View.updateVariablePlaceholderList();
 }
 //function importFile() {}
 function updateConfig(data) {
@@ -95,10 +97,6 @@ function loadFile(data, confirmNewProject=true) {
 		Emitter.stop(true);
 		View.PlaybackController.start();
 		registerEdit('load file')
-
-		setTimeout(() => {
-			View.updateVariablePlaceholderList();
-		}, 200);
 	}
 }
 
