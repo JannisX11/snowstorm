@@ -130,7 +130,17 @@ Emitter.Molang.global_variables = {
 	},
 	'query.camera_distance_range_lerp'(a, b) {
 		let distance = View.camera.position.length();
-		return Math.clamp(Math.getLerp(a, b, distance), 0, 1);
+		// Prevent division by zero
+		const denominator = b - a;
+		if (Math.abs(denominator) < 1e-8) {
+			if (distance < a) {
+				return 0;
+			} else {
+				return 1;
+			}
+		}
+		// Interpolation of x between 0 and 1 in range [a, b]: (x-a)/(b-a)
+		return Math.clamp((distance - a) / denominator, 0, 1);
 	}
 }
 
