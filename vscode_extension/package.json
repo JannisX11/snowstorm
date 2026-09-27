@@ -12,7 +12,8 @@
 		"Other"
 	],
 	"activationEvents": [
-		"onCustomEditor:x11.snowstorm"
+		"onCustomEditor:x11.snowstorm",
+		"onCommand:snowstorm.switchToSnowstorm"
 	],
 	"repository": {
 		"type": "git",
@@ -21,6 +22,21 @@
 	"license": "GPL-3.0-or-later",
 	"main": "./src/extension.js",
 	"contributes": {
+		"commands": [
+			{
+				"command": "snowstorm.switchToSnowstorm",
+				"title": "Switch to Snowstorm"
+			}
+		],
+		"menus": {
+			"editor/title": [
+				{
+					"command": "snowstorm.switchToSnowstorm",
+					"when": "resourceFilename =~ /\\.particle\\.json$/ && activeCustomEditorId != x11.snowstorm",
+					"group": "navigation"
+				}
+			]
+		},
 		"customEditors": [
 			{
 				"viewType": "x11.snowstorm",
