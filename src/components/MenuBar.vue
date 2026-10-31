@@ -5,7 +5,7 @@
             <ul class="menu_dropdown" v-if="open_menu == menu.id">
                 <li v-for="entry in menu.children" :key="entry.id" v-on:click="entry.click(getVM(), $event); open_menu = null">
                     <a>
-						<component v-if="entry.icon" :is="entry.icon" :size="20" class="menu_icon" />
+						<component v-if="entry.icon" :is="entry.icon" :size="18" class="menu_icon" />
 						<div v-else class="menu_icon" />
 						{{ entry.label }}
 					</a>
@@ -37,7 +37,7 @@ import {importFile,	loadPreset,	startNewProject} from '../import'
 import {View} from './Preview'
 
 import vscode from '../vscode_extension'
-import { Share2, HelpCircle, FilePlus, CheckSquare, Square, Camera, FileUp, Save, MessagesSquare, BookOpenCheck, Sigma, Bug, LineChart, PlaySquare } from 'lucide-vue'
+import { Share2, HelpCircle, FilePlus, CheckSquare, Square, Camera, FileUp, Save, MessagesSquare, BookOpenCheck, Sigma, Bug, LineChart, PlaySquare, File } from 'lucide-vue'
 import { shareParticle } from '../share'
 import { generateFile } from '../export'
 import { Texture } from '../texture_edit'
@@ -70,14 +70,14 @@ const Menu = [
 		label: 'Examples',
 		id: 'examples',
 		children: [
-			{label: 'Loading', 	click: () => {loadPreset('loading')}},
-			{label: 'Rainbow', 	click: () => {loadPreset('rainbow')}},
-			{label: 'Rain', 	click: () => {loadPreset('rain')}},
-			{label: 'Snow', 	click: () => {loadPreset('snow')}},
-			{label: 'Fire', 	click: () => {loadPreset('fire')}},
-			{label: 'Magic', 	click: () => {loadPreset('magic')}},
-			{label: 'Trail', 	click: () => {loadPreset('trail')}},
-			{label: 'Billboard',click: () => {loadPreset('billboard')}},
+			{label: 'Loading', 	icon: File, click: () => {loadPreset('loading')}},
+			{label: 'Rainbow', 	icon: File, click: () => {loadPreset('rainbow')}},
+			{label: 'Rain', 	icon: File, click: () => {loadPreset('rain')}},
+			{label: 'Snow', 	icon: File, click: () => {loadPreset('snow')}},
+			{label: 'Fire', 	icon: File, click: () => {loadPreset('fire')}},
+			{label: 'Magic', 	icon: File, click: () => {loadPreset('magic')}},
+			{label: 'Trail', 	icon: File, click: () => {loadPreset('trail')}},
+			{label: 'Billboard',icon: File, click: () => {loadPreset('billboard')}},
 		]
 	},
 	{

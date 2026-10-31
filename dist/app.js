@@ -781,17 +781,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/file-plus.js");
 /* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/file-up.js");
 /* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/save.js");
-/* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/check-square.js");
-/* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/square.js");
-/* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/camera.js");
-/* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/help-circle.js");
-/* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/sigma.js");
-/* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/play-square.js");
-/* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/book-open-check.js");
-/* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/line-chart.js");
-/* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/bug.js");
-/* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/messages-square.js");
-/* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/share-2.js");
+/* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/file.js");
+/* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/check-square.js");
+/* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/square.js");
+/* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/camera.js");
+/* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/help-circle.js");
+/* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/sigma.js");
+/* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/play-square.js");
+/* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/book-open-check.js");
+/* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/line-chart.js");
+/* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/bug.js");
+/* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/messages-square.js");
+/* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/share-2.js");
 /* harmony import */ var _share__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../share */ "./src/share.js");
 /* harmony import */ var _texture_edit__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../texture_edit */ "./src/texture_edit.js");
 /* harmony import */ var _options__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../options */ "./src/options.js");
@@ -876,41 +877,49 @@ var Menu = [{
   id: 'examples',
   children: [{
     label: 'Loading',
+    icon: lucide_vue__WEBPACK_IMPORTED_MODULE_10__["default"],
     click: function click() {
       (0,_import__WEBPACK_IMPORTED_MODULE_1__.loadPreset)('loading');
     }
   }, {
     label: 'Rainbow',
+    icon: lucide_vue__WEBPACK_IMPORTED_MODULE_10__["default"],
     click: function click() {
       (0,_import__WEBPACK_IMPORTED_MODULE_1__.loadPreset)('rainbow');
     }
   }, {
     label: 'Rain',
+    icon: lucide_vue__WEBPACK_IMPORTED_MODULE_10__["default"],
     click: function click() {
       (0,_import__WEBPACK_IMPORTED_MODULE_1__.loadPreset)('rain');
     }
   }, {
     label: 'Snow',
+    icon: lucide_vue__WEBPACK_IMPORTED_MODULE_10__["default"],
     click: function click() {
       (0,_import__WEBPACK_IMPORTED_MODULE_1__.loadPreset)('snow');
     }
   }, {
     label: 'Fire',
+    icon: lucide_vue__WEBPACK_IMPORTED_MODULE_10__["default"],
     click: function click() {
       (0,_import__WEBPACK_IMPORTED_MODULE_1__.loadPreset)('fire');
     }
   }, {
     label: 'Magic',
+    icon: lucide_vue__WEBPACK_IMPORTED_MODULE_10__["default"],
     click: function click() {
       (0,_import__WEBPACK_IMPORTED_MODULE_1__.loadPreset)('magic');
     }
   }, {
     label: 'Trail',
+    icon: lucide_vue__WEBPACK_IMPORTED_MODULE_10__["default"],
     click: function click() {
       (0,_import__WEBPACK_IMPORTED_MODULE_1__.loadPreset)('trail');
     }
   }, {
     label: 'Billboard',
+    icon: lucide_vue__WEBPACK_IMPORTED_MODULE_10__["default"],
     click: function click() {
       (0,_import__WEBPACK_IMPORTED_MODULE_1__.loadPreset)('billboard');
     }
@@ -921,7 +930,7 @@ var Menu = [{
   children: [{
     label: 'Grid',
     get icon() {
-      return _Preview__WEBPACK_IMPORTED_MODULE_2__.View.grid.visible ? lucide_vue__WEBPACK_IMPORTED_MODULE_10__["default"] : lucide_vue__WEBPACK_IMPORTED_MODULE_11__["default"];
+      return _Preview__WEBPACK_IMPORTED_MODULE_2__.View.grid.visible ? lucide_vue__WEBPACK_IMPORTED_MODULE_11__["default"] : lucide_vue__WEBPACK_IMPORTED_MODULE_12__["default"];
     },
     click: function click() {
       _Preview__WEBPACK_IMPORTED_MODULE_2__.View.grid.visible = !_Preview__WEBPACK_IMPORTED_MODULE_2__.View.grid.visible;
@@ -930,7 +939,7 @@ var Menu = [{
   }, {
     label: 'Reference Block',
     get icon() {
-      return _Preview__WEBPACK_IMPORTED_MODULE_2__.View.minecraft_block.visible ? lucide_vue__WEBPACK_IMPORTED_MODULE_10__["default"] : lucide_vue__WEBPACK_IMPORTED_MODULE_11__["default"];
+      return _Preview__WEBPACK_IMPORTED_MODULE_2__.View.minecraft_block.visible ? lucide_vue__WEBPACK_IMPORTED_MODULE_11__["default"] : lucide_vue__WEBPACK_IMPORTED_MODULE_12__["default"];
     },
     click: function click() {
       _Preview__WEBPACK_IMPORTED_MODULE_2__.View.minecraft_block.visible = !_Preview__WEBPACK_IMPORTED_MODULE_2__.View.minecraft_block.visible;
@@ -939,7 +948,7 @@ var Menu = [{
   }, {
     label: 'Axis Helper',
     get icon() {
-      return _Preview__WEBPACK_IMPORTED_MODULE_2__.View.helper.visible ? lucide_vue__WEBPACK_IMPORTED_MODULE_10__["default"] : lucide_vue__WEBPACK_IMPORTED_MODULE_11__["default"];
+      return _Preview__WEBPACK_IMPORTED_MODULE_2__.View.helper.visible ? lucide_vue__WEBPACK_IMPORTED_MODULE_11__["default"] : lucide_vue__WEBPACK_IMPORTED_MODULE_12__["default"];
     },
     click: function click() {
       _Preview__WEBPACK_IMPORTED_MODULE_2__.View.helper.visible = !_Preview__WEBPACK_IMPORTED_MODULE_2__.View.helper.visible;
@@ -947,7 +956,7 @@ var Menu = [{
     }
   }, {
     label: 'Take Screenshot',
-    icon: lucide_vue__WEBPACK_IMPORTED_MODULE_12__["default"],
+    icon: lucide_vue__WEBPACK_IMPORTED_MODULE_13__["default"],
     click: function click() {
       _Preview__WEBPACK_IMPORTED_MODULE_2__.View.screenshot();
     }
@@ -957,49 +966,49 @@ var Menu = [{
   id: 'help',
   children: [{
     label: 'Open Documentation',
-    icon: lucide_vue__WEBPACK_IMPORTED_MODULE_13__["default"],
+    icon: lucide_vue__WEBPACK_IMPORTED_MODULE_14__["default"],
     click: function click(vm) {
       vm.openHelpPanel('', '');
     }
   }, {
     label: 'Molang Reference',
-    icon: lucide_vue__WEBPACK_IMPORTED_MODULE_14__["default"],
+    icon: lucide_vue__WEBPACK_IMPORTED_MODULE_15__["default"],
     click: function click(vm) {
       vm.openHelpPanel('general', 'molang');
     }
   }, {
     label: 'Snowstorm Tutorial',
-    icon: lucide_vue__WEBPACK_IMPORTED_MODULE_15__["default"],
+    icon: lucide_vue__WEBPACK_IMPORTED_MODULE_16__["default"],
     click: function click() {
       openLink('https://docs.microsoft.com/en-us/minecraft/creator/documents/particleeffects');
     }
   }, {
     label: 'Tutorial Video',
-    icon: lucide_vue__WEBPACK_IMPORTED_MODULE_15__["default"],
+    icon: lucide_vue__WEBPACK_IMPORTED_MODULE_16__["default"],
     click: function click() {
       openLink('https://youtu.be/J1Ub1tbO9gg');
     }
   }, {
     label: 'Format Documentation',
-    icon: lucide_vue__WEBPACK_IMPORTED_MODULE_16__["default"],
+    icon: lucide_vue__WEBPACK_IMPORTED_MODULE_17__["default"],
     click: function click() {
       openLink('https://docs.microsoft.com/en-us/minecraft/creator/reference/content/particlesreference/');
     }
   }, {
     label: 'Molang Grapher',
-    icon: lucide_vue__WEBPACK_IMPORTED_MODULE_17__["default"],
+    icon: lucide_vue__WEBPACK_IMPORTED_MODULE_18__["default"],
     click: function click() {
       openLink('https://jannisx11.github.io/molang-grapher/');
     }
   }, {
     label: 'Report a Bug',
-    icon: lucide_vue__WEBPACK_IMPORTED_MODULE_18__["default"],
+    icon: lucide_vue__WEBPACK_IMPORTED_MODULE_19__["default"],
     click: function click() {
       openLink('https://github.com/JannisX11/snowstorm/issues');
     }
   }, {
     label: 'Discord Server',
-    icon: lucide_vue__WEBPACK_IMPORTED_MODULE_19__["default"],
+    icon: lucide_vue__WEBPACK_IMPORTED_MODULE_20__["default"],
     click: function click() {
       openLink('https://discord.gg/W9d78Z8AvM');
     }
@@ -1011,8 +1020,8 @@ if (!isVSCExtension) {
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: 'menu-bar',
   components: {
-    Share2: lucide_vue__WEBPACK_IMPORTED_MODULE_20__["default"],
-    HelpCircle: lucide_vue__WEBPACK_IMPORTED_MODULE_13__["default"]
+    Share2: lucide_vue__WEBPACK_IMPORTED_MODULE_21__["default"],
+    HelpCircle: lucide_vue__WEBPACK_IMPORTED_MODULE_14__["default"]
   },
   props: {
     selected_tab: String,
@@ -4341,6 +4350,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   validate: () => (/* binding */ validate)
 /* harmony export */ });
 /* harmony import */ var _emitter__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./../emitter */ "./src/emitter.js");
+/* harmony import */ var molangjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! molangjs */ "./node_modules/molangjs/dist/molang.esm.js");
 //
 //
 //
@@ -4356,9 +4366,19 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 
 var errors = [];
+var parser = new molangjs__WEBPACK_IMPORTED_MODULE_1__["default"]();
 function validate() {
   errors.splice(0, errors.length);
   if ((_emitter__WEBPACK_IMPORTED_MODULE_0__.Config.particle_appearance_material == 'particles_alpha' || _emitter__WEBPACK_IMPORTED_MODULE_0__.Config.particle_appearance_material == 'particles_opaque') && (_emitter__WEBPACK_IMPORTED_MODULE_0__.Config.particle_color_mode == 'static' && _emitter__WEBPACK_IMPORTED_MODULE_0__.Config.particle_color_static.length == 9 && _emitter__WEBPACK_IMPORTED_MODULE_0__.Config.particle_color_static.substr(-2).toUpperCase() != 'FF' || _emitter__WEBPACK_IMPORTED_MODULE_0__.Config.particle_color_mode == 'expression' && ['', '1', '1.0'].includes(_emitter__WEBPACK_IMPORTED_MODULE_0__.Config.particle_color_expression[3]) == false)) {
@@ -4382,6 +4402,13 @@ function validate() {
   if (_emitter__WEBPACK_IMPORTED_MODULE_0__.Config.emitter_rate_mode == 'steady' && _emitter__WEBPACK_IMPORTED_MODULE_0__.Config.emitter_lifetime_mode !== 'expression' && !isNaN(_emitter__WEBPACK_IMPORTED_MODULE_0__.Config.emitter_rate_rate) && 1 / parseFloat(_emitter__WEBPACK_IMPORTED_MODULE_0__.Config.emitter_rate_rate) >= parseFloat(_emitter__WEBPACK_IMPORTED_MODULE_0__.Config.emitter_lifetime_active_time)) {
     errors.push({
       text: "The emitter rate is lower than the emitter lifetime, so particles may not spawn"
+    });
+  }
+  if (_emitter__WEBPACK_IMPORTED_MODULE_0__.Config.particle_appearance_size.some(function (v) {
+    return v && parser.parse(v) < 0;
+  })) {
+    errors.push({
+      text: "The particle size is negative, which is not supported"
     });
   }
   return errors;
@@ -9917,6 +9944,18 @@ function parseColor(input) {
   }
   return '#' + input.substr(3, 6) + input.substr(1, 2);
 }
+function unwrapExpression(value) {
+  if (value instanceof Array) return value.map(unwrapExpression);
+  if (!value || _typeof(value) != 'object') return value;
+  if (typeof value.expression == 'string' && Object.keys(value).every(function (key) {
+    return key == 'expression' || key == 'version';
+  })) {
+    return value.expression;
+  }
+  var out = {};
+  for (var key in value) out[key] = unwrapExpression(value[key]);
+  return out;
+}
 var Config = /*#__PURE__*/function () {
   function Config(scene, config) {
     var _this2 = this;
@@ -10006,6 +10045,8 @@ var Config = /*#__PURE__*/function () {
       this.particle_appearance_size = ['0.2', '0.2'];
       this.particle_lifetime_max_lifetime = '1';
       this.particle_texture_size = [16, 16];
+      this.particle_texture_uv = [0, 0];
+      this.particle_texture_uv_size = [16, 16];
       this.texture_source_category = 'placeholder';
       return this;
     }
@@ -10039,6 +10080,7 @@ var Config = /*#__PURE__*/function () {
   }, {
     key: "setFromJSON",
     value: function setFromJSON(data) {
+      data = unwrapExpression(data);
       var comps = data.particle_effect.components;
       var curves = data.particle_effect.curves;
       var events = data.particle_effect.events;
@@ -11110,8 +11152,8 @@ var Particle = /*#__PURE__*/function () {
       if (!jump) {
         //Size
         var size = this.emitter.calculate(this.emitter.config.particle_appearance_size, params);
-        this.mesh.scale.x = size.x || 0.0001;
-        this.mesh.scale.y = size.y || 0.0001;
+        this.mesh.scale.x = Math.max(size.x, 0.00001);
+        this.mesh.scale.y = Math.max(size.y, 0.00001);
 
         //UV
         if (this.emitter.config.particle_texture_mode === 'animated') {
@@ -11214,7 +11256,7 @@ var Particle = /*#__PURE__*/function () {
         var offset = this.emitter.calculate(this.emitter.config.particle_texture_uv_step, params);
         uv.addScaledVector(offset, n);
       }
-      this.setUV(uv.x, uv.y, size.x || this.emitter.config.particle_texture_size[0], size.y || this.emitter.config.particle_texture_size[1]);
+      this.setUV(uv.x, uv.y, size.x || 0e-5, size.y || 0e-5);
     }
   }, {
     key: "setUV",
@@ -11612,7 +11654,6 @@ var Emitter = /*#__PURE__*/function (_EventClass) {
   }, {
     key: "tick",
     value: function tick(jump) {
-      var _this7 = this;
       var params = this.params();
       var tick_rate = this.scene.global_options.tick_rate;
       var step = 1 / tick_rate;
@@ -11643,24 +11684,33 @@ var Emitter = /*#__PURE__*/function (_EventClass) {
         this.updateMaterial();
       }
       // Tick particles
-      this.particles.forEach(function (p) {
-        if (_this7.config.particle_update_expression.length) {
-          var particle_params = p.params();
-          var _iterator9 = _createForOfIteratorHelper(_this7.config.particle_update_expression),
-            _step9;
-          try {
-            for (_iterator9.s(); !(_step9 = _iterator9.n()).done;) {
-              var entry = _step9.value;
-              _this7.Molang.parse(entry, particle_params);
+      var _iterator9 = _createForOfIteratorHelper(this.particles.slice()),
+        _step9;
+      try {
+        for (_iterator9.s(); !(_step9 = _iterator9.n()).done;) {
+          var particle = _step9.value;
+          if (this.config.particle_update_expression.length) {
+            var particle_params = particle.params();
+            var _iterator10 = _createForOfIteratorHelper(this.config.particle_update_expression),
+              _step10;
+            try {
+              for (_iterator10.s(); !(_step10 = _iterator10.n()).done;) {
+                var entry = _step10.value;
+                this.Molang.parse(entry, particle_params);
+              }
+            } catch (err) {
+              _iterator10.e(err);
+            } finally {
+              _iterator10.f();
             }
-          } catch (err) {
-            _iterator9.e(err);
-          } finally {
-            _iterator9.f();
           }
+          particle.tick(jump);
         }
-        p.tick(jump);
-      });
+      } catch (err) {
+        _iterator9.e(err);
+      } finally {
+        _iterator9.f();
+      }
       var last_age = this.age;
       this.age += step;
       this.view_age += step;
@@ -11747,24 +11797,24 @@ var Emitter = /*#__PURE__*/function (_EventClass) {
     value: function expire() {
       this.stop();
       this.dispatchEvent('expire');
-      var _iterator10 = _createForOfIteratorHelper(this.config.emitter_events_expiration),
-        _step10;
+      var _iterator11 = _createForOfIteratorHelper(this.config.emitter_events_expiration),
+        _step11;
       try {
-        for (_iterator10.s(); !(_step10 = _iterator10.n()).done;) {
-          var event_id = _step10.value;
+        for (_iterator11.s(); !(_step11 = _iterator11.n()).done;) {
+          var event_id = _step11.value;
           this.runEvent(event_id);
         }
       } catch (err) {
-        _iterator10.e(err);
+        _iterator11.e(err);
       } finally {
-        _iterator10.f();
+        _iterator11.f();
       }
       return this;
     }
   }, {
     key: "jumpTo",
     value: function jumpTo(second) {
-      var _this8 = this;
+      var _this7 = this;
       var tick_rate = this.scene.global_options.tick_rate;
       var old_time = Math.round(this.view_age * tick_rate);
       var new_time = Math.round(second * tick_rate);
@@ -11789,7 +11839,7 @@ var Emitter = /*#__PURE__*/function (_EventClass) {
       this.child_emitters.slice().forEach(function (e) {
         if (e.creation_time > second) {
           e["delete"]();
-          removeFromArray(_this8.child_emitters, e);
+          removeFromArray(_this7.child_emitters, e);
         }
       });
       return this;
@@ -11801,20 +11851,21 @@ var Emitter = /*#__PURE__*/function (_EventClass) {
       this.material.uniforms.materialType.value = materialTypes.indexOf(material);
       this.material.side = material === 'particles_alpha' || material === 'particles_opaque' ? three__WEBPACK_IMPORTED_MODULE_2__.FrontSide : three__WEBPACK_IMPORTED_MODULE_2__.DoubleSide;
       this.material.blending = material === 'particles_add' ? three__WEBPACK_IMPORTED_MODULE_2__.AdditiveBlending : three__WEBPACK_IMPORTED_MODULE_2__.NormalBlending;
+      this.material.depthWrite = material === 'particles_add' || material === 'particles_blend' ? false : true;
     }
 
     // Playback Loop
   }, {
     key: "playLoop",
     value: function playLoop() {
-      var _this9 = this;
+      var _this8 = this;
       if (!this.initialized || this.age == 0) {
         this.start();
       }
       this.paused = false;
       clearInterval(this.tick_interval);
       this.tick_interval = setInterval(function () {
-        _this9.tick();
+        _this8.tick();
       }, 1000 / this.scene.global_options.tick_rate);
       return this;
     }
@@ -11884,19 +11935,19 @@ var Emitter = /*#__PURE__*/function (_EventClass) {
   }, {
     key: "runEvent",
     value: function runEvent(event_id, particle) {
-      var _this10 = this;
+      var _this9 = this;
       if (event_id instanceof Array) {
-        var _iterator11 = _createForOfIteratorHelper(event_id),
-          _step11;
+        var _iterator12 = _createForOfIteratorHelper(event_id),
+          _step12;
         try {
-          for (_iterator11.s(); !(_step11 = _iterator11.n()).done;) {
-            var new_id = _step11.value;
+          for (_iterator12.s(); !(_step12 = _iterator12.n()).done;) {
+            var new_id = _step12.value;
             this.runEvent(new_id, particle);
           }
         } catch (err) {
-          _iterator11.e(err);
+          _iterator12.e(err);
         } finally {
-          _iterator11.f();
+          _iterator12.f();
         }
         return;
       }
@@ -11907,21 +11958,21 @@ var Emitter = /*#__PURE__*/function (_EventClass) {
       var event = this.config.events[event_id];
       var runEventSubpart = /*#__PURE__*/function () {
         var _ref = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee(subpart) {
-          var _iterator12, _step12, part2, picked_option, identifier, config, result, loadResult, emitter, position, offset;
+          var _iterator13, _step13, part2, picked_option, identifier, config, result, loadResult, emitter, position, offset;
           return _regeneratorRuntime().wrap(function _callee$(_context) {
             while (1) switch (_context.prev = _context.next) {
               case 0:
                 if (subpart.sequence instanceof Array) {
-                  _iterator12 = _createForOfIteratorHelper(subpart.sequence);
+                  _iterator13 = _createForOfIteratorHelper(subpart.sequence);
                   try {
-                    for (_iterator12.s(); !(_step12 = _iterator12.n()).done;) {
-                      part2 = _step12.value;
+                    for (_iterator13.s(); !(_step13 = _iterator13.n()).done;) {
+                      part2 = _step13.value;
                       runEventSubpart(part2);
                     }
                   } catch (err) {
-                    _iterator12.e(err);
+                    _iterator13.e(err);
                   } finally {
-                    _iterator12.f();
+                    _iterator13.f();
                   }
                 }
                 if (subpart.randomize instanceof Array) {
@@ -11931,10 +11982,10 @@ var Emitter = /*#__PURE__*/function (_EventClass) {
 
                 // Run event
                 if (subpart.expression) {
-                  _this10.Molang.parse(subpart.expression, _this10.params());
+                  _this9.Molang.parse(subpart.expression, _this9.params());
                 }
                 if (subpart.sound_effect) {
-                  _this10.dispatchEvent('play_sound', {
+                  _this9.dispatchEvent('play_sound', {
                     sound_effect: subpart.sound_effect,
                     particle: particle,
                     event_id: event_id
@@ -11945,13 +11996,13 @@ var Emitter = /*#__PURE__*/function (_EventClass) {
                   break;
                 }
                 identifier = subpart.particle_effect.effect;
-                config = _this10.scene.child_configs[identifier];
-                if (!(!_this10.scene.child_configs[identifier] && _this10.scene._fetchParticleFile)) {
+                config = _this9.scene.child_configs[identifier];
+                if (!(!_this9.scene.child_configs[identifier] && _this9.scene._fetchParticleFile)) {
                   _context.next = 20;
                   break;
                 }
-                config = _this10.scene.child_configs[identifier] = new Config(_this10.scene);
-                result = _this10.scene.fetchParticleFile(identifier, _this10.config, config);
+                config = _this9.scene.child_configs[identifier] = new Config(_this9.scene);
+                result = _this9.scene.fetchParticleFile(identifier, _this9.config, config);
                 loadResult = function loadResult(result) {
                   if (!result) return;
                   if (result.json) {
@@ -11980,13 +12031,13 @@ var Emitter = /*#__PURE__*/function (_EventClass) {
                 }
               case 20:
                 if (config) {
-                  emitter = new Emitter(_this10.scene, config, {});
-                  emitter.creation_time = _this10.age;
-                  emitter.parent_emitter = _this10;
+                  emitter = new Emitter(_this9.scene, config, {});
+                  emitter.creation_time = _this9.age;
+                  emitter.parent_emitter = _this9;
                   emitter.pre_effect_expression = subpart.particle_effect.pre_effect_expression;
-                  _this10.child_emitters.push(emitter);
+                  _this9.child_emitters.push(emitter);
                   if (subpart.particle_effect.type == 'emitter_bound') {
-                    emitter.parent_mode = _this10.parent_mode;
+                    emitter.parent_mode = _this9.parent_mode;
                   } else if (subpart.particle_effect.type == 'particle_with_velocity' && particle) {
                     emitter.inherited_particle_speed = new three__WEBPACK_IMPORTED_MODULE_2__.Vector3().copy(particle.speed);
                   }
@@ -11994,18 +12045,18 @@ var Emitter = /*#__PURE__*/function (_EventClass) {
                   if (particle) {
                     particle.mesh.getWorldPosition(position);
                   } else {
-                    _this10.getActiveSpace().getWorldPosition(position);
+                    _this9.getActiveSpace().getWorldPosition(position);
                   }
-                  if (_this10.local_space.parent) {
-                    if (!_this10.config.space_local_position) {
-                      offset = _this10.local_space.getWorldPosition(new three__WEBPACK_IMPORTED_MODULE_2__.Vector3());
+                  if (_this9.local_space.parent) {
+                    if (!_this9.config.space_local_position) {
+                      offset = _this9.local_space.getWorldPosition(new three__WEBPACK_IMPORTED_MODULE_2__.Vector3());
                       position.add(offset);
                     }
                   }
                   emitter.getActiveSpace().position.copy(position);
                   emitter.start();
                 }
-                _this10.dispatchEvent('play_child_particle', {
+                _this9.dispatchEvent('play_child_particle', {
                   particle_effect: subpart.particle_effect,
                   config: config,
                   child_emitter: emitter,
@@ -77075,7 +77126,7 @@ var render = function () {
                               ? _c(entry.icon, {
                                   tag: "component",
                                   staticClass: "menu_icon",
-                                  attrs: { size: 20 },
+                                  attrs: { size: 18 },
                                 })
                               : _c("div", { staticClass: "menu_icon" }),
                             _vm._v(
@@ -81602,26 +81653,38 @@ var render = function () {
     _vm._v(" "),
     _c("h2", [_vm._v("Warnings")]),
     _vm._v(" "),
-    _c("div", { staticClass: "scrollable" }, [
-      _vm._v(
-        "\n        There are " +
-          _vm._s(_vm.errors.length) +
-          " warning " +
-          _vm._s(_vm.errors.length == 1 ? "note" : "notes") +
-          ":\n        "
-      ),
-      _c(
-        "ul",
-        _vm._l(_vm.errors, function (error, index) {
-          return _c("li", { key: index, staticClass: "warning" }, [
-            _vm._v(
-              "\n                " + _vm._s(error.text) + "\n            "
-            ),
-          ])
-        }),
-        0
-      ),
-    ]),
+    _c(
+      "div",
+      { staticClass: "scrollable" },
+      [
+        _vm.errors.length == 0
+          ? [_vm._v("\n            No issues found\n        ")]
+          : _vm.errors.length == 1
+          ? [_vm._v("\n            There is 1 warning note:\n        ")]
+          : [
+              _vm._v(
+                "\n            There are " +
+                  _vm._s(_vm.errors.length) +
+                  " warning " +
+                  _vm._s(_vm.errors.length == 1 ? "note" : "notes") +
+                  ":\n        "
+              ),
+            ],
+        _vm._v(" "),
+        _c(
+          "ul",
+          _vm._l(_vm.errors, function (error, index) {
+            return _c("li", { key: index, staticClass: "warning" }, [
+              _vm._v(
+                "\n                " + _vm._s(error.text) + "\n            "
+              ),
+            ])
+          }),
+          0
+        ),
+      ],
+      2
+    ),
   ])
 }
 var staticRenderFns = []
