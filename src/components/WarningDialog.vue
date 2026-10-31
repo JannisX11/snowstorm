@@ -3,7 +3,15 @@
         <div class="tool close_button" @click="$emit('close')"><i class="unicode_icon">{{'\u2A09'}}</i></div>
         <h2>Warnings</h2>
         <div class="scrollable">
-            There are {{ errors.length }} warning {{ errors.length == 1 ? 'note' : 'notes'}}:
+            <template v-if="errors.length == 0">
+                No issues found
+            </template>
+            <template v-else-if="errors.length == 1">
+                There is 1 warning note:
+            </template>
+            <template v-else>
+                There are {{ errors.length }} warning {{ errors.length == 1 ? 'note' : 'notes'}}:
+            </template>
             <ul>
                 <li class="warning" v-for="(error, index) in errors" :key="index">
                     {{ error.text }}
@@ -16,8 +24,10 @@
 <script>
 
 import {Config} from './../emitter'
+import Molang from 'molangjs'
 
 const errors = [];
+let parser = new Molang();
 
 function validate() {
     errors.splice(0, errors.length);
@@ -43,6 +53,10 @@ function validate() {
 
     if (Config.emitter_rate_mode == 'steady' && Config.emitter_lifetime_mode !== 'expression' && !isNaN(Config.emitter_rate_rate) && 1/parseFloat(Config.emitter_rate_rate) >= parseFloat(Config.emitter_lifetime_active_time)) {
         errors.push({text: `The emitter rate is lower than the emitter lifetime, so particles may not spawn`})
+    }
+
+    if (Config.particle_appearance_size.some(v => v && parser.parse(v) < 0)) {
+        errors.push({text: `The particle size is negative, which is not supported`})
     }
 
     return errors;
