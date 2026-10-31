@@ -33,7 +33,7 @@
 				>
 					<div class="curve_point"
 						v-show="getValue(point) <= 256 && getValue(point) >= -256"
-						style="top: 10px, left: 10px"
+						style="top: 10px; left: 10px"
 					>
 						<label>{{getValue(point, true)}} / {{Math.roundTo(point.time, 2)}}</label>
 					</div>
@@ -53,22 +53,22 @@
         <div class="curve_point_options" v-if="curve.nodes[curve.selected_point] !== undefined" :point="node = curve.nodes[curve.selected_point]">
 			<label v-if="curve.config.mode !== 'bezier_chain'">{{ `${curve.selected_point+1}/${curve.nodes.length}` }}</label>
 
-			<input v-if="curve.config.mode !== 'bezier_chain'" type="number" step="0.01" v-model="node" @input="curve.setNode(curve.selected_point, node)">
+			<input v-if="curve.config.mode !== 'bezier_chain'" type="number" step="0.01" v-model.number="node" @input="curve.setNode(curve.selected_point, node)">
 
 			<template v-if="curve.config.mode == 'bezier_chain'">
 				<label>T:</label>
-				<input type="number" step="0.01" min="0" max="1" v-model="node.time" @input="registerNodeChange('time')">
+				<input type="number" step="0.01" min="0" max="1" v-model.number="node.time" @input="registerNodeChange('time')">
 				
 				<label>Value:</label>
-				<input type="number" step="0.01" v-model="node.left_value" @input="registerNodeChange('left_value')">
-				<input v-if="node.left_value != node.right_value" type="number" step="0.01" v-model="node.right_value" @input="registerNodeChange('right_value')">
+				<input type="number" step="0.01" v-model.number="node.left_value" @input="registerNodeChange('left_value')">
+				<input v-if="node.left_value != node.right_value" type="number" step="0.01" v-model.number="node.right_value" @input="registerNodeChange('right_value')">
 				<div class="tool slim" @click="((node.left_value == node.right_value) ? node.right_value += 0.1 : node.right_value = node.left_value); registerNodeChange()" title="Connect Sides">
 					<i class="unicode_icon">{{(node.left_value == node.right_value) ? '=' : '≠'}}</i>
 				</div>
 
 				<label>Slope:</label>
-				<input type="number" step="0.01" v-model="node.left_slope" @input="registerNodeChange('left_slope')">
-				<input v-if="node.left_slope != node.right_slope" type="number" step="0.01" v-model="node.right_slope" @input="registerNodeChange('right_slope')">
+				<input type="number" step="0.01" v-model.number="node.left_slope" @input="registerNodeChange('left_slope')">
+				<input v-if="node.left_slope != node.right_slope" type="number" step="0.01" v-model.number="node.right_slope" @input="registerNodeChange('right_slope')">
 				<div class="tool slim" @click="((node.left_slope == node.right_slope) ? node.right_slope += 0.1 : node.right_slope = node.left_slope); registerNodeChange()" title="Connect Sides">
 					<i class="unicode_icon">{{(node.left_slope == node.right_slope) ? '=' : '≠'}}</i>
 				</div>
@@ -80,7 +80,12 @@
         </div>
         <div class="curve_footer">
             <div class="fill_line" @mousedown="slideCurveHeight($event)" @touchstart="slideCurveHeight($event)"></div>
-            <div class="tool" style="width: auto;" v-on:click="curve.remove()">Remove Curve</div>
+            <div class="tool" style="width: auto;" title="Duplicate Curve" v-on:click="curve.duplicate()">
+				<Copy :size="20" />
+			</div>
+            <div class="tool" style="width: auto;" title="Delete Curve" v-on:click="curve.remove()">
+				<Trash :size="20" />
+			</div>
         </div>
     </div>
 </template>
@@ -91,6 +96,9 @@
 	import registerEdit from '../../edits'
 	import {calculateOffset, convertTouchEvent} from './../../util'
 	import Vue from 'vue'
+	import {
+		Trash, Copy
+	} from 'lucide-vue'
 
 	function toCatmullRomBezier( points, tension = 0.5, closing = false) {
 		// sets tension [0.0, 1.0] +/-
@@ -143,7 +151,7 @@
 
 	export default {
 		name: 'curve',
-		components: {InputGroup},
+		components: {InputGroup, Trash, Copy},
 		props: {
 			curve: Object,
 			group_key: String,

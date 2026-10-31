@@ -145,6 +145,25 @@ class Curve {
 		Data.variables.curves.curves.remove(this);
 		registerEdit('remove curve')
 	}
+	duplicate() {
+		let name = this.inputs.id.value;
+		let new_name = name;
+		let i = 2;
+		while (Config.curves[new_name]) {
+			new_name = name + i;
+			i++;
+		}
+		let new_curve = new Curve({
+			mode: this.inputs.mode.value,
+			input: this.inputs.input.value,
+			range: this.inputs.range.value,
+			nodes: structuredClone(this.nodes)
+		});
+		new_curve.inputs.id.value = new_name;
+		Config.curves[new_name] = new_curve.config;
+		Data.variables.curves.curves.push(new_curve);
+		registerEdit('duplicate curve')
+	}
 }
 
 
