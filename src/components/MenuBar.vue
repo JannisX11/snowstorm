@@ -1,10 +1,14 @@
 <template>
     <ul id="menu_bar">
-        <li v-for="menu in Menu" :key="menu.id" onclick="">
+        <li v-for="menu in Menu" :key="menu.id" @click="openMenu(menu, $event)" @mouseenter="onMenuMouseEnter(menu)" :class="{selected: open_menu == menu.id}">
             <a>{{ menu.label }}</a>
-            <ul class="menu_dropdown">
-                <li v-for="entry in menu.children" :key="entry.id" v-on:click="entry.click(getVM(), $event)">
-                    <a>{{ entry.label }}</a>
+            <ul class="menu_dropdown" v-if="open_menu == menu.id">
+                <li v-for="entry in menu.children" :key="entry.id" v-on:click="entry.click(getVM(), $event); open_menu = null">
+                    <a>
+						<component v-if="entry.icon" :is="entry.icon" :size="20" class="menu_icon" />
+						<div v-else class="menu_icon" />
+						{{ entry.label }}
+					</a>
                 </li>
             </ul>
         </li>
@@ -33,7 +37,7 @@ import {importFile,	loadPreset,	startNewProject} from '../import'
 import {View} from './Preview'
 
 import vscode from '../vscode_extension'
-import { Share2, HelpCircle } from 'lucide-vue'
+import { Share2, HelpCircle, FilePlus, CheckSquare, Square, Camera, FileUp, Save, MessagesSquare, BookOpenCheck, Sigma, Bug, LineChart, PlaySquare } from 'lucide-vue'
 import { shareParticle } from '../share'
 import { generateFile } from '../export'
 import { Texture } from '../texture_edit'
@@ -54,12 +58,17 @@ function openLink(link) {
 const Menu = [
 	{
 		label: 'File',
+		id: 'file',
 		children: [
-			{label: 'New File', click: () => {startNewProject()}},
-		]
+			{label: 'New File', icon: FilePlus, click: () => {startNewProject()}},
+		].concat(isVSCExtension ? [] : [
+			{label: 'Import', icon: FileUp, click: () => {importFile()}},
+			{label: 'Download', icon: Save, click: () => {downloadFile()}}
+		])
 	},
 	{
 		label: 'Examples',
+		id: 'examples',
 		children: [
 			{label: 'Loading', 	click: () => {loadPreset('loading')}},
 			{label: 'Rainbow', 	click: () => {loadPreset('rainbow')}},
@@ -73,41 +82,59 @@ const Menu = [
 	},
 	{
 		label: 'View',
+		id: 'view',
 		children: [
-			{label: 'Grid', click: () => {
-				View.grid.visible = !View.grid.visible;
-				setOption('grid_visible', View.grid.visible);
-			}},
-			{label: 'Reference Block', click: () => {
-				View.minecraft_block.visible = !View.minecraft_block.visible;
-				setOption('minecraft_block_visible', View.minecraft_block.visible);
-			}},
-			{label: 'Axis Helper', click: () => {
-				View.helper.visible = !View.helper.visible;
-				setOption('axis_helper_visible', View.grid.visible);
-			}},
-			{label: 'Take Screenshot', click: () => { View.screenshot() }},
+			{
+				label: 'Grid',
+				get icon() {
+					return View.grid.visible ? CheckSquare : Square
+				},
+				click: () => {
+					View.grid.visible = !View.grid.visible;
+					setOption('grid_visible', View.grid.visible);
+				}
+			},
+			{
+				label: 'Reference Block',
+				get icon() {
+					return View.minecraft_block.visible ? CheckSquare : Square
+				},
+				click: () => {
+					View.minecraft_block.visible = !View.minecraft_block.visible;
+					setOption('minecraft_block_visible', View.minecraft_block.visible);
+				}
+			},
+			{
+				label: 'Axis Helper',
+				get icon() {
+					return View.helper.visible ? CheckSquare : Square
+				},
+				click: () => {
+					View.helper.visible = !View.helper.visible;
+					setOption('axis_helper_visible', View.helper.visible);
+				}
+			},
+			{label: 'Take Screenshot', icon: Camera, click: () => { View.screenshot() }},
 		]
 	},
 	{
 		label: 'Help',
+		id: 'help',
 		children: [
-			{label: 'Open Documentation', click: (vm) => { vm.openHelpPanel('', '') }},
-			{label: 'Molang Reference', click: (vm) => { vm.openHelpPanel('general', 'molang') }},
-			{label: 'Snowstorm Tutorial', click: () => { openLink('https://docs.microsoft.com/en-us/minecraft/creator/documents/particleeffects') }},
-			{label: 'Tutorial Video', click: () => { openLink('https://youtu.be/J1Ub1tbO9gg') }},
-			{label: 'Format Documentation', click: () => { openLink('https://docs.microsoft.com/en-us/minecraft/creator/reference/content/particlesreference/') }},
-			{label: 'Molang Grapher', click: () => { openLink('https://jannisx11.github.io/molang-grapher/') }},
-			{label: 'Report a Bug', click: () => { openLink('https://github.com/JannisX11/snowstorm/issues') }},
-			{label: 'Discord Server', click: () => { openLink('https://discord.gg/W9d78Z8AvM') }},
+			{label: 'Open Documentation', icon: HelpCircle, click: (vm) => { vm.openHelpPanel('', '') }},
+			{label: 'Molang Reference', icon: Sigma, click: (vm) => { vm.openHelpPanel('general', 'molang') }},
+			{label: 'Snowstorm Tutorial', icon: PlaySquare, click: () => { openLink('https://docs.microsoft.com/en-us/minecraft/creator/documents/particleeffects') }},
+			{label: 'Tutorial Video', icon: PlaySquare,click: () => { openLink('https://youtu.be/J1Ub1tbO9gg') }},
+			{label: 'Format Documentation', icon: BookOpenCheck, click: () => { openLink('https://docs.microsoft.com/en-us/minecraft/creator/reference/content/particlesreference/') }},
+			{label: 'Molang Grapher', icon: LineChart, click: () => { openLink('https://jannisx11.github.io/molang-grapher/') }},
+			{label: 'Report a Bug', icon: Bug, click: () => { openLink('https://github.com/JannisX11/snowstorm/issues') }},
+			{label: 'Discord Server', icon: MessagesSquare, click: () => { openLink('https://discord.gg/W9d78Z8AvM') }},
 		]
 	}
 ]
 
 if (!isVSCExtension) {
 	Menu[0].children.push(
-		{label: 'Import', click: () => {importFile()}},
-		{label: 'Download', click: () => {downloadFile()}}
 	)
 }
 
@@ -122,6 +149,18 @@ export default {
 		is_help_panel_open: Boolean
     },
     methods: {
+		openMenu(menu, event) {
+			if (this.open_menu) {
+				this.open_menu = null;
+			} else {
+				this.open_menu = menu.id;
+			}
+		},
+		onMenuMouseEnter(menu) {
+			if (this.open_menu && this.open_menu != menu.id) {
+				this.open_menu = menu.id;
+			}
+		},
         changeTab() {
             this.$emit('setTab')
 		},
@@ -155,8 +194,16 @@ export default {
 	data() {return {
 		Menu,
 		isVSCExtension,
+		open_menu: null,
 		canShare: 'share' in navigator,
-	}}
+	}},
+	mounted() {
+		document.addEventListener('click', (event) => {
+			if (this.open_menu && !this.$el.contains(event.target)) {
+				this.open_menu = null;
+			}
+		});
+	}
 }
 </script>
 
@@ -171,18 +218,18 @@ export default {
 	}
 	a {
 		display: block;
-		padding: 2px 12px; 
+		padding: 4px 12px; 
 		padding-top: 3px;
 		color: inherit;
 	}
 	a:hover {
 		background-color: var(--color-interface);
+		color: var(--color-highlight);
 	}
 	ul#menu_bar > li {
 		display: inline-block;
 	}
 	ul#menu_bar > li > ul {
-		display: none;
 		position: absolute;
 		padding: 0;
 		z-index: 8;
@@ -190,14 +237,18 @@ export default {
 		background-color: var(--color-bar);
 		box-shadow: 1px 4px 10px rgba(0, 0, 0, 0.25);
 	}
-	ul#menu_bar > li:hover > ul {
-		display: block;
-	}
 	ul.menu_dropdown > li a {
-		height: 34px;
+		padding: 4px 8px; 
+		height: 35px;
 		padding-top: 5px;
+		display: flex;
+		align-items: center;
 	}
-	ul#menu_bar > li:hover > a {
+	.menu_icon {
+		width: 24px;
+		margin-right: 4px;
+	}
+	ul#menu_bar > li.selected > a {
 		background-color: var(--color-bar);
 	}
 	.mode_selector {
