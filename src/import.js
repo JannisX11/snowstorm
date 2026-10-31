@@ -64,7 +64,7 @@ function updateInputsFromConfig() {
 	for (let id in Config.events) {
 		let event = Config.events[id];
 		let entry = {
-			uuid: guid(), id, event
+			uuid: guid(), id, event, expanded: true
 		};
 		Data.events.events.events.push(entry);
 	}

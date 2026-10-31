@@ -2133,6 +2133,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/plus.js");
 /* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/x.js");
 /* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/grip-vertical.js");
+/* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/chevron-down.js");
+/* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/chevron-right.js");
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
 /* harmony import */ var _EventSubpart_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./EventSubpart.vue */ "./src/components/Sidebar/EventSubpart.vue");
 /* harmony import */ var _edits__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../edits */ "./src/edits.js");
@@ -2140,6 +2142,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _util__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../util */ "./src/util.js");
 /* harmony import */ var _sort__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../sort */ "./src/sort.js");
 /* harmony import */ var _Form_ListAddButton_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../Form/ListAddButton.vue */ "./src/components/Form/ListAddButton.vue");
+//
+//
+//
+//
 //
 //
 //
@@ -2179,6 +2185,8 @@ vue__WEBPACK_IMPORTED_MODULE_6__["default"].component('event-subpart', _EventSub
     Plus: lucide_vue__WEBPACK_IMPORTED_MODULE_7__["default"],
     X: lucide_vue__WEBPACK_IMPORTED_MODULE_8__["default"],
     GripVertical: lucide_vue__WEBPACK_IMPORTED_MODULE_9__["default"],
+    ChevronDown: lucide_vue__WEBPACK_IMPORTED_MODULE_10__["default"],
+    ChevronRight: lucide_vue__WEBPACK_IMPORTED_MODULE_11__["default"],
     ListAddButton: _Form_ListAddButton_vue__WEBPACK_IMPORTED_MODULE_5__["default"]
   },
   props: {
@@ -2210,6 +2218,7 @@ vue__WEBPACK_IMPORTED_MODULE_6__["default"].component('event-subpart', _EventSub
       }
       var event_entry = {
         uuid: (0,_util__WEBPACK_IMPORTED_MODULE_3__.guid)(),
+        expanded: true,
         id: id,
         event: {}
       };
@@ -6911,7 +6920,8 @@ function updateInputsFromConfig() {
     var entry = {
       uuid: (0,_util__WEBPACK_IMPORTED_MODULE_0__.guid)(),
       id: _id,
-      event: event
+      event: event,
+      expanded: true
     };
     _input_structure__WEBPACK_IMPORTED_MODULE_4__["default"].events.events.events.push(entry);
   }
@@ -12521,7 +12531,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n#event_list[data-v-3223e676] {\n\tmargin-block: 12px;\n}\n.event[data-v-3223e676] {\n\tpadding: 20px 6px;\n\tborder-top: 2px solid var(--color-bar);\n\tborder-bottom: 2px solid transparent;\n}\n.event[data-v-3223e676]:first-of-type {\n\tborder-top-color: transparent;\n\tmargin-top: 0;\n\tpadding-top: 4px;\n}\n.event.sort_before[data-v-3223e676] {\n\tborder-top: 2px solid var(--color-accent);\n}\n.event.sort_after[data-v-3223e676] {\n\tborder-bottom: 2px solid var(--color-accent);\n}\n.event_header_bar[data-v-3223e676] {\n\tdisplay: flex;\n\tgap: 4px;\n\tbackground-color: var(--color-bar);\n\tpadding: 5px;\n}\n.event_header_bar > label[data-v-3223e676] {\n\tpadding: 4px;\n\tmin-width: 80px;\n\ttext-align: right;\n}\n.event_header_bar > input[data-v-3223e676] {\n\tmargin-right: auto;\n}\n.event_sort_handle[data-v-3223e676] {\n\tcursor: grab;\n\tpadding-top: 2px;\n}\n.remove_event_button[data-v-3223e676] {\n\tpadding: 4px;\n\tcursor: pointer;\n}\n.remove_event_button[data-v-3223e676]:hover {\n\tcolor: var(--color-highlight);\n}\n\n\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n#event_list[data-v-3223e676] {\n\tmargin-block: 12px;\n}\n.event[data-v-3223e676] {\n\tpadding: 20px 6px;\n\tborder-top: 2px solid var(--color-bar);\n\tborder-bottom: 2px solid transparent;\n}\n.event[data-v-3223e676]:first-of-type {\n\tborder-top-color: transparent;\n\tmargin-top: 0;\n\tpadding-top: 4px;\n}\n.event.sort_before[data-v-3223e676] {\n\tborder-top: 2px solid var(--color-accent);\n}\n.event.sort_after[data-v-3223e676] {\n\tborder-bottom: 2px solid var(--color-accent);\n}\n.event_header_bar[data-v-3223e676] {\n\tdisplay: flex;\n\tgap: 4px;\n\tbackground-color: var(--color-bar);\n\tpadding: 5px;\n}\n.event_header_bar > label[data-v-3223e676] {\n\tpadding: 4px;\n\tmin-width: 80px;\n\ttext-align: right;\n}\n.event_header_bar > input[data-v-3223e676] {\n\tmargin-right: auto;\n}\n.event_sort_handle[data-v-3223e676] {\n\tcursor: grab;\n\tpadding-top: 2px;\n}\n.expand_button[data-v-3223e676] {\n\twidth: 30px;\n\tpadding-top: 1px;\n\tcursor: pointer;\n}\n.expand_button[data-v-3223e676]:hover {\n\tcolor: var(--color-highlight);\n}\n.remove_event_button[data-v-3223e676] {\n\tpadding: 4px;\n\tcursor: pointer;\n}\n.remove_event_button[data-v-3223e676]:hover {\n\tcolor: var(--color-highlight);\n}\n\n\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -16027,6 +16037,37 @@ const ChevronLeft = (0,_createVueComponent_js__WEBPACK_IMPORTED_MODULE_0__["defa
 
 
 //# sourceMappingURL=chevron-left.js.map
+
+
+/***/ }),
+
+/***/ "./node_modules/lucide-vue/dist/esm/icons/chevron-right.js":
+/*!*****************************************************************!*\
+  !*** ./node_modules/lucide-vue/dist/esm/icons/chevron-right.js ***!
+  \*****************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ ChevronRight)
+/* harmony export */ });
+/* harmony import */ var _createVueComponent_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../createVueComponent.js */ "./node_modules/lucide-vue/dist/esm/createVueComponent.js");
+/**
+ * @license lucide-vue v0.298.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+
+
+
+const ChevronRight = (0,_createVueComponent_js__WEBPACK_IMPORTED_MODULE_0__["default"])("ChevronRightIcon", [
+  ["path", { d: "m9 18 6-6-6-6", key: "mthhwq" }]
+]);
+
+
+//# sourceMappingURL=chevron-right.js.map
 
 
 /***/ }),
@@ -78433,6 +78474,24 @@ var render = function () {
                 _c(
                   "div",
                   {
+                    staticClass: "expand_button",
+                    on: {
+                      click: function ($event) {
+                        event_entry.expanded = !event_entry.expanded
+                      },
+                    },
+                  },
+                  [
+                    event_entry.expanded
+                      ? _c("ChevronDown")
+                      : _c("ChevronRight"),
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
                     staticClass: "event_sort_handle",
                     on: {
                       mousedown: function ($event) {
@@ -78470,10 +78529,12 @@ var render = function () {
                 ),
               ]),
               _vm._v(" "),
-              _c("event-subpart", {
-                attrs: { subpart: event_entry.event },
-                on: { modify_event: _vm.modifyEvent },
-              }),
+              event_entry.expanded
+                ? _c("event-subpart", {
+                    attrs: { subpart: event_entry.event },
+                    on: { modify_event: _vm.modifyEvent },
+                  })
+                : _vm._e(),
             ],
             1
           )

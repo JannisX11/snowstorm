@@ -7,6 +7,10 @@
 				v-bind:title="group.info" :id="'event-'+ event_entry.uuid"
 			>
 				<div class="event_header_bar">
+					<div @click="event_entry.expanded = !event_entry.expanded" class="expand_button">
+						<ChevronDown v-if="event_entry.expanded" />
+						<ChevronRight v-else />
+					</div>
 					<div class="event_sort_handle" @mousedown="startSortingList($event)"><GripVertical /></div>
 					<label>Event ID</label>
 					<input type="text" :value="event_entry.id" @input="renameEvent(event_entry, $event)">
@@ -14,7 +18,7 @@
 						Remove Event
 					</div>
 				</div>
-				<event-subpart :subpart="event_entry.event" @modify_event="modifyEvent" />
+				<event-subpart :subpart="event_entry.event" @modify_event="modifyEvent" v-if="event_entry.expanded" />
 			</li>
 		</ul>
 		<list-add-button title="Add Event" @click="addEvent()" />
@@ -22,7 +26,7 @@
 </template>
 
 <script>
-import { Plus, X, GripVertical } from 'lucide-vue'
+import { Plus, X, GripVertical, ChevronDown, ChevronRight } from 'lucide-vue'
 import Vue from 'vue';
 import EventSubpart from './EventSubpart.vue';
 import registerEdit from '../../edits';
@@ -39,6 +43,8 @@ export default {
 		Plus,
 		X,
 		GripVertical,
+		ChevronDown,
+		ChevronRight,
 		ListAddButton,
 	},
 	props: {
@@ -68,6 +74,7 @@ export default {
 			}
 			let event_entry = {
 				uuid: guid(),
+				expanded: true,
 				id,
 				event: {}
 			}
@@ -128,6 +135,14 @@ export default {
 	.event_sort_handle {
 		cursor: grab;
 		padding-top: 2px;
+	}
+	.expand_button {
+		width: 30px;
+		padding-top: 1px;
+		cursor: pointer;
+	}
+	.expand_button:hover {
+		color: var(--color-highlight);
 	}
 
 	.remove_event_button {
