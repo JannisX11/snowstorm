@@ -150,6 +150,13 @@ export default class Input {
 				}
 			}
 		}
+		if (this.type == 'number') {
+			let value = parseFloat(e.target.value);
+			if (Math.clamp(value, this.min, this.max) != value) {
+				this.value = Math.clamp(value, this.min, this.max);
+				e.target.value = this.value.toString();
+			}
+		}
 		if (this.type === 'color') {
 			if (typeof this.value == 'object') this.value = this.value.hex8;
 		}

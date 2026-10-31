@@ -33,7 +33,7 @@
 						<input
 							v-if="input.type == 'number'" type="number"
 							:step="input.step" :min="input.min" :max="input.max"
-							v-model="input.value"
+							v-model.number="input.value"
 							v-on:input="input.change($event)">
 						<div class="tool" v-on:click="input.value.remove(item);input.change($event);"><i class="unicode_icon">{{'\u2A09'}}</i></div>
 					</li>
@@ -56,7 +56,7 @@
 					<input
 						v-if="input.type == 'number'" type="number"
 						:step="input.step" :min="input.min" :max="input.max"
-						v-model="input.value"
+						v-model.number="input.value"
 						v-on:input="input.change($event)">
 				</template>
 
@@ -79,7 +79,7 @@
 						<input class="input_vector" type="number"
 							v-for="i in input.axis_count"
 							:key="i"
-							v-model="input.value[i-1]"
+							v-model.number="input.value[i-1]"
 							:step="input.step" :min="input.min" :max="input.max"
 							:index="i-1"
 							v-on:input="input.change($event)">

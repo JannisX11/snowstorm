@@ -442,7 +442,7 @@ function generateFile() {
 			enabled: getValue('particle_collision_enabled'),
 			collision_drag: getValue('particle_collision_collision_drag'),
 			coefficient_of_restitution: getValue('particle_collision_coefficient_of_restitution'),
-			collision_radius: getValue('particle_collision_collision_radius'),
+			collision_radius: Math.clamp(getValue('particle_collision_collision_radius')??0, 0, 0.5),
 			expire_on_contact: getValue('particle_collision_expire_on_contact'),
 			events: getValue('particle_collision_events'),
 		}
