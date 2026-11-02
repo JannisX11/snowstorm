@@ -191,7 +191,6 @@ if (vscode) {
 				reader.onloadend = function() {
 	
 					loadFile(JSON.parse(reader.result))
-					View.PlaybackController.start();
 				}
 				reader.readAsText(file)
 				event.preventDefault()
