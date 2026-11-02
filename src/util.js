@@ -1,3 +1,5 @@
+import Molang from 'molangjs'
+
 function bbuid(l) {
 	l = l || 1
 	let chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
@@ -405,6 +407,7 @@ const IO = {
 	}
 }
 
+export const InputMolangParser = new Molang();
 
 export {
 	bbuid, guid,

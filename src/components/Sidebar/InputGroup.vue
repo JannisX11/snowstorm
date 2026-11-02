@@ -194,6 +194,7 @@ import "prismjs/themes/prism-okaidia.css";
 import Languages from './../../languages';
 import { guid } from '../../util';
 import registerEdit from '../../edits';
+import { highlightMolang } from '../../molang_highlight.js';
 
 
 
@@ -222,9 +223,7 @@ export default {
 		isInputVisible(input, group) {
 			return input.isVisible(group);
 		},
-		highlightMolang(code) {
-			return Prism.highlight(code, Languages.molang)
-		},
+		highlightMolang,
 		highlightGeneric(code) {
 			return Prism.highlight(code, Languages.generic)
 		},

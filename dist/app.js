@@ -2354,15 +2354,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
 /* harmony import */ var _util__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../util */ "./src/util.js");
-/* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/plus.js");
-/* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/x.js");
-/* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/grip-horizontal.js");
-/* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/upload.js");
-/* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/file-plus-2.js");
-/* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/image-plus.js");
-/* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/pencil.js");
+/* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/plus.js");
+/* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/x.js");
+/* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/grip-horizontal.js");
+/* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/upload.js");
+/* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/file-plus-2.js");
+/* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/image-plus.js");
+/* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/pencil.js");
 /* harmony import */ var prismjs_components_prism_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! prismjs/components/prism-core */ "./node_modules/prismjs/components/prism-core.js");
 /* harmony import */ var prismjs_components_prism_core__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(prismjs_components_prism_core__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var root_packages_vue_prism_editor__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! root/packages/vue-prism-editor */ "./node_modules/root/packages/vue-prism-editor/dist/prismeditor.esm.js");
@@ -2373,6 +2373,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _sort__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../sort */ "./src/sort.js");
 /* harmony import */ var _Form_ListAddButton_vue__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../Form/ListAddButton.vue */ "./src/components/Form/ListAddButton.vue");
 /* harmony import */ var _event_sub_effects__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../event_sub_effects */ "./src/event_sub_effects.js");
+/* harmony import */ var _molang_highlight_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../../molang_highlight.js */ "./src/molang_highlight.js");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return e; }; var t, e = {}, r = Object.prototype, n = r.hasOwnProperty, o = Object.defineProperty || function (t, e, r) { t[e] = r.value; }, i = "function" == typeof Symbol ? Symbol : {}, a = i.iterator || "@@iterator", c = i.asyncIterator || "@@asyncIterator", u = i.toStringTag || "@@toStringTag"; function define(t, e, r) { return Object.defineProperty(t, e, { value: r, enumerable: !0, configurable: !0, writable: !0 }), t[e]; } try { define({}, ""); } catch (t) { define = function define(t, e, r) { return t[e] = r; }; } function wrap(t, e, r, n) { var i = e && e.prototype instanceof Generator ? e : Generator, a = Object.create(i.prototype), c = new Context(n || []); return o(a, "_invoke", { value: makeInvokeMethod(t, r, c) }), a; } function tryCatch(t, e, r) { try { return { type: "normal", arg: t.call(e, r) }; } catch (t) { return { type: "throw", arg: t }; } } e.wrap = wrap; var h = "suspendedStart", l = "suspendedYield", f = "executing", s = "completed", y = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var p = {}; define(p, a, function () { return this; }); var d = Object.getPrototypeOf, v = d && d(d(values([]))); v && v !== r && n.call(v, a) && (p = v); var g = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(p); function defineIteratorMethods(t) { ["next", "throw", "return"].forEach(function (e) { define(t, e, function (t) { return this._invoke(e, t); }); }); } function AsyncIterator(t, e) { function invoke(r, o, i, a) { var c = tryCatch(t[r], t, o); if ("throw" !== c.type) { var u = c.arg, h = u.value; return h && "object" == _typeof(h) && n.call(h, "__await") ? e.resolve(h.__await).then(function (t) { invoke("next", t, i, a); }, function (t) { invoke("throw", t, i, a); }) : e.resolve(h).then(function (t) { u.value = t, i(u); }, function (t) { return invoke("throw", t, i, a); }); } a(c.arg); } var r; o(this, "_invoke", { value: function value(t, n) { function callInvokeWithMethodAndArg() { return new e(function (e, r) { invoke(t, n, e, r); }); } return r = r ? r.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(e, r, n) { var o = h; return function (i, a) { if (o === f) throw new Error("Generator is already running"); if (o === s) { if ("throw" === i) throw a; return { value: t, done: !0 }; } for (n.method = i, n.arg = a;;) { var c = n.delegate; if (c) { var u = maybeInvokeDelegate(c, n); if (u) { if (u === y) continue; return u; } } if ("next" === n.method) n.sent = n._sent = n.arg;else if ("throw" === n.method) { if (o === h) throw o = s, n.arg; n.dispatchException(n.arg); } else "return" === n.method && n.abrupt("return", n.arg); o = f; var p = tryCatch(e, r, n); if ("normal" === p.type) { if (o = n.done ? s : l, p.arg === y) continue; return { value: p.arg, done: n.done }; } "throw" === p.type && (o = s, n.method = "throw", n.arg = p.arg); } }; } function maybeInvokeDelegate(e, r) { var n = r.method, o = e.iterator[n]; if (o === t) return r.delegate = null, "throw" === n && e.iterator["return"] && (r.method = "return", r.arg = t, maybeInvokeDelegate(e, r), "throw" === r.method) || "return" !== n && (r.method = "throw", r.arg = new TypeError("The iterator does not provide a '" + n + "' method")), y; var i = tryCatch(o, e.iterator, r.arg); if ("throw" === i.type) return r.method = "throw", r.arg = i.arg, r.delegate = null, y; var a = i.arg; return a ? a.done ? (r[e.resultName] = a.value, r.next = e.nextLoc, "return" !== r.method && (r.method = "next", r.arg = t), r.delegate = null, y) : a : (r.method = "throw", r.arg = new TypeError("iterator result is not an object"), r.delegate = null, y); } function pushTryEntry(t) { var e = { tryLoc: t[0] }; 1 in t && (e.catchLoc = t[1]), 2 in t && (e.finallyLoc = t[2], e.afterLoc = t[3]), this.tryEntries.push(e); } function resetTryEntry(t) { var e = t.completion || {}; e.type = "normal", delete e.arg, t.completion = e; } function Context(t) { this.tryEntries = [{ tryLoc: "root" }], t.forEach(pushTryEntry, this), this.reset(!0); } function values(e) { if (e || "" === e) { var r = e[a]; if (r) return r.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) { var o = -1, i = function next() { for (; ++o < e.length;) if (n.call(e, o)) return next.value = e[o], next.done = !1, next; return next.value = t, next.done = !0, next; }; return i.next = i; } } throw new TypeError(_typeof(e) + " is not iterable"); } return GeneratorFunction.prototype = GeneratorFunctionPrototype, o(g, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), o(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, u, "GeneratorFunction"), e.isGeneratorFunction = function (t) { var e = "function" == typeof t && t.constructor; return !!e && (e === GeneratorFunction || "GeneratorFunction" === (e.displayName || e.name)); }, e.mark = function (t) { return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, define(t, u, "GeneratorFunction")), t.prototype = Object.create(g), t; }, e.awrap = function (t) { return { __await: t }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, c, function () { return this; }), e.AsyncIterator = AsyncIterator, e.async = function (t, r, n, o, i) { void 0 === i && (i = Promise); var a = new AsyncIterator(wrap(t, r, n, o), i); return e.isGeneratorFunction(r) ? a : a.next().then(function (t) { return t.done ? t.value : a.next(); }); }, defineIteratorMethods(g), define(g, u, "Generator"), define(g, a, function () { return this; }), define(g, "toString", function () { return "[object Generator]"; }), e.keys = function (t) { var e = Object(t), r = []; for (var n in e) r.push(n); return r.reverse(), function next() { for (; r.length;) { var t = r.pop(); if (t in e) return next.value = t, next.done = !1, next; } return next.done = !0, next; }; }, e.values = values, Context.prototype = { constructor: Context, reset: function reset(e) { if (this.prev = 0, this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(resetTryEntry), !e) for (var r in this) "t" === r.charAt(0) && n.call(this, r) && !isNaN(+r.slice(1)) && (this[r] = t); }, stop: function stop() { this.done = !0; var t = this.tryEntries[0].completion; if ("throw" === t.type) throw t.arg; return this.rval; }, dispatchException: function dispatchException(e) { if (this.done) throw e; var r = this; function handle(n, o) { return a.type = "throw", a.arg = e, r.next = n, o && (r.method = "next", r.arg = t), !!o; } for (var o = this.tryEntries.length - 1; o >= 0; --o) { var i = this.tryEntries[o], a = i.completion; if ("root" === i.tryLoc) return handle("end"); if (i.tryLoc <= this.prev) { var c = n.call(i, "catchLoc"), u = n.call(i, "finallyLoc"); if (c && u) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } else if (c) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); } else { if (!u) throw new Error("try statement without catch or finally"); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } } } }, abrupt: function abrupt(t, e) { for (var r = this.tryEntries.length - 1; r >= 0; --r) { var o = this.tryEntries[r]; if (o.tryLoc <= this.prev && n.call(o, "finallyLoc") && this.prev < o.finallyLoc) { var i = o; break; } } i && ("break" === t || "continue" === t) && i.tryLoc <= e && e <= i.finallyLoc && (i = null); var a = i ? i.completion : {}; return a.type = t, a.arg = e, i ? (this.method = "next", this.next = i.finallyLoc, y) : this.complete(a); }, complete: function complete(t, e) { if ("throw" === t.type) throw t.arg; return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && e && (this.next = e), y; }, finish: function finish(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.finallyLoc === t) return this.complete(r.completion, r.afterLoc), resetTryEntry(r), y; } }, "catch": function _catch(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.tryLoc === t) { var n = r.completion; if ("throw" === n.type) { var o = n.arg; resetTryEntry(r); } return o; } } throw new Error("illegal catch attempt"); }, delegateYield: function delegateYield(e, r, n) { return this.delegate = { iterator: values(e), resultName: r, nextLoc: n }, "next" === this.method && (this.arg = t), y; } }, e; }
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -2512,6 +2513,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 
 
+
 var emitter_type_options = {
   emitter: 'Emitter',
   emitter_bound: 'Emitter Bound',
@@ -2521,14 +2523,14 @@ var emitter_type_options = {
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: 'event-subpart',
   components: {
-    Plus: lucide_vue__WEBPACK_IMPORTED_MODULE_10__["default"],
-    X: lucide_vue__WEBPACK_IMPORTED_MODULE_11__["default"],
-    GripHorizontal: lucide_vue__WEBPACK_IMPORTED_MODULE_12__["default"],
+    Plus: lucide_vue__WEBPACK_IMPORTED_MODULE_11__["default"],
+    X: lucide_vue__WEBPACK_IMPORTED_MODULE_12__["default"],
+    GripHorizontal: lucide_vue__WEBPACK_IMPORTED_MODULE_13__["default"],
     PrismEditor: root_packages_vue_prism_editor__WEBPACK_IMPORTED_MODULE_2__.PrismEditor,
-    Upload: lucide_vue__WEBPACK_IMPORTED_MODULE_13__["default"],
-    FilePlus2: lucide_vue__WEBPACK_IMPORTED_MODULE_14__["default"],
-    ImagePlus: lucide_vue__WEBPACK_IMPORTED_MODULE_15__["default"],
-    Pencil: lucide_vue__WEBPACK_IMPORTED_MODULE_16__["default"],
+    Upload: lucide_vue__WEBPACK_IMPORTED_MODULE_14__["default"],
+    FilePlus2: lucide_vue__WEBPACK_IMPORTED_MODULE_15__["default"],
+    ImagePlus: lucide_vue__WEBPACK_IMPORTED_MODULE_16__["default"],
+    Pencil: lucide_vue__WEBPACK_IMPORTED_MODULE_17__["default"],
     ListAddButton: _Form_ListAddButton_vue__WEBPACK_IMPORTED_MODULE_8__["default"]
   },
   props: {
@@ -2543,20 +2545,20 @@ var emitter_type_options = {
   },
   methods: {
     createSequenceSection: function createSequenceSection() {
-      vue__WEBPACK_IMPORTED_MODULE_17__["default"].set(this.subpart, 'sequence', [{
+      vue__WEBPACK_IMPORTED_MODULE_18__["default"].set(this.subpart, 'sequence', [{
         uuid: (0,_util__WEBPACK_IMPORTED_MODULE_0__.guid)()
       }]);
       this.modifyEvent();
     },
     createRandomizeSection: function createRandomizeSection() {
-      vue__WEBPACK_IMPORTED_MODULE_17__["default"].set(this.subpart, 'randomize', [{
+      vue__WEBPACK_IMPORTED_MODULE_18__["default"].set(this.subpart, 'randomize', [{
         uuid: (0,_util__WEBPACK_IMPORTED_MODULE_0__.guid)(),
         weight: 1
       }]);
       this.modifyEvent();
     },
     createParticleSection: function createParticleSection() {
-      vue__WEBPACK_IMPORTED_MODULE_17__["default"].set(this.subpart, 'particle_effect', {
+      vue__WEBPACK_IMPORTED_MODULE_18__["default"].set(this.subpart, 'particle_effect', {
         effect: '',
         type: 'emitter',
         pre_effect_expression: ''
@@ -2564,13 +2566,13 @@ var emitter_type_options = {
       this.modifyEvent();
     },
     createSoundSection: function createSoundSection() {
-      vue__WEBPACK_IMPORTED_MODULE_17__["default"].set(this.subpart, 'sound_effect', {
+      vue__WEBPACK_IMPORTED_MODULE_18__["default"].set(this.subpart, 'sound_effect', {
         event_name: ''
       });
       this.modifyEvent();
     },
     createExpressionSection: function createExpressionSection() {
-      vue__WEBPACK_IMPORTED_MODULE_17__["default"].set(this.subpart, 'expression', '');
+      vue__WEBPACK_IMPORTED_MODULE_18__["default"].set(this.subpart, 'expression', '');
       this.modifyEvent();
     },
     addSequenceOption: function addSequenceOption() {
@@ -2591,27 +2593,27 @@ var emitter_type_options = {
     removeSequenceOption: function removeSequenceOption(option) {
       this.subpart.sequence.remove(option);
       if (this.subpart.sequence.length == 0) {
-        vue__WEBPACK_IMPORTED_MODULE_17__["default"]["delete"](this.subpart, 'sequence');
+        vue__WEBPACK_IMPORTED_MODULE_18__["default"]["delete"](this.subpart, 'sequence');
       }
       this.modifyEvent();
     },
     removeRandomizeOption: function removeRandomizeOption(option) {
       this.subpart.randomize.remove(option);
       if (this.subpart.randomize.length == 0) {
-        vue__WEBPACK_IMPORTED_MODULE_17__["default"]["delete"](this.subpart, 'randomize');
+        vue__WEBPACK_IMPORTED_MODULE_18__["default"]["delete"](this.subpart, 'randomize');
       }
       this.modifyEvent();
     },
     disableParticleSection: function disableParticleSection() {
-      vue__WEBPACK_IMPORTED_MODULE_17__["default"]["delete"](this.subpart, 'particle_effect');
+      vue__WEBPACK_IMPORTED_MODULE_18__["default"]["delete"](this.subpart, 'particle_effect');
       this.modifyEvent();
     },
     disableSoundSection: function disableSoundSection() {
-      vue__WEBPACK_IMPORTED_MODULE_17__["default"]["delete"](this.subpart, 'sound_effect');
+      vue__WEBPACK_IMPORTED_MODULE_18__["default"]["delete"](this.subpart, 'sound_effect');
       this.modifyEvent();
     },
     disableExpressionSection: function disableExpressionSection() {
-      vue__WEBPACK_IMPORTED_MODULE_17__["default"]["delete"](this.subpart, 'expression');
+      vue__WEBPACK_IMPORTED_MODULE_18__["default"]["delete"](this.subpart, 'expression');
       this.modifyEvent();
     },
     selectParticleFile: function selectParticleFile() {
@@ -2689,9 +2691,7 @@ var emitter_type_options = {
     modifyEvent: function modifyEvent(event, type) {
       this.$emit('modify_event', event, type);
     },
-    highlightMolang: function highlightMolang(code) {
-      return prismjs_components_prism_core__WEBPACK_IMPORTED_MODULE_1___default().highlight(code, _languages__WEBPACK_IMPORTED_MODULE_4__["default"].molang);
-    },
+    highlightMolang: _molang_highlight_js__WEBPACK_IMPORTED_MODULE_10__.highlightMolang,
     highlightGeneric: function highlightGeneric(code) {
       return prismjs_components_prism_core__WEBPACK_IMPORTED_MODULE_1___default().highlight(code, _languages__WEBPACK_IMPORTED_MODULE_4__["default"].generic);
     },
@@ -2714,10 +2714,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
 /* harmony import */ var vue_color__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-color */ "./node_modules/vue-color/dist/vue-color.min.js");
 /* harmony import */ var vue_color__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue_color__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _gradient__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./../../gradient */ "./src/gradient.js");
 /* harmony import */ var _util__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./../../util */ "./src/util.js");
+/* harmony import */ var prismjs_components_prism_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! prismjs/components/prism-core */ "./node_modules/prismjs/components/prism-core.js");
+/* harmony import */ var prismjs_components_prism_core__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(prismjs_components_prism_core__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var root_packages_vue_prism_editor__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! root/packages/vue-prism-editor */ "./node_modules/root/packages/vue-prism-editor/dist/prismeditor.esm.js");
+/* harmony import */ var _languages__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./../../languages */ "./src/languages.js");
+/* harmony import */ var _molang_highlight__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../molang_highlight */ "./src/molang_highlight.js");
+/* harmony import */ var _molang_autocomplete__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../molang_autocomplete */ "./src/molang_autocomplete.js");
+/* harmony import */ var _edits__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../edits */ "./src/edits.js");
 function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
 function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
@@ -2745,6 +2753,37 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+
+
+
+
 
 
 
@@ -2752,6 +2791,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: 'gradient',
   components: {
+    PrismEditor: root_packages_vue_prism_editor__WEBPACK_IMPORTED_MODULE_4__.PrismEditor,
     'color-picker': (vue_color__WEBPACK_IMPORTED_MODULE_0___default().Chrome)
   },
   props: {
@@ -2765,7 +2805,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       try {
         for (_iterator.s(); !(_step = _iterator.n()).done;) {
           var point = _step.value;
-          stations.push("".concat(point.color, " ").concat(point.percent, "%"));
+          stations.push("".concat(this.resolveColor(point.color), " ").concat(point.percent, "%"));
         }
       } catch (err) {
         _iterator.e(err);
@@ -2773,6 +2813,34 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
         _iterator.f();
       }
       return "linear-gradient(".concat(stations.join(', '), ")");
+    },
+    resolveColor: function resolveColor(color) {
+      if (color instanceof Array) {
+        var _arr$, _arr$2, _arr$3, _arr$4;
+        var arr = color.map(function (val) {
+          return _util__WEBPACK_IMPORTED_MODULE_2__.InputMolangParser.parse(val);
+        });
+        return "rgba(".concat(((_arr$ = arr[0]) !== null && _arr$ !== void 0 ? _arr$ : 0) * 255, ", ").concat(((_arr$2 = arr[1]) !== null && _arr$2 !== void 0 ? _arr$2 : 0) * 255, ", ").concat(((_arr$3 = arr[2]) !== null && _arr$3 !== void 0 ? _arr$3 : 0) * 255, ", ").concat((_arr$4 = arr[3]) !== null && _arr$4 !== void 0 ? _arr$4 : 0, ")");
+      }
+      return color;
+    },
+    changeColorMode: function changeColorMode(point, event) {
+      if (event.target.value == 'static') {
+        var color = '#' + point.color.slice(0, 4).map(function (hex) {
+          var channel = _util__WEBPACK_IMPORTED_MODULE_2__.InputMolangParser.parse(hex) * 255;
+          channel = Math.clamp(Math.round(channel), 0, 255);
+          return channel.toString(16);
+        }).join('');
+        vue__WEBPACK_IMPORTED_MODULE_9__["default"].set(point, 'color', color);
+      } else {
+        var arr = [point.color.substring(1, 3), point.color.substring(3, 5), point.color.substring(5, 7), point.color.substring(7, 9)].map(function (hex) {
+          var number = parseInt(hex, 16) / 255;
+          number = Math.round(number * 1000) / 1000;
+          return number.toString();
+        });
+        vue__WEBPACK_IMPORTED_MODULE_9__["default"].set(point, 'color', arr);
+      }
+      (0,_edits__WEBPACK_IMPORTED_MODULE_8__["default"])('change gradient');
     },
     dragPoint: function dragPoint(input, point, event1) {
       (0,_util__WEBPACK_IMPORTED_MODULE_2__.convertTouchEvent)(event1);
@@ -2801,7 +2869,11 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       document.addEventListener('mouseup', onDragEnd);
       document.addEventListener('touchmove', onDrag);
       document.addEventListener('touchend', onDragEnd);
-    }
+    },
+    autocomplete: function autocomplete(text, position) {
+      return (0,_molang_autocomplete__WEBPACK_IMPORTED_MODULE_7__["default"])(text, position, 'input');
+    },
+    highlightMolang: _molang_highlight__WEBPACK_IMPORTED_MODULE_6__.highlightMolang
   }
 });
 
@@ -2824,10 +2896,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _TextureInput__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./TextureInput */ "./src/components/Sidebar/TextureInput.vue");
 /* harmony import */ var _Form_Checkbox_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../Form/Checkbox.vue */ "./src/components/Form/Checkbox.vue");
 /* harmony import */ var _EventPicker_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./EventPicker.vue */ "./src/components/Sidebar/EventPicker.vue");
-/* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/chevron-down.js");
-/* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/chevron-up.js");
-/* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/plus.js");
-/* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/x.js");
+/* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/chevron-down.js");
+/* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/chevron-up.js");
+/* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/plus.js");
+/* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/x.js");
 /* harmony import */ var _molang_autocomplete__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./../../molang_autocomplete */ "./src/molang_autocomplete.js");
 /* harmony import */ var _path_autocomplete__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./../../path_autocomplete */ "./src/path_autocomplete.js");
 /* harmony import */ var root_packages_vue_prism_editor_dist_prismeditor_min_css__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! root/packages/vue-prism-editor/dist/prismeditor.min.css */ "./node_modules/root/packages/vue-prism-editor/dist/prismeditor.min.css");
@@ -2838,6 +2910,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _languages__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./../../languages */ "./src/languages.js");
 /* harmony import */ var _util__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../../util */ "./src/util.js");
 /* harmony import */ var _edits__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../../edits */ "./src/edits.js");
+/* harmony import */ var _molang_highlight_js__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../../molang_highlight.js */ "./src/molang_highlight.js");
 //
 //
 //
@@ -3010,6 +3083,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 
 
 
@@ -3041,18 +3115,16 @@ __webpack_require__.r(__webpack_exports__);
     TextureInput: _TextureInput__WEBPACK_IMPORTED_MODULE_2__["default"],
     Checkbox: _Form_Checkbox_vue__WEBPACK_IMPORTED_MODULE_3__["default"],
     EventPicker: _EventPicker_vue__WEBPACK_IMPORTED_MODULE_4__["default"],
-    ChevronDown: lucide_vue__WEBPACK_IMPORTED_MODULE_14__["default"],
-    ChevronUp: lucide_vue__WEBPACK_IMPORTED_MODULE_15__["default"],
-    Plus: lucide_vue__WEBPACK_IMPORTED_MODULE_16__["default"],
-    X: lucide_vue__WEBPACK_IMPORTED_MODULE_17__["default"]
+    ChevronDown: lucide_vue__WEBPACK_IMPORTED_MODULE_15__["default"],
+    ChevronUp: lucide_vue__WEBPACK_IMPORTED_MODULE_16__["default"],
+    Plus: lucide_vue__WEBPACK_IMPORTED_MODULE_17__["default"],
+    X: lucide_vue__WEBPACK_IMPORTED_MODULE_18__["default"]
   },
   methods: {
     isInputVisible: function isInputVisible(input, group) {
       return input.isVisible(group);
     },
-    highlightMolang: function highlightMolang(code) {
-      return prismjs_components_prism_core__WEBPACK_IMPORTED_MODULE_8___default().highlight(code, _languages__WEBPACK_IMPORTED_MODULE_11__["default"].molang);
-    },
+    highlightMolang: _molang_highlight_js__WEBPACK_IMPORTED_MODULE_14__.highlightMolang,
     highlightGeneric: function highlightGeneric(code) {
       return prismjs_components_prism_core__WEBPACK_IMPORTED_MODULE_8___default().highlight(code, _languages__WEBPACK_IMPORTED_MODULE_11__["default"].generic);
     },
@@ -5175,7 +5247,8 @@ window.SubEffectEditors = SubEffectEditors;
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   downloadFile: () => (/* binding */ downloadFile),
-/* harmony export */   generateFile: () => (/* binding */ generateFile)
+/* harmony export */   generateFile: () => (/* binding */ generateFile),
+/* harmony export */   processValue: () => (/* binding */ processValue)
 /* harmony export */ });
 /* harmony import */ var _input_structure__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./input_structure */ "./src/input_structure.js");
 /* harmony import */ var _util__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./util */ "./src/util.js");
@@ -5767,6 +5840,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _input__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./input */ "./src/input.js");
 /* harmony import */ var _util__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./util */ "./src/util.js");
 /* harmony import */ var _edits__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./edits */ "./src/edits.js");
+/* harmony import */ var _export__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./export */ "./src/export.js");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -5788,6 +5862,7 @@ function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) ===
 function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
 
 
 
@@ -5818,8 +5893,11 @@ var Gradient = /*#__PURE__*/function (_Input) {
   _createClass(Gradient, [{
     key: "change",
     value: function change(e, node, test) {
-      this.selected.color = e.hex8;
-      var is_sliding = node && node.parentNode.querySelector(':active');
+      var is_sliding;
+      if (e.hex8) {
+        this.selected.color = e.hex8;
+        is_sliding = node && node.parentNode.querySelector(':active');
+      } else {}
       (0,_edits__WEBPACK_IMPORTED_MODULE_2__["default"])('change gradient', e, !!is_sliding);
       return this;
     }
@@ -5859,7 +5937,16 @@ var Gradient = /*#__PURE__*/function (_Input) {
         var time = point.percent / 100 * range;
         time = Math.roundTo(time, 2).toString();
         if (time.search(/\./) < 0) time += '.0';
-        var color = '#' + point.color.substr(7, 2) + point.color.substr(1, 6);
+        var color = 0;
+        if (typeof point.color == 'string') {
+          color = '#' + point.color.substr(7, 2) + point.color.substr(1, 6);
+        } else {
+          color = point.color.map(function (num) {
+            return (0,_export__WEBPACK_IMPORTED_MODULE_3__.processValue)(num, {
+              type: 'molang'
+            });
+          });
+        }
         obj[time] = color;
       });
       return obj;
@@ -7088,7 +7175,6 @@ if (_vscode_extension__WEBPACK_IMPORTED_MODULE_2__["default"]) {
         var reader = new FileReader();
         reader.onloadend = function () {
           loadFile(JSON.parse(reader.result));
-          _components_Preview__WEBPACK_IMPORTED_MODULE_5__.View.PlaybackController.start();
         };
         reader.readAsText(file);
         event.preventDefault();
@@ -8334,7 +8420,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (/* binding */ getAutocompleteData)
 /* harmony export */ });
 /* harmony import */ var _input_structure__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./input_structure */ "./src/input_structure.js");
-/* harmony import */ var _molang_data__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./molang_data */ "./src/molang_data.js");
+/* harmony import */ var prismjs_components_prism_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! prismjs/components/prism-core */ "./node_modules/prismjs/components/prism-core.js");
+/* harmony import */ var prismjs_components_prism_core__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(prismjs_components_prism_core__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _molang_data__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./molang_data */ "./src/molang_data.js");
+/* harmony import */ var _languages__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./languages */ "./src/languages.js");
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
@@ -8346,6 +8435,8 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
 function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
+
+
 
 
 function getAllMolangExpressions() {
@@ -8430,10 +8521,10 @@ function getAutocompleteData(text, position, type) {
       namespace = _beginning$split2[0],
       dir = _beginning$split2[1];
     if (namespace == 'math') {
-      return filterAndSortList(_molang_data__WEBPACK_IMPORTED_MODULE_1__.MathFunctions, dir, null, _molang_data__WEBPACK_IMPORTED_MODULE_1__.MathFunctionLabels);
+      return filterAndSortList(_molang_data__WEBPACK_IMPORTED_MODULE_2__.MathFunctions, dir, null, _molang_data__WEBPACK_IMPORTED_MODULE_2__.MathFunctionLabels);
     }
     if (namespace == 'query' || namespace == 'q') {
-      return filterAndSortList(_molang_data__WEBPACK_IMPORTED_MODULE_1__.MolangQueries, dir, type !== 'controller' && ['all_animations_finished', 'any_animation_finished'], _molang_data__WEBPACK_IMPORTED_MODULE_1__.MolangQueryLabels);
+      return filterAndSortList(_molang_data__WEBPACK_IMPORTED_MODULE_2__.MolangQueries, dir, type !== 'controller' && ['all_animations_finished', 'any_animation_finished'], _molang_data__WEBPACK_IMPORTED_MODULE_2__.MolangQueryLabels);
     }
     if (namespace == 'temp' || namespace == 't') {
       var temps = text.match(/([^a-z]|^)t(emp)?\.\w+/gi);
@@ -8448,15 +8539,15 @@ function getAutocompleteData(text, position, type) {
       }
     }
     if (namespace == 'context' || namespace == 'c') {
-      return filterAndSortList(_molang_data__WEBPACK_IMPORTED_MODULE_1__.DefaultContext, dir);
+      return filterAndSortList(_molang_data__WEBPACK_IMPORTED_MODULE_2__.DefaultContext, dir);
     }
     if (namespace == 'variable' || namespace == 'v') {
       var options = _toConsumableArray(getProjectVariables(dir));
-      options.safePush.apply(options, _toConsumableArray(_molang_data__WEBPACK_IMPORTED_MODULE_1__.DefaultVariables));
+      options.safePush.apply(options, _toConsumableArray(_molang_data__WEBPACK_IMPORTED_MODULE_2__.DefaultVariables));
       return filterAndSortList(options, dir);
     }
   } else {
-    var root_tokens = _molang_data__WEBPACK_IMPORTED_MODULE_1__.RootTokens.slice();
+    var root_tokens = _molang_data__WEBPACK_IMPORTED_MODULE_2__.RootTokens.slice();
     return filterAndSortList(root_tokens, beginning, null);
   }
   return [];
@@ -8517,6 +8608,28 @@ var MathFunctionLabels = {
   'random_integer()': 'random_integer( low, high )',
   'hermite_blend()': 'hermite_blend( 0_to_1 )'
 };
+
+/***/ }),
+
+/***/ "./src/molang_highlight.js":
+/*!*********************************!*\
+  !*** ./src/molang_highlight.js ***!
+  \*********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   highlightMolang: () => (/* binding */ highlightMolang)
+/* harmony export */ });
+/* harmony import */ var prismjs_components_prism_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! prismjs/components/prism-core */ "./node_modules/prismjs/components/prism-core.js");
+/* harmony import */ var prismjs_components_prism_core__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(prismjs_components_prism_core__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _languages__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./languages */ "./src/languages.js");
+
+
+function highlightMolang(code) {
+  return prismjs_components_prism_core__WEBPACK_IMPORTED_MODULE_0___default().highlight(code, _languages__WEBPACK_IMPORTED_MODULE_1__["default"].molang);
+}
 
 /***/ }),
 
@@ -9254,6 +9367,7 @@ window.getTextureForParentEffect = function () {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   IO: () => (/* binding */ IO),
+/* harmony export */   InputMolangParser: () => (/* binding */ InputMolangParser),
 /* harmony export */   bbuid: () => (/* binding */ bbuid),
 /* harmony export */   calculateOffset: () => (/* binding */ calculateOffset),
 /* harmony export */   compileJSON: () => (/* binding */ compileJSON),
@@ -9263,7 +9377,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   pathToName: () => (/* binding */ pathToName),
 /* harmony export */   trimFloatNumber: () => (/* binding */ trimFloatNumber)
 /* harmony export */ });
+/* harmony import */ var molangjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! molangjs */ "./node_modules/molangjs/dist/molang.esm.js");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+
 function bbuid(l) {
   l = l || 1;
   var chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -9442,6 +9558,7 @@ function trimFloatNumber(val) {
 //JSON
 function compileJSON(object, options) {
   var output = '';
+  var indentation = '\t';
   if (_typeof(options) !== 'object') options = {};
   function newLine(tabs) {
     if (options.small === true) {
@@ -9449,55 +9566,82 @@ function compileJSON(object, options) {
     }
     var s = '\n';
     for (var i = 0; i < tabs; i++) {
-      s += '\t';
+      s += indentation;
     }
     return s;
   }
+  function escape(string) {
+    if (string.includes('\\')) {
+      string = string.replace(/\\/g, '\\\\');
+    }
+    if (string.includes('"')) {
+      string = string.replace(/"/g, '\\"');
+    }
+    if (string.includes('\n')) {
+      string = string.replace(/\n|\r\n/g, '\\n');
+    }
+    if (string.includes('\t')) {
+      string = string.replace(/\t/g, '\\t');
+    }
+    return string;
+  }
   function handleVar(o, tabs) {
+    var breaks = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
     var out = '';
-    if (typeof o === 'string') {
+    var type = _typeof(o);
+    if (type === 'string') {
       //String
-      out += '"' + o.replace(/\\/g, '\\\\').replace(/"/g, '\\"').replace(/\n|\r\n/g, '\\n').replace(/\t/g, '\\t') + '"';
-    } else if (typeof o === 'boolean') {
+      out += '"' + escape(o) + '"';
+    } else if (type === 'boolean') {
       //Boolean
       out += o ? 'true' : 'false';
-    } else if (typeof o === 'number') {
-      //Number
-      o = (Math.round(o * 100000) / 100000).toString();
-      out += o;
     } else if (o === null || o === Infinity || o === -Infinity) {
       //Null
       out += 'null';
-    } else if (_typeof(o) === 'object' && o instanceof Array) {
+    } else if (type === 'number') {
+      //Number
+      o = (Math.round(o * 100000) / 100000).toString();
+      if (o == 'NaN') o = null;
+      out += o;
+    } else if (o instanceof Array) {
       //Array
-      var has_content = false;
+      var _has_content = false;
+      var multiline = !!o.find(function (item) {
+        return _typeof(item) === 'object';
+      });
+      if (!multiline) {
+        var length = 0;
+        o.forEach(function (item) {
+          length += typeof item === 'string' ? item.length + 4 : 3;
+        });
+        if (length > 140) multiline = true;
+      }
       out += '[';
       for (var i = 0; i < o.length; i++) {
         var compiled = handleVar(o[i], tabs + 1);
         if (compiled) {
-          var breaks = _typeof(o[i]) === 'object';
-          if (has_content) {
-            out += ',' + (breaks || options.small ? '' : ' ');
+          if (_has_content) {
+            out += ',' + (options.small || multiline ? '' : ' ');
           }
-          if (breaks) {
+          if (multiline) {
             out += newLine(tabs);
           }
           out += compiled;
-          has_content = true;
+          _has_content = true;
         }
       }
-      if (_typeof(o[o.length - 1]) === 'object') {
+      if (multiline) {
         out += newLine(tabs - 1);
       }
       out += ']';
-    } else if (_typeof(o) === 'object') {
+    } else if (type === 'object') {
       //Object
-      var breaks = o.constructor.name !== 'oneLiner';
+      breaks = o.constructor.name !== 'oneLiner';
       var has_content = false;
       out += '{';
       for (var key in o) {
         if (o.hasOwnProperty(key)) {
-          var compiled = handleVar(o[key], tabs + 1);
+          var compiled = handleVar(o[key], tabs + 1, breaks);
           if (compiled) {
             if (has_content) {
               out += ',' + (breaks || options.small ? '' : ' ');
@@ -9505,7 +9649,7 @@ function compileJSON(object, options) {
             if (breaks) {
               out += newLine(tabs);
             }
-            out += '"' + key + '":' + (options.small === true ? '' : ' ');
+            out += '"' + escape(key) + '":' + (options.small === true ? '' : ' ');
             out += compiled;
             has_content = true;
           }
@@ -9641,6 +9785,7 @@ var IO = {
     }
   }
 };
+var InputMolangParser = new molangjs__WEBPACK_IMPORTED_MODULE_0__["default"]();
 
 
 /***/ }),
@@ -9944,6 +10089,20 @@ function parseColor(input) {
   }
   return '#' + input.substr(3, 6) + input.substr(1, 2);
 }
+function parseGradientColor(input) {
+  if (input instanceof Array && input.some(function (value) {
+    return typeof value == 'string';
+  })) {
+    var arr = input.map(function (v) {
+      return v.toString();
+    });
+    while (arr.length < 4) {
+      arr.push('1');
+    }
+    return arr;
+  }
+  return parseColor(input);
+}
 function unwrapExpression(value) {
   if (value instanceof Array) return value.map(unwrapExpression);
   if (!value || _typeof(value) != 'object') return value;
@@ -10171,8 +10330,9 @@ var Config = /*#__PURE__*/function () {
           this.set('emitter_lifetime_sleep_time', comp('emitter_lifetime_looping').sleep_time);
         }
         if (comp('emitter_lifetime_expression')) {
+          var activation = comp('emitter_lifetime_expression').activation_expression;
           this.set('emitter_lifetime_mode', 'expression');
-          this.set('emitter_lifetime_activation', comp('emitter_lifetime_expression').activation_expression);
+          this.set('emitter_lifetime_activation', activation == undefined ? 1 : activation);
           this.set('emitter_lifetime_expiration', comp('emitter_lifetime_expression').expiration_expression);
         }
         if (comp('emitter_lifetime_events')) {
@@ -10340,8 +10500,8 @@ var Config = /*#__PURE__*/function () {
             }
             if (uv.flipbook) {
               this.set('particle_texture_mode', 'animated');
-              this.set('particle_texture_uv', uv.flipbook.base_UV);
-              this.set('particle_texture_uv_size', uv.flipbook.size_UV);
+              this.set('particle_texture_uv', uv.flipbook.base_UV == undefined ? uv.uv : uv.flipbook.base_UV);
+              this.set('particle_texture_uv_size', uv.flipbook.size_UV == undefined ? uv.uv_size : uv.flipbook.size_UV);
               this.set('particle_texture_uv_step', uv.flipbook.step_UV);
               this.set('particle_texture_frames_per_second', uv.flipbook.frames_per_second);
               this.set('particle_texture_max_frame', uv.flipbook.max_frame);
@@ -10389,7 +10549,7 @@ var Config = /*#__PURE__*/function () {
             if (c.gradient instanceof Array) {
               var distance = 100 / (c.gradient.length - 1);
               c.gradient.forEach(function (color, i) {
-                color = parseColor(color);
+                color = parseGradientColor(color);
                 var percent = distance * i;
                 gradient_points.push({
                   percent: percent,
@@ -10403,7 +10563,7 @@ var Config = /*#__PURE__*/function () {
               }
               this.set('particle_color_range', max_time);
               for (var time in c.gradient) {
-                var color = parseColor(c.gradient[time]);
+                var color = parseGradientColor(c.gradient[time]);
                 var percent = parseFloat(time) / max_time * 100;
                 gradient_points.push({
                   color: color,
@@ -11010,6 +11170,7 @@ var Particle = /*#__PURE__*/function () {
   }, {
     key: "tick",
     value: function tick(jump) {
+      var _this4 = this;
       var params = this.params();
       var step = 1 / this.emitter.scene.global_options.tick_rate;
       var _iterator3 = _createForOfIteratorHelper(this.emitter.config.particle_render_expression),
@@ -11186,7 +11347,25 @@ var Particle = /*#__PURE__*/function () {
         } else if (this.emitter.config.particle_color_mode === 'gradient') {
           var i = this.emitter.calculate(this.emitter.config.particle_color_interpolant, params);
           var r = this.emitter.calculate(this.emitter.config.particle_color_range, params);
-          var c = calculateGradient(this.emitter.config.particle_color_gradient, i / r * 100);
+          var gradient = this.emitter.config.particle_color_gradient;
+          if (gradient.some(function (point) {
+            return point.color instanceof Array;
+          })) {
+            gradient = gradient.map(function (point) {
+              if (!(point.color instanceof Array)) return point;
+              var rgba = _this4.emitter.calculate(point.color, params, 'array');
+              return {
+                percent: point.percent,
+                color: {
+                  r: rgba[0] * 255,
+                  g: rgba[1] * 255,
+                  b: rgba[2] * 255,
+                  a: rgba.length > 3 ? rgba[3] : 1
+                }
+              };
+            });
+          }
+          var c = calculateGradient(gradient, i / r * 100);
           this.setColor(c.r / 255, c.g / 255, c.b / 255, c.a);
         } else {
           var c = tinycolor2__WEBPACK_IMPORTED_MODULE_1___default()(this.emitter.config.particle_color_static).toRgb();
@@ -11390,28 +11569,28 @@ var Emitter = /*#__PURE__*/function (_EventClass) {
   _inherits(Emitter, _EventClass);
   var _super = _createSuper(Emitter);
   function Emitter(scene, config) {
-    var _this4;
+    var _this5;
     var options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
     _classCallCheck(this, Emitter);
-    _this4 = _super.call(this);
-    _this4.scene = scene;
-    _this4.child_emitters = [];
-    scene.emitters.push(_assertThisInitialized(_this4));
-    _this4.config = config instanceof Config ? config : new Config(scene, config, options);
-    _this4.Molang = new molangjs__WEBPACK_IMPORTED_MODULE_0__["default"]();
-    _this4.Molang.variableHandler = function (key, params) {
-      return _this4.config.curves[key] && calculateCurve(_assertThisInitialized(_this4), _this4.config.curves[key], key, params);
+    _this5 = _super.call(this);
+    _this5.scene = scene;
+    _this5.child_emitters = [];
+    scene.emitters.push(_assertThisInitialized(_this5));
+    _this5.config = config instanceof Config ? config : new Config(scene, config, options);
+    _this5.Molang = new molangjs__WEBPACK_IMPORTED_MODULE_0__["default"]();
+    _this5.Molang.variableHandler = function (key, params) {
+      return _this5.config.curves[key] && calculateCurve(_assertThisInitialized(_this5), _this5.config.curves[key], key, params);
     };
     var global_scale = scene.global_options._scale;
-    _this4.local_space = new three__WEBPACK_IMPORTED_MODULE_2__.Object3D();
-    _this4.local_space.scale.set(global_scale, global_scale, global_scale);
-    _this4.global_space = new three__WEBPACK_IMPORTED_MODULE_2__.Object3D();
-    _this4.global_space.scale.set(global_scale, global_scale, global_scale);
-    _this4.material = new three__WEBPACK_IMPORTED_MODULE_2__.ShaderMaterial({
+    _this5.local_space = new three__WEBPACK_IMPORTED_MODULE_2__.Object3D();
+    _this5.local_space.scale.set(global_scale, global_scale, global_scale);
+    _this5.global_space = new three__WEBPACK_IMPORTED_MODULE_2__.Object3D();
+    _this5.global_space.scale.set(global_scale, global_scale, global_scale);
+    _this5.material = new three__WEBPACK_IMPORTED_MODULE_2__.ShaderMaterial({
       uniforms: {
         map: {
           type: 't',
-          value: _this4.config.texture
+          value: _this5.config.texture
         },
         materialType: {
           type: 'int',
@@ -11425,24 +11604,24 @@ var Emitter = /*#__PURE__*/function (_EventClass) {
       depthWrite: false,
       alphaTest: 0.2
     });
-    _this4.particles = [];
-    _this4.dead_particles = [];
-    _this4.creation_time = 0;
-    _this4.parent_emitter = null;
-    _this4.age = 0;
-    _this4.view_age = 0;
-    _this4.enabled = false;
-    _this4.loop_mode = options.loop_mode || scene.global_options.loop_mode;
-    _this4.parent_mode = options.parent_mode || scene.global_options.parent_mode;
-    _this4.ground_collision = typeof options.ground_collision == 'boolean' ? options.ground_collision : scene.global_options.ground_collision;
-    _this4.inherited_particle_speed = null;
-    _this4.pre_effect_expression = null;
-    _this4.random_vars = [Math.random(), Math.random(), Math.random(), Math.random()];
-    _this4.tick_values = {};
-    _this4.creation_values = {};
-    _this4._cached_curves = {};
-    _this4.updateMaterial();
-    return _this4;
+    _this5.particles = [];
+    _this5.dead_particles = [];
+    _this5.creation_time = 0;
+    _this5.parent_emitter = null;
+    _this5.age = 0;
+    _this5.view_age = 0;
+    _this5.enabled = false;
+    _this5.loop_mode = options.loop_mode || scene.global_options.loop_mode;
+    _this5.parent_mode = options.parent_mode || scene.global_options.parent_mode;
+    _this5.ground_collision = typeof options.ground_collision == 'boolean' ? options.ground_collision : scene.global_options.ground_collision;
+    _this5.inherited_particle_speed = null;
+    _this5.pre_effect_expression = null;
+    _this5.random_vars = [Math.random(), Math.random(), Math.random(), Math.random()];
+    _this5.tick_values = {};
+    _this5.creation_values = {};
+    _this5._cached_curves = {};
+    _this5.updateMaterial();
+    return _this5;
   }
   _createClass(Emitter, [{
     key: "getActiveSpace",
@@ -11479,9 +11658,9 @@ var Emitter = /*#__PURE__*/function (_EventClass) {
   }, {
     key: "calculate",
     value: function calculate(input, variables, datatype) {
-      var _this5 = this;
+      var _this6 = this;
       var getV = function getV(v) {
-        return _this5.Molang.parse(v, variables);
+        return _this6.Molang.parse(v, variables);
       };
       var data;
       if (input instanceof Array) {
@@ -11510,7 +11689,7 @@ var Emitter = /*#__PURE__*/function (_EventClass) {
   }, {
     key: "updateFacingRotation",
     value: function updateFacingRotation(camera) {
-      var _this6 = this;
+      var _this7 = this;
       if (this.particles.length == 0) return;
       var quat = new three__WEBPACK_IMPORTED_MODULE_2__.Quaternion();
       var vec = new three__WEBPACK_IMPORTED_MODULE_2__.Vector3();
@@ -11519,7 +11698,7 @@ var Emitter = /*#__PURE__*/function (_EventClass) {
         world_quat_inverse = this.particles[0].mesh.parent.getWorldQuaternion(quat).invert();
       }
       this.particles.forEach(function (p) {
-        if (_this6.config.particle_appearance_facing_camera_mode.substring(0, 9) == 'direction') {
+        if (_this7.config.particle_appearance_facing_camera_mode.substring(0, 9) == 'direction') {
           if (p.mesh.rotation.order !== 'YXZ') {
             p.mesh.rotation.order = 'YXZ';
           }
@@ -11531,13 +11710,13 @@ var Emitter = /*#__PURE__*/function (_EventClass) {
             vec.z = -0.00001;
           }
         }
-        if (_this6.config.particle_appearance_facing_camera_mode == 'lookat_direction') {
+        if (_this7.config.particle_appearance_facing_camera_mode == 'lookat_direction') {
           if (p.mesh.rotation.order !== 'XYZ') {
             p.mesh.rotation.order = 'XYZ';
           }
           vec.copy(p.facing_direction);
         }
-        switch (_this6.config.particle_appearance_facing_camera_mode) {
+        switch (_this7.config.particle_appearance_facing_camera_mode) {
           case 'lookat_xyz':
             p.mesh.lookAt(camera.position);
             break;
@@ -11605,6 +11784,7 @@ var Emitter = /*#__PURE__*/function (_EventClass) {
       this.age = 0;
       this.view_age = 0;
       this.enabled = true;
+      this.expired = false;
       this.initialized = true;
       this.scene.space.add(this.global_space);
       var params = this.params();
@@ -11749,7 +11929,8 @@ var Emitter = /*#__PURE__*/function (_EventClass) {
         if (this.enabled && this.calculate(this.config.emitter_lifetime_expiration, params)) {
           this.expire();
         }
-        if (!this.enabled && this.calculate(this.config.emitter_lifetime_activation, params)) {
+        var can_restart = !this.expired || !this.parent_emitter && this.loop_mode == 'looping';
+        if (!this.enabled && can_restart && this.calculate(this.config.emitter_lifetime_activation, params)) {
           this.start();
         }
       } else if (!this.parent_emitter && (this.loop_mode == 'looping' || this.loop_mode == 'auto' && this.config.emitter_lifetime_mode == 'looping')) {
@@ -11796,6 +11977,7 @@ var Emitter = /*#__PURE__*/function (_EventClass) {
     key: "expire",
     value: function expire() {
       this.stop();
+      this.expired = true;
       this.dispatchEvent('expire');
       var _iterator11 = _createForOfIteratorHelper(this.config.emitter_events_expiration),
         _step11;
@@ -11814,7 +11996,7 @@ var Emitter = /*#__PURE__*/function (_EventClass) {
   }, {
     key: "jumpTo",
     value: function jumpTo(second) {
-      var _this7 = this;
+      var _this8 = this;
       var tick_rate = this.scene.global_options.tick_rate;
       var old_time = Math.round(this.view_age * tick_rate);
       var new_time = Math.round(second * tick_rate);
@@ -11839,7 +12021,7 @@ var Emitter = /*#__PURE__*/function (_EventClass) {
       this.child_emitters.slice().forEach(function (e) {
         if (e.creation_time > second) {
           e["delete"]();
-          removeFromArray(_this7.child_emitters, e);
+          removeFromArray(_this8.child_emitters, e);
         }
       });
       return this;
@@ -11858,14 +12040,14 @@ var Emitter = /*#__PURE__*/function (_EventClass) {
   }, {
     key: "playLoop",
     value: function playLoop() {
-      var _this8 = this;
+      var _this9 = this;
       if (!this.initialized || this.age == 0) {
         this.start();
       }
       this.paused = false;
       clearInterval(this.tick_interval);
       this.tick_interval = setInterval(function () {
-        _this8.tick();
+        _this9.tick();
       }, 1000 / this.scene.global_options.tick_rate);
       return this;
     }
@@ -11935,7 +12117,7 @@ var Emitter = /*#__PURE__*/function (_EventClass) {
   }, {
     key: "runEvent",
     value: function runEvent(event_id, particle) {
-      var _this9 = this;
+      var _this10 = this;
       if (event_id instanceof Array) {
         var _iterator12 = _createForOfIteratorHelper(event_id),
           _step12;
@@ -11982,10 +12164,10 @@ var Emitter = /*#__PURE__*/function (_EventClass) {
 
                 // Run event
                 if (subpart.expression) {
-                  _this9.Molang.parse(subpart.expression, _this9.params());
+                  _this10.Molang.parse(subpart.expression, _this10.params());
                 }
                 if (subpart.sound_effect) {
-                  _this9.dispatchEvent('play_sound', {
+                  _this10.dispatchEvent('play_sound', {
                     sound_effect: subpart.sound_effect,
                     particle: particle,
                     event_id: event_id
@@ -11996,13 +12178,13 @@ var Emitter = /*#__PURE__*/function (_EventClass) {
                   break;
                 }
                 identifier = subpart.particle_effect.effect;
-                config = _this9.scene.child_configs[identifier];
-                if (!(!_this9.scene.child_configs[identifier] && _this9.scene._fetchParticleFile)) {
+                config = _this10.scene.child_configs[identifier];
+                if (!(!_this10.scene.child_configs[identifier] && _this10.scene._fetchParticleFile)) {
                   _context.next = 20;
                   break;
                 }
-                config = _this9.scene.child_configs[identifier] = new Config(_this9.scene);
-                result = _this9.scene.fetchParticleFile(identifier, _this9.config, config);
+                config = _this10.scene.child_configs[identifier] = new Config(_this10.scene);
+                result = _this10.scene.fetchParticleFile(identifier, _this10.config, config);
                 loadResult = function loadResult(result) {
                   if (!result) return;
                   if (result.json) {
@@ -12031,13 +12213,13 @@ var Emitter = /*#__PURE__*/function (_EventClass) {
                 }
               case 20:
                 if (config) {
-                  emitter = new Emitter(_this9.scene, config, {});
-                  emitter.creation_time = _this9.age;
-                  emitter.parent_emitter = _this9;
+                  emitter = new Emitter(_this10.scene, config, {});
+                  emitter.creation_time = _this10.age;
+                  emitter.parent_emitter = _this10;
                   emitter.pre_effect_expression = subpart.particle_effect.pre_effect_expression;
-                  _this9.child_emitters.push(emitter);
+                  _this10.child_emitters.push(emitter);
                   if (subpart.particle_effect.type == 'emitter_bound') {
-                    emitter.parent_mode = _this9.parent_mode;
+                    emitter.parent_mode = _this10.parent_mode;
                   } else if (subpart.particle_effect.type == 'particle_with_velocity' && particle) {
                     emitter.inherited_particle_speed = new three__WEBPACK_IMPORTED_MODULE_2__.Vector3().copy(particle.speed);
                   }
@@ -12045,18 +12227,18 @@ var Emitter = /*#__PURE__*/function (_EventClass) {
                   if (particle) {
                     particle.mesh.getWorldPosition(position);
                   } else {
-                    _this9.getActiveSpace().getWorldPosition(position);
+                    _this10.getActiveSpace().getWorldPosition(position);
                   }
-                  if (_this9.local_space.parent) {
-                    if (!_this9.config.space_local_position) {
-                      offset = _this9.local_space.getWorldPosition(new three__WEBPACK_IMPORTED_MODULE_2__.Vector3());
+                  if (_this10.local_space.parent) {
+                    if (!_this10.config.space_local_position) {
+                      offset = _this10.local_space.getWorldPosition(new three__WEBPACK_IMPORTED_MODULE_2__.Vector3());
                       position.add(offset);
                     }
                   }
                   emitter.getActiveSpace().position.copy(position);
                   emitter.start();
                 }
-                _this9.dispatchEvent('play_child_particle', {
+                _this10.dispatchEvent('play_child_particle', {
                   particle_effect: subpart.particle_effect,
                   config: config,
                   child_emitter: emitter,
@@ -12654,7 +12836,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.color_gradient[data-v-5998915a] {\n\twidth: 100%;\n}\n.gradient_container[data-v-5998915a] {\n\tposition: relative;\n\twidth: calc(100% - 10px);\n\theight: 20px;\n\tmargin: 0 5px 10px 5px;\n\tborder: 1px solid black;\n}\n.gradient_point[data-v-5998915a] {\n\tposition: absolute;\n\theight: 16px;\n\twidth: 10px;\n\ttop: 10px;\n\tmargin-left: -5px;\n\tborder: 1px solid #212529;\n\toverflow: hidden;\n\tcursor: pointer;\n}\n.gradient_point.selected[data-v-5998915a] {\n\tborder-color: #fff;\n\tbox-shadow: 0 0 2px #000;\n\tz-index: 4;\n}\n.gradient_inner[data-v-5998915a] {\n\theight: 100%;\n\twidth: 100%;\n}\ndiv.vc-chrome[data-v-5998915a] {\n\tfloat: left;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.color_gradient[data-v-5998915a] {\n\twidth: 100%;\n}\n.gradient_container[data-v-5998915a] {\n\tposition: relative;\n\twidth: calc(100% - 10px);\n\theight: 20px;\n\tmargin: 0 5px 10px 5px;\n\tborder: 1px solid black;\n}\n.gradient_point[data-v-5998915a] {\n\tposition: absolute;\n\theight: 16px;\n\twidth: 10px;\n\ttop: 10px;\n\tmargin-left: -5px;\n\tborder: 1px solid #212529;\n\toverflow: hidden;\n\tcursor: pointer;\n}\n.gradient_point.selected[data-v-5998915a] {\n\tborder-color: #000;\n\tz-index: 4;\n\toutline: 2px solid #fff;\n\tborder-radius: 1px;\n}\n.gradient_inner[data-v-5998915a] {\n\theight: 100%;\n\twidth: 100%;\n}\ndiv.vc-chrome[data-v-5998915a] {\n\tfloat: left;\n}\n.gradient_point_controls[data-v-5998915a] {\n\tdisplay: flex;\n\talign-items: center;\n\tmargin-bottom: 4px;\n\theight: 32px;\n}\n.gradient_point_controls > label[data-v-5998915a] {\n\tflex-grow: 1;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -79421,7 +79603,10 @@ var render = function () {
             key: point.id,
             staticClass: "gradient_point",
             class: { selected: point == _vm.input.selected },
-            style: { left: point.percent + "%", background: point.color },
+            style: {
+              left: point.percent + "%",
+              background: _vm.resolveColor(point.color),
+            },
             attrs: { title: point.percent + "%" },
             on: {
               mousedown: function ($event) {
@@ -79441,58 +79626,143 @@ var render = function () {
       ? _c(
           "div",
           [
-            _c(
-              "div",
-              {
-                staticClass: "tool",
-                staticStyle: { float: "right" },
-                on: {
-                  click: function ($event) {
-                    return _vm.input.removePoint()
+            _c("div", { staticClass: "gradient_point_controls" }, [
+              _c("label", [_vm._v("Color Point")]),
+              _vm._v(" "),
+              _c(
+                "select",
+                {
+                  domProps: {
+                    value:
+                      typeof _vm.input.selected.color == "string"
+                        ? "static"
+                        : "molang",
+                  },
+                  on: {
+                    change: function ($event) {
+                      return _vm.changeColorMode(_vm.input.selected, $event)
+                    },
                   },
                 },
-              },
-              [
-                _c("i", { staticClass: "unicode_icon" }, [
-                  _vm._v(_vm._s("\u2A09")),
-                ]),
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              {
-                staticClass: "tool",
-                staticStyle: { float: "right" },
-                on: {
-                  click: function ($event) {
-                    return _vm.input.addPoint()
+                [
+                  _c("option", { key: "static", attrs: { value: "static" } }, [
+                    _vm._v("Static"),
+                  ]),
+                  _vm._v(" "),
+                  _c("option", { key: "molang", attrs: { value: "molang" } }, [
+                    _vm._v("Molang"),
+                  ]),
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  staticClass: "tool",
+                  attrs: { title: "Add Color Point" },
+                  on: {
+                    click: function ($event) {
+                      return _vm.input.addPoint()
+                    },
                   },
                 },
-              },
-              [
-                _c("i", { staticClass: "unicode_icon plus" }, [
-                  _vm._v(_vm._s("\uFF0B")),
-                ]),
-              ]
-            ),
+                [
+                  _c("i", { staticClass: "unicode_icon plus" }, [
+                    _vm._v(_vm._s("\uFF0B")),
+                  ]),
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  staticClass: "tool",
+                  attrs: { title: "Delete Color Point" },
+                  on: {
+                    click: function ($event) {
+                      return _vm.input.removePoint()
+                    },
+                  },
+                },
+                [
+                  _c("i", { staticClass: "unicode_icon" }, [
+                    _vm._v(_vm._s("\u2A09")),
+                  ]),
+                ]
+              ),
+            ]),
             _vm._v(" "),
-            _c("color-picker", {
-              on: {
-                input: function ($event) {
-                  return _vm.input.change($event, _vm.$el)
-                },
-              },
-              model: {
-                value: _vm.input.selected.color,
-                callback: function ($$v) {
-                  _vm.$set(_vm.input.selected, "color", $$v)
-                },
-                expression: "input.selected.color",
-              },
-            }),
+            _vm.input.selected && typeof _vm.input.selected.color == "string"
+              ? [
+                  _c("color-picker", {
+                    on: {
+                      input: function ($event) {
+                        return _vm.input.change($event, _vm.$el)
+                      },
+                    },
+                    model: {
+                      value: _vm.input.selected.color,
+                      callback: function ($$v) {
+                        _vm.$set(_vm.input.selected, "color", $$v)
+                      },
+                      expression: "input.selected.color",
+                    },
+                  }),
+                ]
+              : _vm.input.selected && _vm.input.selected.color instanceof Array
+              ? _c(
+                  "div",
+                  {
+                    staticClass: "input_right",
+                    class: {
+                      expandable: true,
+                      expanded: false,
+                      full_width: false,
+                    },
+                    attrs: { axes: 4 },
+                  },
+                  [
+                    _vm._l(4, function (i) {
+                      return _c(
+                        "div",
+                        {
+                          key: i,
+                          staticClass:
+                            "prism_editor_outer_wrapper input_vector",
+                        },
+                        [
+                          _c("prism-editor", {
+                            attrs: {
+                              highlight: _vm.highlightMolang,
+                              "line-numbers": false,
+                              value: _vm.input.selected.color[i - 1].toString(),
+                              index: i - 1,
+                              placeholder: "255",
+                              autocomplete: _vm.autocomplete,
+                            },
+                            on: {
+                              input: function ($event) {
+                                return _vm.input.change($event)
+                              },
+                            },
+                            model: {
+                              value: _vm.input.selected.color[i - 1],
+                              callback: function ($$v) {
+                                _vm.$set(_vm.input.selected.color, i - 1, $$v)
+                              },
+                              expression: "input.selected.color[i-1]",
+                            },
+                          }),
+                        ],
+                        1
+                      )
+                    }),
+                  ],
+                  2
+                )
+              : _vm._e(),
           ],
-          1
+          2
         )
       : _c("div", [
           _c(

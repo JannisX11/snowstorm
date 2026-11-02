@@ -134,6 +134,7 @@ import getAutocompleteData from '../../molang_autocomplete';
 import sort from '../../sort';
 import ListAddButton from '../Form/ListAddButton.vue';
 import { editEventSubEffect, EventSubEffects, loadEventSubEffect, loadEventSubEffectTexture, createEventSubEffect } from '../../event_sub_effects';
+import { highlightMolang } from '../../molang_highlight.js';
 
 const emitter_type_options = {
 	emitter: 'Emitter',
@@ -272,9 +273,7 @@ export default {
 		modifyEvent(event, type) {
 			this.$emit('modify_event', event, type);
 		},
-		highlightMolang(code) {
-			return Prism.highlight(code, Languages.molang)
-		},
+		highlightMolang,
 		highlightGeneric(code) {
 			return Prism.highlight(code, Languages.generic)
 		},

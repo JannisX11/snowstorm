@@ -1,5 +1,5 @@
 import Data, { forEachInput } from "./input_structure";
-
+import Prism from 'prismjs/components/prism-core';
 import {
     RootTokens,
     MolangQueries,
@@ -9,6 +9,7 @@ import {
     MathFunctions,
     MathFunctionLabels
 } from './molang_data'
+import languages from "./languages";
 
 function getAllMolangExpressions() {
     let expressions = [];

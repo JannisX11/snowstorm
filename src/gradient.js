@@ -1,6 +1,7 @@
 import Input from './input'
 import {bbuid} from './util'
 import registerEdit from './edits'
+import { processValue } from './export'
 
 export default class Gradient extends Input {
     constructor(...args) {
@@ -13,8 +14,12 @@ export default class Gradient extends Input {
         this.selected = this.value[0];
     }
     change(e, node, test) {
-		this.selected.color = e.hex8;
-        let is_sliding = node && node.parentNode.querySelector(':active')
+        let is_sliding;
+        if (e.hex8) {
+            this.selected.color = e.hex8;
+            is_sliding = node && node.parentNode.querySelector(':active')
+        } else {
+        }
         registerEdit('change gradient', e, !!is_sliding);
         return this;
     }
@@ -39,8 +44,13 @@ export default class Gradient extends Input {
         this.value.forEach(point => {
             let time = (point.percent / 100) * range
             time = Math.roundTo(time, 2).toString()
-            if (time.search(/\./) < 0) time += '.0'
-            let color = '#' + point.color.substr(7, 2) + point.color.substr(1, 6);
+            if (time.search(/\./) < 0) time += '.0';
+            let color = 0;
+            if (typeof point.color == 'string') {
+                color = '#' + point.color.substr(7, 2) + point.color.substr(1, 6);
+            } else {
+                color = point.color.map(num => processValue(num, {type: 'molang'}));
+            }
             obj[time] = color;
         })
         return obj;

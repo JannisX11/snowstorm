@@ -4,7 +4,7 @@ import {compileJSON, IO} from './util'
 import {Config} from './emitter'
 import { MathUtils } from 'three';
 
-function processValue(v, type) {
+export function processValue(v, type) {
 	if (type.type === 'molang') {
 		if (!isNaN(v)) {
 			v = parseFloat(v)
