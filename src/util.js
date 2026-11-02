@@ -180,59 +180,84 @@ function trimFloatNumber(val, max_digits = 4) {
 
 //JSON
 function compileJSON(object, options) {
-	var output = ''
+	var output = '';
+	let indentation = '\t';
 	if (typeof options !== 'object') options = {}
 	function newLine(tabs) {
 		if (options.small === true) {return '';}
-		var s = '\n'
-		for (var i = 0; i < tabs; i++) {
-			s += '\t'
+		let s = '\n';
+		for (let i = 0; i < tabs; i++) {
+			s += indentation;
 		}
 		return s;
 	}
-	function handleVar(o, tabs) {
+	function escape(string) {
+		if (string.includes('\\')) {
+			string = string.replace(/\\/g, '\\\\');
+		}
+		if (string.includes('"')) {
+			string = string.replace(/"/g, '\\"');
+		}
+		if (string.includes('\n')) {
+			string = string.replace(/\n|\r\n/g, '\\n');
+		}
+		if (string.includes('\t')) {
+			string = string.replace(/\t/g, '\\t');
+		}
+		return string;
+	}
+	function handleVar(o, tabs, breaks = true) {
 		var out = ''
-		if (typeof o === 'string') {
+		let type = typeof o;
+		if (type === 'string') {
 			//String
-			out += '"' + o.replace(/\\/g, '\\\\').replace(/"/g, '\\"').replace(/\n|\r\n/g, '\\n').replace(/\t/g, '\\t') + '"'
-		} else if (typeof o === 'boolean') {
+			out += '"' + escape(o) + '"'
+		} else if (type === 'boolean') {
 			//Boolean
 			out += (o ? 'true' : 'false')
-		} else if (typeof o === 'number') {
-			//Number
-			o = (Math.round(o*100000)/100000).toString()
-			out += o
 		} else if (o === null || o === Infinity || o === -Infinity) {
 			//Null
 			out += 'null'
-		} else if (typeof o === 'object' && o instanceof Array) {
+		} else if (type === 'number') {
+			//Number
+			o = (Math.round(o*100000)/100000).toString()
+			if (o == 'NaN') o = null
+			out += o
+		} else if (o instanceof Array) {
 			//Array
-			var has_content = false
+			let has_content = false
+			let multiline = !!o.find(item => typeof item === 'object');
+			if (!multiline) {
+				let length = 0;
+				o.forEach(item => {
+					length += typeof item === 'string' ? (item.length+4) : 3;
+				});
+				if (length > 140) multiline = true;
+			}
 			out += '['
 			for (var i = 0; i < o.length; i++) {
 				var compiled = handleVar(o[i], tabs+1)
 				if (compiled) {
-					var breaks = typeof o[i] === 'object'
-					if (has_content) {out += ',' + (breaks || options.small?'':' ')}
-					if (breaks) {out += newLine(tabs)}
+					if (has_content) {out += ',' + ((options.small || multiline) ? '' : ' ')}
+					if (multiline) {out += newLine(tabs)}
 					out += compiled
 					has_content = true
 				}
 			}
-			if (typeof o[o.length-1] === 'object') {out += newLine(tabs-1)}
+			if (multiline) {out += newLine(tabs-1)}
 			out += ']'
-		} else if (typeof o === 'object') {
+		} else if (type === 'object') {
 			//Object
-			var breaks = o.constructor.name !== 'oneLiner';
+			breaks = o.constructor.name !== 'oneLiner';
 			var has_content = false
 			out += '{'
 			for (var key in o) {
 				if (o.hasOwnProperty(key)) {
-					var compiled = handleVar(o[key], tabs+1)
+					var compiled = handleVar(o[key], tabs+1, breaks)
 					if (compiled) {
 						if (has_content) {out += ',' + (breaks || options.small?'':' ')}
 						if (breaks) {out += newLine(tabs)}
-						out += '"' + key + '":' + (options.small === true ? '' : ' ')
+						out += '"' + escape(key) + '":' + (options.small === true ? '' : ' ')
 						out += compiled
 						has_content = true
 					}
