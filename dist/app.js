@@ -1,6 +1,477 @@
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
+/***/ "./src/references.ts":
+/*!***************************!*\
+  !*** ./src/references.ts ***!
+  \***************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   createReferenceBlock: () => (/* binding */ createReferenceBlock),
+/* harmony export */   createReferencePlayer: () => (/* binding */ createReferencePlayer)
+/* harmony export */ });
+/* harmony import */ var three__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! three */ "./node_modules/three/build/three.module.js");
+/* harmony import */ var _assets_minecraft_block_png__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../assets/minecraft_block.png */ "./assets/minecraft_block.png");
+/* harmony import */ var _assets_player_skin_png__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../assets/player_skin.png */ "./assets/player_skin.png");
+function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
+
+
+
+var CUBE_FACES = ['east', 'west', 'up', 'down', 'south', 'north'];
+var CUBE_FACE_SHADES = {
+  north: 0.8,
+  south: 0.8,
+  east: 0.64,
+  west: 0.64,
+  up: 1,
+  down: 0.5
+};
+function createCuboid(cube, material, texture_size) {
+  var mesh = new three__WEBPACK_IMPORTED_MODULE_2__.Mesh(new three__WEBPACK_IMPORTED_MODULE_2__.BoxGeometry(cube.size[0], cube.size[1], cube.size[2]), material);
+  if (cube.origin) {
+    mesh.position.set(cube.origin[0], cube.origin[1], cube.origin[2]);
+    mesh.geometry.translate(-cube.origin[0], -cube.origin[1], -cube.origin[2]);
+  }
+  mesh.geometry.translate(cube.position[0] + cube.size[0] / 2, cube.position[1] + cube.size[1] / 2, cube.position[2] + cube.size[2] / 2);
+  if (cube.rotation) {
+    mesh.rotation.fromArray(cube.rotation.map(function (deg) {
+      return Math.degToRad(deg);
+    }));
+  }
+  mesh.geometry.setAttribute('color', new three__WEBPACK_IMPORTED_MODULE_2__.BufferAttribute(new Float32Array(24 * 3).fill(0.3), 3));
+  var getUVArray = function getUVArray(face) {
+    var arr = [[face.uv[0] / texture_size[0], 1 - face.uv[1] / texture_size[1]], [face.uv[2] / texture_size[0], 1 - face.uv[1] / texture_size[1]], [face.uv[0] / texture_size[0], 1 - face.uv[3] / texture_size[1]], [face.uv[2] / texture_size[0], 1 - face.uv[3] / texture_size[1]]];
+    var rot = face.rotation + 0;
+    while (rot > 0) {
+      var a = arr[0];
+      arr[0] = arr[2];
+      arr[2] = arr[3];
+      arr[3] = arr[1];
+      arr[1] = a;
+      rot = rot - 90;
+    }
+    return arr;
+  };
+  var indices = [];
+  // @ts-expect-error
+  mesh.geometry.faces = [];
+  mesh.geometry.clearGroups();
+  CUBE_FACES.forEach(function (fkey, i) {
+    if (cube.faces[fkey]) {
+      indices.push(0 + i * 4, 2 + i * 4, 1 + i * 4, 2 + i * 4, 3 + i * 4, 1 + i * 4);
+      // @ts-expect-error
+      mesh.geometry.faces.push(fkey);
+    }
+  });
+  mesh.geometry.setIndex(indices);
+  var uv_attr = mesh.geometry.attributes.uv;
+  for (var fkey in cube.faces) {
+    var _face$shade;
+    var face = cube.faces[fkey];
+    var uv_array = getUVArray(face);
+    var fIndex = 0;
+    switch (fkey) {
+      case 'north':
+        fIndex = 10;
+        break;
+      case 'east':
+        fIndex = 0;
+        break;
+      case 'south':
+        fIndex = 8;
+        break;
+      case 'west':
+        fIndex = 2;
+        break;
+      case 'up':
+        fIndex = 4;
+        break;
+      case 'down':
+        fIndex = 6;
+        break;
+    }
+    uv_attr.array.set(uv_array[0], fIndex * 4 + 0); //0,1
+    uv_attr.array.set(uv_array[1], fIndex * 4 + 2); //1,1
+    uv_attr.array.set(uv_array[2], fIndex * 4 + 4); //0,0
+    uv_attr.array.set(uv_array[3], fIndex * 4 + 6); //1,0
+    var shade = (_face$shade = face.shade) !== null && _face$shade !== void 0 ? _face$shade : CUBE_FACE_SHADES[fkey];
+    for (var i = 0; i < 4; i++) {
+      mesh.geometry.attributes.color.setXYZ(fIndex * 2 + i, shade, shade, shade);
+    }
+  }
+  uv_attr.needsUpdate = true;
+  mesh.geometry.attributes.color.needsUpdate = true;
+  return mesh;
+}
+function createReferenceBlock() {
+  var cube_texture = new three__WEBPACK_IMPORTED_MODULE_2__.TextureLoader().load(_assets_minecraft_block_png__WEBPACK_IMPORTED_MODULE_0__);
+  cube_texture.magFilter = three__WEBPACK_IMPORTED_MODULE_2__.NearestFilter;
+  cube_texture.minFilter = three__WEBPACK_IMPORTED_MODULE_2__.NearestFilter;
+  var cube_material = new three__WEBPACK_IMPORTED_MODULE_2__.MeshBasicMaterial({
+    vertexColors: true,
+    map: cube_texture
+  });
+  var minecraft_block = createCuboid({
+    size: [1, 1, 1],
+    position: [-0.5, -1.004, -0.5],
+    faces: {
+      east: {
+        uv: [0, 16, 16, 32]
+      },
+      west: {
+        uv: [0, 16, 16, 32]
+      },
+      up: {
+        uv: [0, 0, 16, 16]
+      },
+      down: {
+        uv: [16, 16, 32, 32]
+      },
+      north: {
+        uv: [0, 16, 16, 32]
+      },
+      south: {
+        uv: [0, 16, 16, 32]
+      }
+    }
+  }, cube_material, [32, 32]);
+  return minecraft_block;
+}
+var PLAYER_GEO = [{
+  // "Head
+  "position": [-4, 24, -4],
+  "size": [8, 8, 8],
+  "faces": {
+    "north": {
+      "uv": [8, 8, 16, 16]
+    },
+    "east": {
+      "uv": [0, 8, 8, 16]
+    },
+    "south": {
+      "uv": [24, 8, 32, 16]
+    },
+    "west": {
+      "uv": [16, 8, 24, 16]
+    },
+    "up": {
+      "uv": [16, 8, 8, 0]
+    },
+    "down": {
+      "uv": [24, 0, 16, 8]
+    }
+  }
+}, {
+  // Hat Layer
+  "position": [-4.5, 23.5, -4.5],
+  "size": [9, 9, 9],
+  "faces": {
+    "north": {
+      "uv": [40, 8, 48, 16]
+    },
+    "east": {
+      "uv": [32, 8, 40, 16]
+    },
+    "south": {
+      "uv": [56, 8, 64, 16]
+    },
+    "west": {
+      "uv": [48, 8, 56, 16]
+    },
+    "up": {
+      "uv": [48, 8, 40, 0]
+    },
+    "down": {
+      "uv": [56, 0, 48, 8]
+    }
+  }
+}, {
+  // "Body
+  "position": [-4, 12, -2],
+  "size": [8, 12, 4],
+  "faces": {
+    "north": {
+      "uv": [20, 20, 28, 32]
+    },
+    "east": {
+      "uv": [16, 20, 20, 32]
+    },
+    "south": {
+      "uv": [32, 20, 40, 32]
+    },
+    "west": {
+      "uv": [28, 20, 32, 32]
+    },
+    "up": {
+      "uv": [28, 20, 20, 16]
+    },
+    "down": {
+      "uv": [36, 16, 28, 20]
+    }
+  }
+}, {
+  // Body Layer
+  "position": [-4.25, 11.75, -2.25],
+  "size": [8.5, 12.5, 4.5],
+  "faces": {
+    "north": {
+      "uv": [20, 36, 28, 48]
+    },
+    "east": {
+      "uv": [16, 36, 20, 48]
+    },
+    "south": {
+      "uv": [32, 36, 40, 48]
+    },
+    "west": {
+      "uv": [28, 36, 32, 48]
+    },
+    "up": {
+      "uv": [28, 36, 20, 32]
+    },
+    "down": {
+      "uv": [36, 32, 28, 36]
+    }
+  }
+},
+// ======= Wide Arms
+{
+  // Right Arm
+  "position": [4, 12, -2],
+  "size": [4, 12, 4],
+  "origin": [5, 22, 0],
+  "rotation": [15, 0, 0],
+  "faces": {
+    "north": {
+      "uv": [44, 20, 48, 32]
+    },
+    "east": {
+      "uv": [40, 20, 44, 32]
+    },
+    "south": {
+      "uv": [52, 20, 56, 32]
+    },
+    "west": {
+      "uv": [48, 20, 52, 32]
+    },
+    "up": {
+      "uv": [48, 20, 44, 16]
+    },
+    "down": {
+      "uv": [52, 16, 48, 20]
+    }
+  }
+}, {
+  // Arm Layer
+  "position": [3.75, 11.75, -2.25],
+  "size": [4.5, 12.5, 4.5],
+  "origin": [5, 22, 0],
+  "rotation": [15, 0, 0],
+  "faces": {
+    "north": {
+      "uv": [44, 36, 48, 48]
+    },
+    "east": {
+      "uv": [40, 36, 44, 48]
+    },
+    "south": {
+      "uv": [52, 36, 56, 48]
+    },
+    "west": {
+      "uv": [48, 36, 52, 48]
+    },
+    "up": {
+      "uv": [48, 36, 44, 32]
+    },
+    "down": {
+      "uv": [52, 32, 48, 36]
+    }
+  }
+}, {
+  // Left Arm
+  "position": [-8, 12, -2],
+  "size": [4, 12, 4],
+  "origin": [-5, 22, 0],
+  "rotation": [1, 0, -3],
+  "faces": {
+    "north": {
+      "uv": [36, 52, 40, 64]
+    },
+    "east": {
+      "uv": [32, 52, 36, 64]
+    },
+    "south": {
+      "uv": [44, 52, 48, 64]
+    },
+    "west": {
+      "uv": [40, 52, 44, 64]
+    },
+    "up": {
+      "uv": [40, 52, 36, 48]
+    },
+    "down": {
+      "uv": [44, 48, 40, 52]
+    }
+  }
+}, {
+  // Arm Layer
+  "position": [-8.25, 11.75, -2.25],
+  "size": [4.5, 12.5, 4.5],
+  "origin": [-5, 22, 0],
+  "rotation": [1, 0, -3],
+  "faces": {
+    "north": {
+      "uv": [52, 52, 56, 64]
+    },
+    "east": {
+      "uv": [48, 52, 52, 64]
+    },
+    "south": {
+      "uv": [60, 52, 64, 64]
+    },
+    "west": {
+      "uv": [56, 52, 60, 64]
+    },
+    "up": {
+      "uv": [56, 52, 52, 48]
+    },
+    "down": {
+      "uv": [60, 48, 56, 52]
+    }
+  }
+}, {
+  // Right Leg
+  "position": [-0.1, 0, -2],
+  "size": [4, 12, 4],
+  "faces": {
+    "north": {
+      "uv": [4, 20, 8, 32]
+    },
+    "east": {
+      "uv": [0, 20, 4, 32]
+    },
+    "south": {
+      "uv": [12, 20, 16, 32]
+    },
+    "west": {
+      "uv": [8, 20, 12, 32]
+    },
+    "up": {
+      "uv": [8, 20, 4, 16]
+    },
+    "down": {
+      "uv": [12, 16, 8, 20]
+    }
+  }
+}, {
+  // Leg Layer
+  "position": [-0.35, -0.25, -2.25],
+  "size": [4.5, 12.5, 4.5],
+  "faces": {
+    "north": {
+      "uv": [4, 36, 8, 48]
+    },
+    "east": {
+      "uv": [0, 36, 4, 48]
+    },
+    "south": {
+      "uv": [12, 36, 16, 48]
+    },
+    "west": {
+      "uv": [8, 36, 12, 48]
+    },
+    "up": {
+      "uv": [8, 36, 4, 32]
+    },
+    "down": {
+      "uv": [12, 32, 8, 36]
+    }
+  }
+}, {
+  // Left Leg
+  "position": [-3.9, 0, -2],
+  "size": [4, 12, 4],
+  "faces": {
+    "north": {
+      "uv": [20, 52, 24, 64]
+    },
+    "east": {
+      "uv": [16, 52, 20, 64]
+    },
+    "south": {
+      "uv": [28, 52, 32, 64]
+    },
+    "west": {
+      "uv": [24, 52, 28, 64]
+    },
+    "up": {
+      "uv": [24, 52, 20, 48]
+    },
+    "down": {
+      "uv": [28, 48, 24, 52]
+    }
+  }
+}, {
+  // Leg Layer
+  "position": [-4.15, -0.25, -2.25],
+  "size": [4.5, 12.5, 4.5],
+  "faces": {
+    "north": {
+      "uv": [4, 52, 8, 64]
+    },
+    "east": {
+      "uv": [0, 52, 4, 64]
+    },
+    "south": {
+      "uv": [12, 52, 16, 64]
+    },
+    "west": {
+      "uv": [8, 52, 12, 64]
+    },
+    "up": {
+      "uv": [8, 52, 4, 48]
+    },
+    "down": {
+      "uv": [12, 48, 8, 52]
+    }
+  }
+}];
+function createReferencePlayer() {
+  var cube_texture = new three__WEBPACK_IMPORTED_MODULE_2__.TextureLoader().load(_assets_player_skin_png__WEBPACK_IMPORTED_MODULE_1__);
+  cube_texture.magFilter = three__WEBPACK_IMPORTED_MODULE_2__.NearestFilter;
+  cube_texture.minFilter = three__WEBPACK_IMPORTED_MODULE_2__.NearestFilter;
+  var cube_material = new three__WEBPACK_IMPORTED_MODULE_2__.MeshBasicMaterial({
+    vertexColors: true,
+    map: cube_texture,
+    side: three__WEBPACK_IMPORTED_MODULE_2__.DoubleSide,
+    alphaTest: 0.05
+  });
+  var minecraft_player = new three__WEBPACK_IMPORTED_MODULE_2__.Object3D();
+  var _iterator = _createForOfIteratorHelper(PLAYER_GEO),
+    _step;
+  try {
+    for (_iterator.s(); !(_step = _iterator.n()).done;) {
+      var template = _step.value;
+      var cube = createCuboid(template, cube_material, [64, 64]);
+      minecraft_player.add(cube);
+    }
+  } catch (err) {
+    _iterator.e(err);
+  } finally {
+    _iterator.f();
+  }
+  var scale = 30 / 32 / 16;
+  minecraft_player.scale.set(scale, scale, scale);
+  return minecraft_player;
+}
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/components/App.vue?vue&type=script&lang=js&":
 /*!*************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./src/components/App.vue?vue&type=script&lang=js& ***!
@@ -946,6 +1417,15 @@ var Menu = [{
       (0,_options__WEBPACK_IMPORTED_MODULE_6__.setOption)('minecraft_block_visible', _Preview__WEBPACK_IMPORTED_MODULE_2__.View.minecraft_block.visible);
     }
   }, {
+    label: 'Reference Player',
+    get icon() {
+      return _Preview__WEBPACK_IMPORTED_MODULE_2__.View.minecraft_player.visible ? lucide_vue__WEBPACK_IMPORTED_MODULE_11__["default"] : lucide_vue__WEBPACK_IMPORTED_MODULE_12__["default"];
+    },
+    click: function click() {
+      _Preview__WEBPACK_IMPORTED_MODULE_2__.View.minecraft_player.visible = !_Preview__WEBPACK_IMPORTED_MODULE_2__.View.minecraft_player.visible;
+      (0,_options__WEBPACK_IMPORTED_MODULE_6__.setOption)('minecraft_player_visible', _Preview__WEBPACK_IMPORTED_MODULE_2__.View.minecraft_player.visible);
+    }
+  }, {
     label: 'Axis Helper',
     get icon() {
       return _Preview__WEBPACK_IMPORTED_MODULE_2__.View.helper.visible ? lucide_vue__WEBPACK_IMPORTED_MODULE_11__["default"] : lucide_vue__WEBPACK_IMPORTED_MODULE_12__["default"];
@@ -1108,7 +1588,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _emitter__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./../emitter */ "./src/emitter.js");
 /* harmony import */ var _WarningDialog__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./WarningDialog */ "./src/components/WarningDialog.vue");
 /* harmony import */ var _options__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./../options */ "./src/options.js");
-/* harmony import */ var _assets_minecraft_block_png__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../assets/minecraft_block.png */ "./assets/minecraft_block.png");
 /* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/flip-vertical-2.js");
 /* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/minus.js");
 /* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/play.js");
@@ -1116,8 +1595,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/hash.js");
 /* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/x.js");
 /* harmony import */ var lucide_vue__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! lucide-vue */ "./node_modules/lucide-vue/dist/esm/icons/check-check.js");
-/* harmony import */ var _edits__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../edits */ "./src/edits.js");
-/* harmony import */ var _variable_placeholders__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./../variable_placeholders */ "./src/variable_placeholders.js");
+/* harmony import */ var _edits__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../edits */ "./src/edits.js");
+/* harmony import */ var _variable_placeholders__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./../variable_placeholders */ "./src/variable_placeholders.js");
+/* harmony import */ var _references_ts__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../references.ts */ "./src/references.ts");
 function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
 function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
@@ -1290,43 +1770,12 @@ function initPreview(canvas) {
   View.scene.add(View.grid);
   View.helper.visible = _options__WEBPACK_IMPORTED_MODULE_3__.OptionValues.axis_helper_visible;
   View.grid.visible = _options__WEBPACK_IMPORTED_MODULE_3__.OptionValues.grid_visible;
-  var cube_geometry = new three__WEBPACK_IMPORTED_MODULE_7__.BoxGeometry(1, 1, 1);
-  cube_geometry.setAttribute('color', new three__WEBPACK_IMPORTED_MODULE_7__.BufferAttribute(new Float32Array(24 * 3).fill(0.3), 3));
-  var setupFace = function setupFace(offset, uv, shade) {
-    for (var i = 0; i < 4; i++) {
-      uv[i] = Math.lerp(uv[i], uv[(i + 2) % 4], 0.002);
-    }
-    cube_geometry.attributes.uv.array[offset * 2 + 0] = uv[0];
-    cube_geometry.attributes.uv.array[offset * 2 + 1] = uv[1];
-    cube_geometry.attributes.uv.array[offset * 2 + 2] = uv[2];
-    cube_geometry.attributes.uv.array[offset * 2 + 3] = uv[1];
-    cube_geometry.attributes.uv.array[offset * 2 + 4] = uv[0];
-    cube_geometry.attributes.uv.array[offset * 2 + 5] = uv[3];
-    cube_geometry.attributes.uv.array[offset * 2 + 6] = uv[2];
-    cube_geometry.attributes.uv.array[offset * 2 + 7] = uv[3];
-    for (var _i = 0; _i < 4; _i++) {
-      cube_geometry.attributes.color.setXYZ(offset + _i, shade, shade, shade);
-    }
-  };
-  setupFace(0, [0, 0.5, 0.5, 0.0], 0.64); // East/West
-  setupFace(4, [0, 0.5, 0.5, 0.0], 0.64); // East/West
-  setupFace(8, [0, 0.5, 0.5, 1], 1); // Up
-  setupFace(12, [0.5, 0.5, 1, 0.0], 0.5); // Down
-  setupFace(16, [0, 0.5, 0.5, 0.0], 0.8); // North/South
-  setupFace(20, [0, 0.5, 0.5, 0.0], 0.8); // North/South
-  cube_geometry.attributes.uv.needsUpdate = true;
-  cube_geometry.attributes.color.needsUpdate = true;
-  var cube_texture = new three__WEBPACK_IMPORTED_MODULE_7__.TextureLoader().load(_assets_minecraft_block_png__WEBPACK_IMPORTED_MODULE_4__);
-  cube_texture.magFilter = three__WEBPACK_IMPORTED_MODULE_7__.NearestFilter;
-  cube_texture.minFilter = three__WEBPACK_IMPORTED_MODULE_7__.NearestFilter;
-  var cube_material = new three__WEBPACK_IMPORTED_MODULE_7__.MeshBasicMaterial({
-    vertexColors: true,
-    map: cube_texture
-  });
-  View.minecraft_block = new three__WEBPACK_IMPORTED_MODULE_7__.Mesh(cube_geometry, cube_material);
-  View.minecraft_block.position.set(0, -0.51, 0);
+  View.minecraft_block = (0,_references_ts__WEBPACK_IMPORTED_MODULE_6__.createReferenceBlock)();
   View.scene.add(View.minecraft_block);
   View.minecraft_block.visible = _options__WEBPACK_IMPORTED_MODULE_3__.OptionValues.minecraft_block_visible;
+  View.minecraft_player = (0,_references_ts__WEBPACK_IMPORTED_MODULE_6__.createReferencePlayer)();
+  View.scene.add(View.minecraft_player);
+  View.minecraft_player.visible = _options__WEBPACK_IMPORTED_MODULE_3__.OptionValues.minecraft_player_visible;
   (0,_emitter__WEBPACK_IMPORTED_MODULE_1__.initParticles)(View);
   resizeCanvas();
   animate();
@@ -1405,7 +1854,7 @@ View.frames_this_second = 0;
     },
     showPlaceholderBar: function showPlaceholderBar() {
       this.show_placeholder_bar = true;
-      (0,_variable_placeholders__WEBPACK_IMPORTED_MODULE_6__.updateVariablePlaceholderList)(this.placeholder_keys);
+      (0,_variable_placeholders__WEBPACK_IMPORTED_MODULE_5__.updateVariablePlaceholderList)(this.placeholder_keys);
       localStorage.setItem('snowstorm_show_placeholder_bar', 'true');
     },
     hidePlaceholderBar: function hidePlaceholderBar() {
@@ -1434,7 +1883,7 @@ View.frames_this_second = 0;
     bakePlaceholderVariableConfirm: function bakePlaceholderVariableConfirm() {
       this.$refs.bake_placeholder_confirm_dialog.close();
       var key = this.bake_placeholder_key;
-      (0,_variable_placeholders__WEBPACK_IMPORTED_MODULE_6__.bakePlaceholderVariable)(key, this.placeholder_values[key] || 0);
+      (0,_variable_placeholders__WEBPACK_IMPORTED_MODULE_5__.bakePlaceholderVariable)(key, this.placeholder_values[key] || 0);
     },
     bakePlaceholderVariable: function bakePlaceholderVariable(key) {
       this.bake_placeholder_key = key;
@@ -1486,13 +1935,13 @@ View.frames_this_second = 0;
         _this.warning_count = (0,_WarningDialog__WEBPACK_IMPORTED_MODULE_2__.validate)().length;
       }
     }, 500);
-    _edits__WEBPACK_IMPORTED_MODULE_5__.EditListeners['placeholder_bar'] = function () {
+    _edits__WEBPACK_IMPORTED_MODULE_4__.EditListeners['placeholder_bar'] = function () {
       if (_this.show_placeholder_bar) {
-        (0,_variable_placeholders__WEBPACK_IMPORTED_MODULE_6__.updateVariablePlaceholderList)(_this.placeholder_keys);
+        (0,_variable_placeholders__WEBPACK_IMPORTED_MODULE_5__.updateVariablePlaceholderList)(_this.placeholder_keys);
       }
     };
     View.updateVariablePlaceholderList = function () {
-      (0,_variable_placeholders__WEBPACK_IMPORTED_MODULE_6__.updateVariablePlaceholderList)(_this.placeholder_keys);
+      (0,_variable_placeholders__WEBPACK_IMPORTED_MODULE_5__.updateVariablePlaceholderList)(_this.placeholder_keys);
     };
   }
 });
@@ -8648,6 +9097,7 @@ __webpack_require__.r(__webpack_exports__);
 var OptionValues = {
   grid_visible: true,
   minecraft_block_visible: false,
+  minecraft_player_visible: false,
   axis_helper_visible: true
 };
 try {
@@ -96052,6 +96502,17 @@ module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAACACAYAAAAC
 
 "use strict";
 module.exports = "data:image/png;base64,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";
+
+/***/ }),
+
+/***/ "./assets/player_skin.png":
+/*!********************************!*\
+  !*** ./assets/player_skin.png ***!
+  \********************************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = "data:image/png;base64,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";
 
 /***/ }),
 

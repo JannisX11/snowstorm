@@ -19,6 +19,11 @@ mix.webpackConfig({
     module: {
         rules: [
 			{
+				test: /\.tsx?$/,
+				use: "ts-loader",
+				exclude: /node_modules/,
+			},
+			{
 				test: /\.png/,
 				type: 'asset/inline',
 				generator: {
@@ -32,7 +37,7 @@ mix.webpackConfig({
 		],
 	},
 	resolve: {
-		extensions: ['.js'],
+		extensions: [".tsx", ".ts", ".js"],
 		modules: ['node_modules'],
 		alias
 	},

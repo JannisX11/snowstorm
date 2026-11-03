@@ -105,6 +105,16 @@ const Menu = [
 				}
 			},
 			{
+				label: 'Reference Player',
+				get icon() {
+					return View.minecraft_player.visible ? CheckSquare : Square
+				},
+				click: () => {
+					View.minecraft_player.visible = !View.minecraft_player.visible;
+					setOption('minecraft_player_visible', View.minecraft_player.visible);
+				}
+			},
+			{
 				label: 'Axis Helper',
 				get icon() {
 					return View.helper.visible ? CheckSquare : Square

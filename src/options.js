@@ -2,6 +2,7 @@
 export const OptionValues = {
 	grid_visible: true,
 	minecraft_block_visible: false,
+	minecraft_player_visible: false,
 	axis_helper_visible: true,
 }
 
