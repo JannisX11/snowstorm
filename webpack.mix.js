@@ -1,7 +1,6 @@
 let mix = require('laravel-mix');
 let path = require('path');
 let fs = require('fs');
-let {WebpackBundleSizeAnalyzerPlugin} = require('webpack-bundle-size-analyzer');
 const {DefinePlugin} = require('webpack')
 
 process.argv.push('--https')
@@ -24,14 +23,10 @@ mix.webpackConfig({
 				exclude: /node_modules/,
 			},
 			{
-				test: /\.png/,
+				test: /\.png$/,
 				type: 'asset/inline',
 				generator: {
-					dataUrl: content => {
-						let path = './dist' + content.toString().split('"')[1].replace(/\?.*/, '');
-						let base64 = require('fs').readFileSync(path, {encoding: 'base64'});
-						return 'data:image/png;base64,' + base64;
-					}
+					dataUrl: content => `data:image/png;base64,${content.toString('base64')}`
 				}
 			}
 		],
@@ -44,8 +39,7 @@ mix.webpackConfig({
 	plugins: [
         new DefinePlugin({
             VERSION: `"${require('./package.json').version}"`
-        }),
-		new WebpackBundleSizeAnalyzerPlugin('./plain-report.txt')
+        })
 	],
 	devServer: {
 		contentBase: path.join(__dirname, 'dist'),
