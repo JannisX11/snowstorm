@@ -1,0 +1,23 @@
+name: Publish Extension
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  publish:
+    if: contains(github.event.head_commit.message, 'ci-publish')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24.x"
+          registry-url: "https://registry.npmjs.org"
+      - run: npm ci
+      - run: npm run production
+      - run: cd ./vscode_extension && npx @vscode/vsce publish --oidc
