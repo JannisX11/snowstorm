@@ -23,10 +23,15 @@ mix.webpackConfig({
 				exclude: /node_modules/,
 			},
 			{
-				test: /\.png$/,
+				test: /\.png/,
 				type: 'asset/inline',
 				generator: {
-					dataUrl: content => `data:image/png;base64,${content.toString('base64')}`
+					dataUrl: content => {
+						let image_path = content.toString().split('"')[1].replace(/\?.*/, '');
+						image_path = path.join(__dirname, './assets/', image_path.replace(/images/, ''));
+						let base64 = require('fs').readFileSync(image_path, {encoding: 'base64'});
+						return 'data:image/png;base64,' + base64;
+					}
 				}
 			}
 		],

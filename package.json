@@ -1,6 +1,6 @@
 {
 	"name": "snowstorm",
-	"version": "3.3.0",
+	"version": "3.3.1",
 	"description": "Minecraft Bedrock Edition particle editor",
 	"author": {
 		"name": "JannisX11",
@@ -22,6 +22,7 @@
 		"build-extension": "cd ./vscode_extension && vsce package"
 	},
 	"devDependencies": {
+		"@types/node": "^26.6.6",
 		"cross-env": "^7.0.3",
 		"laravel-mix": "^6.0.49",
 		"sass": "^1.30.0",
