@@ -41,11 +41,16 @@ function createCuboid(cube: PreviewModelCubeTemplate, material: THREE.Material, 
     mesh.geometry.setAttribute('color', new THREE.BufferAttribute(new Float32Array(24 * 3).fill(0.3), 3));
 
     let getUVArray = (face: PreviewModelCubeTemplateFace) => {
+        let uv = face.uv.slice();
+        let ex = 0.05 * (uv[0] < uv[2] ? 1 : -1);
+        uv[0] += ex; uv[2] -= ex;
+        let ey = 0.05 * (uv[1] < uv[3] ? 1 : -1);
+        uv[1] += ey; uv[3] -= ey;
         let arr = [
-            [face.uv[0]/texture_size[0], 1-(face.uv[1]/texture_size[1])],
-            [face.uv[2]/texture_size[0], 1-(face.uv[1]/texture_size[1])],
-            [face.uv[0]/texture_size[0], 1-(face.uv[3]/texture_size[1])],
-            [face.uv[2]/texture_size[0], 1-(face.uv[3]/texture_size[1])]
+            [uv[0]/texture_size[0], 1-(uv[1]/texture_size[1])],
+            [uv[2]/texture_size[0], 1-(uv[1]/texture_size[1])],
+            [uv[0]/texture_size[0], 1-(uv[3]/texture_size[1])],
+            [uv[2]/texture_size[0], 1-(uv[3]/texture_size[1])]
         ]
         let rot = (face.rotation+0)
         while (rot > 0) {
@@ -184,7 +189,7 @@ const PLAYER_GEO: PreviewModelCubeTemplate[] =  [
         "position": [4, 12, -2],
         "size": [4, 12, 4],
         "origin": [5, 22, 0],
-        "rotation": [15, 0, 0],
+        "rotation": [1, 0, 3],
         "faces": {
             "north": {"uv": [44, 20, 48, 32]},
             "east": {"uv": [40, 20, 44, 32]},
@@ -199,7 +204,7 @@ const PLAYER_GEO: PreviewModelCubeTemplate[] =  [
         "position": [3.75, 11.75, -2.25],
         "size": [4.5, 12.5, 4.5],
         "origin": [5, 22, 0],
-        "rotation": [15, 0, 0],
+        "rotation": [1, 0, 3],
         "faces": {
             "north": {"uv": [44, 36, 48, 48]},
             "east": {"uv": [40, 36, 44, 48]},
@@ -244,6 +249,8 @@ const PLAYER_GEO: PreviewModelCubeTemplate[] =  [
         // Right Leg
         "position": [-0.1, 0, -2],
         "size": [4, 12, 4],
+        "origin": [0, 12, 0],
+        "rotation": [0.1, 0, 0],
         "faces": {
             "north": {"uv": [4, 20, 8, 32]},
             "east": {"uv": [0, 20, 4, 32]},
@@ -257,6 +264,8 @@ const PLAYER_GEO: PreviewModelCubeTemplate[] =  [
         // Leg Layer
         "position": [-0.35, -0.25, -2.25],
         "size": [4.5, 12.5, 4.5],
+        "origin": [0, 12, 0],
+        "rotation": [0.1, 0, 0],
         "faces": {
             "north": {"uv": [4, 36, 8, 48]},
             "east": {"uv": [0, 36, 4, 48]},
