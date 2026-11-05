@@ -19,6 +19,4 @@ jobs:
         with:
           node-version: "24.x"
           registry-url: "https://registry.npmjs.org"
-      - run: npm ci
-      - run: npm run production
       - run: cd ./vscode_extension && npx @vscode/vsce publish --oidc

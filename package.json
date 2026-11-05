@@ -1,6 +1,6 @@
 {
 	"name": "snowstorm",
-	"version": "3.3.1",
+	"version": "3.3.2",
 	"description": "Minecraft Bedrock Edition particle editor",
 	"author": {
 		"name": "JannisX11",
@@ -19,7 +19,8 @@
 		"hot": "mix watch --hot",
 		"production": "mix --production",
 		"extension": "npm run dev",
-		"build-extension": "cd ./vscode_extension && vsce package"
+		"build-extension": "cd ./vscode_extension && vsce package",
+		"install": "npm install && npm install github:JannisX11/vue-prism-editor"
 	},
 	"devDependencies": {
 		"@types/node": "^26.6.6",
