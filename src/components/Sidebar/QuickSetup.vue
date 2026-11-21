@@ -206,14 +206,14 @@ const PRESETS = {
 		burst: {
 			'emitter.rate.mode': 'instant',
 			'emitter.rate.amount': '100',
-			'emitter.lifetime.mode': 'once',
+			//'emitter.lifetime.mode': 'once',
 			'emitter.lifetime.active_time': '1',
 		},
 		steady: {
 			'emitter.rate.mode': 'steady',
 			'emitter.rate.rate': '60',
 			'emitter.rate.maximum': '400',
-			'emitter.lifetime.mode': 'once',
+			//'emitter.lifetime.mode': 'once',
 			'emitter.lifetime.active_time': '1',
 		}
 	},
