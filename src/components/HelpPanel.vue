@@ -12,7 +12,7 @@
 					<li v-for="(cat, cat_key) in HelpData">
 						<span class="category_title">{{ cat.title }}</span>
 						<ul>
-							<li v-for="(pg, pg_key) in HelpData[cat_key].pages" class="clickable" @click="openPage(cat_key, pg_key)">{{ pg.title }}</li>
+							<li v-for="(pg, pg_key) in HelpData[cat_key].pages" class="clickable help_page_link" @click="openPage(cat_key, pg_key)">{{ pg.title }}</li>
 						</ul>
 					</li>
 				</ul>
@@ -134,11 +134,17 @@ export default {
 		padding-bottom: 5px;
 	}
 	ul > li > ul {
-		padding-left: 2px;
+		margin: 6px 0;
 	}
-	li > ul > li {
+	.help_page_link {
 		padding-left: 25px;
 		margin-left: -2px;
+	}
+	#help_panel.portrait_view .help_page_link {
+		padding: 10px 12px;
+		background-color: var(--color-bar);
+		margin: 2px 0;
+		border-radius: 8px;
 	}
 	.category_title {
 		color: var(--color-text_grayed);

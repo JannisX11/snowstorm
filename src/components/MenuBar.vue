@@ -1,5 +1,5 @@
 <template>
-    <ul id="menu_bar">
+    <ul id="menu_bar" :class="{portrait_view: portrait_view}">
         <li v-for="menu in Menu" :key="menu.id" @click="openMenu(menu, $event)" @mouseenter="onMenuMouseEnter(menu)" :class="{selected: open_menu == menu.id}">
             <a>{{ menu.label }}</a>
             <ul class="menu_dropdown" v-if="open_menu == menu.id">
@@ -253,6 +253,9 @@ export default {
 		padding-top: 5px;
 		display: flex;
 		align-items: center;
+	}
+	#menu_bar.portrait_view ul.menu_dropdown > li a {
+		height: 40px;
 	}
 	.menu_icon {
 		width: 24px;
