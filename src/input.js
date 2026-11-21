@@ -150,8 +150,9 @@ export default class Input {
 				}
 			}
 		}
-		if (this.type == 'number') {
+		if (this.type == 'number' && e?.target instanceof HTMLInputElement) {
 			let value = parseFloat(e.target.value);
+			if (isNaN(value)) value = 0;
 			if (Math.clamp(value, this.min, this.max) != value) {
 				this.value = Math.clamp(value, this.min, this.max);
 				e.target.value = this.value.toString();
